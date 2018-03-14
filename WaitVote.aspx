@@ -88,7 +88,6 @@
                                     </div>
                                     <div class="panel-body">
                                         文號：<asp:TextBox placeholder="輸入文號代碼" ID="Txt_SID" class="form-control" runat="server"></asp:TextBox>
-
                                         <br />
                                         主旨：<asp:TextBox placeholder="輸入關鍵字" ID="Txt_Title" class="form-control" runat="server"></asp:TextBox>
                                     </div>

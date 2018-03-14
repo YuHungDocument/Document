@@ -23,6 +23,8 @@ namespace WebApplication1
         string txt_Ciphertext_Proposition;
         string txt_Ciphertext_DocumentContent;
         string txt_PKmessage;
+        private SqlConnection connection;
+        private SqlCommand command;
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -698,12 +700,66 @@ namespace WebApplication1
 
         protected void OpenDoc(object sender, EventArgs e)
         {
+            LinkButton lnk = (LinkButton)sender;
+            GridViewRow gr = (GridViewRow)lnk.NamingContainer;
 
+            int FNO = int.Parse(gv_showTempFile.DataKeys[gr.RowIndex].Value.ToString());
+            Download(FNO);
         }
+        private void Download(int FNO)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection con = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+                SqlCommand cmd = new SqlCommand("select Name,FNO,DocumentContent,Extn from tempDocument where FNO = @FNO and SID = @SID", con);
+                //cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@FNO", SqlDbType.Int).Value = FNO;
+                cmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                dt.Load(reader);
+            }
+            string name = dt.Rows[0]["Name"].ToString();
+            byte[] documentBytes = (byte[])dt.Rows[0]["DocumentContent"];
+
+            Response.ClearContent();
+            Response.ContentType = "application/octetstream";
+            Response.AddHeader("Content-Disposition", string.Format("attachment; filename={0}", name));
+            Response.AddHeader("Content-Length", documentBytes.Length.ToString());
+
+            Response.BinaryWrite(documentBytes);
+            Response.Flush();
+            Response.Close();
+        }
+
 
         protected void gv_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
+            connection = new SqlConnection(tmpdbhelper.DB_CnStr);
+            command = new SqlCommand();
+            command.Connection = connection;
+            string strName;
 
+            strName = ((LinkButton)gv_showTempFile.Rows[e.RowIndex].Cells[0].
+                FindControl("btn_filename")).Text;
+
+            /* 刪除資料 */
+            command.Parameters.Clear();
+            command.Parameters.AddWithValue("@Name", strName);
+            command.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+            command.CommandText =
+                "DELETE FROM tempDocument WHERE Name=@Name and SID=@SID ";
+
+            connection.Open();
+            command.ExecuteNonQuery();
+            connection.Close();
+            int FNO_INDEX;
+            int FNOSession;
+            FNOSession = int.Parse(Session["FNOSession"].ToString());
+            FNO_INDEX = FNOSession - 1;
+            Session["FNOSession"] = FNO_INDEX;
+            FillData();
         }
 
         protected void GridView2_RowDataBound(object sender, GridViewRowEventArgs e)

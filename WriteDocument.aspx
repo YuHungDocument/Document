@@ -138,22 +138,6 @@
                                         </asp:TemplateField>
                                     </Columns>
                                 </asp:GridView>
-                                <asp:GridView runat="server" ID="gv_showTempFile0" AutoGenerateColumns="False" OnRowDeleting="gv_RowDeleting"
-                                    DataKeyNames="FNO">
-                                    <Columns>
-                                        <asp:TemplateField HeaderText="已上傳的檔案">
-                                            <ItemTemplate>
-                                                <asp:LinkButton ID="btn_filename0" OnClick="OpenDoc" runat="server" Text='<%# Eval("Name") %>'></asp:LinkButton>
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="刪除">
-                                            <ItemTemplate>
-                                                <asp:LinkButton ID="lbDelete0" runat="server" CommandName="Delete"
-                                                    OnClientClick="javascript:return confirm('確定刪除?')">刪除</asp:LinkButton>
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                    </Columns>
-                                </asp:GridView>
                             </td>
                         </tr>
                         <tr>

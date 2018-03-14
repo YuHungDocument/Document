@@ -571,12 +571,22 @@
                                 </div>
                             </li>
                             <li><asp:LinkButton ID="Lb_Import" runat="server"><span class="glyphicon glyphicon-star"></span>標記重要項目</asp:LinkButton></li>
-                            <li>
-                                <asp:LinkButton ID="Lb_Set" runat="server"><span class="glyphicon glyphicon-cog"></span>個人設定</asp:LinkButton>
+                            <li  class="panel panel-default" id="dropdown">
+                                 <asp:LinkButton href="#dropdown-lv04" data-toggle="collapse" ID="Lb_Set" runat="server"><span class="glyphicon glyphicon-hdd"></span>個人設定<span class="caret"></span></asp:LinkButton>
+                                 <!-- Dropdown level 1 -->
+                                <div id="dropdown-lv04" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <ul class="nav navbar-nav">
+                                            <li><a href="set.aspx">帳戶設定</a></li>
+                                            <li><a href="SetAgent.aspx">代理人設定</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </li>
                             <li>
                                 <asp:LinkButton ID="Lb_Manager" runat="server"><span class="glyphicon glyphicon-cog"></span>管理者介面</asp:LinkButton>
                             </li>
+
                         </ul>
                     </div>
                     <!-- /.navbar-collapse -->

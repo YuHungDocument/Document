@@ -140,7 +140,6 @@ namespace WebApplication1
                     rsaProviderReceiver.FromXmlString(ReadAll);
                     try
                     {
-
                         SqlCommand cmd3 = new SqlCommand(@"Select RSAkey From Detail Where EID=@EID and SID=@SID");
                         cmd3.Connection = cn;
                         cmd3.Parameters.AddWithValue("@EID", Lbl_EID.Text);

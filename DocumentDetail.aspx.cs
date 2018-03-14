@@ -152,7 +152,6 @@ namespace WebApplication1
                                 RSAkey = dr2["RSAkey"].ToString();
                             }
                         }
-
                         // 將資料解密
 
                         byte[] byteCipher = Convert.FromBase64String(RSAkey);

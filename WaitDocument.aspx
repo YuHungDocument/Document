@@ -115,8 +115,8 @@
     <asp:GridView ID="Menu" Style="border: 2px #ccc solid; border-radius: 10px;" runat="server" AutoGenerateColumns="False" DataKeyNames="SID" OnRowCommand="GridView1_RowCommand" AllowSorting="True" OnRowDataBound="GridView1_RowDataBound" GridLines="None" Width="100%" EmptyDataText="暫無待處理項目"
         AllowPaging="True" OnRowCreated="Gridview_OnRowCreated"
         OnSorting="Gv_Sorting" PageSize="3" OnPageIndexChanging="gv_PageIndexChanging">
-        <FooterStyle  ForeColor="Black" />
-        <PagerStyle  HorizontalAlign="Center" />
+        <FooterStyle ForeColor="Black" />
+        <PagerStyle HorizontalAlign="Center" />
         <SortedAscendingHeaderStyle CssClass="asc" />
         <SortedDescendingHeaderStyle CssClass="dsc" />
         <Columns>
@@ -153,7 +153,7 @@
             </asp:TemplateField>
         </Columns>
         <EmptyDataRowStyle BorderStyle="None" Font-Size="Large" />
-        <HeaderStyle  Font-Size="Large" />
+        <HeaderStyle Font-Size="Large" />
         <RowStyle Font-Size="Large" BackColor="White" />
     </asp:GridView>
     <div>
@@ -168,12 +168,13 @@
         頁
     </div>
 
-    <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString %>" SelectCommand="SELECT [TN] FROM [TypeGroup] WHERE ([Tp] = @Tp)">
+    <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString2 %>" SelectCommand="SELECT [TN] FROM [TypeGroup] WHERE (([Tp] = @Tp) AND ([TID] &lt;&gt; @TID))">
         <SelectParameters>
             <asp:Parameter DefaultValue="FT" Name="Tp" Type="String" />
+            <asp:Parameter DefaultValue="6" Name="TID" Type="Int32" />
         </SelectParameters>
     </asp:SqlDataSource>
 
-    
+
     <asp:Label ID="Lbl_EID" runat="server" Text="Label" Visible="False"></asp:Label>
 </asp:Content>

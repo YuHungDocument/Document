@@ -79,15 +79,21 @@
                             </td>
                             <td style="width: 300px; height: 30px; padding-top: 5px;">公文類型：<asp:DropDownList ID="Ddp_Type" runat="server" DataSourceID="SqlDataSource1" DataTextField="TN" DataValueField="TN" Height="30px" Width="170px" OnSelectedIndexChanged="Ddp_Type_SelectedIndexChanged" AutoPostBack="True">
                             </asp:DropDownList>
-                                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="Data Source=.\SQLEXPRESS;Initial Catalog=電子公文;Integrated Security=True" SelectCommand="SELECT [TN] FROM [TypeGroup] WHERE ([Tp] = @Tp)" ProviderName="System.Data.SqlClient">
+                                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString2 %>" SelectCommand="SELECT [TN] FROM [TypeGroup] WHERE (([Tp] = @Tp) AND ([TID] &lt;&gt; @TID))">
                                     <SelectParameters>
                                         <asp:Parameter DefaultValue="FT" Name="Tp" Type="String" />
+                                        <asp:Parameter DefaultValue="6" Name="TID" Type="Int32" />
                                     </SelectParameters>
                                 </asp:SqlDataSource>
                             </td>
                             <td style="height: 30px" colspan="2">發文日期：<asp:Label ID="Lbl_Date" runat="server"></asp:Label>
                                 <asp:Label ID="Lbl_EID" runat="server" Text="Label" Visible="False"></asp:Label>
-                                &nbsp; 截止日期：<input type="text" runat="server" class="Wdate" id="d1" onclick="WdatePicker({ minDate: '%y-%M-{%d}' })" />
+                                &nbsp; 速別：<asp:DropDownList ID="Ddl_Speed" runat="server">
+                                    <asp:ListItem>--請選擇速別--</asp:ListItem>
+                                    <asp:ListItem>普通</asp:ListItem>
+                                    <asp:ListItem>急件</asp:ListItem>
+                                    <asp:ListItem>超急件</asp:ListItem>
+                                </asp:DropDownList>
                             </td>
                         </tr>
                         <tr>

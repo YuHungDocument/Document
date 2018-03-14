@@ -14,7 +14,17 @@ namespace WebApplication1
         String EID;
         protected void Page_Load(object sender, EventArgs e)
         {
-           
+            if(!Page.IsPostBack)
+            {
+                if (Session["userinfo"] == null)
+                {
+                    Response.Redirect("Home.aspx");
+                }
+                else
+                {
+                    ((Label)this.Master.FindControl("Lb_Title")).Text = "設定金鑰位置";
+                }
+            }
         }
 
         protected void Button1_Click(object sender, EventArgs e)
@@ -33,7 +43,7 @@ namespace WebApplication1
                 cmd.Parameters.AddWithValue("@KeyAddress", address);
                 cmd.Parameters.AddWithValue("@EID", EID);
                 cmd.ExecuteNonQuery();//執行命令
-                Response.Write("<script>alert('金鑰建立成功!');location.href='WaitProcess.aspx';</script>");
+                Response.Write("<script>alert('金鑰建立成功!');location.href='WaitDocument.aspx';</script>");
             }
         }
     }

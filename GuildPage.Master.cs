@@ -21,7 +21,7 @@ namespace WebApplication1
                 if (Session["userinfo"] is UserInfo)
                 {
                     tmpUserInfo = (UserInfo)Session["userinfo"];
-                    LinkButton2.Text = tmpUserInfo.Name;
+                    LinkButton2.Text = tmpUserInfo.Department+"/"+tmpUserInfo.position+"/"+tmpUserInfo.Name;
                 }
             }
         }

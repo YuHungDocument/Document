@@ -66,10 +66,12 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Detail.aspx" />
     <Content Include="goodpage.aspx" />
     <Content Include="GuildPage.Master" />
     <Content Include="HostDocument.aspx" />
     <Content Include="HostVote.aspx" />
+    <Content Include="KeyAddress.aspx" />
     <Content Include="WriteDocument.aspx" />
     <Content Include="WriteVote.aspx" />
     <None Include="packages.config" />
@@ -77,7 +79,6 @@
     <Content Include="ChangePermission.aspx" />
     <Content Include="DocumentDetail.aspx" />
     <Content Include="Home.aspx" />
-    <Content Include="KeyAddress.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="My97DatePicker\calendar.js" />
     <Content Include="My97DatePicker\lang\en.js" />
@@ -159,6 +160,13 @@
       <DependentUpon>ChangePermission.aspx</DependentUpon>
     </Compile>
     <Compile Include="DbHelper.cs" />
+    <Compile Include="Detail.aspx.cs">
+      <DependentUpon>Detail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Detail.aspx.designer.cs">
+      <DependentUpon>Detail.aspx</DependentUpon>
+    </Compile>
     <Compile Include="DocumentDetail.aspx.cs">
       <DependentUpon>DocumentDetail.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

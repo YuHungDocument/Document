@@ -258,7 +258,7 @@ namespace WebApplication1
             string searchingstr = "Select * From Fil Where EID='" + Lbl_EID.Text + "' and Type='投票'";
             string wherestr = null;
             string SID = Txt_SID.Text;
-            string Type = Ddl_Type.SelectedValue;
+            
             string Title = Txt_Title.Text;
             DataSet ds = new DataSet();
             SqlConnection scn = new SqlConnection();
@@ -300,11 +300,6 @@ namespace WebApplication1
             {
                 wherestr = wherestr + " and ( SID Like'%" + SID + "%')";
             }
-            if (Type != "--請選擇公文種類--")
-            {
-                wherestr = wherestr + " and (Type='" + Type + "')";
-            }
-
             if (!string.IsNullOrWhiteSpace(Txt_Title.Text))
             {
                 wherestr = wherestr + " and (Title Like'%" + Title + "%')";

@@ -20,7 +20,6 @@ namespace WebApplication1
         string txtKey;
         string txtIV;
         string txt_Ciphertext_Text;
-        string txt_Ciphertext_Title;
         string txt_Ciphertext_Proposition;
         string txt_Ciphertext_DocumentContent;
         string txt_PKmessage;
@@ -826,7 +825,7 @@ namespace WebApplication1
 
             }
             if (Ddp_Type.SelectedValue != "FT0"
-                && d1.Value != ""
+                && Ddl_Speed.SelectedValue != "--請選擇公文速別--"
                 && !string.IsNullOrWhiteSpace(Txt_Title.Text)
                 && !string.IsNullOrWhiteSpace(Txt_Text.Text)
                 )
@@ -834,7 +833,7 @@ namespace WebApplication1
                 using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
                 {
                     //SqlCommand cmd4 = new SqlCommand(@"update Fil set Fil.Name=Document.Name,Fil.DocumentContent=Document.DocumentContent,Fil.Extn=Document.Extn  from Document join Fil on Fil.SID=Document.SID");
-                    SqlCommand cmd3 = new SqlCommand(@"Insert INTO Fil(SID,EID,Date,DeadLine,Text,Title,Proposition,Type,YOS,AESkey,AESiv)VALUES(@SID,@EID,@Date,@DeadLine,@Text,@Title,@Proposition,@Type,@YOS,@AESkey,@AESiv)");
+                    SqlCommand cmd3 = new SqlCommand(@"Insert INTO Fil(SID,EID,Date,Speed,Text,Title,Proposition,Type,YOS,AESkey,AESiv)VALUES(@SID,@EID,@Date,@Speed,@Text,@Title,@Proposition,@Type,@YOS,@AESkey,@AESiv)");
                     cn2.Open();
                     cmd3.Connection = cn2;
                     //cmd4.Connection = cn2;
@@ -848,7 +847,7 @@ namespace WebApplication1
                     cmd3.Parameters.AddWithValue("@SID", SID);
                     cmd3.Parameters.AddWithValue("@EID", Lbl_EID.Text);
                     cmd3.Parameters.AddWithValue("@Date", Lbl_Date.Text);
-                    cmd3.Parameters.AddWithValue("@DeadLine", d1.Value);
+                    cmd3.Parameters.AddWithValue("@Speed", Ddl_Speed.SelectedValue);
                     cmd3.Parameters.AddWithValue("@Text", txt_Ciphertext_Text);
                     cmd3.Parameters.AddWithValue("@Title", Txt_Title.Text);
                     cmd3.Parameters.AddWithValue("@Proposition", txt_Ciphertext_Proposition);

@@ -30,24 +30,9 @@
         <div class="col-sm-12">
             擬辦：
             <br />
-            <asp:Label ID="Lbl_Proposition" runat="server"></asp:Label>
+            　　　<asp:Label ID="Lbl_Proposition" runat="server"></asp:Label>
             <br />
             <br />
-            <asp:Panel ID="Pel_Choose" runat="server" Visible="False">
-                您的投票選項為：<asp:Label ID="Lbl_Choose" runat="server"></asp:Label>
-            </asp:Panel>
-            <br />
-            <asp:Panel ID="Pel_selectwatch" runat="server" Visible="False">
-                <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" GridLines="None" Width="148px">
-                    <Columns>
-                        <asp:BoundField DataField="number" HeaderText="選項" />
-                        <asp:BoundField DataField="Vname" />
-                    </Columns>
-                </asp:GridView>
-                <br />
-                選擇選項：<asp:DropDownList ID="DropDownList1" runat="server">
-                </asp:DropDownList>
-            </asp:Panel>
         </div>
 
     </div>

@@ -334,7 +334,7 @@ namespace WebApplication1
                 string keyId = Menu.DataKeys[index].Value.ToString();
 
                 Session["keyId"] = keyId;
-                Response.Redirect("DocumentDetail.aspx");
+                Response.Redirect("Detail.aspx");
             }
         }
 

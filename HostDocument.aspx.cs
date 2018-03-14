@@ -238,7 +238,7 @@ namespace WebApplication1
             DataSet myds = new DataSet();
             sqlcon.Open();
             SqlDataAdapter myda = new SqlDataAdapter(sqlstr, sqlcon);
-            myda.Fill(myds, "Detail");
+            myda.Fill(myds, "Fil");
             Menu.DataSource = myds;
             myda.Fill(dt);
             Menu.DataBind();
@@ -313,7 +313,7 @@ namespace WebApplication1
             scmd.CommandText = searchingstr + wherestr + " order by SID desc";
             scmd.Parameters.AddWithValue("@EID", Lbl_EID.Text);
             SqlDataAdapter sda = new SqlDataAdapter(scmd);
-            sda.Fill(ds, "Detail");
+            sda.Fill(ds, "Fil");
             Menu.DataSource = ds;
             Menu.EmptyDataText = "查無此項目";
             sda.Fill(dt);

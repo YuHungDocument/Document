@@ -10,31 +10,28 @@ using System.Data;
 
 namespace WebApplication1
 {
-    public partial class WaitVote : System.Web.UI.Page
+    public partial class HostVote : System.Web.UI.Page
     {
         int index = 1;
         private DataTable dt;
         DbHelper tmpdbhelper = new DbHelper();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!Page.IsPostBack)
+            if (Session["userinfo"] == null)
             {
-                if (Session["userinfo"] == null)
+                Response.Redirect("Home.aspx");
+            }
+            else
+            {
+                ((LinkButton)this.Master.FindControl("Lb_Host")).BackColor = Color.White;
+                ((LinkButton)this.Master.FindControl("Lb_Host")).ForeColor = Color.Black;
+                ((Label)this.Master.FindControl("Lb_Title")).Text = "主辦投票";
+                UserInfo tmpUserInfo = null;
+                if (Session["userinfo"] is UserInfo)
                 {
-                    Response.Redirect("Home.aspx");
-                }
-                else
-                {
-                    ((LinkButton)this.Master.FindControl("Lb_WaitProcess")).BackColor = Color.White;
-                    ((LinkButton)this.Master.FindControl("Lb_WaitProcess")).ForeColor = Color.Black;
-                    ((Label)this.Master.FindControl("Lb_Title")).Text = "待處理投票";
-                    UserInfo tmpUserInfo = null;
-                    if (Session["userinfo"] is UserInfo)
-                    {
-                        tmpUserInfo = (UserInfo)Session["userinfo"];
-                        Lbl_EID.Text = tmpUserInfo.EID;
-                        bind();
-                    }
+                    tmpUserInfo = (UserInfo)Session["userinfo"];
+                    Lbl_EID.Text = tmpUserInfo.EID;
+                    bind();
                 }
             }
         }
@@ -43,7 +40,7 @@ namespace WebApplication1
         {
             dt = new DataTable();
 
-            string sqlstr = "Select Fil.Title,Fil.DeadLine,Fil.Date,Fil.SID From Fil Left join Detail On Fil.SID = Detail.SID Where Detail.EID = '" + Lbl_EID.Text + "' and Detail.look = 1 and Detail.sign = 0 and Fil.Type = '投票' order by SID desc";
+            string sqlstr = "Select * From Fil Where EID='" + Lbl_EID.Text + "' and Type='投票' order by SID desc";
 
             SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
             SqlCommand cmd = new SqlCommand(sqlstr, sqlcon);
@@ -51,7 +48,7 @@ namespace WebApplication1
             sqlcon.Open();
             SqlDataAdapter myda = new SqlDataAdapter(sqlstr, sqlcon);
 
-            myda.Fill(myds, "Detail");
+            myda.Fill(myds, "Fil");
 
             Menu.DataSource = myds;
             Menu.DataBind();
@@ -70,11 +67,11 @@ namespace WebApplication1
             string sSort = string.Empty;
             if (pSortDirection == SortDirection.Ascending)
             {
-                sSort = pSortExpression;
+                sSort = string.Format("{0} {1}", pSortExpression, "DESC");
             }
             else
             {
-                sSort = string.Format("{0} {1}", pSortExpression, "DESC");
+                sSort = string.Format("{0} {1}", pSortExpression, "ASC");
             }
 
             DataView dv = _dt.DefaultView;
@@ -235,13 +232,13 @@ namespace WebApplication1
         public void bind()
         {
             dt = new DataTable();
-            string sqlstr = "Select Fil.Title,Fil.DeadLine,Fil.Date,Fil.SID From Fil Left join Detail On Fil.SID=Detail.SID Where Detail.EID='" + Lbl_EID.Text + "' and Detail.look=1 and Detail.sign=0 and Fil.Type='投票' order by SID desc";
+            string sqlstr = "Select * From Fil Where EID='" + Lbl_EID.Text + "' and Type='投票' order by SID desc";
             SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
             SqlCommand cmd = new SqlCommand(sqlstr, sqlcon);
             DataSet myds = new DataSet();
             sqlcon.Open();
             SqlDataAdapter myda = new SqlDataAdapter(sqlstr, sqlcon);
-            myda.Fill(myds, "Detail");
+            myda.Fill(myds, "Fil");
             Menu.DataSource = myds;
             myda.Fill(dt);
             Menu.DataBind();
@@ -258,9 +255,10 @@ namespace WebApplication1
             string date2 = Request.Form["d2"];
             string date3 = Request.Form["d3"];
             string date4 = Request.Form["d4"];
-            string searchingstr = "Select Fil.Title,Fil.DeadLine,Fil.Date,Fil.SID From Fil Left join Detail On Fil.SID=Detail.SID Where Detail.EID=@EID and Detail.look=1 and Detail.sign=0 and Fil.Type='投票'";
+            string searchingstr = "Select * From Fil Where EID='" + Lbl_EID.Text + "' and Type='投票'";
             string wherestr = null;
-            string SID = Txt_SID.Text;            
+            string SID = Txt_SID.Text;
+            string Type = Ddl_Type.SelectedValue;
             string Title = Txt_Title.Text;
             DataSet ds = new DataSet();
             SqlConnection scn = new SqlConnection();
@@ -302,6 +300,10 @@ namespace WebApplication1
             {
                 wherestr = wherestr + " and ( SID Like'%" + SID + "%')";
             }
+            if (Type != "--請選擇公文種類--")
+            {
+                wherestr = wherestr + " and (Type='" + Type + "')";
+            }
 
             if (!string.IsNullOrWhiteSpace(Txt_Title.Text))
             {
@@ -311,7 +313,7 @@ namespace WebApplication1
             scmd.CommandText = searchingstr + wherestr + " order by SID desc";
             scmd.Parameters.AddWithValue("@EID", Lbl_EID.Text);
             SqlDataAdapter sda = new SqlDataAdapter(scmd);
-            sda.Fill(ds, "Detail");
+            sda.Fill(ds, "Fil");
             Menu.DataSource = ds;
             Menu.EmptyDataText = "查無此項目";
             sda.Fill(dt);
@@ -356,7 +358,7 @@ namespace WebApplication1
                     {
                         if (dr.Read())
                         {
-                            LB.ToolTip = "文號：" + dr["SID"].ToString();
+                            LB.ToolTip = "公文文號：" + dr["SID"].ToString();
                             using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
                             {
                                 cn2.Open();
@@ -372,7 +374,6 @@ namespace WebApplication1
                                     }
                                 }
                             }
-
                         }
                     }
                 }

@@ -74,7 +74,7 @@
     <div class="container">
         <table class="nav-justified" style="height: 336px">
             <tr>
-                <td runat="server" style="background-color: #FFFFFF;" valign="top" id="Main">
+                <td runat="server"  valign="top" id="Main">
                     <table class="nav-justified" style="width: 900px; height: 110px">
                         <tr>
                             <td class="text-left" style="width: 225px; height: 30px">文　　號：<asp:Label ID="Lbl_SID" runat="server"></asp:Label>

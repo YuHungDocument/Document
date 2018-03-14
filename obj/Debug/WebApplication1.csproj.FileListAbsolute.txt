@@ -205,3 +205,12 @@ D:\程式區\簡化版專題03132314(家誠)\簡化版專題03102257\簡化版�
 D:\程式區\簡化版專題03132314(家誠)\簡化版專題03102257\簡化版專題\專題程式簡化版\WebApplication1\obj\Debug\WebApplication1.csproj.CoreCompileInputs.cache
 D:\程式區\簡化版專題03132314(家誠)\簡化版專題03102257\簡化版專題\專題程式簡化版\WebApplication1\obj\Debug\WebApplication1.dll
 D:\程式區\簡化版專題03132314(家誠)\簡化版專題03102257\簡化版專題\專題程式簡化版\WebApplication1\obj\Debug\WebApplication1.pdb
+C:\Users\admin\Desktop\project\WebApplication1\bin\WebApplication1.dll.config
+C:\Users\admin\Desktop\project\WebApplication1\bin\WebApplication1.dll
+C:\Users\admin\Desktop\project\WebApplication1\bin\WebApplication1.pdb
+C:\Users\admin\Desktop\project\WebApplication1\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\admin\Desktop\project\WebApplication1\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\admin\Desktop\project\WebApplication1\obj\Debug\WebApplication1.csprojResolveAssemblyReference.cache
+C:\Users\admin\Desktop\project\WebApplication1\obj\Debug\WebApplication1.csproj.CoreCompileInputs.cache
+C:\Users\admin\Desktop\project\WebApplication1\obj\Debug\WebApplication1.dll
+C:\Users\admin\Desktop\project\WebApplication1\obj\Debug\WebApplication1.pdb

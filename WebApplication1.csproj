@@ -69,6 +69,7 @@
     <Content Include="goodpage.aspx" />
     <Content Include="GuildPage.Master" />
     <Content Include="HostDocument.aspx" />
+    <Content Include="HostVote.aspx" />
     <Content Include="WriteDocument.aspx" />
     <Content Include="WriteVote.aspx" />
     <None Include="packages.config" />
@@ -192,6 +193,13 @@
     </Compile>
     <Compile Include="HostDocument.aspx.designer.cs">
       <DependentUpon>HostDocument.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HostVote.aspx.cs">
+      <DependentUpon>HostVote.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HostVote.aspx.designer.cs">
+      <DependentUpon>HostVote.aspx</DependentUpon>
     </Compile>
     <Compile Include="KeyAddress.aspx.cs">
       <DependentUpon>KeyAddress.aspx</DependentUpon>

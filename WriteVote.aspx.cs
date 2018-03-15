@@ -39,7 +39,7 @@ namespace WebApplication1
                 {
                     ((LinkButton)this.Master.FindControl("Lb_Write")).BackColor = Color.White;
                     ((LinkButton)this.Master.FindControl("Lb_Write")).ForeColor = Color.Black;
-                    ((Label)this.Master.FindControl("Lb_Title")).Text = "撰寫公文";
+                    ((Label)this.Master.FindControl("Lb_Title")).Text = "撰寫投票";
                     if (Session["userinfo"] is UserInfo)
                     {
                         tmpUserInfo = (UserInfo)Session["userinfo"];
@@ -824,8 +824,6 @@ namespace WebApplication1
         protected void Btn_Save_Click(object sender, EventArgs e)
         {
             string SID = Lbl_SID.Text;
-            if (Ddp_Type.SelectedValue == "投票")
-            {
                 using (SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr))
                 {
                     sqlcon.Open();
@@ -845,9 +843,8 @@ namespace WebApplication1
                     }
                 }
 
-            }
-            if (Ddp_Type.SelectedValue != "FT0"
-                && Ddl_Speed.SelectedValue != "--請選擇公文速別--"
+            
+            if (!string.IsNullOrWhiteSpace(Request.Form["d1"])
                 && !string.IsNullOrWhiteSpace(Txt_Title.Text)
                 && !string.IsNullOrWhiteSpace(Txt_Text.Text)
                 )
@@ -855,7 +852,7 @@ namespace WebApplication1
                 using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
                 {
                     //SqlCommand cmd4 = new SqlCommand(@"update Fil set Fil.Name=Document.Name,Fil.DocumentContent=Document.DocumentContent,Fil.Extn=Document.Extn  from Document join Fil on Fil.SID=Document.SID");
-                    SqlCommand cmd3 = new SqlCommand(@"Insert INTO Fil(SID,EID,Date,Speed,Text,Title,Proposition,Type,YOS,AESkey,AESiv)VALUES(@SID,@EID,@Date,@Speed,@Text,@Title,@Proposition,@Type,@YOS,@AESkey,@AESiv)");
+                    SqlCommand cmd3 = new SqlCommand(@"Insert INTO Fil(SID,EID,Date,DeadLine,Text,Title,Proposition,Type,YOS,AESkey,AESiv)VALUES(@SID,@EID,@Date,@DeadLine,@Text,@Title,@Proposition,@Type,@YOS,@AESkey,@AESiv)");
                     cn2.Open();
                     cmd3.Connection = cn2;
                     //cmd4.Connection = cn2;
@@ -869,11 +866,11 @@ namespace WebApplication1
                     cmd3.Parameters.AddWithValue("@SID", SID);
                     cmd3.Parameters.AddWithValue("@EID", Lbl_EID.Text);
                     cmd3.Parameters.AddWithValue("@Date", Lbl_Date.Text);
-                    cmd3.Parameters.AddWithValue("@Speed", Ddl_Speed.SelectedValue);
+                    cmd3.Parameters.AddWithValue("@DeadLine", Request.Form["d1"]);
                     cmd3.Parameters.AddWithValue("@Text", txt_Ciphertext_Text);
                     cmd3.Parameters.AddWithValue("@Title", Txt_Title.Text);
                     cmd3.Parameters.AddWithValue("@Proposition", txt_Ciphertext_Proposition);
-                    cmd3.Parameters.AddWithValue("@Type", Ddp_Type.SelectedValue);
+                    cmd3.Parameters.AddWithValue("@Type","投票");
                     cmd3.Parameters.AddWithValue("@YOS", Ddp_YOS.SelectedValue);
                     cmd3.Parameters.AddWithValue("@AESkey", txtKey);
                     cmd3.Parameters.AddWithValue("@AESiv", txtIV);
@@ -940,8 +937,6 @@ namespace WebApplication1
                             using (SqlConnection cnsavefile = new SqlConnection(tmpdbhelper.DB_CnStr))
                             {
                                 cn3.Open();
-
-
                                 SqlCommand cmdsavefile = new SqlCommand(@"Insert INTO Document(FNO,Name,DocumentContent,Extn,SID)SELECT FNO,Name,@DocumentContent,Extn,SID FROM tempDocument Where SID=@SID ");
                                 cnsavefile.Open();
                                 SqlCommand cmddeletefile = new SqlCommand(@"DELETE FROM tempDocument WHERE SID=@SID");

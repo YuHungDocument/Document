@@ -146,6 +146,7 @@
                         </tr>
                         <tr>
                             <td colspan="4" style="height: 22px">說　　明：<asp:TextBox ID="Txt_Text" class="form-control" runat="server" Height="99px" TextMode="MultiLine" Width="784px"></asp:TextBox>
+
                             </td>
                         </tr>
                         <tr>

@@ -146,27 +146,6 @@
                         </tr>
                         <tr>
                             <td colspan="4" style="height: 22px">說　　明：<asp:TextBox ID="Txt_Text" class="form-control" runat="server" Height="99px" TextMode="MultiLine" Width="784px"></asp:TextBox>
-                                <asp:UpdatePanel ID="UpdatePanel2" runat="server">
-                                    <ContentTemplate>
-                                        <asp:GridView ID="GridView5" runat="server" AutoGenerateColumns="False" Visible="False">
-                                            <Columns>
-                                                <asp:TemplateField HeaderText="選項">
-                                                    <HeaderTemplate>
-                                                        選項<asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click">增加選項</asp:LinkButton>
-                                                    </HeaderTemplate>
-                                                    <ItemTemplate>
-                                                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("number") %>'></asp:Label>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="選項內容">
-                                                    <ItemTemplate>
-                                                        <asp:TextBox ID="Txt_content" runat="server" DataField="Vname"></asp:TextBox>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                            </Columns>
-                                        </asp:GridView>
-                                    </ContentTemplate>
-                                </asp:UpdatePanel>
                             </td>
                         </tr>
                         <tr>

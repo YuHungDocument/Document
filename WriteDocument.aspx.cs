@@ -311,26 +311,6 @@ namespace WebApplication1
 
 
         }
-
-        public void bind4()
-        {
-            string sqlstr = "select * from Vote Where VID='" + Session["VID"].ToString() + "'";
-
-            SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
-            SqlCommand cmd = new SqlCommand(sqlstr, sqlcon);
-            DataSet myds = new DataSet();
-            sqlcon.Open();
-            SqlDataAdapter myda = new SqlDataAdapter(sqlstr, sqlcon);
-
-            myda.Fill(myds, "Vote");
-
-            GridView5.DataSource = myds;
-            GridView5.DataBind();
-            sqlcon.Close();
-
-
-        }
-
         protected void btn_upload_Click(object sender, EventArgs e)
         {
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
@@ -401,6 +381,7 @@ namespace WebApplication1
             }
 
         }
+        #region 增加一列
         protected void Button1_Click(object sender, EventArgs e)
         {
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
@@ -433,7 +414,8 @@ namespace WebApplication1
                 }
             }
         }
-
+        #endregion
+        #region 增加十列
         protected void Button2_Click(object sender, EventArgs e)
         {
             for (int i = 1; i <= 10; i++)
@@ -469,6 +451,7 @@ namespace WebApplication1
                 }
             }
         }
+#endregion
 
         protected void Btn_Newgroup_Click(object sender, EventArgs e)
         {
@@ -824,28 +807,6 @@ namespace WebApplication1
         protected void Btn_Save_Click(object sender, EventArgs e)
         {
             string SID = Lbl_SID.Text;
-            if (Ddp_Type.SelectedValue == "投票")
-            {
-                using (SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr))
-                {
-                    sqlcon.Open();
-                    for (int i = 0; i < GridView5.Rows.Count; i++)
-                    {
-                        string Vname = ((TextBox)GridView5.Rows[i].FindControl("Txt_content")).Text.Trim();
-                        string number = ((Label)GridView5.Rows[i].FindControl("Label1")).Text.Trim();
-                        if (Vname != "")
-                        {
-                            SqlCommand sqlcmd = new SqlCommand("Update Vote Set Vname=@Vname where SID=@SID and number=@number");
-                            sqlcmd.Connection = sqlcon;
-                            sqlcmd.Parameters.AddWithValue("@SID", SID);
-                            sqlcmd.Parameters.AddWithValue("@number", number);
-                            sqlcmd.Parameters.AddWithValue("@Vname", Vname);
-                            sqlcmd.ExecuteNonQuery();
-                        }
-                    }
-                }
-
-            }
             if (Ddp_Type.SelectedValue != "FT0"
                 && Ddl_Speed.SelectedValue != "--請選擇公文速別--"
                 && !string.IsNullOrWhiteSpace(Txt_Title.Text)
@@ -884,8 +845,6 @@ namespace WebApplication1
                 {
                     for (int i = 0; i < GridView2.Rows.Count; i++)
                     {
-
-
                         string Lvl = ((TextBox)GridView2.Rows[i].FindControl("TextBox2")).Text.Trim();
                         string EID = ((TextBox)GridView2.Rows[i].FindControl("TextBox3")).Text.Trim();
                         string Department = ((TextBox)GridView2.Rows[i].FindControl("TextBox4")).Text.Trim();
@@ -940,8 +899,6 @@ namespace WebApplication1
                             using (SqlConnection cnsavefile = new SqlConnection(tmpdbhelper.DB_CnStr))
                             {
                                 cn3.Open();
-
-
                                 SqlCommand cmdsavefile = new SqlCommand(@"Insert INTO Document(FNO,Name,DocumentContent,Extn,SID)SELECT FNO,Name,@DocumentContent,Extn,SID FROM tempDocument Where SID=@SID ");
                                 cnsavefile.Open();
                                 SqlCommand cmddeletefile = new SqlCommand(@"DELETE FROM tempDocument WHERE SID=@SID");
@@ -1011,7 +968,7 @@ namespace WebApplication1
                 cmd.Parameters.AddWithValue("@number", Session["number"].ToString());
                 cmd.Connection = cn;
                 cmd.ExecuteNonQuery();
-                bind4();
+                
             }
         }
     }

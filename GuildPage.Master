@@ -489,9 +489,6 @@
                     <li>
                         <asp:LinkButton ToolTip="個人資料" ID="LinkButton2" runat="server"><span class="glyphicon glyphicon-user"></span></asp:LinkButton>
                     </li>
-                    <li>
-                        <asp:LinkButton ToolTip="後台管理" ID="LinkButton3" runat="server"><span class="glyphicon glyphicon-user"></span></asp:LinkButton>
-                    </li>
                 </ul>
             </div>
         </div>

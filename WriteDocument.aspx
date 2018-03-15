@@ -77,7 +77,7 @@
                         <tr>
                             <td class="text-left" style="width: 225px; height: 30px">文　　號：<asp:Label ID="Lbl_SID" runat="server"></asp:Label>
                             </td>
-                            <td style="width: 300px; height: 30px; padding-top: 5px;">公文類型：<asp:DropDownList ID="Ddp_Type" runat="server" DataSourceID="SqlDataSource1" DataTextField="TN" DataValueField="TN" Height="30px" Width="170px" OnSelectedIndexChanged="Ddp_Type_SelectedIndexChanged" AutoPostBack="True">
+                            <td style="width: 300px; height: 30px; padding-top: 5px;">公文類型：<asp:DropDownList ID="Ddp_Type" runat="server" DataSourceID="SqlDataSource1" DataTextField="TN" DataValueField="TN" Height="30px" Width="170px">
                             </asp:DropDownList>
                                 <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString2 %>" SelectCommand="SELECT [TN] FROM [TypeGroup] WHERE (([Tp] = @Tp) AND ([TID] &lt;&gt; @TID))">
                                     <SelectParameters>
@@ -210,7 +210,7 @@
                                                     <asp:BoundField DataField="SID" HeaderText="序列" Visible="false" />
                                                     <asp:TemplateField HeaderText="層級">
                                                         <ItemTemplate>
-                                                            <asp:TextBox DataField="Lvl" ID="TextBox2" runat="server" OnTextChanged="TextBox2_TextChanged"></asp:TextBox>
+                                                            <asp:TextBox DataField="Lvl" ID="TextBox2" runat="server" OnTextChanged="TextBox2_TextChanged" TextMode="Number"></asp:TextBox>
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
                                                     <asp:TemplateField HeaderText="人員編號">

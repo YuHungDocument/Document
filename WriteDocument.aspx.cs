@@ -822,39 +822,6 @@ namespace WebApplication1
             return dv;
         }
 
-        protected void Ddp_Type_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Session["VID"] = DateTime.Now.ToString("yyyyMMddhhmmss");
-            if (Ddp_Type.SelectedValue == "投票")
-            {
-                Session["number"] = 1;
-                using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
-                {
-                    cn.Open();
-                    SqlCommand cmd = new SqlCommand("Insert Into Vote(SID,VID,number) Values(@SID,@VID,@number)");
-                    cmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
-                    cmd.Parameters.AddWithValue("@VID", Session["VID"].ToString());
-                    cmd.Parameters.AddWithValue("@number", Session["number"].ToString());
-                    cmd.Connection = cn;
-                    cmd.ExecuteNonQuery();
-                    bind4();
-                }
-                GridView5.Visible = true;
-            }
-            else
-            {
-                using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
-                {
-                    cn.Open();
-                    SqlCommand cmd = new SqlCommand("DELETE FROM Vote WHERE SID = @SID");
-                    cmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
-                    cmd.Connection = cn;
-                    cmd.ExecuteNonQuery();
-                    bind4();
-                }
-            }
-        }
-
         protected void Btn_Save_Click(object sender, EventArgs e)
         {
             string SID = Lbl_SID.Text;

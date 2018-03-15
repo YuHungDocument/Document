@@ -23,7 +23,7 @@ namespace WebApplication1
                 if (Session["userinfo"] is UserInfo)
                 {
                     tmpUserInfo = (UserInfo)Session["userinfo"];
-                    LinkButton2.Text = tmpUserInfo.Name;
+                    Lb_UserInfo.Text = tmpUserInfo.Name;
                     //判斷代理期限是否失效
                     using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
                     {

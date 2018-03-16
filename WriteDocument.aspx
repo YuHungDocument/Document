@@ -208,7 +208,7 @@
                                                             <asp:TextBox DataField="Name" ID="TextBox5" runat="server" AutoPostBack="True" OnTextChanged="TextBox5_TextChanged"></asp:TextBox>
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
-                                                    <asp:TemplateField HeaderText="簽核模式">
+                                                    <asp:TemplateField HeaderText="需簽章">
                                                         <ItemTemplate>
                                                             <asp:DropDownList DataField="status" ID="Ddl_status" runat="server" OnSelectedIndexChanged="Ddl_status_SelectedIndexChanged">
                                                             </asp:DropDownList>

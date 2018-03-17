@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/GuildPage.Master" AutoEventWireup="true" CodeBehind="WriteDocument.aspx.cs" Inherits="WebApplication1.WriteDocument" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-        <script src="My97DatePicker/WdatePicker.js"></script>
+    <script src="My97DatePicker/WdatePicker.js"></script>
     <script type="text/javascript">
         function SelectAllCheckboxes(spanChk) {
             elm = document.forms[0];
@@ -12,9 +13,189 @@
             }
         }
     </script>
+    <style type="text/css">
+        .auto-style1 {
+            width: 100%;
+            border: 1px solid #F0AD4E;
+        }
+
+        .auto-style4 {
+            height: 20px;
+        }
+        .auto-style5 {
+            width: 127px;
+        }
+        .auto-style6 {
+            height: 20px;
+            width: 127px;
+        }
+        .auto-style7 {
+            height: 20px;
+            width: 268px;
+        }
+        .auto-style8 {
+            height: 20px;
+            width: 82px;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+    <asp:Label ID="Lbl_EID" runat="server" Visible="False"></asp:Label>
+    <br />
+    <table class="auto-style1">
+        <tr>
+            <td style="background-color: #FFCC99; font-size: large;" class="auto-style6">文號</td>
+            <td class="auto-style7" style="font-size: large;">
+                <asp:Label ID="Lbl_SID" runat="server"></asp:Label>
+            </td>
+            <td class="auto-style8" style="background-color: #FFCC99; font-size: large;">發布日期</td>
+            <td class="auto-style4" style="font-size: large;">
+                <asp:Label ID="Lbl_Date" runat="server"></asp:Label>
+            </td>
+        </tr>
+        <tr>
+            <td style="background-color: #FFCC99; font-size: large;" class="auto-style5">&nbsp;</td>
+            <td class="auto-style7" style="font-size: large;">
+                &nbsp;</td>
+            <td class="auto-style8" style="background-color: #FFCC99; font-size: large;">&nbsp;</td>
+            <td class="auto-style4" style="font-size: large;">
+                &nbsp;</td>
+        </tr>
+        <tr>
+            <td style="background-color: #FFCC99; font-size: large;" class="auto-style5">發布人</td>
+            <td class="auto-style7" style="font-size: large;">
+                <asp:Label ID="Lbl_Sender" runat="server"></asp:Label>
+            </td>
+            <td class="auto-style8" style="background-color: #FFCC99; font-size: large;">速別</td>
+            <td class="auto-style4" style="font-size: large;">
+                <asp:DropDownList ID="Ddl_Speed" runat="server">
+                    <asp:ListItem>--請選擇速別--</asp:ListItem>
+                    <asp:ListItem>普通</asp:ListItem>
+                    <asp:ListItem>急件</asp:ListItem>
+                    <asp:ListItem>超急件</asp:ListItem>
+                </asp:DropDownList>
+            </td>
+        </tr>
+        <tr>
+            <td style="background-color: #FFCC99; font-size: large;" class="auto-style5">&nbsp;</td>
+            <td class="auto-style7" style="font-size: large;">
+                &nbsp;</td>
+            <td class="auto-style8">&nbsp;</td>
+            <td class="auto-style4" style="font-size: large;">
+                &nbsp;</td>
+        </tr>
+        <tr>
+            <td style="background-color: #FFCC99; font-size: large;" class="auto-style6">公文類型</td>
+            <td style="font-size: large;" class="auto-style7">
+                <asp:DropDownList ID="Ddp_Type" runat="server" DataSourceID="SqlDataSource1" DataTextField="TN" DataValueField="TN" Height="30px" Width="170px">
+                </asp:DropDownList>
+            </td>
+            <td class="auto-style8">&nbsp;</td>
+            <td style="font-size: large;" class="auto-style4">
+                &nbsp;</td>
+        </tr>
+        <tr>
+            <td style="background-color: #FFCC99; font-size: large;" class="auto-style6">&nbsp;</td>
+            <td style="font-size: large;" class="auto-style7">
+                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString2 %>" SelectCommand="SELECT [TN] FROM [TypeGroup] WHERE (([Tp] = @Tp) AND ([TID] &lt;&gt; @TID))">
+                    <SelectParameters>
+                        <asp:Parameter DefaultValue="FT" Name="Tp" Type="String" />
+                        <asp:Parameter DefaultValue="6" Name="TID" Type="Int32" />
+                    </SelectParameters>
+                </asp:SqlDataSource>
+            </td>
+            <td class="auto-style8">&nbsp;</td>
+            <td style="font-size: large;" class="auto-style4">
+                &nbsp;</td>
+        </tr>
+        <tr>
+            <td style="background-color: #FFCC99; font-size: large;" class="auto-style6">保存期限</td>
+            <td style="font-size: large;" class="auto-style4" colspan="3">
+                <asp:DropDownList ID="Ddp_YOS" runat="server" Width="70px">
+                    <asp:ListItem>1</asp:ListItem>
+                    <asp:ListItem>2</asp:ListItem>
+                    <asp:ListItem>3</asp:ListItem>
+                    <asp:ListItem>4</asp:ListItem>
+                    <asp:ListItem>5</asp:ListItem>
+                    <asp:ListItem>6</asp:ListItem>
+                    <asp:ListItem>7</asp:ListItem>
+                    <asp:ListItem>8</asp:ListItem>
+                    <asp:ListItem>9</asp:ListItem>
+                    <asp:ListItem>10</asp:ListItem>
+                    <asp:ListItem>15</asp:ListItem>
+                    <asp:ListItem>20</asp:ListItem>
+                    <asp:ListItem>永久</asp:ListItem>
+                </asp:DropDownList>
+                年</td>
+        </tr>
+        <tr>
+            <td style="background-color: #FFCC99; font-size: large;" class="auto-style6">&nbsp;</td>
+            <td style="font-size: large;" class="auto-style4" colspan="3">
+                &nbsp;</td>
+        </tr>
+        <tr>
+            <td style="background-color: #FFCC99; font-size: large;" class="auto-style6">附　　件</td>
+            <td style="font-size: large;" class="auto-style4" colspan="3">
+                                <asp:FileUpload runat="server" ID="fu_upload" />
+                                <br />
+                            <asp:Button Text="上傳檔案"
+                                ID="btn_upload" runat="server" OnClick="btn_upload_Click" />
+                                <br />
+                            <asp:GridView runat="server" ID="gv_showTempFile" AutoGenerateColumns="false" OnRowDeleting="gv_RowDeleting"
+                                DataKeyNames="FNO">
+                                <Columns>
+                                    <asp:TemplateField HeaderText="已上傳的檔案">
+                                        <ItemTemplate>
+                                            <asp:LinkButton ID="btn_filename" OnClick="OpenDoc" runat="server" Text='<%# Eval("Name") %>'></asp:LinkButton>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="刪除">
+                                        <ItemTemplate>
+                                            <asp:LinkButton ID="lbDelete" runat="server" CommandName="Delete"
+                                                OnClientClick="javascript:return confirm('確定刪除?')">刪除</asp:LinkButton>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                </Columns>
+                            </asp:GridView>
+                        </td>
+        </tr>
+        <tr>
+            <td style="background-color: #FFCC99; font-size: large;" class="auto-style6">&nbsp;</td>
+            <td style="font-size: large;" class="auto-style4" colspan="3">
+                &nbsp;</td>
+        </tr>
+        <tr>
+            <td style="background-color: #FFCC99; font-size: large;" class="auto-style6">主　　旨</td>
+            <td style="font-size: large;" class="auto-style4" colspan="3">
+                <asp:TextBox class="form-control" ID="Txt_Title" runat="server" Width="264px"></asp:TextBox>
+                        </td>
+        </tr>
+        <tr>
+            <td style="background-color: #FFCC99; font-size: large;" class="auto-style6">&nbsp;</td>
+            <td style="font-size: large;" class="auto-style4" colspan="3">
+                &nbsp;</td>
+        </tr>
+        <tr>
+            <td style="background-color: #FFCC99; font-size: large;" class="auto-style6">說　　明</td>
+            <td style="font-size: large;" class="auto-style4" colspan="3">
+                <asp:TextBox ID="Txt_Text" class="form-control" runat="server" Height="99px" TextMode="MultiLine" ></asp:TextBox>
+
+                        </td>
+        </tr>
+        <tr>
+            <td style="background-color: #FFCC99; font-size: large;" class="auto-style6">&nbsp;</td>
+            <td style="font-size: large;" class="auto-style4" colspan="3">
+                &nbsp;</td>
+        </tr>
+        <tr>
+            <td style="background-color: #FFCC99; font-size: large;" class="auto-style6">擬　　辦</td>
+            <td style="font-size: large;" class="auto-style4" colspan="3">
+                <asp:TextBox ID="txt_Proposition" class="form-control" runat="server" Height="100px" TextMode="MultiLine" ></asp:TextBox>
+
+                        </td>
+        </tr>
+    </table>
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="top: 18%;">
         <div class="container" style="width: 500px; height: 500px">
@@ -70,163 +251,89 @@
             <!-- Modal content-->
         </div>
     </div>
-        <table class="nav-justified" style="height: 336px">
-            <tr>
-                <td runat="server" valign="top" id="Main">
-                    <table class="nav-justified" style="width: 900px; height: 110px">
-                        <tr>
-                            <td class="text-left" style="width: 225px; height: 30px">文　　號：<asp:Label ID="Lbl_SID" runat="server"></asp:Label>
-                            </td>
-                            <td style="width: 300px; height: 30px; padding-top: 5px;">公文類型：<asp:DropDownList ID="Ddp_Type" runat="server" DataSourceID="SqlDataSource1" DataTextField="TN" DataValueField="TN" Height="30px" Width="170px">
-                            </asp:DropDownList>
-                                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString2 %>" SelectCommand="SELECT [TN] FROM [TypeGroup] WHERE (([Tp] = @Tp) AND ([TID] &lt;&gt; @TID))">
-                                    <SelectParameters>
-                                        <asp:Parameter DefaultValue="FT" Name="Tp" Type="String" />
-                                        <asp:Parameter DefaultValue="6" Name="TID" Type="Int32" />
-                                    </SelectParameters>
-                                </asp:SqlDataSource>
-                            </td>
-                            <td style="height: 30px" colspan="2">發文日期：<asp:Label ID="Lbl_Date" runat="server"></asp:Label>
-                                <asp:Label ID="Lbl_EID" runat="server" Text="Label" Visible="False"></asp:Label>
-                                &nbsp; 速別：<asp:DropDownList ID="Ddl_Speed" runat="server">
-                                    <asp:ListItem>--請選擇速別--</asp:ListItem>
-                                    <asp:ListItem>普通</asp:ListItem>
-                                    <asp:ListItem>急件</asp:ListItem>
-                                    <asp:ListItem>超急件</asp:ListItem>
-                                </asp:DropDownList>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 225px; height: 56px">保存期限：<span style="font-size: 16px; font-family: DFKai-SB"><asp:DropDownList ID="Ddp_YOS" runat="server" Height="30px" Width="70px">
-                                <asp:ListItem>1</asp:ListItem>
-                                <asp:ListItem>2</asp:ListItem>
-                                <asp:ListItem>3</asp:ListItem>
-                                <asp:ListItem>4</asp:ListItem>
-                                <asp:ListItem>5</asp:ListItem>
-                                <asp:ListItem>6</asp:ListItem>
-                                <asp:ListItem>7</asp:ListItem>
-                                <asp:ListItem>8</asp:ListItem>
-                                <asp:ListItem>9</asp:ListItem>
-                                <asp:ListItem>10</asp:ListItem>
-                                <asp:ListItem>15</asp:ListItem>
-                                <asp:ListItem>20</asp:ListItem>
-                                <asp:ListItem>永久</asp:ListItem>
-                            </asp:DropDownList>
-                                年</span></td>
-                            <td style="width: 225px; height: 56px">發文者　：<asp:Label ID="Lbl_Sender" runat="server"></asp:Label>
-                            </td>
-                            <td style="width: 225px; height: 56px">附　　件：
-                                <asp:FileUpload runat="server" ID="fu_upload" />
-                                <asp:Button Text="上傳檔案"
-                                    ID="btn_upload" runat="server" OnClick="btn_upload_Click" />
+    <table class="nav-justified" style="height: 336px">
+        <tr>
+            <td runat="server" valign="top" id="Main">
+                <table class="nav-justified">
+                    <tr>
+                        <td style="height: 243px">
+                            <div style="text-align: left">
+                                <asp:Label ID="Label2" runat="server" Text="輸入群組名稱："></asp:Label>
+                                <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+
+                                &nbsp;<asp:Button ID="Btn_Newgroup" runat="server" OnClick="Btn_Newgroup_Click" Text="新增至群組" />
+                                &nbsp;<asp:Button ID="Btn_editgroup" runat="server" OnClick="Btn_editgroup_Click" Text="修改此群組" />
+
                                 <br />
-                            </td>
-                            <td style="width: 225px; height: 56px" class="text-center">附件上傳佇列：<br />
-                                <asp:GridView runat="server" ID="gv_showTempFile" AutoGenerateColumns="false" OnRowDeleting="gv_RowDeleting"
-                                    DataKeyNames="FNO">
-                                    <Columns>
-                                        <asp:TemplateField HeaderText="已上傳的檔案">
-                                            <ItemTemplate>
-                                                <asp:LinkButton ID="btn_filename" OnClick="OpenDoc" runat="server" Text='<%# Eval("Name") %>'></asp:LinkButton>
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField HeaderText="刪除">
-                                            <ItemTemplate>
-                                                <asp:LinkButton ID="lbDelete" runat="server" CommandName="Delete"
-                                                    OnClientClick="javascript:return confirm('確定刪除?')">刪除</asp:LinkButton>
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                    </Columns>
-                                </asp:GridView>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="4" style="height: 22px">主　　旨：<asp:TextBox class="form-control" ID="Txt_Title" runat="server" TextMode="MultiLine" Width="785px"></asp:TextBox>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="4" style="height: 22px">說　　明：<asp:TextBox ID="Txt_Text" class="form-control" runat="server" Height="99px" TextMode="MultiLine" Width="784px"></asp:TextBox>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="4" style="height: 22px">擬　　辦：<asp:TextBox ID="txt_Proposition" class="form-control" runat="server" Height="100px" TextMode="MultiLine" Width="785px"></asp:TextBox>
-                            </td>
-                        </tr>
-                    </table>
-                    <table class="nav-justified">
-                        <tr>
-                            <td style="height: 243px">
-                                <div style="text-align: left">
-
-
-
-                                    <asp:Label ID="Label2" runat="server" Text="輸入群組名稱："></asp:Label>
-                                    <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
-
-                                    &nbsp;<asp:Button ID="Btn_Newgroup" runat="server" OnClick="Btn_Newgroup_Click" Text="新增至群組" />
-                                    &nbsp;<asp:Button ID="Btn_editgroup" runat="server" OnClick="Btn_editgroup_Click" Text="修改此群組" />
-
-                                    <br />
-                                    <br />
-                                    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-                                        <ContentTemplate>
-                                            <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="增加1列" />
-                                            &nbsp;<asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="增加10列" />
-                                            &nbsp;
+                                <br />
+                                <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                                    <ContentTemplate>
+                                        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="增加1列" />
+                                        &nbsp;<asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="增加10列" />
+                                        &nbsp;
                                             <button type="button" id="Btn" runat="server" data-toggle="modal" data-target="#myModal">選擇群組</button>
 
 
-                                            <asp:Label ID="Lbl_GpName" runat="server" Text="Label" Visible="False"></asp:Label>
-                                            <br />
-                                            <br />
-                                            <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" OnRowDataBound="GridView2_RowDataBound">
-                                                <Columns>
-                                                    <asp:TemplateField HeaderText="排列" ShowHeader="False" Visible="False">
-                                                        <ItemTemplate>
-                                                            <asp:Label ID="Label1" runat="server" Text='<%# Bind("ID") %>'></asp:Label>
-                                                        </ItemTemplate>
-                                                    </asp:TemplateField>
-                                                    <asp:BoundField DataField="SID" HeaderText="序列" Visible="false" />
-                                                    <asp:TemplateField HeaderText="層級">
-                                                        <ItemTemplate>
-                                                            <asp:TextBox DataField="Lvl" ID="TextBox2" runat="server" OnTextChanged="TextBox2_TextChanged" TextMode="Number"></asp:TextBox>
-                                                        </ItemTemplate>
-                                                    </asp:TemplateField>
-                                                    <asp:TemplateField HeaderText="人員編號">
-                                                        <ItemTemplate>
-                                                            <asp:TextBox DataField="EID" ID="TextBox3" runat="server" AutoPostBack="True" OnTextChanged="TextBox3_TextChanged"></asp:TextBox>
-                                                        </ItemTemplate>
-                                                    </asp:TemplateField>
-                                                    <asp:TemplateField HeaderText="部門">
-                                                        <ItemTemplate>
-                                                            <asp:TextBox DataField="Department" ID="TextBox4" runat="server"></asp:TextBox>
-                                                        </ItemTemplate>
-                                                    </asp:TemplateField>
-                                                    <asp:TemplateField HeaderText="員工姓名">
-                                                        <ItemTemplate>
-                                                            <asp:TextBox DataField="Name" ID="TextBox5" runat="server" AutoPostBack="True" OnTextChanged="TextBox5_TextChanged"></asp:TextBox>
-                                                        </ItemTemplate>
-                                                    </asp:TemplateField>
-                                                    <asp:TemplateField HeaderText="需簽章">
-                                                        <ItemTemplate>
-                                                            <asp:DropDownList DataField="status" ID="Ddl_status" runat="server" OnSelectedIndexChanged="Ddl_status_SelectedIndexChanged">
-                                                            </asp:DropDownList>
-                                                        </ItemTemplate>
-                                                    </asp:TemplateField>
-                                                </Columns>
-                                            </asp:GridView>
-                                            <br />
-                                        </ContentTemplate>
-                                    </asp:UpdatePanel>
-                                    <asp:Button ID="Btn_Save" runat="server" Text="送出" OnClick="Btn_Save_Click" />
-                                    <asp:Label ID="Lbl_Eorr" runat="server" ForeColor="Red" Text="資料輸入不完整" Visible="False"></asp:Label>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
-    
+                                        <asp:Label ID="Lbl_GpName" runat="server" Text="Label" Visible="False"></asp:Label>
+                                        <br />
+                                        <br />
+                                        <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" OnRowDataBound="GridView2_RowDataBound">
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="排列" ShowHeader="False" Visible="False">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("ID") %>'></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:BoundField DataField="SID" HeaderText="序列" Visible="false" />
+                                                <asp:TemplateField HeaderText="層級">
+                                                    <ItemTemplate>
+                                                        <asp:TextBox DataField="Lvl" ID="Txt_Lvl" runat="server" OnTextChanged="Txt_Lvl_TextChanged" TextMode="Number" Width="50px"></asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="人員編號">
+                                                    <ItemTemplate>
+                                                        <asp:TextBox DataField="EID" ID="Txt_EID" runat="server" AutoPostBack="True" OnTextChanged="Txt_EID_TextChanged"></asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="部門">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Lbl_Dep" runat="server"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="員工姓名">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Lbl_Name" runat="server"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField>
+                                                    <HeaderTemplate>
+                                                        <asp:CheckBox ID="CheckAll2" runat="server" onclick="javascript: SelectAllCheckboxes(this);" Text="需簽章" ToolTip="按一次全選，再按一次取消全選" />
+                                                    </HeaderTemplate>
+                                                    <ItemTemplate>
+                                                        <asp:CheckBox ID="Cb_sign" runat="server" OnCheckedChanged="Cb_sign_CheckedChanged" AutoPostBack="True" />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField>
+                                                    <HeaderTemplate>
+                                                        <asp:CheckBox ID="CheckAll3" runat="server" onclick="javascript: SelectAllCheckboxes(this);" Text="是否能看路徑" ToolTip="按一次全選，再按一次取消全選" />
+                                                    </HeaderTemplate>
+                                                    <ItemTemplate>
+                                                        <asp:CheckBox ID="Cb_path" runat="server" AutoPostBack="True" />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                        </asp:GridView>
+                                        <br />
+                                    </ContentTemplate>
+                                </asp:UpdatePanel>
+                                <asp:Button ID="Btn_Save" runat="server" Text="送出" OnClick="Btn_Save_Click" />
+                                <asp:Label ID="Lbl_Eorr" runat="server" ForeColor="Red" Text="資料輸入不完整" Visible="False"></asp:Label>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
 </asp:Content>

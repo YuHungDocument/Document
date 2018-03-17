@@ -16,6 +16,7 @@ namespace WebApplication1
 {
     public partial class WriteDocument : System.Web.UI.Page
     {
+        #region 一連串宣告
         DbHelper tmpdbhelper = new DbHelper();
         string txtKey;
         string txtIV;
@@ -25,6 +26,8 @@ namespace WebApplication1
         string txt_PKmessage;
         private SqlConnection connection;
         private SqlCommand command;
+        #endregion
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -37,6 +40,7 @@ namespace WebApplication1
                 }
                 else
                 {
+                    #region 內容
                     ((LinkButton)this.Master.FindControl("Lb_Write")).BackColor = Color.White;
                     ((LinkButton)this.Master.FindControl("Lb_Write")).ForeColor = Color.Black;
                     ((Label)this.Master.FindControl("Lb_Title")).Text = "撰寫公文";
@@ -77,10 +81,11 @@ namespace WebApplication1
                             cn.Close();
                         }
                     }
+                    #endregion
                 }
             }
         }
-        //AES加密功能
+        #region AES加密功能
         public string AESEncryption(string Key, string IV, string PlainText)
         {
             byte[] byte_Key = Encoding.UTF8.GetBytes(Key);
@@ -102,6 +107,8 @@ namespace WebApplication1
                 return Convert.ToBase64String(cryptedText);
             }
         }
+        
+
         public string AESEncryption(string Key, string IV, byte[] PlainText)
         {
             byte[] byte_Key = Encoding.UTF8.GetBytes(Key);
@@ -122,7 +129,10 @@ namespace WebApplication1
                 return Convert.ToBase64String(cryptedText);
             }
         }
-        protected void TextBox2_TextChanged(object sender, EventArgs e)
+        #endregion
+
+        #region 改變Gridview的Lvl(層級)時做的Update
+        protected void Txt_Lvl_TextChanged(object sender, EventArgs e)
         {
             TextBox curTextBox = (TextBox)sender;
             int gvRowIndex = (curTextBox.NamingContainer as GridViewRow).RowIndex;
@@ -132,7 +142,7 @@ namespace WebApplication1
             {
                 cn2.Open();
                 SqlCommand cmd2 = new SqlCommand("Update Preview set Lvl=@Lvl,Department=@Department,EID=@EID,Name=@Name,status=@status Where ID=@ID");
-                cmd2.Parameters.AddWithValue("@Lvl", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("TextBox2")).Text);
+                cmd2.Parameters.AddWithValue("@Lvl", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_Lvl")).Text);
                 cmd2.Parameters.AddWithValue("@Department", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("TextBox4")).Text);
                 cmd2.Parameters.AddWithValue("@EID", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("TextBox3")).Text);
                 cmd2.Parameters.AddWithValue("@Name", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("TextBox5")).Text);
@@ -142,8 +152,10 @@ namespace WebApplication1
                 cmd2.ExecuteNonQuery();
             }
         }
+        #endregion
 
-        protected void TextBox3_TextChanged(object sender, EventArgs e)
+        #region Gridview的輸入EID或名字找到人
+        protected void Txt_EID_TextChanged(object sender, EventArgs e)
         {
             TextBox curTextBox = (TextBox)sender;
             int gvRowIndex = (curTextBox.NamingContainer as GridViewRow).RowIndex;
@@ -178,35 +190,9 @@ namespace WebApplication1
                 }
             }
         }
+        #endregion
 
-        protected void TextBox5_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void Ddl_status_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            TextBox curTextBox = (TextBox)sender;
-            int gvRowIndex = (curTextBox.NamingContainer as GridViewRow).RowIndex;
-            string UserEID = ((TextBox)GridView2.Rows[gvRowIndex].FindControl("TextBox3")).Text.Trim();
-            string ID = ((Label)GridView2.Rows[gvRowIndex].FindControl("Label1")).Text.Trim();
-            using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
-            {
-                cn2.Open();
-                SqlCommand cmd2 = new SqlCommand("Update Preview set Lvl=@Lvl,Department=@Department,EID=@EID,Name=@Name,status=@status Where ID=@ID");
-                cmd2.Parameters.AddWithValue("@Lvl", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("TextBox2")).Text);
-                cmd2.Parameters.AddWithValue("@Department", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("TextBox4")).Text);
-                cmd2.Parameters.AddWithValue("@EID", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("TextBox3")).Text);
-                cmd2.Parameters.AddWithValue("@Name", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("TextBox5")).Text);
-                cmd2.Parameters.AddWithValue("@status", ((DropDownList)GridView2.Rows[gvRowIndex].FindControl("Ddl_status")).SelectedValue);
-                cmd2.Parameters.AddWithValue("@ID", ID);
-                cmd2.Connection = cn2;
-                cmd2.ExecuteNonQuery();
-            }
-        }
-
-
-
+        #region 插入群組
         protected void Btn_Insert_Click(object sender, EventArgs e)
         {
             for (int i = 0; i < GridView4.Rows.Count; i++)
@@ -219,9 +205,12 @@ namespace WebApplication1
                 }
             }
         }
+        #endregion        
 
+        #region bind
         public void bind()
         {
+            
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
                 cn.Open();
@@ -262,10 +251,11 @@ namespace WebApplication1
                                 while (dr2.Read())
                                 {
 
-                                    ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("TextBox2")).Text = dr2["Lvl"].ToString();
-                                    ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("TextBox3")).Text = dr2["EID"].ToString();
-                                    ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("TextBox4")).Text = dr2["Department"].ToString();
-                                    ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("TextBox5")).Text = dr2["Name"].ToString();
+                                    ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Txt_Lvl")).Text = dr2["Lvl"].ToString();
+                                    ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("EID")).Text = dr2["EID"].ToString();
+                                    ((Label)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Lbl_Dep")).Text = dr2["Department"].ToString();
+                                    ((Label)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Lbl_Name")).Text = dr2["Name"].ToString();
+
                                     ((DropDownList)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Ddl_status")).Text = dr2["status"].ToString();
                                     Session["i"] = int.Parse(Session["i"].ToString()) + 1;
                                 }
@@ -274,11 +264,14 @@ namespace WebApplication1
                         }
                     }
                 }
-            }
+            }            
         }
+        #endregion
 
+        #region bind2
         public void bind2()
         {
+            
             string sqlstr = "select * from Record ";
             SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
             SqlDataAdapter myda = new SqlDataAdapter(sqlstr, sqlcon);
@@ -291,10 +284,13 @@ namespace WebApplication1
             GridView4.DataKeyNames = new string[] { "GID" };//主键
             GridView4.DataBind();
             sqlcon.Close();
+            
         }
+        #endregion
 
+        #region bind3
         public void bind3()
-        {
+        {            
             string sqlstr = "select * from Preview Where SID='" + Lbl_SID.Text + "'";
 
             SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
@@ -307,10 +303,11 @@ namespace WebApplication1
 
             GridView2.DataSource = myds;
             GridView2.DataBind();
-            sqlcon.Close();
-
-
+            sqlcon.Close();            
         }
+        #endregion
+
+        #region 上傳檔案
         protected void btn_upload_Click(object sender, EventArgs e)
         {
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
@@ -355,6 +352,26 @@ namespace WebApplication1
                 }
             }
         }
+        #endregion
+
+        #region Gridview的下拉式連結暫時沒用
+        //private DataView GetDV3(string sql)
+        //{
+        //    SqlConnection sqlCon = new SqlConnection(tmpdbhelper.DB_CnStr);
+        //    DataView dv;
+        //    SqlDataAdapter sqlAdp = new SqlDataAdapter();
+        //    SqlCommand cmd;
+        //    DataSet ds = new DataSet();
+        //    sqlCon.Open();
+        //    cmd = new SqlCommand(sql, sqlCon);
+        //    sqlAdp.SelectCommand = cmd;
+        //    cmd.Parameters.AddWithValue("@Tp", "FS");
+        //    sqlAdp.Fill(ds);
+        //    dv = new DataView(ds.Tables[0]);
+        //    return dv;
+        //}
+        #endregion
+
         private void FillData()
         {
             DataTable dt = new DataTable();
@@ -381,6 +398,7 @@ namespace WebApplication1
             }
 
         }
+
         #region 增加一列
         protected void Button1_Click(object sender, EventArgs e)
         {
@@ -415,6 +433,7 @@ namespace WebApplication1
             }
         }
         #endregion
+
         #region 增加十列
         protected void Button2_Click(object sender, EventArgs e)
         {
@@ -451,8 +470,9 @@ namespace WebApplication1
                 }
             }
         }
-#endregion
+        #endregion
 
+        #region 增加新群組
         protected void Btn_Newgroup_Click(object sender, EventArgs e)
         {
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
@@ -468,7 +488,6 @@ namespace WebApplication1
                         Response.Write("<Script language='Javascript'>");
                         Response.Write("alert('此群組名稱已存在請重新輸入')");
                         Response.Write("</" + "Script>");
-
                     }
                     else
                     {
@@ -483,7 +502,6 @@ namespace WebApplication1
                             cmd4.Parameters.AddWithValue("@GpName", TextBox1.Text);
                             cmd4.Parameters.AddWithValue("@GID", GID);
                             cmd4.ExecuteNonQuery();
-
 
                             for (int i = 0; i < GridView2.Rows.Count - 1; i++)
                             {
@@ -542,16 +560,9 @@ namespace WebApplication1
 
             }
         }
+        #endregion
 
-        protected void GridView4_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int i;
-            i = int.Parse(GridView4.SelectedIndex.ToString());
-            string GpName = ((LinkButton)GridView4.Rows[i].FindControl("LblName")).Text.Trim();
-            Lbl_GpName.Text = GpName;
-
-            bind();
-        }
+        #region 編輯群組
         protected void Btn_editgroup_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(TextBox1.Text))
@@ -679,7 +690,21 @@ namespace WebApplication1
                 }
             }
         }
+        #endregion
 
+        #region 點選插入
+        protected void GridView4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int i;
+            i = int.Parse(GridView4.SelectedIndex.ToString());
+            string GpName = ((LinkButton)GridView4.Rows[i].FindControl("LblName")).Text.Trim();
+            Lbl_GpName.Text = GpName;
+
+            bind();
+        }
+        #endregion
+
+        #region 點選下載檔案
         protected void OpenDoc(object sender, EventArgs e)
         {
             LinkButton lnk = (LinkButton)sender;
@@ -688,6 +713,9 @@ namespace WebApplication1
             int FNO = int.Parse(gv_showTempFile.DataKeys[gr.RowIndex].Value.ToString());
             Download(FNO);
         }
+        #endregion
+
+        #region 下載檔案coding
         private void Download(int FNO)
         {
             DataTable dt = new DataTable();
@@ -714,8 +742,9 @@ namespace WebApplication1
             Response.Flush();
             Response.Close();
         }
+        #endregion
 
-
+        #region 刪除檔案
         protected void gv_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             connection = new SqlConnection(tmpdbhelper.DB_CnStr);
@@ -730,8 +759,7 @@ namespace WebApplication1
             command.Parameters.Clear();
             command.Parameters.AddWithValue("@Name", strName);
             command.Parameters.AddWithValue("@SID", Lbl_SID.Text);
-            command.CommandText =
-                "DELETE FROM tempDocument WHERE Name=@Name and SID=@SID ";
+            command.CommandText ="DELETE FROM tempDocument WHERE Name=@Name and SID=@SID ";
 
             connection.Open();
             command.ExecuteNonQuery();
@@ -743,67 +771,40 @@ namespace WebApplication1
             Session["FNOSession"] = FNO_INDEX;
             FillData();
         }
+        #endregion
 
-        protected void GridView2_RowDataBound(object sender, GridViewRowEventArgs e)
+        #region 勾選發生變化
+        protected void Cb_sign_CheckedChanged(object sender, EventArgs e)
         {
-            //宣告DropDownList
-
-
-            DropDownList Ddl_sign;
-
-            string sql1;
-
-            DataView dv1;
-
-            //要特別注意一下這邊，如果不用這個if包起來的話，RowDataBound會跑Header，Footer，Pager
-            //我們的DropDownList是放在DataRow裡，所以只有在這邊才會找到DropDownList控制項
-            if (e.Row.RowType == DataControlRowType.DataRow)
+            CheckBox CheckBox = (CheckBox)sender;
+            int gvRowIndex = (CheckBox.NamingContainer as GridViewRow).RowIndex;
+            string UserEID = ((TextBox)GridView2.Rows[gvRowIndex].FindControl("TextBox3")).Text.Trim();
+            string ID = ((Label)GridView2.Rows[gvRowIndex].FindControl("Label1")).Text.Trim();
+            CheckBox ck = ((CheckBox)GridView2.Rows[gvRowIndex].FindControl("Cb_sign"));
+            using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
-                //用FindControl(你的DropDownList的ID)，來找我們的DropDownList，記得要轉型喔!
-
-
-                Ddl_sign = (DropDownList)e.Row.FindControl("Ddl_status");
-
-                sql1 = "select * from TypeGroup where Tp=@Tp ";
-
-                string Dp = Ddl_sign.SelectedValue;
-
-                dv1 = GetDV3(sql1);
-
-                //DropDownList要顯示的內容
-
-
-                Ddl_sign.DataTextField = "TN";
-                //DropDownList顯示內容對應的值
-
-
-                Ddl_sign.DataValueField = "TID";
-                //繫結DropDownList
-
-
-                Ddl_sign.DataSource = dv1;
-
-
-                Ddl_sign.DataBind();
+                cn2.Open();
+                SqlCommand cmd2 = new SqlCommand("Update Preview set Lvl=@Lvl,Department=@Department,EID=@EID,Name=@Name,status=@status Where ID=@ID");
+                cmd2.Parameters.AddWithValue("@Lvl", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("TextBox2")).Text);
+                cmd2.Parameters.AddWithValue("@Department", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("TextBox4")).Text);
+                cmd2.Parameters.AddWithValue("@EID", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("TextBox3")).Text);
+                cmd2.Parameters.AddWithValue("@Name", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("TextBox5")).Text);
+                if(ck.Checked==true)
+                {
+                    cmd2.Parameters.AddWithValue("@status", "1");
+                }
+                else
+                {
+                    cmd2.Parameters.AddWithValue("@status", "0");
+                }
+                cmd2.Parameters.AddWithValue("@ID", ID);
+                cmd2.Connection = cn2;
+                cmd2.ExecuteNonQuery();
             }
         }
-        private DataView GetDV3(string sql)
-        {
+        #endregion
 
-            SqlConnection sqlCon = new SqlConnection(tmpdbhelper.DB_CnStr);
-            DataView dv;
-            SqlDataAdapter sqlAdp = new SqlDataAdapter();
-            SqlCommand cmd;
-            DataSet ds = new DataSet();
-            sqlCon.Open();
-            cmd = new SqlCommand(sql, sqlCon);
-            sqlAdp.SelectCommand = cmd;
-            cmd.Parameters.AddWithValue("@Tp", "FS");
-            sqlAdp.Fill(ds);
-            dv = new DataView(ds.Tables[0]);
-            return dv;
-        }
-
+        #region 送出
         protected void Btn_Save_Click(object sender, EventArgs e)
         {
             string SID = Lbl_SID.Text;
@@ -955,21 +956,53 @@ namespace WebApplication1
 
 
         }
+        #endregion
 
-        protected void LinkButton1_Click(object sender, EventArgs e)
+        #region 目前用不到
+        protected void GridView2_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            Session["number"] = int.Parse(Session["number"].ToString()) + 1;
-            using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
-            {
-                cn.Open();
-                SqlCommand cmd = new SqlCommand("Insert Into Vote(SID,VID,number) Values(@SID,@VID,@number)");
-                cmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
-                cmd.Parameters.AddWithValue("@VID", Session["VID"].ToString());
-                cmd.Parameters.AddWithValue("@number", Session["number"].ToString());
-                cmd.Connection = cn;
-                cmd.ExecuteNonQuery();
-                
-            }
+            #region 宣告DropDownList
+
+
+            //DropDownList Ddl_sign;
+
+            //string sql1;
+
+            //DataView dv1;
+
+            ////要特別注意一下這邊，如果不用這個if包起來的話，RowDataBound會跑Header，Footer，Pager
+            ////我們的DropDownList是放在DataRow裡，所以只有在這邊才會找到DropDownList控制項
+            //if (e.Row.RowType == DataControlRowType.DataRow)
+            //{
+            //    //用FindControl(你的DropDownList的ID)，來找我們的DropDownList，記得要轉型喔!
+
+
+            //    Ddl_sign = (DropDownList)e.Row.FindControl("Ddl_status");
+
+            //    sql1 = "select * from TypeGroup where Tp=@Tp ";
+
+            //    string Dp = Ddl_sign.SelectedValue;
+
+            //    dv1 = GetDV3(sql1);
+
+            //    //DropDownList要顯示的內容
+
+
+            //    Ddl_sign.DataTextField = "TN";
+            //    //DropDownList顯示內容對應的值
+
+
+            //    Ddl_sign.DataValueField = "TID";
+            //    //繫結DropDownList
+
+
+            //    Ddl_sign.DataSource = dv1;
+
+
+            //    Ddl_sign.DataBind();
+            //}
+            #endregion
         }
+        #endregion
     }
 }

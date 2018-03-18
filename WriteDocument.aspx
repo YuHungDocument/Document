@@ -292,7 +292,7 @@
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="人員編號">
                                                     <ItemTemplate>
-                                                        <asp:TextBox DataField="EID" ID="Txt_EID" runat="server" AutoPostBack="True" OnTextChanged="Txt_EID_TextChanged"></asp:TextBox>
+                                                        <asp:TextBox DataField="EID" placeholder="請輸入員工編號或姓名" ID="Txt_EID" runat="server" AutoPostBack="True" OnTextChanged="Txt_EID_TextChanged"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="部門">

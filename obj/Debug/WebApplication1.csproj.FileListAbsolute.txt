@@ -1,4 +1,4 @@
-﻿D:\專題程式\專題程式簡化版\WebApplication1\bin\WebApplication1.dll.config
+D:\專題程式\專題程式簡化版\WebApplication1\bin\WebApplication1.dll.config
 D:\專題程式\專題程式簡化版\WebApplication1\bin\WebApplication1.dll
 D:\專題程式\專題程式簡化版\WebApplication1\bin\WebApplication1.pdb
 D:\專題程式\專題程式簡化版\WebApplication1\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
@@ -251,4 +251,3 @@ C:\Users\AJ\Desktop\Doc\Document\project\WebApplication1\obj\Debug\WebApplicatio
 C:\Users\AJ\Desktop\Doc\Document\project\WebApplication1\obj\Debug\WebApplication1.csproj.CoreCompileInputs.cache
 C:\Users\AJ\Desktop\Doc\Document\project\WebApplication1\obj\Debug\WebApplication1.dll
 C:\Users\AJ\Desktop\Doc\Document\project\WebApplication1\obj\Debug\WebApplication1.pdb
-

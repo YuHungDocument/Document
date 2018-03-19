@@ -1,5 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/GuildPage.Master" AutoEventWireup="true" CodeBehind="WriteDocument.aspx.cs" Inherits="WebApplication1.WriteDocument" %>
 
+<%@ Register Src="~/ucGridViewChoiceAll.ascx" TagPrefix="uc1" TagName="ucGridViewChoiceAll" %>
+
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script src="My97DatePicker/WdatePicker.js"></script>
     <script type="text/javascript">
@@ -285,22 +288,24 @@
                                                     <asp:Label ID="Lbl_Name" runat="server"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField>
+
+                                            <asp:TemplateField >
                                                 <HeaderTemplate>
-                                                    <asp:CheckBox ID="CheckAll2" runat="server" onclick="javascript: SelectAllCheckboxes(this);" Text="需簽章" ToolTip="按一次全選，再按一次取消全選" />
-                                                </HeaderTemplate>
+                                                    <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll1" CheckBoxName="Cb_sign" HeaderText="需簽章"/>
+                                                </HeaderTemplate>                                      
                                                 <ItemTemplate>
-                                                    <asp:CheckBox ID="Cb_sign" runat="server" OnCheckedChanged="Cb_sign_CheckedChanged" AutoPostBack="True" />
+                                                    <asp:CheckBox ID="Cb_sign" runat="server" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField>
+                                            <asp:TemplateField >
                                                 <HeaderTemplate>
-                                                    <asp:CheckBox ID="CheckAll3" runat="server" onclick="javascript: SelectAllCheckboxes(this);" Text="是否能看路徑" ToolTip="按一次全選，再按一次取消全選" />
+                                                    <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll" CheckBoxName="Cb_path" HeaderText="可察看進度"/>
                                                 </HeaderTemplate>
                                                 <ItemTemplate>
-                                                    <asp:CheckBox ID="Cb_path" runat="server" AutoPostBack="True" />
+                                                    <asp:CheckBox ID="Cb_path" runat="server" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
+
                                         </Columns>
                                         <RowStyle HorizontalAlign="Center" />
                                     </asp:GridView>

@@ -77,12 +77,12 @@
     <Content Include="password.aspx" />
     <Content Include="set.aspx" />
     <Content Include="SetAgent.aspx" />
+    <Content Include="ucGridViewChoiceAll.ascx" />
     <Content Include="WriteDocument.aspx" />
     <Content Include="WriteVote.aspx" />
     <None Include="packages.config" />
     <Content Include="ChangeGroup.aspx" />
     <Content Include="ChangePermission.aspx" />
-    <Content Include="DocumentDetail.aspx" />
     <Content Include="Home.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="My97DatePicker\calendar.js" />
@@ -186,13 +186,6 @@
     <Compile Include="Detail.aspx.designer.cs">
       <DependentUpon>Detail.aspx</DependentUpon>
     </Compile>
-    <Compile Include="DocumentDetail.aspx.cs">
-      <DependentUpon>DocumentDetail.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="DocumentDetail.aspx.designer.cs">
-      <DependentUpon>DocumentDetail.aspx</DependentUpon>
-    </Compile>
     <Compile Include="goodpage.aspx.cs">
       <DependentUpon>goodpage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -284,6 +277,13 @@
     </Compile>
     <Compile Include="SetAgent.aspx.designer.cs">
       <DependentUpon>SetAgent.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ucGridViewChoiceAll.ascx.cs">
+      <DependentUpon>ucGridViewChoiceAll.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ucGridViewChoiceAll.ascx.designer.cs">
+      <DependentUpon>ucGridViewChoiceAll.ascx</DependentUpon>
     </Compile>
     <Compile Include="UserInfo.cs" />
     <Compile Include="UserPage.aspx.cs">

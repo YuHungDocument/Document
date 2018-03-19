@@ -241,6 +241,7 @@ C:\Users\SS\Desktop\Document\Document\project\WebApplication1\obj\Debug\WebAppli
 C:\Users\SS\Desktop\Document\Document\project\WebApplication1\obj\Debug\WebApplication1.csproj.CoreCompileInputs.cache
 C:\Users\SS\Desktop\Document\Document\project\WebApplication1\obj\Debug\WebApplication1.dll
 C:\Users\SS\Desktop\Document\Document\project\WebApplication1\obj\Debug\WebApplication1.pdb
+<<<<<<< HEAD
 =======
 C:\Users\AJ\Desktop\Doc\Document\project\WebApplication1\bin\WebApplication1.dll.config
 C:\Users\AJ\Desktop\Doc\Document\project\WebApplication1\bin\WebApplication1.dll
@@ -251,3 +252,14 @@ C:\Users\AJ\Desktop\Doc\Document\project\WebApplication1\obj\Debug\WebApplicatio
 C:\Users\AJ\Desktop\Doc\Document\project\WebApplication1\obj\Debug\WebApplication1.csproj.CoreCompileInputs.cache
 C:\Users\AJ\Desktop\Doc\Document\project\WebApplication1\obj\Debug\WebApplication1.dll
 C:\Users\AJ\Desktop\Doc\Document\project\WebApplication1\obj\Debug\WebApplication1.pdb
+=======
+C:\Users\Amd\Desktop\Document\Document\project\WebApplication1\bin\WebApplication1.dll.config
+C:\Users\Amd\Desktop\Document\Document\project\WebApplication1\bin\WebApplication1.dll
+C:\Users\Amd\Desktop\Document\Document\project\WebApplication1\bin\WebApplication1.pdb
+C:\Users\Amd\Desktop\Document\Document\project\WebApplication1\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\Amd\Desktop\Document\Document\project\WebApplication1\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\Amd\Desktop\Document\Document\project\WebApplication1\obj\Debug\WebApplication1.csprojResolveAssemblyReference.cache
+C:\Users\Amd\Desktop\Document\Document\project\WebApplication1\obj\Debug\WebApplication1.csproj.CoreCompileInputs.cache
+C:\Users\Amd\Desktop\Document\Document\project\WebApplication1\obj\Debug\WebApplication1.dll
+C:\Users\Amd\Desktop\Document\Document\project\WebApplication1\obj\Debug\WebApplication1.pdb
+>>>>>>> branch

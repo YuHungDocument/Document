@@ -66,8 +66,21 @@ namespace WebApplication1
 
         protected void Lb_Logout_Click(object sender, EventArgs e)
         {
-            Session["UserInfo"] = null;
+            using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+                UserInfo tmpUserInfo;
+                tmpUserInfo = (UserInfo)Session["userinfo"];
+                SqlCommand cmd2 = new SqlCommand(@"Update UserInfo Set KeyAddress=@KeyAddress Where EID=@EID");
+                cmd2.Connection = cn;
+                cn.Open();
+                cmd2.Parameters.AddWithValue("@EID", tmpUserInfo.EID);
+                cmd2.Parameters.AddWithValue("@KeyAddress", "");
+                cmd2.ExecuteNonQuery();
+                cn.Close();
+            }
+                Session["UserInfo"] = null;
             Response.Redirect("Home.aspx");
+
         }
 
         protected void LinkButton1_Click(object sender, EventArgs e)

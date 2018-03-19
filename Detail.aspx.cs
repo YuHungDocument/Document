@@ -30,7 +30,7 @@ namespace WebApplication1
                 }
                 else
                 {
-                    ((Label)this.Master.FindControl("Lb_Title")).Text = "內文";
+                   ((Label)this.Master.FindControl("Lb_Title")).Text = "內文";
                     UserInfo tmpUserInfo = null;
                     if (Session["userinfo"] is UserInfo)
                     {
@@ -38,6 +38,44 @@ namespace WebApplication1
                         Lbl_EID.Text = tmpUserInfo.EID;
                         bind();
                         bind2();
+                    }
+                    using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+                    {
+                        cn.Open();
+                        SqlCommand cmd = new SqlCommand(@"Select EID From Fil  Where SID=@SID");
+                        cmd.Connection = cn;
+                        cmd.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
+                        using (SqlDataReader dr = cmd.ExecuteReader())
+                        {
+                            if (dr.Read())
+                            {
+                                Lbl_SenderEID.Text = dr["EID"].ToString();
+                                using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
+                                {
+                                    cn2.Open();
+                                    SqlCommand cmd2 = new SqlCommand(@"Select Name From UserInfo  Where EID=@EID");
+                                    cmd2.Connection = cn2;
+                                    cmd2.Parameters.AddWithValue("@EID", dr["EID"].ToString());
+                                    using (SqlDataReader dr2 = cmd2.ExecuteReader())
+                                    {
+                                        if (dr2.Read())
+                                        {
+                                            Lbl_SenderName.Text = "主辦人姓名" + dr2["Name"].ToString();
+                                        }
+                                        cn2.Close();
+                                    }
+                                }
+                            }
+                        }
+                        cn.Close();
+                    }
+                    if (Lbl_Type.Text == "公文類型：代理人設定")
+                    {
+                        if (Lbl_SenderEID.Text == Lbl_EID.Text)
+                        {
+                            Txt_Enterpassword.Visible = false;
+                            Btn_check.Visible = false;
+                        }
                     }
                 }
             }
@@ -175,7 +213,7 @@ namespace WebApplication1
                     }
                     catch
                     {
-                        Response.Write("<script>alert('解密失敗!');location.href='UserPage.aspx';</script>");
+                        Response.Write("<script>alert('解密失敗!');location.href='WaitDocument.aspx';</script>");
                     }
                 }
                 catch
@@ -322,9 +360,49 @@ namespace WebApplication1
                                         cmd4.ExecuteNonQuery();
                                     }
                                 }
+                                if (Lbl_Type.Text == "公文類型：代理人設定")
+                                {
+                                    using (SqlConnection cnAgent = new SqlConnection(tmpdbhelper.DB_CnStr))
+                                    {
+                                        cnAgent.Open();
+                                        SqlCommand cmdAgent = new SqlCommand(@"Select agent From UserInfo  Where EID=@EID");
+                                        cmdAgent.Connection = cnAgent;
+                                        cmdAgent.Parameters.AddWithValue("@EID", Lbl_SenderEID.Text);
+                                        using (SqlDataReader drAgent = cmdAgent.ExecuteReader())
+                                        {
+                                            if (drAgent.Read())
+                                            {
+                                                using (SqlConnection cnUpate = new SqlConnection(tmpdbhelper.DB_CnStr))
+                                                {
+                                                    cnUpate.Open();
+                                                    SqlCommand cmd2 = new SqlCommand(@"Update UserInfo Set agent=@agent Where EID=@EID");
+                                                    cmd2.Connection = cnUpate;
+                                                    cmd2.Parameters.AddWithValue("@EID", Lbl_SenderEID.Text);
+                                                    cmd2.Parameters.AddWithValue("@agent", Lbl_EID.Text);
+                                                    cmd2.ExecuteNonQuery();
+                                                    SqlCommand cmd4 = new SqlCommand(@"Insert Into AgentInfo (agent,EID,AgentName,StartTime,EndTime,send,receive) Select agent,EID,AgentName,StartTime,EndTime,send,receive From tempAgentInfo Where EID = @EID");
+                                                    cmd4.Connection = cnUpate;
+                                                    cmd4.Parameters.AddWithValue("@EID", Lbl_SenderEID.Text);
+                                                    cmd4.ExecuteNonQuery();
+                                                    cnUpate.Close();
+                                                }
+                                            }
+                                                using (SqlConnection cnUpate = new SqlConnection(tmpdbhelper.DB_CnStr))
+                                                {
+                                                    cnUpate.Open();
+                                                    SqlCommand cmd2 = new SqlCommand(@"Delete From tempAgentInfo  Where EID=@EID");
+                                                    cmd2.Connection = cnUpate;
+                                                    cmd2.Parameters.AddWithValue("@EID", Lbl_SenderEID.Text);
+                                                    cmd2.ExecuteNonQuery();
+                                                    cnUpate.Close();
+                                            }
+                                        }
+                                        cnAgent.Close();
+                                    }
+                                }
 
                                 Response.Write("<script language=javascript>alert('簽核成功!')</script>");
-                                Response.Write("<script language=javascript>window.location.href='Alldocument.aspx'</script>");
+                                Response.Write("<script language=javascript>window.location.href='Detail.aspx'</script>");
                             }
                         }
                     }

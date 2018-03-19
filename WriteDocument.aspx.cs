@@ -449,6 +449,7 @@ namespace WebApplication1
         //}
         #endregion
 
+        #region 找暫存檔填寫到gridview
         private void FillData()
         {
             DataTable dt = new DataTable();
@@ -475,6 +476,7 @@ namespace WebApplication1
             }
 
         }
+        #endregion
 
         #region 增加一列
         protected void Button1_Click(object sender, EventArgs e)
@@ -1097,8 +1099,8 @@ namespace WebApplication1
             //}
             #endregion
         }
-        #endregion
 
+        #endregion
 
     }
 }

@@ -25,6 +25,39 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+    <div class="modal fade" id="FileModal" role="dialog" style="top: 18%;">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">所有上傳檔案</h4>
+                </div>
+                <div class="modal-body">
+                    <asp:GridView runat="server" ID="gv_showTempFile" AutoGenerateColumns="false" OnRowDeleting="gv_RowDeleting"
+                    DataKeyNames="FNO">
+                    <Columns>
+                        <asp:TemplateField HeaderText="已上傳的檔案">
+                            <ItemTemplate>
+                                <asp:LinkButton ID="btn_filename" OnClick="OpenDoc" runat="server" Text='<%# Eval("Name") %>'></asp:LinkButton>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField HeaderText="刪除">
+                            <ItemTemplate>
+                                <asp:LinkButton ID="lbDelete" runat="server" CommandName="Delete"
+                                    OnClientClick="javascript:return confirm('確定刪除?')">刪除</asp:LinkButton>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                </asp:GridView>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
     <asp:Label ID="Lbl_EID" runat="server" Visible="False"></asp:Label>
     <br />
     <table class="auto-style1">
@@ -128,22 +161,7 @@
                 <br />
             </td>
             <td style="font-size: large;" colspan="3">
-                <asp:GridView runat="server" ID="gv_showTempFile" AutoGenerateColumns="false" OnRowDeleting="gv_RowDeleting"
-                    DataKeyNames="FNO">
-                    <Columns>
-                        <asp:TemplateField HeaderText="已上傳的檔案">
-                            <ItemTemplate>
-                                <asp:LinkButton ID="btn_filename" OnClick="OpenDoc" runat="server" Text='<%# Eval("Name") %>'></asp:LinkButton>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:TemplateField HeaderText="刪除">
-                            <ItemTemplate>
-                                <asp:LinkButton ID="lbDelete" runat="server" CommandName="Delete"
-                                    OnClientClick="javascript:return confirm('確定刪除?')">刪除</asp:LinkButton>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                    </Columns>
-                </asp:GridView>
+                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#FileModal">顯示上傳檔案</button>
             </td>
         </tr>
         <tr style="height: 25px">
@@ -289,17 +307,17 @@
                                                 </ItemTemplate>
                                             </asp:TemplateField>
 
-                                            <asp:TemplateField >
+                                            <asp:TemplateField>
                                                 <HeaderTemplate>
-                                                    <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll1" CheckBoxName="Cb_sign" HeaderText="需簽章"/>
-                                                </HeaderTemplate>                                      
+                                                    <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll1" CheckBoxName="Cb_sign" HeaderText="需簽章" />
+                                                </HeaderTemplate>
                                                 <ItemTemplate>
-                                                    <asp:CheckBox ID="Cb_sign" runat="server" />
+                                                    <asp:CheckBox ID="Cb_sign" runat="server" OnCheckedChanged="Cb_sign_CheckedChanged" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField >
+                                            <asp:TemplateField>
                                                 <HeaderTemplate>
-                                                    <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll" CheckBoxName="Cb_path" HeaderText="可察看進度"/>
+                                                    <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll" CheckBoxName="Cb_path" HeaderText="可察看進度" />
                                                 </HeaderTemplate>
                                                 <ItemTemplate>
                                                     <asp:CheckBox ID="Cb_path" runat="server" />

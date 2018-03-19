@@ -556,11 +556,27 @@ namespace WebApplication1
                     while (dr2.Read())
                     {
 
-                        ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("TextBox2")).Text = dr2["Lvl"].ToString();
-                        ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("TextBox3")).Text = dr2["EID"].ToString();
-                        ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("TextBox4")).Text = dr2["Department"].ToString();
-                        ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("TextBox5")).Text = dr2["Name"].ToString();
-                        ((DropDownList)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Ddl_status")).Text = dr2["status"].ToString();
+                        ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Txt_Lvl")).Text = dr2["Lvl"].ToString();
+                        ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Txt_EID")).Text = dr2["EID"].ToString();
+                        ((Label)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Lbl_Dep")).Text = dr2["Department"].ToString();
+                        ((Label)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Lbl_Name")).Text = dr2["Name"].ToString();
+                        if (dr2["status"].ToString() == "1")
+                        {
+                            ((CheckBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Cb_sign")).Checked = true;
+                        }
+                        else
+                        {
+                            ((CheckBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Cb_sign")).Checked = false;
+                        }
+
+                        if (dr2["path"].ToString() == "1")
+                        {
+                            ((CheckBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Cb_path")).Checked = true;
+                        }
+                        else
+                        {
+                            ((CheckBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Cb_path")).Checked = false;
+                        }
                         Session["i"] = int.Parse(Session["i"].ToString()) + 1;
                     }
                 }
@@ -869,7 +885,7 @@ namespace WebApplication1
         }
         #endregion
 
-        #region 勾選發生變化
+        #region 勾選sign時發生變化
         protected void Cb_sign_CheckedChanged(object sender, EventArgs e)
         {
             CheckBox CheckBox = (CheckBox)sender;
@@ -877,10 +893,11 @@ namespace WebApplication1
             string UserEID = ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text.Trim();
             string ID = ((Label)GridView2.Rows[gvRowIndex].FindControl("Label1")).Text.Trim();
             CheckBox ck = ((CheckBox)GridView2.Rows[gvRowIndex].FindControl("Cb_sign"));
+            CheckBox ckp = ((CheckBox)GridView2.Rows[gvRowIndex].FindControl("Cb_path"));
             using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
                 cn2.Open();
-                SqlCommand cmd2 = new SqlCommand("Update Preview set Lvl=@Lvl,Department=@Department,EID=@EID,Name=@Name,status=@status Where ID=@ID");
+                SqlCommand cmd2 = new SqlCommand("Update Preview set Lvl=@Lvl,Department=@Department,EID=@EID,Name=@Name,status=@status,path=@path Where ID=@ID");
                 cmd2.Parameters.AddWithValue("@Lvl", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_Lvl")).Text);
                 cmd2.Parameters.AddWithValue("@Department", ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Dep")).Text);
                 cmd2.Parameters.AddWithValue("@EID", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text);
@@ -892,6 +909,14 @@ namespace WebApplication1
                 else
                 {
                     cmd2.Parameters.AddWithValue("@status", "0");
+                }
+                if (ckp.Checked == true)
+                {
+                    cmd2.Parameters.AddWithValue("@path", "1");
+                }
+                else
+                {
+                    cmd2.Parameters.AddWithValue("@path", "0");
                 }
                 cmd2.Parameters.AddWithValue("@ID", ID);
                 cmd2.Connection = cn2;
@@ -1102,5 +1127,44 @@ namespace WebApplication1
 
         #endregion
 
+        #region 勾選path時發生變化
+        protected void Cb_path_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox CheckBox = (CheckBox)sender;
+            int gvRowIndex = (CheckBox.NamingContainer as GridViewRow).RowIndex;
+            string UserEID = ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text.Trim();
+            string ID = ((Label)GridView2.Rows[gvRowIndex].FindControl("Label1")).Text.Trim();
+            CheckBox ck = ((CheckBox)GridView2.Rows[gvRowIndex].FindControl("Cb_sign"));
+            CheckBox ckp = ((CheckBox)GridView2.Rows[gvRowIndex].FindControl("Cb_path"));
+            using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+                cn2.Open();
+                SqlCommand cmd2 = new SqlCommand("Update Preview set Lvl=@Lvl,Department=@Department,EID=@EID,Name=@Name,status=@status,path=@path Where ID=@ID");
+                cmd2.Parameters.AddWithValue("@Lvl", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_Lvl")).Text);
+                cmd2.Parameters.AddWithValue("@Department", ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Dep")).Text);
+                cmd2.Parameters.AddWithValue("@EID", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text);
+                cmd2.Parameters.AddWithValue("@Name", ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Name")).Text);
+                if (ck.Checked == true)
+                {
+                    cmd2.Parameters.AddWithValue("@status", "1");
+                }
+                else
+                {
+                    cmd2.Parameters.AddWithValue("@status", "0");
+                }
+                if (ckp.Checked == true)
+                {
+                    cmd2.Parameters.AddWithValue("@path", "1");
+                }
+                else
+                {
+                    cmd2.Parameters.AddWithValue("@path", "0");
+                }
+                cmd2.Parameters.AddWithValue("@ID", ID);
+                cmd2.Connection = cn2;
+                cmd2.ExecuteNonQuery();
+            }
+        }
+        #endregion
     }
 }

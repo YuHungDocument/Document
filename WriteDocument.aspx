@@ -161,7 +161,7 @@
                 <br />
             </td>
             <td style="font-size: large;" colspan="3">
-                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#FileModal">顯示上傳檔案</button>
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#FileModal">顯示上傳檔案</button>
             </td>
         </tr>
         <tr style="height: 25px">
@@ -288,7 +288,7 @@
                                             <asp:BoundField DataField="SID" HeaderText="序列" Visible="false" />
                                             <asp:TemplateField HeaderText="層級">
                                                 <ItemTemplate>
-                                                    <asp:TextBox DataField="Lvl" ID="Txt_Lvl" runat="server" OnTextChanged="Txt_Lvl_TextChanged" TextMode="Number" Width="50px"></asp:TextBox>
+                                                    <asp:TextBox DataField="Lvl" ID="Txt_Lvl" runat="server" OnTextChanged="Txt_Lvl_TextChanged" TextMode="Number" Width="50px" AutoPostBack="True"></asp:TextBox>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="人員編號">
@@ -309,18 +309,18 @@
 
                                             <asp:TemplateField>
                                                 <HeaderTemplate>
-                                                    <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll1" CheckBoxName="Cb_sign" HeaderText="需簽章" />
+                                                    <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll1" CheckBoxName="Cb_sign" HeaderText="需簽章" OnCheckedChanged="Cb_sign_CheckedChanged" AutoPostBack="True"/>
                                                 </HeaderTemplate>
                                                 <ItemTemplate>
-                                                    <asp:CheckBox ID="Cb_sign" runat="server" OnCheckedChanged="Cb_sign_CheckedChanged" />
+                                                    <asp:CheckBox ID="Cb_sign" runat="server" OnCheckedChanged="Cb_sign_CheckedChanged" AutoPostBack="True" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField>
                                                 <HeaderTemplate>
-                                                    <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll" CheckBoxName="Cb_path" HeaderText="可察看進度" />
+                                                    <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll" CheckBoxName="Cb_path" HeaderText="可察看進度" OnCheckedChanged="Cb_path_CheckedChanged" AutoPostBack="True"/>
                                                 </HeaderTemplate>
                                                 <ItemTemplate>
-                                                    <asp:CheckBox ID="Cb_path" runat="server" />
+                                                    <asp:CheckBox ID="Cb_path" runat="server" OnCheckedChanged="Cb_path_CheckedChanged" AutoPostBack="True" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
 

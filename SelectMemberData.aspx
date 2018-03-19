@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/UserPage.Master" AutoEventWireup="true" CodeBehind="SelectMemberData.aspx.cs" Inherits="WebApplication1.ManagerPage" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/GuildPage.Master" AutoEventWireup="true" CodeBehind="SelectMemberData.aspx.cs" Inherits="WebApplication1.ManagerPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script src="My97DatePicker/WdatePicker.js"></script>
@@ -16,7 +16,6 @@
         }
 
         .row {
-            margin-top: 40px;
             padding: 0 10px;
         }
 
@@ -33,16 +32,18 @@
             height: 100%;
         }
 
-        body {
-            background-image: url(background.jpg);
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-position: center;
-            background-size: cover;
+
+
+        .auto-style1 {
+            width: 533px;
+        }
+
+        .panel panel-default{
+            width: 500px
         }
     </style>
     <script>
-        $(document).on('click', '.panel-heading span.clickable', function (e) {
+        $(document).on('click', '.panel-heading.clickable', function (e) {
             var $this = $(this);
             if (!$this.hasClass('panel-collapsed')) {
                 $this.parents('.panel').find('.panel-body').slideUp();
@@ -57,6 +58,55 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:GridView ID="Menu" runat="server">
-    </asp:GridView>
-    </asp:Content>
+    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+    </asp:UpdatePanel>
+    <br />
+    <div class="panel panel-primary">
+        <div class="panel-heading pull clickable">
+            <h3 class="panel-title "><span>查詢<i class="glyphicon glyphicon-chevron-up"></i></span></h3>
+        </div>
+        <div class="panel-body">
+            <table>
+                <tr>
+                    <td class="auto-style1">
+                        <div class="panel panel-default" <%--style="width: 500px"--%>>
+                            <div class="panel-heading">
+                                <asp:TextBox ID="TB_Inquire" runat="server"></asp:TextBox>
+                                <asp:Button ID="Button1" runat="server" Text="查詢" OnClick="Button1_Click" />
+                            </div>
+
+                            <div class="panel-body">
+                                <asp:GridView ID="Menu" runat="server"></asp:GridView>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    新增
+    <asp:DropDownList ID="DropDownList1" runat="server">
+        <asp:ListItem Value="Dp">部門</asp:ListItem>
+        <asp:ListItem Value="FT">公文總類</asp:ListItem>
+        <asp:ListItem Value="PO">職稱</asp:ListItem>
+    </asp:DropDownList>
+
+    <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+
+    <asp:Button ID="Button2" runat="server" Text="確定新增" OnClick="Button2_Click" />
+
+    <asp:TextBox ID="TextBox3" runat="server" Visible="False"></asp:TextBox>
+    <asp:TextBox ID="TextBox4" runat="server" Visible="False"></asp:TextBox>
+    <asp:GridView ID="TG" runat="server"></asp:GridView>
+
+</asp:Content>

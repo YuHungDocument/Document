@@ -18,7 +18,6 @@ namespace WebApplication1
         string txtKey;
         string txtIV;
         string txt_Ciphertext_Text;
-        string txt_Ciphertext_Title;
         string txt_Ciphertext_Proposition;
         string txt_Ciphertext_DocumentContent;
         string txt_PKmessage;

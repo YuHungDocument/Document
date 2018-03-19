@@ -81,7 +81,7 @@ namespace WebApplication1
             }
         }
 
-        //AES解密功能
+        #region AES解密功能
         public string AESDecryption(string Key, string IV, string CipherText)
         {
             UTF32Encoding utf32Encoding = new UTF32Encoding();
@@ -105,7 +105,7 @@ namespace WebApplication1
                 return Encoding.Unicode.GetString(encryptedText);
             }
         }
-
+        #endregion
 
 
         public void bind()
@@ -114,6 +114,7 @@ namespace WebApplication1
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
                 cn.Open();
+
                 #region 讀公文資料
                 SqlCommand cmd = new SqlCommand("Select * from Fil Where SID=@SID");
                 cmd.Connection = cn;
@@ -143,7 +144,8 @@ namespace WebApplication1
                     }
                 }
                 #endregion
-                #region 判斷投票完成或者是不是投票類型公文
+
+                #region 判斷簽核是否完成
                 SqlCommand cmd2 = new SqlCommand(@"Select * From Detail Where SID=@SID AND EID=@EID");
                 cmd2.Connection = cn;
                 cmd2.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
@@ -164,6 +166,11 @@ namespace WebApplication1
                         }
                     }
                 #endregion
+
+                #region 判斷可不可看進度
+
+                #endregion
+
                 #region 找出金鑰位址
                 SqlCommand cmdfindkeyaddress = new SqlCommand(@"Select KeyAddress From UserInfo Where EID=@EID");
                 cmdfindkeyaddress.Connection = cn;
@@ -181,6 +188,7 @@ namespace WebApplication1
                     }
                 }
                 #endregion
+
                 try
                 {
                     StreamReader str = new StreamReader(@"" + KeyAddress + "");
@@ -246,7 +254,7 @@ namespace WebApplication1
                 }
             }
         }
-
+        #region 讀取Vote投票內容 bind2()
         public void bind2()
         {
             string sqlstr = "select * from Vote where SID='" + Session["keyId"].ToString() + "'";
@@ -281,7 +289,9 @@ namespace WebApplication1
                 }
             }
         }
+        #endregion
 
+        #region 簽核
         protected void Btn_check_Click(object sender, EventArgs e)
         {
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
@@ -411,5 +421,6 @@ namespace WebApplication1
                 }
             }
         }
+        #endregion
     }
 }

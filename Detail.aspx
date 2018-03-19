@@ -56,5 +56,7 @@
             &nbsp;
                     <asp:Label ID="Lbl_Eorr" runat="server" ForeColor="Red" Text="密碼錯誤" Visible="False"></asp:Label>
         </asp:Panel>
+        <br />
+
     </div>
 </asp:Content>

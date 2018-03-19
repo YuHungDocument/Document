@@ -967,13 +967,13 @@ namespace WebApplication1
                 {
                     for (int i = 0; i < GridView2.Rows.Count; i++)
                     {
-                        string Lvl = ((TextBox)GridView2.Rows[i].FindControl("TextBox2")).Text.Trim();
-                        string EID = ((TextBox)GridView2.Rows[i].FindControl("TextBox3")).Text.Trim();
-                        string Department = ((TextBox)GridView2.Rows[i].FindControl("TextBox4")).Text.Trim();
-                        string Name = ((TextBox)GridView2.Rows[i].FindControl("TextBox5")).Text.Trim();
-                        string status = ((DropDownList)GridView2.Rows[i].FindControl("Ddl_status")).Text.Trim();
-
-                        if (SID != "" && Lvl != "" && Department != "" && Name != "" && status != "")
+                        string Lvl = ((TextBox)GridView2.Rows[i].FindControl("Txt_Lvl")).Text.Trim();
+                        string EID = ((TextBox)GridView2.Rows[i].FindControl("Txt_EID")).Text.Trim();
+                        string Department = ((Label)GridView2.Rows[i].FindControl("Lbl_Dep")).Text.Trim();
+                        string Name = ((Label)GridView2.Rows[i].FindControl("Lbl_Name")).Text.Trim();
+                        CheckBox Cb_sign = ((CheckBox)GridView2.Rows[i].FindControl("Cb_sign"));
+                        CheckBox Cb_path = ((CheckBox)GridView2.Rows[i].FindControl("Cb_path"));
+                        if (SID != "" && Lvl != "" && Department != "" && Name != "" )
                         {
                             //找尋接收者PK並加密KEY
                             SqlCommand cmduserInfo = new SqlCommand(@"select UserInfo.PK from UserInfo LEFT JOIN Detail ON UserInfo.EID=Detail.EID where (UserInfo.EID=@EID)");
@@ -1042,16 +1042,30 @@ namespace WebApplication1
                                 cn3.Close();
                             }
                             //寫回資料庫                        
-                            SqlCommand cmd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,sign,look,RSAkey)VALUES(@SID,@Lvl,@EID,@Department,@status,@sign,@look,@RSAkey)");
+                            SqlCommand cmd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,path,sign,look,RSAkey)VALUES(@SID,@Lvl,@EID,@Department,@status,@path,@sign,@look,@RSAkey)");
                             cn3.Open();
                             cmd.Connection = cn3;
                             cmd.Parameters.AddWithValue("@SID", SID);
                             cmd.Parameters.AddWithValue("@Lvl", Lvl);
                             cmd.Parameters.AddWithValue("@EID", EID);
                             cmd.Parameters.AddWithValue("@Department", Department);
-                            cmd.Parameters.AddWithValue("@status", status);
                             cmd.Parameters.AddWithValue("@RSAkey", txt_PKmessage);
-
+                            if (Cb_sign.Checked == true)
+                            {
+                                cmd.Parameters.AddWithValue("@status", "1");
+                            }
+                            else
+                            {
+                                cmd.Parameters.AddWithValue("@status", "0");
+                            }
+                            if (Cb_path.Checked == true)
+                            {
+                                cmd.Parameters.AddWithValue("@path", "1");
+                            }
+                            else
+                            {
+                                cmd.Parameters.AddWithValue("@path", "0");
+                            }
                             if (Lvl == "1")
                             {
                                 cmd.Parameters.AddWithValue("@look", 1);
@@ -1067,7 +1081,7 @@ namespace WebApplication1
                         }
 
                     }
-                    Response.Redirect("sender.aspx");
+                    Response.Redirect("WaitDocument.aspx");
                 }
             }
             else

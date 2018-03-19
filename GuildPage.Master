@@ -571,7 +571,9 @@
                             <li>
                                 <asp:LinkButton ID="Lb_Manager" runat="server"><span class="glyphicon glyphicon-cog"></span>管理者介面</asp:LinkButton>
                             </li>
-
+                              <li>
+                                <asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click"><span class="glyphicon glyphicon-cog"></span>後台管理</asp:LinkButton>
+                            </li>
                         </ul>
                     </div>
                     <!-- /.navbar-collapse -->

@@ -42,7 +42,7 @@ namespace WebApplication1
                         }
                         else if (tmpUserInfo.Permission == 1)
                         {
-                            bind3();
+                            //bind3();
                            
                         }
                     }

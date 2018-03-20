@@ -7,7 +7,7 @@
     <div class="col-sm-8">
         <asp:Label ID="Lbl_Title" runat="server" Font-Size="X-Large" Font-Names="標楷體"></asp:Label>
         &nbsp;
-            <asp:Label ID="Lbl_SID" runat="server" ForeColor="#999999"></asp:Label>
+            <label for="male" style="color: #999999">文號：</label><asp:Label ID="Lbl_SID" runat="server" ForeColor="#999999"></asp:Label>
         <asp:Label ID="Lbl_EID" runat="server" Visible="False"></asp:Label>
         &nbsp;主辦人文號:
         <asp:Label ID="Lbl_SenderEID" runat="server"></asp:Label>
@@ -36,6 +36,16 @@
         <asp:Panel ID="Pel_Choose" runat="server" Visible="False">
             您的投票選項為：<asp:Label ID="Lbl_Choose" runat="server"></asp:Label>
         </asp:Panel>
+        <br />
+        <asp:GridView ID="gv_showTempFile" runat="server" AutoGenerateColumns="false" DataKeyNames="FNO">
+            <Columns>
+                <asp:TemplateField HeaderText="已上傳的檔案">
+                    <ItemTemplate>
+                        <asp:LinkButton ID="btn_filename" runat="server" OnClick="OpenDoc" Text='<%# Eval("Name") %>'></asp:LinkButton>
+                    </ItemTemplate>
+                </asp:TemplateField>
+            </Columns>
+        </asp:GridView>
         <br />
         <asp:Panel ID="Pnl_sign" runat="server" Visible="False">
             <asp:Panel ID="Pel_selectwatch" runat="server" Visible="False">

@@ -563,6 +563,7 @@
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
                                             <li><a href="set.aspx">帳戶設定</a></li>
+                                            <li><a href="setInfo.aspx">個資設定</a></li>
                                             <li><a href="SetAgent.aspx">代理人設定</a></li>
                                         </ul>
                                     </div>

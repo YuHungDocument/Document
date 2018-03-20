@@ -33,17 +33,25 @@ namespace WebApplication1
             tmpUserInfo = (UserInfo)Session["userinfo"];
             EID = tmpUserInfo.EID;
             string address = FileUpload1.PostedFile.FileName;
-            using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+            string strdr = root.Text;
+            if (!string.IsNullOrWhiteSpace(root.Text))
             {
-                cn.Open();
-                SqlCommand cmd = new SqlCommand(@"UPDATE UserInfo SET KeyAddress = @KeyAddress WHERE EID = @EID");
+                using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+                {
+                    cn.Open();
+                    SqlCommand cmd = new SqlCommand(@"UPDATE UserInfo SET KeyAddress = @KeyAddress WHERE EID = @EID");
 
-                cmd.Connection = cn;
-                address = @"D:\" + address;
-                cmd.Parameters.AddWithValue("@KeyAddress", address);
-                cmd.Parameters.AddWithValue("@EID", EID);
-                cmd.ExecuteNonQuery();//執行命令
-                Response.Write("<script>alert('金鑰建立成功!');location.href='WaitDocument.aspx';</script>");
+                    cmd.Connection = cn;
+                    address = strdr+ ":\\" + address;
+                    cmd.Parameters.AddWithValue("@KeyAddress", address);
+                    cmd.Parameters.AddWithValue("@EID", EID);
+                    cmd.ExecuteNonQuery();//執行命令
+                    Response.Write("<script>alert('金鑰建立成功!');location.href='WaitDocument.aspx';</script>");
+                }
+            }
+            else
+            {
+                Response.Write("<script>alert('請輸入根目錄!');location.href='KeyAddress.aspx';</script>");
             }
         }
     }

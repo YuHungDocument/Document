@@ -30,6 +30,7 @@ namespace WebApplication1
                 }
                 else
                 {
+                   
                    ((Label)this.Master.FindControl("Lb_Title")).Text = "內文";
                     UserInfo tmpUserInfo = null;
                     if (Session["userinfo"] is UserInfo)
@@ -69,6 +70,7 @@ namespace WebApplication1
                         }
                         cn.Close();
                     }
+                    FillData();
                     if (Lbl_Type.Text == "公文類型：代理人設定")
                     {
                         if (Lbl_SenderEID.Text == Lbl_EID.Text)
@@ -80,6 +82,34 @@ namespace WebApplication1
                 }
             }
         }
+        #region 找暫存檔填寫到gridview
+        private void FillData()
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection con = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+                SqlCommand cmd = new SqlCommand("select Name,FNO from Document where SID=@SID", con);
+                //cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                dt.Load(reader);
+                con.Close();
+            }
+            if (dt.Rows.Count > 0)
+            {
+                gv_showTempFile.DataSource = dt;
+                gv_showTempFile.DataBind();
+            }
+            else
+            {
+                gv_showTempFile.DataSource = dt;
+                gv_showTempFile.DataBind();
+            }
+
+        }
+#endregion
 
         #region AES解密功能
         public string AESDecryption(string Key, string IV, string CipherText)
@@ -105,8 +135,156 @@ namespace WebApplication1
                 return Encoding.Unicode.GetString(encryptedText);
             }
         }
+        public byte[] AESDecryptionFile(string Key, string IV, string CipherText)
+        {
+            UTF32Encoding utf32Encoding = new UTF32Encoding();
+            byte[] byte_Key = Encoding.UTF8.GetBytes(Key);
+            byte[] byte_IV = Encoding.UTF8.GetBytes(IV);
+            MD5CryptoServiceProvider provider_MD5 = new MD5CryptoServiceProvider();
+            byte[] byte_KeyMD5 = provider_MD5.ComputeHash(byte_Key);
+            byte[] byte_IVMD5 = provider_MD5.ComputeHash(byte_IV);
+            using (Aes aesAlg = Aes.Create())
+            {
+                //加密金鑰(32 Byte)
+                aesAlg.Key = byte_KeyMD5;
+                //初始向量(Initial Vector, iv) 
+                aesAlg.IV = byte_IVMD5;
+                //加密器
+                ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
+                //執行解密
+                byte[] encryptTextBytes = Convert.FromBase64String(CipherText);
+
+                byte[] encryptedText = decryptor.TransformFinalBlock(encryptTextBytes, 0, encryptTextBytes.Length);
+                return encryptedText;
+            }
+        }
+
         #endregion
 
+
+
+        #region 點選下載檔案
+        protected void OpenDoc(object sender, EventArgs e)
+        {
+            LinkButton lnk = (LinkButton)sender;
+            GridViewRow gr = (GridViewRow)lnk.NamingContainer;
+
+            int FNO = int.Parse(gv_showTempFile.DataKeys[gr.RowIndex].Value.ToString());
+            Download(FNO);
+        }
+        #endregion
+
+        #region 下載檔案coding
+        private void Download(int FNO)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection con = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+                SqlCommand cmd = new SqlCommand("select Name,FNO,DocumentContent,Extn from Document where FNO = @FNO and SID = @SID", con);
+                //cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@FNO", SqlDbType.Int).Value = FNO;
+                cmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                dt.Load(reader);
+            }
+            string name = dt.Rows[0]["Name"].ToString();
+            //檔案解密
+            #region 找出金鑰位址
+            using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+                cn.Open();
+                SqlCommand cmdfindkeyaddress = new SqlCommand(@"Select KeyAddress From UserInfo Where EID=@EID");
+                cmdfindkeyaddress.Connection = cn;
+                cmdfindkeyaddress.Parameters.AddWithValue("@EID", Lbl_EID.Text);
+
+                using (SqlDataReader dr2 = cmdfindkeyaddress.ExecuteReader())
+                {
+                    if (dr2.Read())
+                    {
+                        KeyAddress = dr2["KeyAddress"].ToString();
+                    }
+                    if (KeyAddress == "")
+                    {
+                        Response.Redirect("KeyAddress.aspx");
+                    }
+                }
+                #endregion
+
+                try
+                {
+                    StreamReader str = new StreamReader(@"" + KeyAddress + "");
+                    string ReadAll = str.ReadToEnd();
+                    // 建立 RSA 演算法物件的執行個體，並匯入先前建立的私鑰
+                    RSACryptoServiceProvider rsaProviderReceiver = new RSACryptoServiceProvider();
+                    rsaProviderReceiver.FromXmlString(ReadAll);
+                    try
+                    {
+
+                        SqlCommand cmd3 = new SqlCommand(@"Select RSAkey From Detail Where EID=@EID and SID=@SID");
+                        cmd3.Connection = cn;
+                        cmd3.Parameters.AddWithValue("@EID", Lbl_EID.Text);
+                        cmd3.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
+                        using (SqlDataReader dr2 = cmd3.ExecuteReader())
+                        {
+                            if (dr2.Read())
+                            {
+                                RSAkey = dr2["RSAkey"].ToString();
+                            }
+                        }
+
+                        // 將資料解密
+
+                        byte[] byteCipher = Convert.FromBase64String(RSAkey);
+                        byte[] bytePlain = rsaProviderReceiver.Decrypt(byteCipher, false);
+
+                        // 將解密後的資料，轉 UTF8 格式輸入
+                        key = Encoding.UTF8.GetString(bytePlain);
+                    }
+                    catch
+                    {
+                        Response.Write("<script>alert('解密失敗!');location.href='WaitDocument.aspx';</script>");
+                    }
+                }
+                catch
+                {
+                    Response.Write("<script>alert('此位置找無金鑰，請從新設定!');location.href='KeyAddress.aspx';</script>");
+                }
+
+
+                if (key != null)
+                {
+                    //找到解密iv
+
+                    SqlCommand cmd5 = new SqlCommand(@"Select AESiv From Fil Where SID=@SID");
+                    cmd5.Connection = cn;
+                    cmd5.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
+
+                    using (SqlDataReader dr3 = cmd5.ExecuteReader())
+                    {
+                        if (dr3.Read())
+                        {
+                            AESiv = dr3["AESiv"].ToString();
+                        }
+                    }
+
+                    //對稱解密
+                    string document = dt.Rows[0]["DocumentContent"].ToString();
+                    byte[] documentBytes = AESDecryptionFile(key, AESiv, document);
+
+                    Response.ClearContent();
+                    Response.ContentType = "application/octetstream";
+                    Response.AddHeader("Content-Disposition", string.Format("attachment; filename={0}", name));
+                    Response.AddHeader("Content-Length", documentBytes.Length.ToString());
+
+                    Response.BinaryWrite(documentBytes);
+                    Response.Flush();
+                    Response.Close();
+                }
+            }
+        }
+        #endregion
 
         public void bind()
         {
@@ -125,7 +303,7 @@ namespace WebApplication1
                     {
                         DateTime strDate = DateTime.Parse(dr["Date"].ToString());
 
-                        Lbl_SID.Text = "文號：" + dr["SID"].ToString();
+                        Lbl_SID.Text = dr["SID"].ToString();
                         Lbl_Title.Text = dr["Title"].ToString();
                         Lbl_Date.Text = String.Format("{0:yyyy/MM/dd}", strDate);
                         Lbl_Text.Text = dr["Text"].ToString();

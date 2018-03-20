@@ -77,6 +77,7 @@
     <Content Include="password.aspx" />
     <Content Include="set.aspx" />
     <Content Include="SetAgent.aspx" />
+    <Content Include="setInfo.aspx" />
     <Content Include="ucGridViewChoiceAll.ascx" />
     <Content Include="WriteDocument.aspx" />
     <Content Include="WriteVote.aspx" />
@@ -279,6 +280,13 @@
     </Compile>
     <Compile Include="SetAgent.aspx.designer.cs">
       <DependentUpon>SetAgent.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="setInfo.aspx.cs">
+      <DependentUpon>setInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="setInfo.aspx.designer.cs">
+      <DependentUpon>setInfo.aspx</DependentUpon>
     </Compile>
     <Compile Include="ucGridViewChoiceAll.ascx.cs">
       <DependentUpon>ucGridViewChoiceAll.ascx</DependentUpon>

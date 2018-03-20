@@ -76,8 +76,75 @@
                                 <asp:Button ID="Button1" runat="server" Text="查詢" OnClick="Button1_Click" />
                             </div>
 
-                            <div class="panel-body">
-                                <asp:GridView ID="Menu" runat="server"></asp:GridView>
+                            <div class="panel-body" style="width:80vw">
+                                <asp:GridView ID="Menu" runat="server" AutoGenerateColumns="False"  Style="border: 2px #ccc solid; border-radius: 10px;">
+                                    <Columns>
+                                        <asp:TemplateField HeaderText="員工編號">
+                                            <ItemTemplate>
+                                                <asp:Label ID="Lbl_Eid" runat="server" Text='<%# Eval("Eid") %>'></asp:Label>
+                                            </ItemTemplate>
+                                           
+                                            <HeaderStyle Width="200px" />
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="姓名">
+                                            <ItemTemplate>
+                                             <asp:Label ID="Lbl_Name" runat="server" Text='<%# Eval("Name") %>'></asp:Label>
+                                               </ItemTemplate>
+                                            <HeaderStyle Width="100px" />
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="單位部門">
+                                             <ItemTemplate>
+                                             <asp:Label ID="Lbl_Department" runat="server" Text='<%# Eval("Department") %>'></asp:Label>
+                                               </ItemTemplate>
+                                             <HeaderStyle Width="100px" />
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="職稱">
+                                            <ItemTemplate>
+                                             <asp:Label ID="Lbl_position" runat="server" Text='<%# Eval("position") %>'></asp:Label>
+                                               </ItemTemplate>
+                                            <HeaderStyle Width="100px" />
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="性別">
+                                             <ItemTemplate>
+                                             <asp:Label ID="Lbl_Gender" runat="server" Text='<%# Eval("Gender") %>'></asp:Label>
+                                               </ItemTemplate>
+                                             <HeaderStyle Width="100px" />
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="地址">
+                                            <ItemTemplate>
+                                             <asp:Label ID="Lbl_Address" runat="server" Text='<%# Eval("Address") %>'></asp:Label>
+                                               </ItemTemplate>
+                                            <HeaderStyle Width="200px" />
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="E-Mail">
+                                            <ItemTemplate>
+                                             <asp:Label ID="Lbl_Email" runat="server" Text='<%# Eval("Email") %>'></asp:Label>
+                                               </ItemTemplate>
+                                            <HeaderStyle Width="100px" />
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="電話">
+                                            <ItemTemplate>
+                                             <asp:Label ID="Lbl_Tel" runat="server" Text='<%# Eval("Tel") %>'></asp:Label>
+                                               </ItemTemplate>
+                                            <HeaderStyle Width="100px" />
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="手機">
+                                             <ItemTemplate>
+                                             <asp:Label ID="Lbl_Cel" runat="server" Text='<%# Eval("Cel") %>'></asp:Label>
+                                               </ItemTemplate>
+                                             <HeaderStyle Width="100px" />
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="生日">
+                                            <ItemTemplate>
+                                             <asp:Label ID="Lbl_Birthday" runat="server" Text='<%# Eval("Birthday") %>'></asp:Label>
+                                               </ItemTemplate>
+                                            <HeaderStyle Width="100px" />
+                                        </asp:TemplateField>
+                                    </Columns>
+                                   <EmptyDataRowStyle BorderStyle="None" Font-Size="Large" />
+                                    <HeaderStyle Font-Size="Large" />
+                                    <RowStyle Font-Size="Large" BackColor="White" />
+                                </asp:GridView>
                             </div>
                         </div>
                     </td>

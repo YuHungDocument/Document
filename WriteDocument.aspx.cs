@@ -804,7 +804,7 @@ namespace WebApplication1
         }
         #endregion
 
-        #region 點選插入
+        #region 點選LinkButton插入群組
         protected void GridView4_SelectedIndexChanged(object sender, EventArgs e)
         {
             int i;

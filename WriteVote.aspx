@@ -1,5 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/GuildPage.Master" AutoEventWireup="true" CodeBehind="WriteVote.aspx.cs" Inherits="WebApplication1.WriteVote" %>
 
+<%@ Register Src="~/ucGridViewChoiceAll.ascx" TagPrefix="uc1" TagName="ucGridViewChoiceAll" %>
+
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script src="My97DatePicker/WdatePicker.js"></script>
     <script type="text/javascript">
@@ -135,14 +138,14 @@
                         <td colspan="4" style="height: 22px">說　　明：<asp:TextBox ID="Txt_Text" class="form-control" runat="server" Height="99px" TextMode="MultiLine" Width="784px"></asp:TextBox>
                             <asp:UpdatePanel ID="UpdatePanel2" runat="server">
                                 <ContentTemplate>
-                                    <asp:GridView ID="GridView5" runat="server" AutoGenerateColumns="False">
+                                    <asp:GridView ID="GridView5" runat="server" AutoGenerateColumns="False" OnRowDeleting="GridView5_RowDeleting" DataKeyNames="number">
                                         <Columns>
                                             <asp:TemplateField HeaderText="選項">
                                                 <HeaderTemplate>
                                                     選項<asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click">+</asp:LinkButton>
                                                 </HeaderTemplate>
                                                 <ItemTemplate>
-                                                    <asp:Label ID="Label1" runat="server" Text='<%# Bind("number") %>'></asp:Label>
+                                                    <asp:Label ID="Lbl_number" runat="server" Text='<%# Bind("number") %>'></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="選項內容">
@@ -150,14 +153,15 @@
                                                     <asp:TextBox ID="Txt_content" runat="server" DataField="Vname"></asp:TextBox>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="刪除" ShowHeader="False">
+                                                <ItemTemplate>
+                                                    <asp:LinkButton ID="Lb_Delete" runat="server" CausesValidation="False" CommandName="Delete" Text="刪除" OnClientClick="return confirm('確認刪除?')"></asp:LinkButton>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                         </Columns>
                                     </asp:GridView>
                                 </ContentTemplate>
                             </asp:UpdatePanel>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="4" style="height: 22px">擬　　辦：<asp:TextBox ID="txt_Proposition" class="form-control" runat="server" Height="100px" TextMode="MultiLine" Width="785px"></asp:TextBox>
                         </td>
                     </tr>
                 </table>
@@ -187,7 +191,7 @@
                                         <asp:Label ID="Lbl_GpName" runat="server" Text="Label" Visible="False"></asp:Label>
                                         <br />
                                         <br />
-                                        <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" OnRowDataBound="GridView2_RowDataBound">
+                                        <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False">
                                             <Columns>
                                                 <asp:TemplateField HeaderText="排列" ShowHeader="False" Visible="False">
                                                     <ItemTemplate>
@@ -197,31 +201,45 @@
                                                 <asp:BoundField DataField="SID" HeaderText="序列" Visible="false" />
                                                 <asp:TemplateField HeaderText="層級">
                                                     <ItemTemplate>
-                                                        <asp:TextBox DataField="Lvl" ID="TextBox2" runat="server" OnTextChanged="TextBox2_TextChanged" TextMode="Number"></asp:TextBox>
+                                                        <asp:TextBox DataField="Lvl" ID="Txt_Lvl" runat="server" OnTextChanged="Txt_Lvl_TextChanged" TextMode="Number" Width="50px" AutoPostBack="True"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="人員編號">
                                                     <ItemTemplate>
-                                                        <asp:TextBox DataField="EID" ID="TextBox3" runat="server" AutoPostBack="True" OnTextChanged="TextBox3_TextChanged"></asp:TextBox>
+                                                        <asp:TextBox DataField="EID" placeholder="請輸入員工編號或姓名" ID="Txt_EID" runat="server" AutoPostBack="True" OnTextChanged="Txt_EID_TextChanged"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="部門">
                                                     <ItemTemplate>
-                                                        <asp:TextBox DataField="Department" ID="TextBox4" runat="server"></asp:TextBox>
+                                                        <asp:Label ID="Lbl_Dep" runat="server"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="員工姓名">
                                                     <ItemTemplate>
-                                                        <asp:TextBox DataField="Name" ID="TextBox5" runat="server" AutoPostBack="True" OnTextChanged="TextBox5_TextChanged"></asp:TextBox>
+                                                        <asp:Label ID="Lbl_Name" runat="server"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="簽核模式">
+
+                                                <asp:TemplateField>
+                                                    <HeaderTemplate>
+                                                        <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll" CheckBoxName="Cb_sign" HeaderText="需簽章" OnCheckedChanged="Cb_sign_CheckedChanged" AutoPostBack="True" />
+
+                                                    </HeaderTemplate>
                                                     <ItemTemplate>
-                                                        <asp:DropDownList DataField="status" ID="Ddl_status" runat="server" OnSelectedIndexChanged="Ddl_status_SelectedIndexChanged">
-                                                        </asp:DropDownList>
+                                                        <asp:CheckBox ID="Cb_sign" runat="server" OnCheckedChanged="Cb_sign_CheckedChanged" AutoPostBack="True" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
+                                                <asp:TemplateField>
+                                                    <HeaderTemplate>
+                                                        <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll1" CheckBoxName="Cb_path" HeaderText="可察看進度" OnCheckedChanged="Cb_path_CheckedChanged" AutoPostBack="True" />
+                                                    </HeaderTemplate>
+                                                    <ItemTemplate>
+                                                        <asp:CheckBox ID="Cb_path" runat="server" OnCheckedChanged="Cb_path_CheckedChanged" AutoPostBack="True" />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+
                                             </Columns>
+                                            <RowStyle HorizontalAlign="Center" />
                                         </asp:GridView>
                                         <br />
                                     </ContentTemplate>

@@ -20,7 +20,6 @@ namespace WebApplication1
         string txtKey;
         string txtIV;
         string txt_Ciphertext_Text;
-        string txt_Ciphertext_Proposition;
         string txt_Ciphertext_DocumentContent;
         string txt_PKmessage;
         private SqlConnection connection;
@@ -37,6 +36,9 @@ namespace WebApplication1
                 }
                 else
                 {
+                    #region 內容
+                    Session["number"] = 1;
+                    Session["max"] = 1;
                     ((LinkButton)this.Master.FindControl("Lb_Write")).BackColor = Color.White;
                     ((LinkButton)this.Master.FindControl("Lb_Write")).ForeColor = Color.Black;
                     ((Label)this.Master.FindControl("Lb_Title")).Text = "撰寫投票";
@@ -64,6 +66,12 @@ namespace WebApplication1
                             cmd2.Parameters.AddWithValue("@SID", Lbl_SID.Text);
                             cmd2.ExecuteNonQuery();
                             bind3();
+                            SqlCommand votecmd = new SqlCommand("Insert Into Vote(SID,number) Values(@SID,@number)");
+                            votecmd.Connection = cn;
+                            votecmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+                            votecmd.Parameters.AddWithValue("@number", int.Parse(Session["number"].ToString()));
+                            votecmd.ExecuteNonQuery();
+                            bind4();
                             cmd.Connection = cn;
                             cmd.Parameters.AddWithValue("@EID", Lbl_EID.Text);
                             using (SqlDataReader dr = cmd.ExecuteReader())
@@ -77,10 +85,12 @@ namespace WebApplication1
                             cn.Close();
                         }
                     }
+                    #endregion
                 }
             }
         }
 
+        #region AES加密功能
         public string AESEncryption(string Key, string IV, string PlainText)
         {
             byte[] byte_Key = Encoding.UTF8.GetBytes(Key);
@@ -122,32 +132,54 @@ namespace WebApplication1
                 return Convert.ToBase64String(cryptedText);
             }
         }
-        protected void TextBox2_TextChanged(object sender, EventArgs e)
+        #endregion
+
+        #region 改變Gridview的Lvl(層級)時做的Update
+        protected void Txt_Lvl_TextChanged(object sender, EventArgs e)
         {
             TextBox curTextBox = (TextBox)sender;
             int gvRowIndex = (curTextBox.NamingContainer as GridViewRow).RowIndex;
-            string UserEID = ((TextBox)GridView2.Rows[gvRowIndex].FindControl("TextBox3")).Text.Trim();
+            string UserEID = ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text.Trim();
             string ID = ((Label)GridView2.Rows[gvRowIndex].FindControl("Label1")).Text.Trim();
             using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
+                CheckBox Cb_sign = ((CheckBox)GridView2.Rows[gvRowIndex].FindControl("Cb_sign"));
+                CheckBox Cb_path = ((CheckBox)GridView2.Rows[gvRowIndex].FindControl("Cb_path"));
                 cn2.Open();
-                SqlCommand cmd2 = new SqlCommand("Update Preview set Lvl=@Lvl,Department=@Department,EID=@EID,Name=@Name,status=@status Where ID=@ID");
-                cmd2.Parameters.AddWithValue("@Lvl", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("TextBox2")).Text);
-                cmd2.Parameters.AddWithValue("@Department", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("TextBox4")).Text);
-                cmd2.Parameters.AddWithValue("@EID", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("TextBox3")).Text);
-                cmd2.Parameters.AddWithValue("@Name", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("TextBox5")).Text);
-                cmd2.Parameters.AddWithValue("@status", ((DropDownList)GridView2.Rows[gvRowIndex].FindControl("Ddl_status")).SelectedValue);
+                SqlCommand cmd2 = new SqlCommand("Update Preview set Lvl=@Lvl,Department=@Department,EID=@EID,Name=@Name,status=@status,path=@path Where ID=@ID");
+                cmd2.Parameters.AddWithValue("@Lvl", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_Lvl")).Text);
+                cmd2.Parameters.AddWithValue("@Department", ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Dep")).Text);
+                cmd2.Parameters.AddWithValue("@EID", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text);
+                cmd2.Parameters.AddWithValue("@Name", ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Name")).Text);
+                if (Cb_sign.Checked == true)
+                {
+                    cmd2.Parameters.AddWithValue("@status", "1");
+                }
+                else
+                {
+                    cmd2.Parameters.AddWithValue("@status", "0");
+                }
+                if (Cb_path.Checked == true)
+                {
+                    cmd2.Parameters.AddWithValue("@path", "1");
+                }
+                else
+                {
+                    cmd2.Parameters.AddWithValue("@path", "0");
+                }
                 cmd2.Parameters.AddWithValue("@ID", ID);
                 cmd2.Connection = cn2;
                 cmd2.ExecuteNonQuery();
             }
         }
+        #endregion
 
-        protected void TextBox3_TextChanged(object sender, EventArgs e)
+        #region Gridview的輸入EID或名字找到人
+        protected void Txt_EID_TextChanged(object sender, EventArgs e)
         {
             TextBox curTextBox = (TextBox)sender;
             int gvRowIndex = (curTextBox.NamingContainer as GridViewRow).RowIndex;
-            string UserEID = ((TextBox)GridView2.Rows[gvRowIndex].FindControl("TextBox3")).Text.Trim();
+            string UserEID = ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text.Trim();
             string ID = ((Label)GridView2.Rows[gvRowIndex].FindControl("Label1")).Text.Trim();
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
@@ -159,54 +191,88 @@ namespace WebApplication1
                 {
                     if (dr.Read())
                     {
-                        ((TextBox)GridView2.Rows[gvRowIndex].FindControl("TextBox4")).Text = dr["Department"].ToString();
-                        ((TextBox)GridView2.Rows[gvRowIndex].FindControl("TextBox5")).Text = dr["Name"].ToString();
+                        ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Dep")).Text = dr["Department"].ToString();
+                        ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Name")).Text = dr["Name"].ToString();
                         using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
                         {
+                            CheckBox Cb_sign = ((CheckBox)GridView2.Rows[gvRowIndex].FindControl("Cb_sign"));
+                            CheckBox Cb_path = ((CheckBox)GridView2.Rows[gvRowIndex].FindControl("Cb_path"));
                             cn2.Open();
-                            SqlCommand cmd2 = new SqlCommand("Update Preview set Lvl=@Lvl,Department=@Department,EID=@EID,Name=@Name,status=@status Where ID=@ID");
-                            cmd2.Parameters.AddWithValue("@Lvl", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("TextBox2")).Text);
-                            cmd2.Parameters.AddWithValue("@Department", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("TextBox4")).Text);
-                            cmd2.Parameters.AddWithValue("@EID", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("TextBox3")).Text);
-                            cmd2.Parameters.AddWithValue("@Name", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("TextBox5")).Text);
-                            cmd2.Parameters.AddWithValue("@status", ((DropDownList)GridView2.Rows[gvRowIndex].FindControl("Ddl_status")).SelectedValue);
+                            SqlCommand cmd2 = new SqlCommand("Update Preview set Lvl=@Lvl,Department=@Department,EID=@EID,Name=@Name,status=@status,path=@path Where ID=@ID");
+                            cmd2.Parameters.AddWithValue("@Lvl", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_Lvl")).Text);
+                            cmd2.Parameters.AddWithValue("@Department", ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Dep")).Text);
+                            cmd2.Parameters.AddWithValue("@EID", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text);
+                            cmd2.Parameters.AddWithValue("@Name", ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Name")).Text);
+                            if (Cb_sign.Checked == true)
+                            {
+                                cmd2.Parameters.AddWithValue("@status", "1");
+                            }
+                            else
+                            {
+                                cmd2.Parameters.AddWithValue("@status", "0");
+                            }
+                            if (Cb_path.Checked == true)
+                            {
+                                cmd2.Parameters.AddWithValue("@path", "1");
+                            }
+                            else
+                            {
+                                cmd2.Parameters.AddWithValue("@path", "0");
+                            }
                             cmd2.Parameters.AddWithValue("@ID", ID);
                             cmd2.Connection = cn2;
                             cmd2.ExecuteNonQuery();
                         }
                     }
                 }
+
+                SqlCommand namemd = new SqlCommand("Select * from UserInfo Where Name=@Name");
+                namemd.Parameters.AddWithValue("@Name", UserEID);
+                namemd.Connection = cn;
+                using (SqlDataReader dr = namemd.ExecuteReader())
+                {
+                    if (dr.Read())
+                    {
+                        ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text = dr["EID"].ToString();
+                        ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Dep")).Text = dr["Department"].ToString();
+                        ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Name")).Text = dr["Name"].ToString();
+                        using (SqlConnection cn3 = new SqlConnection(tmpdbhelper.DB_CnStr))
+                        {
+                            CheckBox ck = ((CheckBox)GridView2.Rows[gvRowIndex].FindControl("Cb_sign"));
+                            CheckBox Cb_path = ((CheckBox)GridView2.Rows[gvRowIndex].FindControl("Cb_path"));
+                            cn3.Open();
+                            SqlCommand cmd2 = new SqlCommand("Update Preview set Lvl=@Lvl,Department=@Department,EID=@EID,Name=@Name,status=@status,@path=path Where ID=@ID");
+                            cmd2.Parameters.AddWithValue("@Lvl", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_Lvl")).Text);
+                            cmd2.Parameters.AddWithValue("@Department", ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Dep")).Text);
+                            cmd2.Parameters.AddWithValue("@EID", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text);
+                            cmd2.Parameters.AddWithValue("@Name", ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Name")).Text);
+                            if (ck.Checked == true)
+                            {
+                                cmd2.Parameters.AddWithValue("@status", "1");
+                            }
+                            else
+                            {
+                                cmd2.Parameters.AddWithValue("@status", "0");
+                            }
+                            if (Cb_path.Checked == true)
+                            {
+                                cmd2.Parameters.AddWithValue("@path", "1");
+                            }
+                            else
+                            {
+                                cmd2.Parameters.AddWithValue("@path", "0");
+                            }
+                            cmd2.Parameters.AddWithValue("@ID", ID);
+                            cmd2.Connection = cn3;
+                            cmd2.ExecuteNonQuery();
+                        }
+                    }
+                }
             }
         }
+        #endregion
 
-        protected void TextBox5_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void Ddl_status_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            TextBox curTextBox = (TextBox)sender;
-            int gvRowIndex = (curTextBox.NamingContainer as GridViewRow).RowIndex;
-            string UserEID = ((TextBox)GridView2.Rows[gvRowIndex].FindControl("TextBox3")).Text.Trim();
-            string ID = ((Label)GridView2.Rows[gvRowIndex].FindControl("Label1")).Text.Trim();
-            using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
-            {
-                cn2.Open();
-                SqlCommand cmd2 = new SqlCommand("Update Preview set Lvl=@Lvl,Department=@Department,EID=@EID,Name=@Name,status=@status Where ID=@ID");
-                cmd2.Parameters.AddWithValue("@Lvl", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("TextBox2")).Text);
-                cmd2.Parameters.AddWithValue("@Department", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("TextBox4")).Text);
-                cmd2.Parameters.AddWithValue("@EID", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("TextBox3")).Text);
-                cmd2.Parameters.AddWithValue("@Name", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("TextBox5")).Text);
-                cmd2.Parameters.AddWithValue("@status", ((DropDownList)GridView2.Rows[gvRowIndex].FindControl("Ddl_status")).SelectedValue);
-                cmd2.Parameters.AddWithValue("@ID", ID);
-                cmd2.Connection = cn2;
-                cmd2.ExecuteNonQuery();
-            }
-        }
-
-
-
+        #region 插入群組
         protected void Btn_Insert_Click(object sender, EventArgs e)
         {
             for (int i = 0; i < GridView4.Rows.Count; i++)
@@ -219,9 +285,12 @@ namespace WebApplication1
                 }
             }
         }
+        #endregion
 
+        #region bind
         public void bind()
         {
+
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
                 cn.Open();
@@ -262,10 +331,11 @@ namespace WebApplication1
                                 while (dr2.Read())
                                 {
 
-                                    ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("TextBox2")).Text = dr2["Lvl"].ToString();
-                                    ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("TextBox3")).Text = dr2["EID"].ToString();
-                                    ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("TextBox4")).Text = dr2["Department"].ToString();
-                                    ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("TextBox5")).Text = dr2["Name"].ToString();
+                                    ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Txt_Lvl")).Text = dr2["Lvl"].ToString();
+                                    ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("EID")).Text = dr2["EID"].ToString();
+                                    ((Label)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Lbl_Dep")).Text = dr2["Department"].ToString();
+                                    ((Label)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Lbl_Name")).Text = dr2["Name"].ToString();
+
                                     ((DropDownList)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Ddl_status")).Text = dr2["status"].ToString();
                                     Session["i"] = int.Parse(Session["i"].ToString()) + 1;
                                 }
@@ -276,9 +346,12 @@ namespace WebApplication1
                 }
             }
         }
+        #endregion
 
+        #region bind2
         public void bind2()
         {
+
             string sqlstr = "select * from Record ";
             SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
             SqlDataAdapter myda = new SqlDataAdapter(sqlstr, sqlcon);
@@ -291,8 +364,11 @@ namespace WebApplication1
             GridView4.DataKeyNames = new string[] { "GID" };//主键
             GridView4.DataBind();
             sqlcon.Close();
-        }
 
+        }
+        #endregion
+
+        #region bind3
         public void bind3()
         {
             string sqlstr = "select * from Preview Where SID='" + Lbl_SID.Text + "'";
@@ -308,13 +384,13 @@ namespace WebApplication1
             GridView2.DataSource = myds;
             GridView2.DataBind();
             sqlcon.Close();
-
-
         }
+        #endregion
 
+        #region bind4
         public void bind4()
         {
-            string sqlstr = "select * from Vote Where VID='" + Session["VID"].ToString() + "'";
+            string sqlstr = "select * from Vote Where SID='" + Lbl_SID.Text + "'";
 
             SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
             SqlCommand cmd = new SqlCommand(sqlstr, sqlcon);
@@ -330,7 +406,9 @@ namespace WebApplication1
 
 
         }
+        #endregion
 
+        #region 上傳檔案
         protected void btn_upload_Click(object sender, EventArgs e)
         {
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
@@ -375,6 +453,9 @@ namespace WebApplication1
                 }
             }
         }
+        #endregion
+
+        #region 找暫存檔填寫到gridview
         private void FillData()
         {
             DataTable dt = new DataTable();
@@ -401,6 +482,9 @@ namespace WebApplication1
             }
 
         }
+        #endregion
+
+        #region 增加一列
         protected void Button1_Click(object sender, EventArgs e)
         {
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
@@ -422,18 +506,37 @@ namespace WebApplication1
                         while (dr2.Read())
                         {
 
-                            ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("TextBox2")).Text = dr2["Lvl"].ToString();
-                            ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("TextBox3")).Text = dr2["EID"].ToString();
-                            ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("TextBox4")).Text = dr2["Department"].ToString();
-                            ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("TextBox5")).Text = dr2["Name"].ToString();
-                            ((DropDownList)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Ddl_status")).Text = dr2["status"].ToString();
+                            ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Txt_Lvl")).Text = dr2["Lvl"].ToString();
+                            ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Txt_EID")).Text = dr2["EID"].ToString();
+                            ((Label)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Lbl_Dep")).Text = dr2["Department"].ToString();
+                            ((Label)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Lbl_Name")).Text = dr2["Name"].ToString();
+                            if (dr2["status"].ToString() == "1")
+                            {
+                                ((CheckBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Cb_sign")).Checked = true;
+                            }
+                            else
+                            {
+                                ((CheckBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Cb_sign")).Checked = false;
+                            }
+
+                            if (dr2["path"].ToString() == "1")
+                            {
+                                ((CheckBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Cb_path")).Checked = true;
+                            }
+                            else
+                            {
+                                ((CheckBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Cb_path")).Checked = false;
+                            }
+
                             Session["i"] = int.Parse(Session["i"].ToString()) + 1;
                         }
                     }
                 }
             }
         }
+        #endregion
 
+        #region 增加十列
         protected void Button2_Click(object sender, EventArgs e)
         {
             for (int i = 1; i <= 10; i++)
@@ -459,17 +562,35 @@ namespace WebApplication1
                     while (dr2.Read())
                     {
 
-                        ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("TextBox2")).Text = dr2["Lvl"].ToString();
-                        ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("TextBox3")).Text = dr2["EID"].ToString();
-                        ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("TextBox4")).Text = dr2["Department"].ToString();
-                        ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("TextBox5")).Text = dr2["Name"].ToString();
-                        ((DropDownList)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Ddl_status")).Text = dr2["status"].ToString();
+                        ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Txt_Lvl")).Text = dr2["Lvl"].ToString();
+                        ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Txt_EID")).Text = dr2["EID"].ToString();
+                        ((Label)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Lbl_Dep")).Text = dr2["Department"].ToString();
+                        ((Label)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Lbl_Name")).Text = dr2["Name"].ToString();
+                        if (dr2["status"].ToString() == "1")
+                        {
+                            ((CheckBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Cb_sign")).Checked = true;
+                        }
+                        else
+                        {
+                            ((CheckBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Cb_sign")).Checked = false;
+                        }
+
+                        if (dr2["path"].ToString() == "1")
+                        {
+                            ((CheckBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Cb_path")).Checked = true;
+                        }
+                        else
+                        {
+                            ((CheckBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Cb_path")).Checked = false;
+                        }
                         Session["i"] = int.Parse(Session["i"].ToString()) + 1;
                     }
                 }
             }
         }
+        #endregion
 
+        #region 增加新群組
         protected void Btn_Newgroup_Click(object sender, EventArgs e)
         {
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
@@ -485,7 +606,6 @@ namespace WebApplication1
                         Response.Write("<Script language='Javascript'>");
                         Response.Write("alert('此群組名稱已存在請重新輸入')");
                         Response.Write("</" + "Script>");
-
                     }
                     else
                     {
@@ -500,7 +620,6 @@ namespace WebApplication1
                             cmd4.Parameters.AddWithValue("@GpName", TextBox1.Text);
                             cmd4.Parameters.AddWithValue("@GID", GID);
                             cmd4.ExecuteNonQuery();
-
 
                             for (int i = 0; i < GridView2.Rows.Count - 1; i++)
                             {
@@ -559,7 +678,9 @@ namespace WebApplication1
 
             }
         }
+        #endregion
 
+        #region 點選LinkButton插入群組
         protected void GridView4_SelectedIndexChanged(object sender, EventArgs e)
         {
             int i;
@@ -569,6 +690,9 @@ namespace WebApplication1
 
             bind();
         }
+        #endregion
+
+        #region 編輯群組
         protected void Btn_editgroup_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(TextBox1.Text))
@@ -696,7 +820,9 @@ namespace WebApplication1
                 }
             }
         }
+        #endregion
 
+        #region 點選下載檔案
         protected void OpenDoc(object sender, EventArgs e)
         {
             LinkButton lnk = (LinkButton)sender;
@@ -705,6 +831,9 @@ namespace WebApplication1
             int FNO = int.Parse(gv_showTempFile.DataKeys[gr.RowIndex].Value.ToString());
             Download(FNO);
         }
+        #endregion
+
+        #region 下載檔案coding
         private void Download(int FNO)
         {
             DataTable dt = new DataTable();
@@ -731,8 +860,9 @@ namespace WebApplication1
             Response.Flush();
             Response.Close();
         }
+        #endregion
 
-
+        #region 刪除檔案
         protected void gv_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             connection = new SqlConnection(tmpdbhelper.DB_CnStr);
@@ -747,8 +877,7 @@ namespace WebApplication1
             command.Parameters.Clear();
             command.Parameters.AddWithValue("@Name", strName);
             command.Parameters.AddWithValue("@SID", Lbl_SID.Text);
-            command.CommandText =
-                "DELETE FROM tempDocument WHERE Name=@Name and SID=@SID ";
+            command.CommandText = "DELETE FROM tempDocument WHERE Name=@Name and SID=@SID ";
 
             connection.Open();
             command.ExecuteNonQuery();
@@ -760,67 +889,108 @@ namespace WebApplication1
             Session["FNOSession"] = FNO_INDEX;
             FillData();
         }
+        #endregion        
 
-        protected void GridView2_RowDataBound(object sender, GridViewRowEventArgs e)
+        #region 增加投票選項
+        protected void LinkButton1_Click(object sender, EventArgs e)
         {
-            //宣告DropDownList
-
-
-            DropDownList Ddl_sign;
-
-            string sql1;
-
-            DataView dv1;
-
-            //要特別注意一下這邊，如果不用這個if包起來的話，RowDataBound會跑Header，Footer，Pager
-            //我們的DropDownList是放在DataRow裡，所以只有在這邊才會找到DropDownList控制項
-            if (e.Row.RowType == DataControlRowType.DataRow)
+            Session["max"]= int.Parse(Session["max"].ToString()) + 1;
+            Session["number"] = int.Parse(Session["max"].ToString());
+            using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
-                //用FindControl(你的DropDownList的ID)，來找我們的DropDownList，記得要轉型喔!
-
-
-                Ddl_sign = (DropDownList)e.Row.FindControl("Ddl_status");
-
-                sql1 = "select * from TypeGroup where Tp=@Tp ";
-
-                string Dp = Ddl_sign.SelectedValue;
-
-                dv1 = GetDV3(sql1);
-
-                //DropDownList要顯示的內容
-
-
-                Ddl_sign.DataTextField = "TN";
-                //DropDownList顯示內容對應的值
-
-
-                Ddl_sign.DataValueField = "TID";
-                //繫結DropDownList
-
-
-                Ddl_sign.DataSource = dv1;
-
-
-                Ddl_sign.DataBind();
+                cn.Open();
+                SqlCommand cmd = new SqlCommand("Insert Into Vote(SID,number) Values(@SID,@number)");
+                cmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+                cmd.Parameters.AddWithValue("@number", int.Parse(Session["number"].ToString()));
+                cmd.Connection = cn;
+                cmd.ExecuteNonQuery();
+                
+                bind4();
             }
         }
-        private DataView GetDV3(string sql)
+        #endregion
+
+        #region 勾選sign時發生變化
+        protected void Cb_sign_CheckedChanged(object sender, EventArgs e)
         {
-
-            SqlConnection sqlCon = new SqlConnection(tmpdbhelper.DB_CnStr);
-            DataView dv;
-            SqlDataAdapter sqlAdp = new SqlDataAdapter();
-            SqlCommand cmd;
-            DataSet ds = new DataSet();
-            sqlCon.Open();
-            cmd = new SqlCommand(sql, sqlCon);
-            sqlAdp.SelectCommand = cmd;
-            cmd.Parameters.AddWithValue("@Tp", "FS");
-            sqlAdp.Fill(ds);
-            dv = new DataView(ds.Tables[0]);
-            return dv;
+            CheckBox CheckBox = (CheckBox)sender;
+            int gvRowIndex = (CheckBox.NamingContainer as GridViewRow).RowIndex;
+            string UserEID = ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text.Trim();
+            string ID = ((Label)GridView2.Rows[gvRowIndex].FindControl("Label1")).Text.Trim();
+            CheckBox ck = ((CheckBox)GridView2.Rows[gvRowIndex].FindControl("Cb_sign"));
+            CheckBox ckp = ((CheckBox)GridView2.Rows[gvRowIndex].FindControl("Cb_path"));
+            using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+                cn2.Open();
+                SqlCommand cmd2 = new SqlCommand("Update Preview set Lvl=@Lvl,Department=@Department,EID=@EID,Name=@Name,status=@status,path=@path Where ID=@ID");
+                cmd2.Parameters.AddWithValue("@Lvl", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_Lvl")).Text);
+                cmd2.Parameters.AddWithValue("@Department", ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Dep")).Text);
+                cmd2.Parameters.AddWithValue("@EID", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text);
+                cmd2.Parameters.AddWithValue("@Name", ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Name")).Text);
+                if (ck.Checked == true)
+                {
+                    cmd2.Parameters.AddWithValue("@status", "1");
+                }
+                else
+                {
+                    cmd2.Parameters.AddWithValue("@status", "0");
+                }
+                if (ckp.Checked == true)
+                {
+                    cmd2.Parameters.AddWithValue("@path", "1");
+                }
+                else
+                {
+                    cmd2.Parameters.AddWithValue("@path", "0");
+                }
+                cmd2.Parameters.AddWithValue("@ID", ID);
+                cmd2.Connection = cn2;
+                cmd2.ExecuteNonQuery();
+            }
         }
+        #endregion
 
+        #region 勾選path時發生變化
+        protected void Cb_path_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox CheckBox = (CheckBox)sender;
+            int gvRowIndex = (CheckBox.NamingContainer as GridViewRow).RowIndex;
+            string UserEID = ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text.Trim();
+            string ID = ((Label)GridView2.Rows[gvRowIndex].FindControl("Label1")).Text.Trim();
+            CheckBox ck = ((CheckBox)GridView2.Rows[gvRowIndex].FindControl("Cb_sign"));
+            CheckBox ckp = ((CheckBox)GridView2.Rows[gvRowIndex].FindControl("Cb_path"));
+            using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+                cn2.Open();
+                SqlCommand cmd2 = new SqlCommand("Update Preview set Lvl=@Lvl,Department=@Department,EID=@EID,Name=@Name,status=@status,path=@path Where ID=@ID");
+                cmd2.Parameters.AddWithValue("@Lvl", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_Lvl")).Text);
+                cmd2.Parameters.AddWithValue("@Department", ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Dep")).Text);
+                cmd2.Parameters.AddWithValue("@EID", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text);
+                cmd2.Parameters.AddWithValue("@Name", ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Name")).Text);
+                if (ck.Checked == true)
+                {
+                    cmd2.Parameters.AddWithValue("@status", "1");
+                }
+                else
+                {
+                    cmd2.Parameters.AddWithValue("@status", "0");
+                }
+                if (ckp.Checked == true)
+                {
+                    cmd2.Parameters.AddWithValue("@path", "1");
+                }
+                else
+                {
+                    cmd2.Parameters.AddWithValue("@path", "0");
+                }
+                cmd2.Parameters.AddWithValue("@ID", ID);
+                cmd2.Connection = cn2;
+                cmd2.ExecuteNonQuery();
+            }
+        }
+        #endregion
+
+        #region 送出
         protected void Btn_Save_Click(object sender, EventArgs e)
         {
             string SID = Lbl_SID.Text;
@@ -830,7 +1000,7 @@ namespace WebApplication1
                     for (int i = 0; i < GridView5.Rows.Count; i++)
                     {
                         string Vname = ((TextBox)GridView5.Rows[i].FindControl("Txt_content")).Text.Trim();
-                        string number = ((Label)GridView5.Rows[i].FindControl("Label1")).Text.Trim();
+                        string number = ((Label)GridView5.Rows[i].FindControl("Lbl_number")).Text.Trim();
                         if (Vname != "")
                         {
                             SqlCommand sqlcmd = new SqlCommand("Update Vote Set Vname=@Vname where SID=@SID and number=@number");
@@ -842,7 +1012,6 @@ namespace WebApplication1
                         }
                     }
                 }
-
             
             if (!string.IsNullOrWhiteSpace(Request.Form["d1"])
                 && !string.IsNullOrWhiteSpace(Txt_Title.Text)
@@ -852,7 +1021,7 @@ namespace WebApplication1
                 using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
                 {
                     //SqlCommand cmd4 = new SqlCommand(@"update Fil set Fil.Name=Document.Name,Fil.DocumentContent=Document.DocumentContent,Fil.Extn=Document.Extn  from Document join Fil on Fil.SID=Document.SID");
-                    SqlCommand cmd3 = new SqlCommand(@"Insert INTO Fil(SID,EID,Date,DeadLine,Text,Title,Proposition,Type,YOS,AESkey,AESiv)VALUES(@SID,@EID,@Date,@DeadLine,@Text,@Title,@Proposition,@Type,@YOS,@AESkey,@AESiv)");
+                    SqlCommand cmd3 = new SqlCommand(@"Insert INTO Fil(SID,EID,Date,DeadLine,Text,Title,Type,YOS,AESkey,AESiv)VALUES(@SID,@EID,@Date,@DeadLine,@Text,@Title,@Type,@YOS,@AESkey,@AESiv)");
                     cn2.Open();
                     cmd3.Connection = cn2;
                     //cmd4.Connection = cn2;
@@ -862,14 +1031,12 @@ namespace WebApplication1
                     txtIV = Convert.ToBase64String(symAlgorithm.IV);       //oeZlJhiaZB0=
                                                                            //對稱加密
                     txt_Ciphertext_Text = AESEncryption(txtKey, txtIV, Txt_Text.Text);
-                    txt_Ciphertext_Proposition = AESEncryption(txtKey, txtIV, txt_Proposition.Text);
                     cmd3.Parameters.AddWithValue("@SID", SID);
                     cmd3.Parameters.AddWithValue("@EID", Lbl_EID.Text);
                     cmd3.Parameters.AddWithValue("@Date", Lbl_Date.Text);
                     cmd3.Parameters.AddWithValue("@DeadLine", Request.Form["d1"]);
                     cmd3.Parameters.AddWithValue("@Text", txt_Ciphertext_Text);
                     cmd3.Parameters.AddWithValue("@Title", Txt_Title.Text);
-                    cmd3.Parameters.AddWithValue("@Proposition", txt_Ciphertext_Proposition);
                     cmd3.Parameters.AddWithValue("@Type","投票");
                     cmd3.Parameters.AddWithValue("@YOS", Ddp_YOS.SelectedValue);
                     cmd3.Parameters.AddWithValue("@AESkey", txtKey);
@@ -993,21 +1160,47 @@ namespace WebApplication1
 
 
         }
+        #endregion
 
-        protected void LinkButton1_Click(object sender, EventArgs e)
+        #region 投票選項刪除
+        protected void GridView5_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            Session["number"] = int.Parse(Session["number"].ToString()) + 1;
+            string sqlstr = "delete from Vote where number=@number";
+            SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
+            SqlCommand sqlcom = new SqlCommand(sqlstr, sqlcon);
+            //這樣就可以取得Keys值了
+            string keyId = GridView5.DataKeys[e.RowIndex].Value.ToString();
+            sqlcom.Parameters.AddWithValue("@number", int.Parse(keyId));
+            sqlcon.Open();
+            sqlcom.ExecuteNonQuery();
+
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
+                Session["number"] = 1;
                 cn.Open();
-                SqlCommand cmd = new SqlCommand("Insert Into Vote(SID,VID,number) Values(@SID,@VID,@number)");
-                cmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
-                cmd.Parameters.AddWithValue("@VID", Session["VID"].ToString());
-                cmd.Parameters.AddWithValue("@number", Session["number"].ToString());
-                cmd.Connection = cn;
-                cmd.ExecuteNonQuery();
-                bind4();
+                SqlCommand cmdselect = new SqlCommand("Select * From Vote Where SID=@SID");
+                cmdselect.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+                cmdselect.Connection = cn;
+                using (SqlDataReader dr = cmdselect.ExecuteReader())
+                {
+                    while(dr.Read())
+                    {
+                        using (SqlConnection cnupdate = new SqlConnection(tmpdbhelper.DB_CnStr))
+                        {
+                            Session["max"] = int.Parse(Session["number"].ToString());
+                            cnupdate.Open();
+                            SqlCommand cmdupdate = new SqlCommand("UpDate Vote Set number=@number where number=@nb");
+                            cmdupdate.Connection = cnupdate;
+                            cmdupdate.Parameters.AddWithValue("@number",int.Parse(Session["number"].ToString()));
+                            cmdupdate.Parameters.AddWithValue("@nb",int.Parse(dr["number"].ToString()));
+                            cmdupdate.ExecuteNonQuery();
+                            Session["number"] = int.Parse(Session["number"].ToString())+1;
+                        }
+                    }
+                }
             }
+            bind4();
         }
+        #endregion
     }
 }

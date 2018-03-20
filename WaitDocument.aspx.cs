@@ -359,6 +359,7 @@ namespace WebApplication1
                         if (dr.Read())
                         {
                             LB.ToolTip = "公文文號：" + dr["SID"].ToString();
+
                             #region 未來可能用到
                             //DateTime strDate = DateTime.Parse(dr["Date"].ToString());
                             //Date.Text = String.Format("{0:yyyy/MM/dd}", strDate);
@@ -370,6 +371,7 @@ namespace WebApplication1
                             //    e.Row.Attributes.Add("style", "background-color:#F9B7C2");
                             //}
 #endregion
+
                             using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
                             {
                                 cn2.Open();
@@ -385,7 +387,7 @@ namespace WebApplication1
                                     }
                                 }
                             }                         
-                                                    }
+                        }
                     }
                 }
             }

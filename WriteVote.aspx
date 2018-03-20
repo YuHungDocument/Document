@@ -138,7 +138,7 @@
                         <td colspan="4" style="height: 22px">說　　明：<asp:TextBox ID="Txt_Text" class="form-control" runat="server" Height="99px" TextMode="MultiLine" Width="784px"></asp:TextBox>
                             <asp:UpdatePanel ID="UpdatePanel2" runat="server">
                                 <ContentTemplate>
-                                    <asp:GridView ID="GridView5" runat="server" AutoGenerateColumns="False" OnRowDeleting="GridView5_RowDeleting" DataKeyNames="number">
+                                    <asp:GridView ID="GridView5" runat="server" AutoGenerateColumns="False"  DataKeyNames="number" OnRowDeleting="GridView5_RowDeleting">
                                         <Columns>
                                             <asp:TemplateField HeaderText="選項">
                                                 <HeaderTemplate>

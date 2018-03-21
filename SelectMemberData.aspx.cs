@@ -25,6 +25,8 @@ namespace WebApplication1
                     UserInfo tmpUserInfo;
                     if (Session["userinfo"] is UserInfo)
                     {
+                        ((Label)this.Master.FindControl("Lb_Title")).Text = "後台管理";
+
                         tmpUserInfo = (UserInfo)Session["userinfo"];
                         TB_Inquire.Text = "" + tmpUserInfo.Department + "";
                         if (tmpUserInfo.Permission == 3)
@@ -71,7 +73,7 @@ namespace WebApplication1
         {
             if (!string.IsNullOrWhiteSpace(TB_Inquire.Text))
             {
-                string sqlstr = @"select Eid,Name,Department,position,Gender,Address,Email,Tel,Cel,Birthday from UserInfo where position = '" + TB_Inquire.Text + "' OR Department = '" + TB_Inquire.Text + "'";
+                string sqlstr = @"select Eid,Name,Department,position,Gender,Address,Email,Tel,Cel,Birthday from UserInfo where position = '" + TB_Inquire.Text + "' OR Department = '" + TB_Inquire.Text + "' OR  EID = '" + TB_Inquire.Text + "' OR  Name = '" + TB_Inquire.Text + "'";
                 SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
                 SqlCommand cmd = new SqlCommand(sqlstr, sqlcon);
                 //cmd.Parameters.AddWithValue("@position", TextBox1.Text);

@@ -177,7 +177,16 @@
                             </div>
 
                             <div class="panel-body">
-                                <asp:GridView ID="TG" runat="server"></asp:GridView>
+                                <asp:GridView ID="TG" runat="server" AutoGenerateColumns="False">
+                                    <Columns>
+                                        <asp:TemplateField>
+                                             <ItemTemplate>
+                                             <asp:Label ID="Lbl_TG" runat="server" Text='<%# Eval("TN") %>'></asp:Label>
+                                               </ItemTemplate>
+                                             <HeaderStyle Width="100px" BorderWidth="0px" />
+                                        </asp:TemplateField>
+                                    </Columns>
+                                </asp:GridView>
                             </div>
                         </div>
                     </td>

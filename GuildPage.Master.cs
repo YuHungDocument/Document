@@ -24,8 +24,12 @@ namespace WebApplication1
                 {
                     tmpUserInfo = (UserInfo)Session["userinfo"];
                     Lb_UserInfo.Text = tmpUserInfo.Name;
-                    //判斷代理期限是否失效
-                    using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+                    if (tmpUserInfo.Permission < 5)
+                    {
+                        LinkButton1.Visible = true;
+                    }
+                        //判斷代理期限是否失效
+                        using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
                     {
                         cn.Open();
                         SqlCommand cmd = new SqlCommand(@"Select EndTime From AgentInfo Where EID=@EID");

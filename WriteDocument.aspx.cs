@@ -973,7 +973,7 @@ namespace WebApplication1
                         string Name = ((Label)GridView2.Rows[i].FindControl("Lbl_Name")).Text.Trim();
                         CheckBox Cb_sign = ((CheckBox)GridView2.Rows[i].FindControl("Cb_sign"));
                         CheckBox Cb_path = ((CheckBox)GridView2.Rows[i].FindControl("Cb_path"));
-                        if (SID != "" && Lvl != "" && Department != "" && Name != "" )
+                        if (SID != "" && Lvl != "" )
                         {
                             //找尋接收者PK並加密KEY
                             SqlCommand cmduserInfo = new SqlCommand(@"select UserInfo.PK from UserInfo LEFT JOIN Detail ON UserInfo.EID=Detail.EID where (UserInfo.EID=@EID)");

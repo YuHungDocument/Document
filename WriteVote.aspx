@@ -19,6 +19,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+                            <asp:Label ID="Lbl_EID" runat="server" Text="Label" Visible="False"></asp:Label>
+                            <br />
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="top: 18%;">
         <div class="container" style="width: 500px; height: 500px">
@@ -81,10 +83,9 @@
                     <tr>
                         <td class="text-left" style="width: 225px; height: 30px">文　　號：<asp:Label ID="Lbl_SID" runat="server"></asp:Label>
                         </td>
-                        <td style="width: 300px; height: 30px; padding-top: 5px;">&nbsp;</td>
-                        <td style="height: 30px" colspan="2">發布日期：<asp:Label ID="Lbl_Date" runat="server"></asp:Label>
-                            <asp:Label ID="Lbl_EID" runat="server" Text="Label" Visible="False"></asp:Label>
-                            &nbsp; 截止日期：<input type="text" runat="server" class="Wdate" id="d1" onclick="WdatePicker({ minDate: '%y-%M-{%d}' })" /></td>
+                        <td style="width: 300px; height: 30px; padding-top: 5px;">發布日期：<asp:Label ID="Lbl_Date" runat="server"></asp:Label>
+                            </td>
+                        <td style="height: 30px" colspan="2">&nbsp; 截止日期：<input type="text" runat="server" class="Wdate" id="d1" onclick="WdatePicker({ minDate: '%y-%M-{%d}' })" /></td>
                     </tr>
                     <tr>
                         <td style="width: 225px; height: 56px">保存期限：<span style="font-size: 16px; font-family: DFKai-SB"><asp:DropDownList ID="Ddp_YOS" runat="server" Height="30px" Width="70px">
@@ -103,7 +104,7 @@
                             <asp:ListItem>永久</asp:ListItem>
                         </asp:DropDownList>
                             年</span></td>
-                        <td style="width: 225px; height: 56px">發文者　：<asp:Label ID="Lbl_Sender" runat="server"></asp:Label>
+                        <td style="width: 225px; height: 56px">發布者　：<asp:Label ID="Lbl_Sender" runat="server"></asp:Label>
                         </td>
                         <td style="width: 225px; height: 56px">附　　件：
                                 <asp:FileUpload runat="server" ID="fu_upload" />
@@ -231,7 +232,7 @@
                                                 </asp:TemplateField>
                                                 <asp:TemplateField>
                                                     <HeaderTemplate>
-                                                        <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll1" CheckBoxName="Cb_path" HeaderText="可察看進度" OnCheckedChanged="Cb_path_CheckedChanged" AutoPostBack="True" />
+                                                        <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll1" CheckBoxName="Cb_path" HeaderText="可察看投票結果" OnCheckedChanged="Cb_path_CheckedChanged" AutoPostBack="True" />
                                                     </HeaderTemplate>
                                                     <ItemTemplate>
                                                         <asp:CheckBox ID="Cb_path" runat="server" OnCheckedChanged="Cb_path_CheckedChanged" AutoPostBack="True" />

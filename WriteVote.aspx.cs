@@ -994,27 +994,10 @@ namespace WebApplication1
         protected void Btn_Save_Click(object sender, EventArgs e)
         {
             string SID = Lbl_SID.Text;
-                using (SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr))
-                {
-                    sqlcon.Open();
-                    for (int i = 0; i < GridView5.Rows.Count; i++)
-                    {
-                        string Vname = ((TextBox)GridView5.Rows[i].FindControl("Txt_content")).Text.Trim();
-                        string number = ((Label)GridView5.Rows[i].FindControl("Lbl_number")).Text.Trim();
-                        if (Vname != "")
-                        {
-                            SqlCommand sqlcmd = new SqlCommand("Update Vote Set Vname=@Vname where SID=@SID and number=@number");
-                            sqlcmd.Connection = sqlcon;
-                            sqlcmd.Parameters.AddWithValue("@SID", SID);
-                            sqlcmd.Parameters.AddWithValue("@number", number);
-                            sqlcmd.Parameters.AddWithValue("@Vname", Vname);
-                            sqlcmd.ExecuteNonQuery();
-                        }
-                    }
-                }
             
-            if (!string.IsNullOrWhiteSpace(Request.Form["d1"])
-                && !string.IsNullOrWhiteSpace(Txt_Title.Text)
+
+            if (!string.IsNullOrWhiteSpace(d1.Value)
+                &&!string.IsNullOrWhiteSpace(Txt_Title.Text)
                 && !string.IsNullOrWhiteSpace(Txt_Text.Text)
                 )
             {
@@ -1034,7 +1017,7 @@ namespace WebApplication1
                     cmd3.Parameters.AddWithValue("@SID", SID);
                     cmd3.Parameters.AddWithValue("@EID", Lbl_EID.Text);
                     cmd3.Parameters.AddWithValue("@Date", Lbl_Date.Text);
-                    cmd3.Parameters.AddWithValue("@DeadLine", Request.Form["d1"]);
+                    cmd3.Parameters.AddWithValue("@DeadLine", d1.Value);
                     cmd3.Parameters.AddWithValue("@Text", txt_Ciphertext_Text);
                     cmd3.Parameters.AddWithValue("@Title", Txt_Title.Text);
                     cmd3.Parameters.AddWithValue("@Type","投票");
@@ -1044,19 +1027,39 @@ namespace WebApplication1
                     cmd3.ExecuteNonQuery();
                     //cmd4.ExecuteNonQuery();
                 }
+
+                using (SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr))
+                {
+                    sqlcon.Open();
+                    for (int i = 0; i < GridView5.Rows.Count; i++)
+                    {
+                        string Vname = ((TextBox)GridView5.Rows[i].FindControl("Txt_content")).Text.Trim();
+                        string number = ((Label)GridView5.Rows[i].FindControl("Lbl_number")).Text.Trim();
+                        if (Vname != "")
+                        {
+                            SqlCommand sqlcmd = new SqlCommand("Update Vote Set Vname=@Vname where SID=@SID and number=@number");
+                            sqlcmd.Connection = sqlcon;
+                            sqlcmd.Parameters.AddWithValue("@SID", SID);
+                            sqlcmd.Parameters.AddWithValue("@number", number);
+                            string txt_Vname = AESEncryption(txtKey, txtIV, Vname);
+                            sqlcmd.Parameters.AddWithValue("@Vname", txt_Vname);
+                            sqlcmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+
                 using (SqlConnection cn3 = new SqlConnection(tmpdbhelper.DB_CnStr))
                 {
                     for (int i = 0; i < GridView2.Rows.Count; i++)
                     {
+                        string Lvl = ((TextBox)GridView2.Rows[i].FindControl("Txt_Lvl")).Text.Trim();
+                        string EID = ((TextBox)GridView2.Rows[i].FindControl("Txt_EID")).Text.Trim();
+                        string Department = ((Label)GridView2.Rows[i].FindControl("Lbl_Dep")).Text.Trim();
+                        string Name = ((Label)GridView2.Rows[i].FindControl("Lbl_Name")).Text.Trim();
+                        CheckBox Cb_sign = ((CheckBox)GridView2.Rows[i].FindControl("Cb_sign"));
+                        CheckBox Cb_path = ((CheckBox)GridView2.Rows[i].FindControl("Cb_path"));
 
-
-                        string Lvl = ((TextBox)GridView2.Rows[i].FindControl("TextBox2")).Text.Trim();
-                        string EID = ((TextBox)GridView2.Rows[i].FindControl("TextBox3")).Text.Trim();
-                        string Department = ((TextBox)GridView2.Rows[i].FindControl("TextBox4")).Text.Trim();
-                        string Name = ((TextBox)GridView2.Rows[i].FindControl("TextBox5")).Text.Trim();
-                        string status = ((DropDownList)GridView2.Rows[i].FindControl("Ddl_status")).Text.Trim();
-
-                        if (SID != "" && Lvl != "" && Department != "" && Name != "" && status != "")
+                        if (SID != "" && Lvl != "")
                         {
                             //找尋接收者PK並加密KEY
                             SqlCommand cmduserInfo = new SqlCommand(@"select UserInfo.PK from UserInfo LEFT JOIN Detail ON UserInfo.EID=Detail.EID where (UserInfo.EID=@EID)");
@@ -1125,15 +1128,31 @@ namespace WebApplication1
                                 cn3.Close();
                             }
                             //寫回資料庫                        
-                            SqlCommand cmd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,sign,look,RSAkey)VALUES(@SID,@Lvl,@EID,@Department,@status,@sign,@look,@RSAkey)");
+                            SqlCommand cmd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,path,sign,look,RSAkey)VALUES(@SID,@Lvl,@EID,@Department,@status,@path,@sign,@look,@RSAkey)");
                             cn3.Open();
                             cmd.Connection = cn3;
                             cmd.Parameters.AddWithValue("@SID", SID);
                             cmd.Parameters.AddWithValue("@Lvl", Lvl);
                             cmd.Parameters.AddWithValue("@EID", EID);
                             cmd.Parameters.AddWithValue("@Department", Department);
-                            cmd.Parameters.AddWithValue("@status", status);
                             cmd.Parameters.AddWithValue("@RSAkey", txt_PKmessage);
+
+                            if (Cb_sign.Checked == true)
+                            {
+                                cmd.Parameters.AddWithValue("@status", "1");
+                            }
+                            else
+                            {
+                                cmd.Parameters.AddWithValue("@status", "0");
+                            }
+                            if (Cb_path.Checked == true)
+                            {
+                                cmd.Parameters.AddWithValue("@path", "1");
+                            }
+                            else
+                            {
+                                cmd.Parameters.AddWithValue("@path", "0");
+                            }
 
                             if (Lvl == "1")
                             {
@@ -1150,7 +1169,7 @@ namespace WebApplication1
                         }
 
                     }
-                    Response.Redirect("sender.aspx");
+                    Response.Redirect("WaitVote.aspx");
                 }
             }
             else

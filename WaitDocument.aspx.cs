@@ -359,7 +359,17 @@ namespace WebApplication1
                         if (dr.Read())
                         {
                             LB.ToolTip = "公文文號：" + dr["SID"].ToString();
+                            if(dr["Speed"].ToString()=="速件")
+                            {
+                                e.Row.Attributes.Add("OnMouseout", "this.style.background='#ADD8E6'");
+                                e.Row.Attributes.Add("style", "background-color:#ADD8E6");
+                            }
 
+                            if (dr["Speed"].ToString() == "最速件")
+                            {
+                                e.Row.Attributes.Add("OnMouseout", "this.style.background='#FFCCCC'");
+                                e.Row.Attributes.Add("style", "background-color:#FFCCCC");
+                            }
                             #region 未來可能用到
                             //DateTime strDate = DateTime.Parse(dr["Date"].ToString());
                             //Date.Text = String.Format("{0:yyyy/MM/dd}", strDate);
@@ -370,7 +380,7 @@ namespace WebApplication1
                             //    e.Row.Attributes.Add("OnMouseout", "this.style.background='#F9B7C2'");
                             //    e.Row.Attributes.Add("style", "background-color:#F9B7C2");
                             //}
-#endregion
+                            #endregion
 
                             using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
                             {

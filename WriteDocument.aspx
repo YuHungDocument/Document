@@ -87,12 +87,7 @@
             </td>
             <td style="background-color: #FFCC99; font-size: large; text-align: center;" colspan="4">速　　別</td>
             <td style="font-size: large; text-align: center;">
-                <asp:DropDownList ID="Ddl_Speed" runat="server">
-                    <asp:ListItem>--請選擇速別--</asp:ListItem>
-                    <asp:ListItem>普通</asp:ListItem>
-                    <asp:ListItem>急件</asp:ListItem>
-                    <asp:ListItem>超急件</asp:ListItem>
-                </asp:DropDownList>
+                <asp:DropDownList ID="Ddl_Speed" runat="server" DataSourceID="SqlDataSource2" DataTextField="TN" DataValueField="TN"></asp:DropDownList>
             </td>
         </tr>
         <tr style="height: 25px">
@@ -104,11 +99,17 @@
         <tr style="height: 25px">
             <td style="background-color: #FFCC99; font-size: large; text-align: center;">公文類型</td>
             <td style="font-size: large; text-align: center;">
-                <asp:DropDownList ID="Ddp_Type" runat="server" DataSourceID="SqlDataSource1" DataTextField="TN" DataValueField="TN" Height="30px" Width="170px">
+                <asp:DropDownList ID="Ddp_Type" runat="server" DataSourceID="SqlDataSource1" DataTextField="TN" DataValueField="TN" Height="30px" Width="185px">
                 </asp:DropDownList>
             </td>
             <td colspan="4">&nbsp;</td>
-            <td style="font-size: large;">&nbsp;</td>
+            <td style="font-size: large;">
+                <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString %>" SelectCommand="SELECT [TN] FROM [TypeGroup] WHERE ([Tp] = @Tp)">
+                    <SelectParameters>
+                        <asp:Parameter DefaultValue="Sp" Name="Tp" Type="String" />
+                    </SelectParameters>
+                </asp:SqlDataSource>
+            </td>
         </tr>
         <tr style="height: 25px">
             <td style="background-color: #FFCC99; font-size: large;">&nbsp;</td>

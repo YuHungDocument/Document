@@ -929,8 +929,8 @@ namespace WebApplication1
         protected void Btn_Save_Click(object sender, EventArgs e)
         {
             string SID = Lbl_SID.Text;
-            if (Ddp_Type.SelectedValue != "FT0"
-                && Ddl_Speed.SelectedValue != "--請選擇公文速別--"
+            if (Ddp_Type.SelectedValue != "--請選擇公文種類--"
+                && Ddl_Speed.SelectedValue != "--請選擇速別--"
                 && !string.IsNullOrWhiteSpace(Txt_Title.Text)
                 && !string.IsNullOrWhiteSpace(Txt_Text.Text)
                 )

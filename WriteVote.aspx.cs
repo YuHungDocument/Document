@@ -1037,10 +1037,11 @@ namespace WebApplication1
                         string number = ((Label)GridView5.Rows[i].FindControl("Lbl_number")).Text.Trim();
                         if (Vname != "")
                         {
-                            SqlCommand sqlcmd = new SqlCommand("Update Vote Set Vname=@Vname where SID=@SID and number=@number");
+                            SqlCommand sqlcmd = new SqlCommand("Update Vote Set Vname=@Vname,Total=@Total where SID=@SID and number=@number");
                             sqlcmd.Connection = sqlcon;
                             sqlcmd.Parameters.AddWithValue("@SID", SID);
                             sqlcmd.Parameters.AddWithValue("@number", number);
+                            sqlcmd.Parameters.AddWithValue("@Total", "0");
                             string txt_Vname = AESEncryption(txtKey, txtIV, Vname);
                             sqlcmd.Parameters.AddWithValue("@Vname", txt_Vname);
                             sqlcmd.ExecuteNonQuery();

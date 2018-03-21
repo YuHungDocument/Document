@@ -30,8 +30,8 @@ namespace WebApplication1
                 }
                 else
                 {
-                   
-                   ((Label)this.Master.FindControl("Lb_Title")).Text = "內文";
+
+                    ((Label)this.Master.FindControl("Lb_Title")).Text = "內文";
                     UserInfo tmpUserInfo = null;
                     if (Session["userinfo"] is UserInfo)
                     {
@@ -55,6 +55,7 @@ namespace WebApplication1
                                 {
                                     cn2.Open();
                                     SqlCommand cmd2 = new SqlCommand(@"Select Name From UserInfo  Where EID=@EID");
+                                    SqlCommand cmd3 = new SqlCommand(@"Select path,sign From Detail  Where EID=@EID");
                                     cmd2.Connection = cn2;
                                     cmd2.Parameters.AddWithValue("@EID", dr["EID"].ToString());
                                     using (SqlDataReader dr2 = cmd2.ExecuteReader())
@@ -63,25 +64,146 @@ namespace WebApplication1
                                         {
                                             Lbl_SenderName.Text = "主辦人姓名" + dr2["Name"].ToString();
                                         }
+
                                         cn2.Close();
+                                    }
+                                    cn2.Open();
+                                    cmd3.Connection = cn2;
+                                    cmd3.Parameters.AddWithValue("@EID", dr["EID"].ToString());
+                                    using (SqlDataReader dr3 = cmd3.ExecuteReader())
+                                    {
+                                        if (dr3.Read())
+                                        {
+                                            if(dr3["sign"].ToString() == "1")
+                                            {
+                                                Txt_Enterpassword.Visible = false;
+                                                Btn_check.Visible = false;
+                                            }
+                                            if (dr3["path"].ToString() == "1")
+                                            {
+                                                bind3();
+                                            }
+                                        }
+
+                                        cn2.Close();
+
                                     }
                                 }
                             }
+                            cn.Close();
                         }
-                        cn.Close();
-                    }
-                    FillData();
-                    if (Lbl_Type.Text == "公文類型：代理人設定")
-                    {
-                        if (Lbl_SenderEID.Text == Lbl_EID.Text)
+                        FillData();
+                        if (Lbl_Type.Text == "公文類型：代理人設定")
                         {
-                            Txt_Enterpassword.Visible = false;
-                            Btn_check.Visible = false;
+                            if (Lbl_SenderEID.Text == Lbl_EID.Text)
+                            {
+                                Txt_Enterpassword.Visible = false;
+                                Btn_check.Visible = false;
+                            }
                         }
                     }
                 }
             }
         }
+        #region 顯示投票統計
+        public void bind3()
+        {
+            string sqlstr = "select * from Vote where SID='" + Lbl_SID.Text + "'";
+
+            SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
+            SqlCommand cmd = new SqlCommand(sqlstr, sqlcon);
+            DataSet myds = new DataSet();
+            sqlcon.Open();
+            SqlDataAdapter myda = new SqlDataAdapter(sqlstr, sqlcon);
+            //解密投票
+            #region 找出金鑰位址
+            using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+                cn.Open();
+                SqlCommand cmdfindkeyaddress = new SqlCommand(@"Select KeyAddress From UserInfo Where EID=@EID");
+                cmdfindkeyaddress.Connection = cn;
+                cmdfindkeyaddress.Parameters.AddWithValue("@EID", Lbl_EID.Text);
+
+                using (SqlDataReader dr2 = cmdfindkeyaddress.ExecuteReader())
+                {
+                    if (dr2.Read())
+                    {
+                        KeyAddress = dr2["KeyAddress"].ToString();
+                    }
+                    if (KeyAddress == "")
+                    {
+                        Response.Redirect("KeyAddress.aspx");
+                    }
+                }
+                #endregion
+
+                try
+                {
+                    StreamReader str = new StreamReader(@"" + KeyAddress + "");
+                    string ReadAll = str.ReadToEnd();
+                    // 建立 RSA 演算法物件的執行個體，並匯入先前建立的私鑰
+                    RSACryptoServiceProvider rsaProviderReceiver = new RSACryptoServiceProvider();
+                    rsaProviderReceiver.FromXmlString(ReadAll);
+                    try
+                    {
+
+                        SqlCommand cmd3 = new SqlCommand(@"Select RSAkey From Detail Where EID=@EID and SID=@SID");
+                        cmd3.Connection = cn;
+                        cmd3.Parameters.AddWithValue("@EID", Lbl_EID.Text);
+                        cmd3.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
+                        using (SqlDataReader dr2 = cmd3.ExecuteReader())
+                        {
+                            if (dr2.Read())
+                            {
+                                RSAkey = dr2["RSAkey"].ToString();
+                            }
+                        }
+
+                        // 將資料解密
+
+                        byte[] byteCipher = Convert.FromBase64String(RSAkey);
+                        byte[] bytePlain = rsaProviderReceiver.Decrypt(byteCipher, false);
+
+                        // 將解密後的資料，轉 UTF8 格式輸入
+                        key = Encoding.UTF8.GetString(bytePlain);
+                    }
+                    catch
+                    {
+                        Response.Write("<script>alert('解密失敗!');location.href='WaitDocument.aspx';</script>");
+                    }
+                }
+                catch
+                {
+                    Response.Write("<script>alert('此位置找無金鑰，請從新設定!');location.href='KeyAddress.aspx';</script>");
+                }
+
+
+                if (key != null)
+                {
+                    //找到解密iv
+
+                    SqlCommand cmd5 = new SqlCommand(@"Select AESiv From Fil Where SID=@SID");
+                    cmd5.Connection = cn;
+                    cmd5.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
+
+                    using (SqlDataReader dr3 = cmd5.ExecuteReader())
+                    {
+                        if (dr3.Read())
+                        {
+                            AESiv = dr3["AESiv"].ToString();
+                        }
+                    }
+                    //對稱解密
+                    myda.Fill(myds, AESDecryption(key, AESiv, "Vote"));
+                    Gv_Total.DataSource = myds;
+                    Gv_Total.DataBind();
+                    sqlcon.Close();
+                }
+            }
+
+           
+        }
+        #endregion
         #region 找暫存檔填寫到gridview
         private void FillData()
         {

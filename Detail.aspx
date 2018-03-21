@@ -37,6 +37,13 @@
             您的投票選項為：<asp:Label ID="Lbl_Choose" runat="server"></asp:Label>
         </asp:Panel>
         <br />
+        <asp:GridView ID="Gv_Total" runat="server" AutoGenerateColumns="False" GridLines="None" Width="148px">
+            <Columns>
+                <asp:BoundField DataField="Vname" />
+                <asp:BoundField DataField="Total" HeaderText="投票數" />
+            </Columns>
+        </asp:GridView>
+        <br />
         <asp:GridView ID="gv_showTempFile" runat="server" AutoGenerateColumns="false" DataKeyNames="FNO">
             <Columns>
                 <asp:TemplateField HeaderText="已上傳的檔案">

@@ -39,69 +39,72 @@ namespace WebApplication1
                         Lbl_EID.Text = tmpUserInfo.EID;
                         bind();
                         bind2();
-                    }
-                    using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
-                    {
-                        cn.Open();
-                        SqlCommand cmd = new SqlCommand(@"Select EID From Fil  Where SID=@SID");
-                        cmd.Connection = cn;
-                        cmd.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
-                        using (SqlDataReader dr = cmd.ExecuteReader())
+                        using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
                         {
-                            if (dr.Read())
+                            cn.Open();
+                            SqlCommand cmd = new SqlCommand(@"Select EID From Fil  Where SID=@SID");
+                            cmd.Connection = cn;
+                            cmd.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
+                            using (SqlDataReader dr = cmd.ExecuteReader())
                             {
-                                Lbl_SenderEID.Text = dr["EID"].ToString();
-                                using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
+                                if (dr.Read())
                                 {
-                                    cn2.Open();
-                                    SqlCommand cmd2 = new SqlCommand(@"Select Name From UserInfo  Where EID=@EID");
-                                    SqlCommand cmd3 = new SqlCommand(@"Select path,sign From Detail  Where EID=@EID");
-                                    cmd2.Connection = cn2;
-                                    cmd2.Parameters.AddWithValue("@EID", dr["EID"].ToString());
-                                    using (SqlDataReader dr2 = cmd2.ExecuteReader())
+                                    Lbl_SenderEID.Text = dr["EID"].ToString();
+                                    using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
                                     {
-                                        if (dr2.Read())
+                                        cn2.Open();
+                                        SqlCommand cmd2 = new SqlCommand(@"Select Name From UserInfo  Where EID=@EID");
+                                        SqlCommand cmd3 = new SqlCommand(@"Select path,sign From Detail  Where SID=@SID And EID=@EID");
+                                        cmd2.Connection = cn2;
+                                        cmd2.Parameters.AddWithValue("@EID", dr["EID"].ToString());
+                                        using (SqlDataReader dr2 = cmd2.ExecuteReader())
                                         {
-                                            Lbl_SenderName.Text = "主辦人姓名" + dr2["Name"].ToString();
-                                        }
+                                            if (dr2.Read())
+                                            {
+                                                Lbl_SenderName.Text = "主辦人姓名：" + dr2["Name"].ToString();
+                                            }
 
-                                        cn2.Close();
-                                    }
-                                    cn2.Open();
-                                    cmd3.Connection = cn2;
-                                    cmd3.Parameters.AddWithValue("@EID", dr["EID"].ToString());
-                                    using (SqlDataReader dr3 = cmd3.ExecuteReader())
-                                    {
-                                        if (dr3.Read())
+                                            cn2.Close();
+                                        }
+                                        cn2.Open();
+                                        cmd3.Connection = cn2;
+                                        cmd3.Parameters.AddWithValue("@EID", Lbl_EID.Text);
+                                        cmd3.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+
+                                        using (SqlDataReader dr3 = cmd3.ExecuteReader())
                                         {
-                                            if(dr3["sign"].ToString() == "1")
+                                            if (dr3.Read())
                                             {
-                                                Txt_Enterpassword.Visible = false;
-                                                Btn_check.Visible = false;
+                                                if (dr3["sign"].ToString() == "1")
+                                                {
+                                                    Txt_Enterpassword.Visible = false;
+                                                    Btn_check.Visible = false;
+                                                }
+                                                if (dr3["path"].ToString() == "1")
+                                                {
+                                                    bind3();
+                                                }
                                             }
-                                            if (dr3["path"].ToString() == "1")
-                                            {
-                                                bind3();
-                                            }
+
+                                            cn2.Close();
+
                                         }
-
-                                        cn2.Close();
-
                                     }
                                 }
+                                cn.Close();
                             }
-                            cn.Close();
-                        }
-                        FillData();
-                        if (Lbl_Type.Text == "公文類型：代理人設定")
-                        {
-                            if (Lbl_SenderEID.Text == Lbl_EID.Text)
+                            FillData();
+                            if (Lbl_Type.Text == "公文類型：代理人設定")
                             {
-                                Txt_Enterpassword.Visible = false;
-                                Btn_check.Visible = false;
+                                if (Lbl_SenderEID.Text == Lbl_EID.Text)
+                                {
+                                    Txt_Enterpassword.Visible = false;
+                                    Btn_check.Visible = false;
+                                }
                             }
                         }
                     }
+                    
                 }
             }
         }
@@ -115,94 +118,11 @@ namespace WebApplication1
             DataSet myds = new DataSet();
             sqlcon.Open();
             SqlDataAdapter myda = new SqlDataAdapter(sqlstr, sqlcon);
-            //解密投票
-            #region 找出金鑰位址
-            using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
-            {
-                cn.Open();
-                SqlCommand cmdfindkeyaddress = new SqlCommand(@"Select KeyAddress From UserInfo Where EID=@EID");
-                cmdfindkeyaddress.Connection = cn;
-                cmdfindkeyaddress.Parameters.AddWithValue("@EID", Lbl_EID.Text);
-
-                using (SqlDataReader dr2 = cmdfindkeyaddress.ExecuteReader())
-                {
-                    if (dr2.Read())
-                    {
-                        KeyAddress = dr2["KeyAddress"].ToString();
-                    }
-                    if (KeyAddress == "")
-                    {
-                        Response.Redirect("KeyAddress.aspx");
-                    }
-                }
-                #endregion
-
-                try
-                {
-                    StreamReader str = new StreamReader(@"" + KeyAddress + "");
-                    string ReadAll = str.ReadToEnd();
-                    // 建立 RSA 演算法物件的執行個體，並匯入先前建立的私鑰
-                    RSACryptoServiceProvider rsaProviderReceiver = new RSACryptoServiceProvider();
-                    rsaProviderReceiver.FromXmlString(ReadAll);
-                    try
-                    {
-
-                        SqlCommand cmd3 = new SqlCommand(@"Select RSAkey From Detail Where EID=@EID and SID=@SID");
-                        cmd3.Connection = cn;
-                        cmd3.Parameters.AddWithValue("@EID", Lbl_EID.Text);
-                        cmd3.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
-                        using (SqlDataReader dr2 = cmd3.ExecuteReader())
-                        {
-                            if (dr2.Read())
-                            {
-                                RSAkey = dr2["RSAkey"].ToString();
-                            }
-                        }
-
-                        // 將資料解密
-
-                        byte[] byteCipher = Convert.FromBase64String(RSAkey);
-                        byte[] bytePlain = rsaProviderReceiver.Decrypt(byteCipher, false);
-
-                        // 將解密後的資料，轉 UTF8 格式輸入
-                        key = Encoding.UTF8.GetString(bytePlain);
-                    }
-                    catch
-                    {
-                        Response.Write("<script>alert('解密失敗!');location.href='WaitDocument.aspx';</script>");
-                    }
-                }
-                catch
-                {
-                    Response.Write("<script>alert('此位置找無金鑰，請從新設定!');location.href='KeyAddress.aspx';</script>");
-                }
-
-
-                if (key != null)
-                {
-                    //找到解密iv
-
-                    SqlCommand cmd5 = new SqlCommand(@"Select AESiv From Fil Where SID=@SID");
-                    cmd5.Connection = cn;
-                    cmd5.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
-
-                    using (SqlDataReader dr3 = cmd5.ExecuteReader())
-                    {
-                        if (dr3.Read())
-                        {
-                            AESiv = dr3["AESiv"].ToString();
-                        }
-                    }
-                    //對稱解密
-                    myda.Fill(myds, AESDecryption(key, AESiv, "Vote"));
+                    myda.Fill(myds, "Vote");
                     Gv_Total.DataSource = myds;
                     Gv_Total.DataBind();
                     sqlcon.Close();
                 }
-            }
-
-           
-        }
         #endregion
         #region 找暫存檔填寫到gridview
         private void FillData()
@@ -564,31 +484,32 @@ namespace WebApplication1
             DataSet myds = new DataSet();
             sqlcon.Open();
             SqlDataAdapter myda = new SqlDataAdapter(sqlstr, sqlcon);
+    myda.Fill(myds, "Vote");
+    GridView2.DataSource = myds;
+                    GridView2.DataBind();
+                    sqlcon.Close();
 
-            myda.Fill(myds, "Vote");
-
-            GridView2.DataSource = myds;
-            GridView2.DataBind();
-            sqlcon.Close();
-
-            using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
-            {
-                SqlCommand cmd2 = new SqlCommand();
-                cmd.CommandText = "Select * From Vote Where SID=@SID";
-                cmd.Connection = cn;
-                cmd.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
-                cn.Open();
-
-                using (SqlDataReader dr = cmd.ExecuteReader())
-                {
-                    DropDownList1.Items.Clear();
-                    while (dr.Read())//讀取資料有幾筆讀幾筆只能往下讀不能往上讀
+                    using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
                     {
-                        DropDownList1.Items.Add(dr["number"].ToString());//下拉式選單
+                        SqlCommand cmd2 = new SqlCommand();
+                        cmd.CommandText = "Select * From Vote Where SID=@SID";
+                        cmd.Connection = cn2;
+                        cmd.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
+                        cn2.Open();
+
+                        using (SqlDataReader dr = cmd.ExecuteReader())
+                        {
+                            DropDownList1.Items.Clear();
+                            while (dr.Read())//讀取資料有幾筆讀幾筆只能往下讀不能往上讀
+                            {
+                                DropDownList1.Items.Add(dr["number"].ToString());//下拉式選單
+                            }
+                        }
                     }
                 }
-            }
-        }
+            
+        
+
         #endregion
 
         #region 簽核
@@ -722,5 +643,228 @@ namespace WebApplication1
             }
         }
         #endregion
+
+        protected void Gv_Total_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+                {
+                    cn.Open();
+                    #region 找出金鑰位址
+                    SqlCommand cmdfindkeyaddress = new SqlCommand(@"Select KeyAddress From UserInfo Where EID=@EID");
+                cmdfindkeyaddress.Connection = cn;
+                cmdfindkeyaddress.Parameters.AddWithValue("@EID", Lbl_EID.Text);
+
+                using (SqlDataReader dr2 = cmdfindkeyaddress.ExecuteReader())
+                {
+                    if (dr2.Read())
+                    {
+                        KeyAddress = dr2["KeyAddress"].ToString();
+                    }
+                    if (KeyAddress == "")
+                    {
+                        Response.Redirect("KeyAddress.aspx");
+                    }
+                }
+                #endregion
+
+                try
+                {
+                    StreamReader str = new StreamReader(@"" + KeyAddress + "");
+                    string ReadAll = str.ReadToEnd();
+                    // 建立 RSA 演算法物件的執行個體，並匯入先前建立的私鑰
+                    RSACryptoServiceProvider rsaProviderReceiver = new RSACryptoServiceProvider();
+                    rsaProviderReceiver.FromXmlString(ReadAll);
+                    try
+                    {
+
+                        SqlCommand cmd3 = new SqlCommand(@"Select RSAkey From Detail Where EID=@EID and SID=@SID");
+                        cmd3.Connection = cn;
+                        cmd3.Parameters.AddWithValue("@EID", Lbl_EID.Text);
+                        cmd3.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
+                        using (SqlDataReader dr2 = cmd3.ExecuteReader())
+                        {
+                            if (dr2.Read())
+                            {
+                                RSAkey = dr2["RSAkey"].ToString();
+                            }
+                        }
+
+                        // 將資料解密
+
+                        byte[] byteCipher = Convert.FromBase64String(RSAkey);
+                        byte[] bytePlain = rsaProviderReceiver.Decrypt(byteCipher, false);
+
+                        // 將解密後的資料，轉 UTF8 格式輸入
+                        key = Encoding.UTF8.GetString(bytePlain);
+                    }
+                    catch
+                    {
+                        Response.Write("<script>alert('解密失敗!');location.href='WaitDocument.aspx';</script>");
+                    }
+                }
+                catch
+                {
+                    Response.Write("<script>alert('此位置找無金鑰，請從新設定!');location.href='KeyAddress.aspx';</script>");
+                }
+
+
+                    if (key != null)
+                    {
+                        //找到解密iv
+
+                        SqlCommand cmd5 = new SqlCommand(@"Select AESiv From Fil Where SID=@SID");
+                        cmd5.Connection = cn;
+                        cmd5.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
+
+                        using (SqlDataReader dr3 = cmd5.ExecuteReader())
+                        {
+                            if (dr3.Read())
+                            {
+                                AESiv = dr3["AESiv"].ToString();
+                            }
+                        }
+
+                        //對稱解密
+                        Label Lbl_number = (Label)e.Row.FindControl("Lbl_number");
+                        Label Lbl_Vname = (Label)e.Row.FindControl("Lbl_Vname");
+                        using (SqlConnection cnVote = new SqlConnection(tmpdbhelper.DB_CnStr))
+                        {
+                            cnVote.Open();
+                            SqlCommand cmd = new SqlCommand("Select * from Vote where SID=@SID and number=@number");
+                            cmd.Connection = cnVote;
+                            cmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+                            cmd.Parameters.AddWithValue("@number", Lbl_number.Text);
+                            using (SqlDataReader dr = cmd.ExecuteReader())
+                            {
+                                if (dr.Read())
+                                {
+                                    Lbl_Vname.Text = AESDecryption(key, AESiv, dr["Vname"].ToString());
+                                }
+                            }
+                            cnVote.Close();
+
+
+
+                        }
+                    }
+
+                    cn.Close();
+                }
+            }
+
+        }
+
+        protected void GridView2_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+                {
+                    cn.Open();
+                    #region 找出金鑰位址
+                    SqlCommand cmdfindkeyaddress = new SqlCommand(@"Select KeyAddress From UserInfo Where EID=@EID");
+                    cmdfindkeyaddress.Connection = cn;
+                    cmdfindkeyaddress.Parameters.AddWithValue("@EID", Lbl_EID.Text);
+
+                    using (SqlDataReader dr2 = cmdfindkeyaddress.ExecuteReader())
+                    {
+                        if (dr2.Read())
+                        {
+                            KeyAddress = dr2["KeyAddress"].ToString();
+                        }
+                        if (KeyAddress == "")
+                        {
+                            Response.Redirect("KeyAddress.aspx");
+                        }
+                    }
+                    #endregion
+
+                    try
+                    {
+                        StreamReader str = new StreamReader(@"" + KeyAddress + "");
+                        string ReadAll = str.ReadToEnd();
+                        // 建立 RSA 演算法物件的執行個體，並匯入先前建立的私鑰
+                        RSACryptoServiceProvider rsaProviderReceiver = new RSACryptoServiceProvider();
+                        rsaProviderReceiver.FromXmlString(ReadAll);
+                        try
+                        {
+
+                            SqlCommand cmd3 = new SqlCommand(@"Select RSAkey From Detail Where EID=@EID and SID=@SID");
+                            cmd3.Connection = cn;
+                            cmd3.Parameters.AddWithValue("@EID", Lbl_EID.Text);
+                            cmd3.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
+                            using (SqlDataReader dr2 = cmd3.ExecuteReader())
+                            {
+                                if (dr2.Read())
+                                {
+                                    RSAkey = dr2["RSAkey"].ToString();
+                                }
+                            }
+
+                            // 將資料解密
+
+                            byte[] byteCipher = Convert.FromBase64String(RSAkey);
+                            byte[] bytePlain = rsaProviderReceiver.Decrypt(byteCipher, false);
+
+                            // 將解密後的資料，轉 UTF8 格式輸入
+                            key = Encoding.UTF8.GetString(bytePlain);
+                        }
+                        catch
+                        {
+                            Response.Write("<script>alert('解密失敗!');location.href='WaitDocument.aspx';</script>");
+                        }
+                    }
+                    catch
+                    {
+                        Response.Write("<script>alert('此位置找無金鑰，請從新設定!');location.href='KeyAddress.aspx';</script>");
+                    }
+
+
+                    if (key != null)
+                    {
+                        //找到解密iv
+
+                        SqlCommand cmd5 = new SqlCommand(@"Select AESiv From Fil Where SID=@SID");
+                        cmd5.Connection = cn;
+                        cmd5.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
+
+                        using (SqlDataReader dr3 = cmd5.ExecuteReader())
+                        {
+                            if (dr3.Read())
+                            {
+                                AESiv = dr3["AESiv"].ToString();
+                            }
+                        }
+
+                        //對稱解密
+                        Label Lb_number = (Label)e.Row.FindControl("Lb_Num");
+                        Label Lb_Vname = (Label)e.Row.FindControl("Lb_Vname");
+                        using (SqlConnection cnVote = new SqlConnection(tmpdbhelper.DB_CnStr))
+                        {
+                            cnVote.Open();
+                            SqlCommand cmd = new SqlCommand("Select * from Vote where SID=@SID and number=@number");
+                            cmd.Connection = cnVote;
+                            cmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+                            cmd.Parameters.AddWithValue("@number", Lb_number.Text);
+                            using (SqlDataReader dr = cmd.ExecuteReader())
+                            {
+                                if (dr.Read())
+                                {
+                                    Lb_Vname.Text = AESDecryption(key, AESiv, dr["Vname"].ToString());
+                                }
+                            }
+                            cnVote.Close();
+
+
+
+                        }
+                    }
+
+                    cn.Close();
+                }
+            }
+        }
     }
 }

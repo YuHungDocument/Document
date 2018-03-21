@@ -124,6 +124,7 @@ namespace WebApplication1
                     sqlcon.Close();
                 }
         #endregion
+
         #region 找暫存檔填寫到gridview
         private void FillData()
         {
@@ -202,8 +203,6 @@ namespace WebApplication1
         }
 
         #endregion
-
-
 
         #region 點選下載檔案
         protected void OpenDoc(object sender, EventArgs e)
@@ -353,6 +352,37 @@ namespace WebApplication1
                         Lbl_Proposition.Text = dr["Proposition"].ToString();
                         if (dr["Type"].ToString() == "投票")
                         {
+
+                            using (SqlConnection cn3 = new SqlConnection(tmpdbhelper.DB_CnStr))
+                            {
+                                cn3.Open();
+                                SqlCommand choosecmd = new SqlCommand(@"Select choose From Detail Where EID=@EID and SID=@SID");
+                                choosecmd.Connection = cn3;
+                                choosecmd.Parameters.AddWithValue("@EID", Lbl_EID.Text);
+                                choosecmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+                                using (SqlDataReader dr2 = choosecmd.ExecuteReader())
+                                {
+                                    if (dr2.Read())
+                                    {
+                                        using (SqlConnection Vmcn = new SqlConnection(tmpdbhelper.DB_CnStr))
+                                        {
+                                            Vmcn.Open();
+                                            SqlCommand Vmcmd = new SqlCommand(@"Select Vname From Vote Where number=@number and SID=@SID");
+                                            Vmcmd.Connection = Vmcn;
+                                            Vmcmd.Parameters.AddWithValue("@number", dr2["choose"].ToString());
+                                            Vmcmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+                                            using (SqlDataReader drVm = Vmcmd.ExecuteReader())
+                                            {
+                                                if (drVm.Read())
+                                                {
+                                                    Lbl_Choose.Text = drVm["Vname"].ToString();
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                cn3.Close();
+                            }
                             Pel_selectwatch.Visible = true;
                             bind2();
                         }
@@ -386,10 +416,7 @@ namespace WebApplication1
                         }
                     }
                 #endregion
-
-                #region 判斷可不可看進度
-
-                #endregion
+                                
 
                 #region 找出金鑰位址
                 SqlCommand cmdfindkeyaddress = new SqlCommand(@"Select KeyAddress From UserInfo Where EID=@EID");
@@ -470,7 +497,7 @@ namespace WebApplication1
 
                     Lbl_Text.Text = AESDecryption(key, AESiv, Lbl_Text.Text);
                     Lbl_Proposition.Text = AESDecryption(key, AESiv, Lbl_Proposition.Text);
-
+                    Lbl_Choose.Text= AESDecryption(key, AESiv, Lbl_Choose.Text);
                 }
             }
         }
@@ -484,8 +511,8 @@ namespace WebApplication1
             DataSet myds = new DataSet();
             sqlcon.Open();
             SqlDataAdapter myda = new SqlDataAdapter(sqlstr, sqlcon);
-    myda.Fill(myds, "Vote");
-    GridView2.DataSource = myds;
+            myda.Fill(myds, "Vote");
+            GridView2.DataSource = myds;
                     GridView2.DataBind();
                     sqlcon.Close();
 
@@ -543,10 +570,36 @@ namespace WebApplication1
                                 choosecmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
                                 choosecmd.Connection = sqlcon;
                                 choosecmd.ExecuteNonQuery();
+
+                                
+                                SqlCommand selecttotalcmd = new SqlCommand("Select * from Vote where SID=@SID and number=@number");
+                                selecttotalcmd.Parameters.AddWithValue("SID", Lbl_SID.Text);
+                                selecttotalcmd.Parameters.AddWithValue("number", DropDownList1.SelectedValue);
+                                selecttotalcmd.Connection = sqlcon;
+                                using (SqlDataReader totaldr = selecttotalcmd.ExecuteReader())
+                                {
+                                    
+                                    if (totaldr.Read())
+                                    {
+                                        Session["total"] = int.Parse(totaldr["Total"].ToString());
+                                        Session["total"] = int.Parse(Session["total"].ToString()) + 1;
+                                        using (SqlConnection upcn = new SqlConnection(tmpdbhelper.DB_CnStr))
+                                        {
+                                            upcn.Open();
+                                            SqlCommand upcmd = new SqlCommand("Update Vote set Total=@Total Where number=@number");
+                                            upcmd.Parameters.AddWithValue("@Total", Session["total"].ToString());
+                                            upcmd.Parameters.AddWithValue("number", DropDownList1.SelectedValue);
+                                            upcmd.Connection = upcn;
+                                            upcmd.ExecuteNonQuery();
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
                 }
+
+                
 
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {

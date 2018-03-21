@@ -56,7 +56,7 @@
                 <HeaderStyle BackColor="#F2F2F2" Font-Size="Large" />
                 <RowStyle Font-Size="Large" BackColor="White" HorizontalAlign="Center" />
         </asp:GridView>
-        <asp:GridView ID="GridView1" runat="server" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" BackColor="#DDDDDD" BorderStyle="None" BorderWidth="1px" CellPadding="5" CellSpacing="1" DataKeyNames="SID" GridLines="None" OnPageIndexChanging="gv_PageIndexChanging2" OnRowCreated="Gridview_OnRowCreated2" OnSorting="gv_Sorting2" Style="line-height: 22px; width: 100%;">
+        <%--<asp:GridView ID="GridView1" runat="server" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" BackColor="#DDDDDD" BorderStyle="None" BorderWidth="1px" CellPadding="5" CellSpacing="1" DataKeyNames="SID" GridLines="None" OnPageIndexChanging="gv_PageIndexChanging2" OnRowCreated="Gridview_OnRowCreated2" OnSorting="gv_Sorting2" Style="line-height: 22px; width: 100%;">
             <RowStyle BackColor="#ffffff" ForeColor="Black" />
             <HeaderStyle BackColor="#efefef" Font-Bold="True" />
             <SortedAscendingHeaderStyle CssClass="asc" />
@@ -77,23 +77,8 @@
                         <asp:Label ID="NOS" runat="server" Text='<%# Eval("EID") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="簽核模式" SortExpression="status">
-                    <ItemTemplate>
-                        <asp:Label ID="status" runat="server" Text='<%# Eval("status") %>'></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="是否讀過" SortExpression="isread">
-                    <ItemTemplate>
-                        <asp:Label ID="isread" runat="server" Text='<%# Eval("isread") %>'></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="是否簽核" SortExpression="sign">
-                    <ItemTemplate>
-                        <asp:Label ID="sign" runat="server" Text='<%# Eval("sign") %>'></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>
             </Columns>
-        </asp:GridView>
+        </asp:GridView>--%>
         <br />
         <asp:GridView Style="border: 2px #ccc solid; border-radius: 10px;" ID="gv_showTempFile" runat="server" AutoGenerateColumns="false" DataKeyNames="FNO">
             <Columns>

@@ -21,6 +21,14 @@
             width: 800px;
             border: 1px solid #CC6600;
         }
+        table {
+            width:100%;
+            border: #f6bb9e 2px solid ;
+        }
+        .entryForm td,entryForm th{
+            padding:5px 10px;
+            border: #f6bb9e 1px solid;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -60,50 +68,50 @@
     </div>
     <asp:Label ID="Lbl_EID" runat="server" Visible="False"></asp:Label>
     <br />
-    <table class="auto-style1">
+    <table >
         <tr style="height: 25px">
-            <td style="background-color: #FF9900; font-size: large; border-bottom-style: solid; border-bottom-width: 1px; border-bottom-color: #CC6600;" colspan="7">撰寫內文</td>
+            <td  colspan="7">撰寫內文</td>
         </tr>
         <tr style="height: 25px">
-            <td style="background-color: #FFCC99; font-size: large; text-align: center; width: 200px;">文　　號</td>
-            <td style="font-size: large; text-align: center; width: 200px;">
+            <td >文　　號</td>
+            <td >
                 <asp:Label ID="Lbl_SID" runat="server"></asp:Label>
             </td>
-            <td style="background-color: #FFCC99; text-align: center; font-size: large; width: 200px;" colspan="4">發布日期</td>
-            <td style="font-size: large; text-align: center; width: 200px;">
+            <td  colspan="4">發布日期</td>
+            <td >
                 <asp:Label ID="Lbl_Date" runat="server"></asp:Label>
             </td>
         </tr>
         <tr style="height: 25px">
-            <td style="background-color: #FFCC99; font-size: large;">&nbsp;</td>
-            <td style="font-size: large;">&nbsp;</td>
-            <td style="background-color: #FFCC99; font-size: large;" colspan="4">&nbsp;</td>
-            <td style="font-size: large;">&nbsp;</td>
+            <td >&nbsp;</td>
+            <td >&nbsp;</td>
+            <td  colspan="4">&nbsp;</td>
+            <td >&nbsp;</td>
         </tr>
         <tr style="height: 25px">
-            <td style="background-color: #FFCC99; font-size: large; text-align: center;">發布人</td>
-            <td style="font-size: large; text-align: center;">
+            <td >發布人</td>
+            <td >
                 <asp:Label ID="Lbl_Sender" runat="server"></asp:Label>
             </td>
-            <td style="background-color: #FFCC99; font-size: large; text-align: center;" colspan="4">速　　別</td>
-            <td style="font-size: large; text-align: center;">
+            <td colspan="4">速　　別</td>
+            <td >
                 <asp:DropDownList ID="Ddl_Speed" runat="server" DataSourceID="SqlDataSource2" DataTextField="TN" DataValueField="TN"></asp:DropDownList>
             </td>
         </tr>
         <tr style="height: 25px">
-            <td style="background-color: #FFCC99; font-size: large;">&nbsp;</td>
-            <td style="font-size: large;">&nbsp;</td>
+            <td >&nbsp;</td>
+            <td >&nbsp;</td>
             <td colspan="4">&nbsp;</td>
-            <td style="font-size: large;">&nbsp;</td>
+            <td >&nbsp;</td>
         </tr>
         <tr style="height: 25px">
-            <td style="background-color: #FFCC99; font-size: large; text-align: center;">公文類型</td>
-            <td style="font-size: large; text-align: center;">
+            <td>公文類型</td>
+            <td >
                 <asp:DropDownList ID="Ddp_Type" runat="server" DataSourceID="SqlDataSource1" DataTextField="TN" DataValueField="TN" Height="30px" Width="185px">
                 </asp:DropDownList>
             </td>
             <td colspan="4">&nbsp;</td>
-            <td style="font-size: large;">
+            <td >
                 <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString %>" SelectCommand="SELECT [TN] FROM [TypeGroup] WHERE ([Tp] = @Tp)">
                     <SelectParameters>
                         <asp:Parameter DefaultValue="Sp" Name="Tp" Type="String" />
@@ -112,8 +120,8 @@
             </td>
         </tr>
         <tr style="height: 25px">
-            <td style="background-color: #FFCC99; font-size: large;">&nbsp;</td>
-            <td style="font-size: large;">
+            <td >&nbsp;</td>
+            <td >
                 <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString2 %>" SelectCommand="SELECT [TN] FROM [TypeGroup] WHERE (([Tp] = @Tp) AND ([TID] &lt;&gt; @TID))">
                     <SelectParameters>
                         <asp:Parameter DefaultValue="FT" Name="Tp" Type="String" />
@@ -125,8 +133,8 @@
             <td style="font-size: large;">&nbsp;</td>
         </tr>
         <tr style="height: 25px">
-            <td style="background-color: #FFCC99; font-size: large; text-align: center;">保存期限</td>
-            <td style="font-size: large; text-align: center;">
+            <td >保存期限</td>
+            <td>
                 <asp:DropDownList ID="Ddp_YOS" runat="server" Width="70px">
                     <asp:ListItem>1</asp:ListItem>
                     <asp:ListItem>2</asp:ListItem>
@@ -143,58 +151,57 @@
                     <asp:ListItem>永久</asp:ListItem>
                 </asp:DropDownList>
                 年</td>
-            <td style="font-size: large;" colspan="4">&nbsp;</td>
-            <td style="font-size: large;">&nbsp;</td>
+            <td colspan="4">&nbsp;</td>
+            <td >&nbsp;</td>
         </tr>
         <tr style="height: 25px">
-            <td style="background-color: #FFCC99; font-size: large;">&nbsp;</td>
+            <td >&nbsp;</td>
             <td style="font-size: large;" colspan="2">&nbsp;</td>
             <td style="font-size: large;" colspan="2">&nbsp;</td>
             <td style="font-size: large;" colspan="2">&nbsp;</td>
         </tr>
         <tr style="height: 25px">
-            <td style="background-color: #FFCC99; font-size: large; text-align: center;">附　　件</td>
-            <td style="font-size: large;" colspan="3">
+            <td >附　　件</td>
+            <td colspan="3">
                 <asp:FileUpload runat="server" ID="fu_upload" />
                 <br />
                 <asp:Button Text="上傳檔案"
                     ID="btn_upload" runat="server" OnClick="btn_upload_Click" />
                 <br />
             </td>
-            <td style="font-size: large;" colspan="3">
+            <td colspan="3">
                 <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#FileModal">顯示上傳檔案</button>
             </td>
         </tr>
         <tr style="height: 25px">
-            <td style="background-color: #FFCC99; font-size: large;">&nbsp;</td>
+            <td >&nbsp;</td>
             <td style="font-size: large;" colspan="6">&nbsp;</td>
         </tr>
         <tr style="height: 25px">
-            <td style="background-color: #FFCC99; font-size: large; text-align: center;">主　　旨</td>
+            <td >主　　旨</td>
             <td style="font-size: large;" colspan="6">
                 <asp:TextBox class="form-control" ID="Txt_Title" runat="server" Width="264px"></asp:TextBox>
             </td>
         </tr>
         <tr style="height: 25px">
-            <td style="background-color: #FFCC99; font-size: large;">&nbsp;</td>
-            <td style="font-size: large;" colspan="6">&nbsp;</td>
+            <td >&nbsp;</td>
+            <td  colspan="6">&nbsp;</td>
         </tr>
         <tr style="height: 25px">
-            <td style="background-color: #FFCC99; font-size: large; text-align: center;">說　　明</td>
-            <td style="font-size: large;" colspan="6">
+            <td >說　　明</td>
+            <td  colspan="6">
                 <asp:TextBox ID="Txt_Text" class="form-control" runat="server" Height="99px" TextMode="MultiLine"></asp:TextBox>
 
             </td>
         </tr>
         <tr style="height: 25px">
-            <td style="background-color: #FFCC99; font-size: large;">&nbsp;</td>
-            <td style="font-size: large;" colspan="6">&nbsp;</td>
+            <td >&nbsp;</td>
+            <td  colspan="6">&nbsp;</td>
         </tr>
         <tr style="height: 25px">
-            <td style="background-color: #FFCC99; font-size: large; text-align: center;">擬　　辦</td>
+            <td >擬　　辦</td>
             <td style="font-size: large;" colspan="6">
                 <asp:TextBox ID="txt_Proposition" class="form-control" runat="server" Height="100px" TextMode="MultiLine"></asp:TextBox>
-
             </td>
         </tr>
     </table>

@@ -260,6 +260,7 @@ namespace WebApplication1
             string SID = Txt_SID.Text;
             string Type = Ddl_Type.SelectedValue;
             string Title = Txt_Title.Text;
+            string Speed = Ddl_speed.SelectedValue;
             DataSet ds = new DataSet();
             SqlConnection scn = new SqlConnection();
             scn.ConnectionString = tmpdbhelper.DB_CnStr;
@@ -281,25 +282,17 @@ namespace WebApplication1
             {
                 wherestr = " and Date <='" + date2 + "'";
             }
-            if (!string.IsNullOrWhiteSpace(Request.Form["d3"]))
-            {
-                if (!string.IsNullOrWhiteSpace(Request.Form["d4"]))
-                {
-                    wherestr = wherestr + " and DeadLine Between'" + date3 + "'AND'" + date4 + "'";
-                }
-                else
-                {
-                    wherestr = wherestr + " and DeadLine >='" + date3 + "'";
-                }
-            }
-            else if (!string.IsNullOrWhiteSpace(Request.Form["d4"]))
-            {
-                wherestr = wherestr + " and DeadLine <='" + date4 + "'";
-            }
+
             if (!string.IsNullOrWhiteSpace(Txt_SID.Text))
             {
                 wherestr = wherestr + " and ( SID Like'%" + SID + "%')";
             }
+
+            if (Speed != "--請選擇速別--")
+            {
+                wherestr = wherestr + " and (Speed='" + Speed + "')";
+            }
+
             if (Type != "--請選擇公文種類--")
             {
                 wherestr = wherestr + " and (Type='" + Type + "')";

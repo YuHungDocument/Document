@@ -68,17 +68,16 @@
                     <td class="auto-style1">
                         <div class="panel panel-default" style="width: 500px">
                             <div class="panel-heading">
-                                日期查詢
+                                日期與速別查詢
                             </div>
                             <div class="panel-body">
-                                發文日期：
-    <input type="text" name="d1" class="Wdate form-control" id="d1" onclick="WdatePicker({ maxDate: '#F{$dp.$D(\'d2\')||\'%y-%M-%d\'}' })" />
+                                發布日期：
+                            <input type="text" name="d1" class="Wdate form-control" id="d1" onclick="WdatePicker({ maxDate: '#F{$dp.$D(\'d2\')||\'%y-%M-%d\'}' })" />
                                 到
-                                        <input type="text" name="d2" class="Wdate form-control" id="d2" onclick="WdatePicker({ minDate: '#F{$dp.$D(\'d1\')}', maxDate: '%y-%M-%d' })" />
-                                截止日期：
-    <input type="text" name="d3" class="Wdate form-control" id="d3" onclick="WdatePicker({ maxDate: '#F{$dp.$D(\'d4\')}' })" />
-                                到
-                                        <input type="text" name="d4" class="Wdate form-control" id="d4" onclick="WdatePicker({ minDate: '#F{$dp.$D(\'d3\')}' })" />
+                            <input type="text" name="d2" class="Wdate form-control" id="d2" onclick="WdatePicker({ minDate: '#F{$dp.$D(\'d1\')}', maxDate: '%y-%M-%d' })" />
+                                <br />
+                                速別：
+                                <asp:DropDownList ID="Ddl_speed" runat="server" DataSourceID="SqlDataSource3" DataTextField="TN" DataValueField="TN" class="col-xs-offset-0 form-control" Width="200px"></asp:DropDownList>
                             </div>
                         </div>
                     </td>
@@ -177,4 +176,9 @@
 
 
     <asp:Label ID="Lbl_EID" runat="server" Text="Label" Visible="False"></asp:Label>
+    <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString %>" SelectCommand="SELECT [TN] FROM [TypeGroup] WHERE ([Tp] = @Tp)">
+        <SelectParameters>
+            <asp:Parameter DefaultValue="Sp" Name="Tp" Type="String" />
+        </SelectParameters>
+    </asp:SqlDataSource>
 </asp:Content>

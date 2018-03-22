@@ -9,6 +9,7 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
+    <link href="style.css" rel="stylesheet" media="all" />
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -23,6 +24,7 @@
         body {
             font: 300 14px 'HelveticaNeue-Light','Helvetica Neue Light','Helvetica Neue',Helvetica,Arial,'Lucida Grande',sans-serif;
             background: #f5f5f5;
+            overflow-x: hidden;
         }
         /* Style the top navigation bar */
         .topnav {
@@ -221,7 +223,7 @@
                         }
         /* Main body section */
         .side-body {
-            margin-left: 310px;
+            margin-left: 290px;
             margin-top: 15px;
         }
         /* small screen */
@@ -555,10 +557,11 @@
                                     </div>
                                 </div>
                             </li>
-                            <li><asp:LinkButton ID="Lb_Import" runat="server"><span class="glyphicon glyphicon-star"></span>標記重要項目</asp:LinkButton></li>
-                            <li  class="panel panel-default" id="dropdown">
-                                 <asp:LinkButton href="#dropdown-lv04" data-toggle="collapse" ID="Lb_Set" runat="server"><span class="glyphicon glyphicon-hdd"></span>個人設定<span class="caret"></span></asp:LinkButton>
-                                 <!-- Dropdown level 1 -->
+                            <li>
+                                <asp:LinkButton ID="Lb_Import" runat="server"><span class="glyphicon glyphicon-star"></span>標記重要項目</asp:LinkButton></li>
+                            <li class="panel panel-default" id="dropdown">
+                                <asp:LinkButton href="#dropdown-lv04" data-toggle="collapse" ID="Lb_Set" runat="server"><span class="glyphicon glyphicon-hdd"></span>個人設定<span class="caret"></span></asp:LinkButton>
+                                <!-- Dropdown level 1 -->
                                 <div id="dropdown-lv04" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
@@ -573,7 +576,7 @@
                             <li>
                                 <asp:LinkButton ID="Lb_Manager" runat="server"><span class="glyphicon glyphicon-cog"></span>管理者介面</asp:LinkButton>
                             </li>
-                              <li>
+                            <li>
                                 <asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click" Visible="False"><span class="glyphicon glyphicon-cog"></span>後台管理</asp:LinkButton>
                             </li>
                         </ul>
@@ -587,14 +590,14 @@
             <div style="border-bottom-style: solid; border-bottom-width: 3px; border-color: #C0C0C0; padding-top: 60px; padding-left: 303px">
                 <asp:Label ID="Lb_Title" runat="server" Text="Label" Font-Size="XX-Large"></asp:Label>
             </div>
-            <div class="container-fluid">
 
+            <div class="container-fluid">
                 <div class="side-body">
                     <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                     </asp:ContentPlaceHolder>
-
                 </div>
             </div>
+
 
 
         </div>

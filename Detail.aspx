@@ -50,35 +50,30 @@
                         <asp:Label ID="Lbl_Vname" runat="server" Text='<%# Bind("Vname") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:BoundField DataField="Total" HeaderText="投票數"/>
+                <asp:BoundField DataField="Total" HeaderText="投票數" />
             </Columns>
-             <EmptyDataRowStyle BorderStyle="None" Font-Size="Large" />
-                <HeaderStyle BackColor="#F2F2F2" Font-Size="Large" />
-                <RowStyle Font-Size="Large" BackColor="White" HorizontalAlign="Center" />
+            <EmptyDataRowStyle BorderStyle="None" Font-Size="Large" />
+            <HeaderStyle BackColor="#F2F2F2" Font-Size="Large" />
+            <RowStyle Font-Size="Large" BackColor="White" HorizontalAlign="Center" />
         </asp:GridView>
-        <%--<asp:GridView ID="GridView1" runat="server" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" BackColor="#DDDDDD" BorderStyle="None" BorderWidth="1px" CellPadding="5" CellSpacing="1" DataKeyNames="SID" GridLines="None" OnPageIndexChanging="gv_PageIndexChanging2" OnRowCreated="Gridview_OnRowCreated2" OnSorting="gv_Sorting2" Style="line-height: 22px; width: 100%;">
-            <RowStyle BackColor="#ffffff" ForeColor="Black" />
-            <HeaderStyle BackColor="#efefef" Font-Bold="True" />
-            <SortedAscendingHeaderStyle CssClass="asc" />
-            <SortedDescendingHeaderStyle CssClass="dsc" />
+
+        <asp:GridView ID="Gv_path" Style="border: 2px #ccc solid; border-radius: 10px;" runat="server" AutoGenerateColumns="False" Width="148px" OnRowDataBound="Gv_Total_RowDataBound">
             <Columns>
-                <asp:TemplateField HeaderText="層　　級" SortExpression="Lvl">
+                <asp:BoundField DataField="SID" Visible="False" />
+                <asp:BoundField DataField="Lvl" HeaderText="階層" />
+                <asp:BoundField DataField="Lvl" HeaderText="部門" />
+                <asp:BoundField DataField="Lvl" HeaderText="員工名稱" />
+                <asp:TemplateField HeaderText="有無簽核">
                     <ItemTemplate>
-                        <asp:Label ID="Lvl" runat="server" Text='<%# Eval("Lvl") %>'></asp:Label>
+                        <asp:Label ID="Lbl_sign" runat="server" Text='<%# Bind("sign") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:TemplateField HeaderText="部　　門" SortExpression="Department">
-                    <ItemTemplate>
-                        <asp:Label ID="Department" runat="server" Text='<%# Eval("Department") %>'></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="人　　員" SortExpression="EID">
-                    <ItemTemplate>
-                        <asp:Label ID="NOS" runat="server" Text='<%# Eval("EID") %>'></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>
+                <asp:BoundField DataField="signtime" HeaderText="簽核時間" />
             </Columns>
-        </asp:GridView>--%>
+            <EmptyDataRowStyle BorderStyle="None" Font-Size="Large" />
+            <HeaderStyle BackColor="#F2F2F2" Font-Size="Large" />
+            <RowStyle Font-Size="Large" BackColor="White" HorizontalAlign="Center" />
+        </asp:GridView>
         <br />
         <asp:GridView Style="border: 2px #ccc solid; border-radius: 10px;" ID="gv_showTempFile" runat="server" AutoGenerateColumns="false" DataKeyNames="FNO">
             <Columns>
@@ -88,16 +83,16 @@
                     </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
-             <EmptyDataRowStyle BorderStyle="None" Font-Size="Large" />
-                <HeaderStyle BackColor="#F2F2F2" Font-Size="Large" />
-                <RowStyle Font-Size="Large" BackColor="White" HorizontalAlign="Center" />
+            <EmptyDataRowStyle BorderStyle="None" Font-Size="Large" />
+            <HeaderStyle BackColor="#F2F2F2" Font-Size="Large" />
+            <RowStyle Font-Size="Large" BackColor="White" HorizontalAlign="Center" />
         </asp:GridView>
         <br />
         <asp:Panel ID="Pnl_sign" runat="server" Visible="False">
             <asp:Panel ID="Pel_selectwatch" runat="server" Visible="False">
                 <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" Width="148px" OnRowDataBound="GridView2_RowDataBound">
                     <Columns>
-                        <asp:TemplateField  HeaderText="投票項次">
+                        <asp:TemplateField HeaderText="投票項次">
                             <ItemTemplate>
                                 <asp:Label ID="Lb_Num" runat="server" Text='<%# Bind("number") %>'></asp:Label>
                             </ItemTemplate>

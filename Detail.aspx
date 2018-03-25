@@ -29,8 +29,8 @@
     <hr />
     <div class="col-sm-12">
         擬辦：
-            <br />
-        <asp:Label ID="Lbl_Proposition" runat="server"></asp:Label>
+        <br />
+        　　　<asp:Label ID="Lbl_Proposition" runat="server"></asp:Label>
         <br />
         <br />
         <asp:Panel ID="Pel_Choose" runat="server" Visible="False">
@@ -57,12 +57,12 @@
             <RowStyle Font-Size="Large" BackColor="White" HorizontalAlign="Center" />
         </asp:GridView>
 
-        <asp:GridView ID="Gv_path" Style="border: 2px #ccc solid; border-radius: 10px;" runat="server" AutoGenerateColumns="False" Width="148px" OnRowDataBound="Gv_Total_RowDataBound">
+        <asp:GridView ID="Gv_path" Style="border: 2px #ccc solid; border-radius: 10px;" runat="server" AutoGenerateColumns="False" OnRowDataBound="Gv_path_RowDataBound">
             <Columns>
                 <asp:BoundField DataField="SID" Visible="False" />
                 <asp:BoundField DataField="Lvl" HeaderText="階層" />
-                <asp:BoundField DataField="Lvl" HeaderText="部門" />
-                <asp:BoundField DataField="Lvl" HeaderText="員工名稱" />
+                <asp:BoundField DataField="Department" HeaderText="部門" />
+                <asp:BoundField DataField="Name" HeaderText="員工名稱" />
                 <asp:TemplateField HeaderText="有無簽核">
                     <ItemTemplate>
                         <asp:Label ID="Lbl_sign" runat="server" Text='<%# Bind("sign") %>'></asp:Label>

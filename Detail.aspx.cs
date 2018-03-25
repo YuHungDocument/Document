@@ -30,7 +30,7 @@ namespace WebApplication1
                 }
                 else
                 {
-
+                    #region 內文
                     ((Label)this.Master.FindControl("Lb_Title")).Text = "內文";
                     UserInfo tmpUserInfo = null;
                     if (Session["userinfo"] is UserInfo)
@@ -104,25 +104,54 @@ namespace WebApplication1
                             }
                         }
                     }
-                    
+                    #endregion
                 }
             }
         }
-        #region 顯示投票統計
+
+        #region 顯示投票統計bind3
         public void bind3()
         {
-            string sqlstr = "select * from Vote where SID='" + Lbl_SID.Text + "'";
-
-            SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
-            SqlCommand cmd = new SqlCommand(sqlstr, sqlcon);
-            DataSet myds = new DataSet();
-            sqlcon.Open();
-            SqlDataAdapter myda = new SqlDataAdapter(sqlstr, sqlcon);
-                    myda.Fill(myds, "Vote");
-                    Gv_Total.DataSource = myds;
-                    Gv_Total.DataBind();
-                    sqlcon.Close();
+            using (SqlConnection pathcn = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+                pathcn.Open();
+                SqlCommand pathcmd = new SqlCommand("Select Type From Fil Where SID='" + Lbl_SID.Text + "'");
+                pathcmd.Connection = pathcn;
+                using (SqlDataReader pathdr = pathcmd.ExecuteReader())
+                {
+                    if(pathdr.Read())
+                    {
+                        if(pathdr["Type"].ToString()=="投票")
+                        {
+                            string sqlstr = "select * from Vote where SID='" + Lbl_SID.Text + "'";
+                            SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
+                            SqlCommand cmd = new SqlCommand(sqlstr, sqlcon);
+                            DataSet myds = new DataSet();
+                            sqlcon.Open();
+                            SqlDataAdapter myda = new SqlDataAdapter(sqlstr, sqlcon);
+                            myda.Fill(myds, "Vote");
+                            Gv_Total.DataSource = myds;
+                            Gv_Total.DataBind();
+                            sqlcon.Close();
+                        }
+                        else
+                        {
+                            string sqlstr = "Select Detail.SID,Detail.Lvl,UserInfo.Department,UserInfo.Name,Detail.sign,Detail.signtime From Detail Left join UserInfo On Detail.EID = UserInfo.EID Where Detail.SID = '" + Lbl_SID.Text + "'";
+                            SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
+                            SqlCommand cmd = new SqlCommand(sqlstr, sqlcon);
+                            DataSet myds = new DataSet();
+                            sqlcon.Open();
+                            SqlDataAdapter myda = new SqlDataAdapter(sqlstr, sqlcon);
+                            myda.Fill(myds, "Detail");
+                            Gv_path.DataSource = myds;
+                            Gv_path.DataBind();
+                            sqlcon.Close();
+                        }
+                    }
                 }
+            }
+
+        }
         #endregion
 
         #region 找暫存檔填寫到gridview
@@ -327,6 +356,7 @@ namespace WebApplication1
         }
         #endregion
 
+        #region bind
         public void bind()
         {
 
@@ -403,7 +433,7 @@ namespace WebApplication1
                 using (SqlDataReader dr2 = cmd2.ExecuteReader())
                     if (dr2.Read())
                     {
-                        if (dr2["sign"].ToString() == "0")
+                        if (dr2["sign"].ToString() == "0" || dr2["choose"]!=null)
 
                         {
                             Pnl_sign.Visible = true;
@@ -415,8 +445,7 @@ namespace WebApplication1
                             Pnl_sign.Visible = false;
                         }
                     }
-                #endregion
-                                
+                #endregion                                
 
                 #region 找出金鑰位址
                 SqlCommand cmdfindkeyaddress = new SqlCommand(@"Select KeyAddress From UserInfo Where EID=@EID");
@@ -436,6 +465,7 @@ namespace WebApplication1
                 }
                 #endregion
 
+                #region 解密
                 try
                 {
                     StreamReader str = new StreamReader(@"" + KeyAddress + "");
@@ -499,8 +529,11 @@ namespace WebApplication1
                     Lbl_Proposition.Text = AESDecryption(key, AESiv, Lbl_Proposition.Text);
                     Lbl_Choose.Text= AESDecryption(key, AESiv, Lbl_Choose.Text);
                 }
+        #endregion
             }
         }
+        #endregion
+
         #region 讀取Vote投票內容 bind2()
         public void bind2()
         {
@@ -516,24 +549,24 @@ namespace WebApplication1
                     GridView2.DataBind();
                     sqlcon.Close();
 
-                    using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
-                    {
-                        SqlCommand cmd2 = new SqlCommand();
-                        cmd.CommandText = "Select * From Vote Where SID=@SID";
-                        cmd.Connection = cn2;
-                        cmd.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
-                        cn2.Open();
+            using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+                SqlCommand cmd2 = new SqlCommand();
+                cmd.CommandText = "Select * From Vote Where SID=@SID";
+                cmd.Connection = cn2;
+                cmd.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
+                cn2.Open();
 
-                        using (SqlDataReader dr = cmd.ExecuteReader())
-                        {
-                            DropDownList1.Items.Clear();
-                            while (dr.Read())//讀取資料有幾筆讀幾筆只能往下讀不能往上讀
-                            {
-                                DropDownList1.Items.Add(dr["number"].ToString());//下拉式選單
-                            }
-                        }
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    DropDownList1.Items.Clear();
+                    while (dr.Read())//讀取資料有幾筆讀幾筆只能往下讀不能往上讀
+                    {
+                        DropDownList1.Items.Add(dr["number"].ToString());//下拉式選單
                     }
                 }
+            }
+        }
             
         
 
@@ -697,6 +730,7 @@ namespace WebApplication1
         }
         #endregion
 
+        #region 投票總數解密
         protected void Gv_Total_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -808,7 +842,9 @@ namespace WebApplication1
             }
 
         }
+        #endregion
 
+        #region 投票選項解密
         protected void GridView2_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -918,6 +954,12 @@ namespace WebApplication1
                     cn.Close();
                 }
             }
+        }
+        #endregion
+
+        protected void Gv_path_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+
         }
     }
 }

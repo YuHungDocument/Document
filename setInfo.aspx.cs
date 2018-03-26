@@ -63,7 +63,7 @@ namespace WebApplication1
 
                             Session["userinfo"] = tmpuserinfo;
                         }
-                        Response.Redirect("SelectUserData.aspx");
+                        Response.Redirect("setinfo.aspx");
                     }
                 }
             }

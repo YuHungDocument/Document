@@ -26,6 +26,8 @@ namespace WebApplication1
         string txt_PKmessage;
         private SqlConnection connection;
         private SqlCommand command;
+        string AgentEID;
+        string AgentName;
         #endregion
 
         protected void Page_Load(object sender, EventArgs e)
@@ -182,7 +184,33 @@ namespace WebApplication1
             {
                 cn.Open();
                 SqlCommand cmd = new SqlCommand("Select * from UserInfo Where EID=@EID");
-                cmd.Parameters.AddWithValue("@EID", UserEID);
+                SqlCommand cmdAgentEID = new SqlCommand("Select * from UserInfo Where EID=@EID");
+                cmdAgentEID.Connection = cn;
+                cmdAgentEID.Parameters.AddWithValue("@EID", UserEID);
+                using (SqlDataReader dr = cmdAgentEID.ExecuteReader())
+                {
+                    if (dr.Read())
+                    {
+                        AgentEID= dr["agent"].ToString();
+                        if (AgentEID != "")
+                        {
+                            cmd.Parameters.AddWithValue("@EID", AgentEID);
+                            ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Agent")).Visible = true;
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@EID", UserEID);
+                        }
+                       
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@EID", UserEID);
+                    }
+                    
+                }
+                cn.Close();
+                cn.Open();
                 cmd.Connection = cn;
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
@@ -190,6 +218,10 @@ namespace WebApplication1
                     {
                         ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Dep")).Text = dr["Department"].ToString();
                         ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Name")).Text = dr["Name"].ToString();
+                        if(AgentEID!="")
+                        {
+                            ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text = AgentEID;
+                        }
                         using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
                         {
                             CheckBox Cb_sign = ((CheckBox)GridView2.Rows[gvRowIndex].FindControl("Cb_sign"));
@@ -219,12 +251,58 @@ namespace WebApplication1
                             cmd2.Parameters.AddWithValue("@ID", ID);
                             cmd2.Connection = cn2;
                             cmd2.ExecuteNonQuery();
+                            
                         }
                     }
+                    
                 }
-
+                cn.Close();
+                cn.Open();
                 SqlCommand namemd = new SqlCommand("Select * from UserInfo Where Name=@Name");
-                namemd.Parameters.AddWithValue("@Name", UserEID);
+                
+                SqlCommand cmdAgentName = new SqlCommand("Select agent from UserInfo Where Name=@Name");
+                cmdAgentName.Connection = cn;
+                cmdAgentName.Parameters.AddWithValue("@Name", UserEID);
+                using (SqlDataReader dr = cmdAgentName.ExecuteReader())
+                {
+                    if (dr.Read())
+                    {
+                        AgentEID = dr["agent"].ToString();
+                        if (AgentEID != "")
+                        {
+                            using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
+                            {
+                                SqlCommand cmdAgentName2 = new SqlCommand("Select Name from UserInfo Where EID=@EID");
+                                cmdAgentName2.Parameters.AddWithValue("@EID", AgentEID);
+                                cmdAgentName2.Connection = cn2;
+                                cn2.Open();
+                                using (SqlDataReader dr2 = cmdAgentName2.ExecuteReader())
+                                {
+
+                                    if (dr2.Read())
+                                    {
+                                        AgentName = dr2["Name"].ToString();
+
+                                    }
+                                }
+                                cn2.Close();
+                            }
+                            namemd.Parameters.AddWithValue("@Name", AgentName);
+                            ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Agent")).Visible = true;
+                        }
+                        else
+                        {
+                            namemd.Parameters.AddWithValue("@Name", UserEID);
+                        }
+                        
+                    }
+                    else
+                    {
+                        namemd.Parameters.AddWithValue("@Name", UserEID);
+                    }
+                }
+                cn.Close();
+                cn.Open();
                 namemd.Connection = cn;
                 using (SqlDataReader dr = namemd.ExecuteReader())
                 {
@@ -233,6 +311,10 @@ namespace WebApplication1
                         ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text = dr["EID"].ToString();
                         ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Dep")).Text = dr["Department"].ToString();
                         ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Name")).Text = dr["Name"].ToString();
+                        if(AgentEID!="")
+                        {
+                            ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text = AgentEID;
+                        }
                         using (SqlConnection cn3 = new SqlConnection(tmpdbhelper.DB_CnStr))
                         {
                             CheckBox ck = ((CheckBox)GridView2.Rows[gvRowIndex].FindControl("Cb_sign"));
@@ -262,9 +344,12 @@ namespace WebApplication1
                             cmd2.Parameters.AddWithValue("@ID",ID);
                             cmd2.Connection = cn3;
                             cmd2.ExecuteNonQuery();
+                            
                         }
                     }
+                    
                 }
+                cn.Close();
             }
         }
         #endregion
@@ -1041,8 +1126,8 @@ namespace WebApplication1
                                 cmd2.ExecuteNonQuery();
                                 cn3.Close();
                             }
-                            //寫回資料庫                        
-                            SqlCommand cmd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,path,sign,look,RSAkey)VALUES(@SID,@Lvl,@EID,@Department,@status,@path,@sign,@look,@RSAkey)");
+                            //寫回資料庫 
+                            SqlCommand cmd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,path,sign,look,RSAkey,isAgent)VALUES(@SID,@Lvl,@EID,@Department,@status,@path,@sign,@look,@RSAkey,@isAgent)");
                             cn3.Open();
                             cmd.Connection = cn3;
                             cmd.Parameters.AddWithValue("@SID", SID);
@@ -1075,6 +1160,29 @@ namespace WebApplication1
                                 cmd.Parameters.AddWithValue("@look", 0);
                             }
                             cmd.Parameters.AddWithValue("@sign", 0);
+                            using (SqlConnection cnEID = new SqlConnection(tmpdbhelper.DB_CnStr))
+                            {
+                                SqlCommand cmdEID = new SqlCommand(@"Select agent From UserInfo Where EID=@EID");
+                                cnEID.Open();
+                                cmdEID.Connection = cnEID;
+                                cmdEID.Parameters.AddWithValue("@EID", EID);
+                                using (SqlDataReader drEID = cmdEID.ExecuteReader())
+                                {
+                                    if (drEID.Read())
+                                    {
+                                        if (drEID["agent"].ToString() != "")
+                                        {
+                                            cmd.Parameters.AddWithValue("@isAgent", "1");
+                                        }
+                                        else
+                                        {
+                                            cmd.Parameters.AddWithValue("@isAgent", "0");
+                                        }
+                                    }
+                                    cnEID.Close();
+                                }
+                            }
+                            
                             cmd.ExecuteNonQuery();
                             cn3.Close();
 

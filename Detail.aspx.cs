@@ -9,6 +9,7 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Drawing;
 
 
 namespace WebApplication1
@@ -959,7 +960,32 @@ namespace WebApplication1
 
         protected void Gv_path_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+                {
+                    cn.Open();
+                    SqlCommand cmd = new SqlCommand("Select * From Detail Where SID=@SID");
+                    cmd.Connection = cn;
+                    cmd.Parameters.AddWithValue("@SID",Lbl_SID.Text);
+                    Label sign = (Label)e.Row.FindControl("Lbl_sign");
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        if(dr.Read())
+                        {
+                            if(sign.Text == "0")
+                            {
+                                sign.Text = "未簽核";
+                                sign.ForeColor = Color.Red;                                
+                            }
+                            else
+                            {
+                                sign.Text = "已簽核";
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

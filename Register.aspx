@@ -72,13 +72,13 @@
     </style>
 
     <%--背景漸層--%>
-    <style>
+    <%--<style>
         #grad1 {
             height: 1000px;
             background: red; /* For browsers that do not support gradients */
             background: linear-gradient(#fac592, #fae9df); /* Standard syntax (must be last) */
         }
-    </style>
+    </style>--%>
 
 </head>
 <body>
@@ -87,9 +87,9 @@
 
       <%--中間層--%>
         <div class="row">
-            <div class="column1" style="background-color: #6c6969;">
+            <div class="column1" style="background-color: #949494;">
             </div>
-            <div class="column" style="background-color: #ffffff;" id="grad1">
+            <div class="column" style="background-color: #f1f1f1;">
                 <h3>註冊新帳戶</h3>
                 <br />
                 <br />
@@ -222,7 +222,7 @@
 
                 </div>
             </div>
-            <div class="column2" style="background-color: #6c6969;">
+            <div class="column2" style="background-color: #949494;">
             </div>
         </div>
 

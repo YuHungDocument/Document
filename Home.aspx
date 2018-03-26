@@ -159,17 +159,17 @@
     <form id="form2" runat="server">
         <%--上面排--%>
         <div class="row">
-            <div class="column0 side" style="background-color: #6c6969;"></div>
+            <div class="column0 side" style="background-color: #949494;"></div>
             <div class="column0 middle" style="background-color: #8AABF7">
                 <h2>電子公文暨投票系統</h2>                
             </div>
-            <div class="column0 side" style="background-color: #6c6969;"></div>
+            <div class="column0 side" style="background-color: #949494;"></div>
         </div>
 
         <%--中間排--%>
         <div class="row">
 
-            <div class="column side" style="background-color: #6c6969;"></div>
+            <div class="column side" style="background-color: #949494;"></div>
             <div class="column middle" style="background-color: #FFFFFF;">
 
                 <br />
@@ -228,19 +228,19 @@
 
 
             </div>
-            <div class="column side" style="background-color: #6c6969;"></div>
+            <div class="column side" style="background-color: #949494;"></div>
         </div>
 
         <%--下面排--%>
         <div class="row">
-            <div class="column1 side" style="background-color: #6c6969;"></div>
+            <div class="column1 side" style="background-color: #949494;"></div>
             <div class="column1 middle" style="color: #FFFFFF; background-color: #484646;">
                 <h5>國立勤益科技大學資管專題小組</h5>
                 <h5>地址：41170臺中市太平區坪林里中山路二段 57號</h5>
                     <h5></h5>
                     <h5></h5>
             </div>
-            <div class="column1 side" style="background-color: #6c6969;"></div>
+            <div class="column1 side" style="background-color: #949494;"></div>
         </div>
     </form>
 

@@ -75,6 +75,9 @@
     <Content Include="HostVote.aspx" />
     <Content Include="KeyAddress.aspx" />
     <Content Include="password.aspx" />
+    <Content Include="P\個人資料.png" />
+    <Content Include="P\金鑰位置.png" />
+    <Content Include="P\鑰匙.png" />
     <Content Include="set.aspx" />
     <Content Include="SetAgent.aspx" />
     <Content Include="setInfo.aspx" />

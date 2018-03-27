@@ -69,6 +69,7 @@
     <Content Include="ChangeAgent.aspx" />
     <Content Include="ChangePwd.aspx" />
     <Content Include="Detail.aspx" />
+    <Content Include="EmailTest.aspx" />
     <Content Include="goodpage.aspx" />
     <Content Include="GuildPage.Master" />
     <Content Include="HostDocument.aspx" />
@@ -88,7 +89,6 @@
     <Content Include="ChangeGroup.aspx" />
     <Content Include="ChangePermission.aspx" />
     <Content Include="Home.aspx" />
-    <Content Include="Login.aspx" />
     <Content Include="My97DatePicker\calendar.js" />
     <Content Include="My97DatePicker\lang\en.js" />
     <Content Include="My97DatePicker\lang\zh-cn.js" />
@@ -147,13 +147,11 @@
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="SelectMemberData.aspx" />
     <Content Include="sender.aspx" />
-    <Content Include="UserPage.aspx" />
     <Content Include="WaitDocument.aspx" />
     <Content Include="WaitVote.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="UserPage.Master" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChangeAgent.aspx.cs">
@@ -191,6 +189,13 @@
     </Compile>
     <Compile Include="Detail.aspx.designer.cs">
       <DependentUpon>Detail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EmailTest.aspx.cs">
+      <DependentUpon>EmailTest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EmailTest.aspx.designer.cs">
+      <DependentUpon>EmailTest.aspx</DependentUpon>
     </Compile>
     <Compile Include="goodpage.aspx.cs">
       <DependentUpon>goodpage.aspx</DependentUpon>
@@ -233,13 +238,6 @@
     </Compile>
     <Compile Include="KeyAddress.aspx.designer.cs">
       <DependentUpon>KeyAddress.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Login.aspx.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Login.aspx.designer.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="password.aspx.cs">
       <DependentUpon>password.aspx</DependentUpon>
@@ -299,20 +297,6 @@
       <DependentUpon>ucGridViewChoiceAll.ascx</DependentUpon>
     </Compile>
     <Compile Include="UserInfo.cs" />
-    <Compile Include="UserPage.aspx.cs">
-      <DependentUpon>UserPage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserPage.aspx.designer.cs">
-      <DependentUpon>UserPage.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="UserPage.Master.cs">
-      <DependentUpon>UserPage.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserPage.Master.designer.cs">
-      <DependentUpon>UserPage.Master</DependentUpon>
-    </Compile>
     <Compile Include="WaitDocument.aspx.cs">
       <DependentUpon>WaitDocument.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

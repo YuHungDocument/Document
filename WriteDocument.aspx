@@ -18,11 +18,12 @@
     </script>
     <style type="text/css">
         table {
-            width:100%;
-            border: #f6bb9e 2px solid ;
+            width: 100%;
+            border: #f6bb9e 2px solid;
         }
-        .entryForm td,entryForm th{
-            padding:5px 10px;
+
+        .entryForm td, entryForm th {
+            padding: 5px 10px;
             border: #f6bb9e 1px solid;
         }
     </style>
@@ -39,21 +40,21 @@
                 </div>
                 <div class="modal-body">
                     <asp:GridView runat="server" ID="gv_showTempFile" AutoGenerateColumns="false" OnRowDeleting="gv_RowDeleting"
-                    DataKeyNames="FNO">
-                    <Columns>
-                        <asp:TemplateField HeaderText="已上傳的檔案">
-                            <ItemTemplate>
-                                <asp:LinkButton ID="btn_filename" OnClick="OpenDoc" runat="server" Text='<%# Eval("Name") %>'></asp:LinkButton>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:TemplateField HeaderText="刪除">
-                            <ItemTemplate>
-                                <asp:LinkButton ID="lbDelete" runat="server" CommandName="Delete"
-                                    OnClientClick="javascript:return confirm('確定刪除?')">刪除</asp:LinkButton>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                    </Columns>
-                </asp:GridView>
+                        DataKeyNames="FNO">
+                        <Columns>
+                            <asp:TemplateField HeaderText="已上傳的檔案">
+                                <ItemTemplate>
+                                    <asp:LinkButton ID="btn_filename" OnClick="OpenDoc" runat="server" Text='<%# Eval("Name") %>'></asp:LinkButton>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="刪除">
+                                <ItemTemplate>
+                                    <asp:LinkButton ID="lbDelete" runat="server" CommandName="Delete"
+                                        OnClientClick="javascript:return confirm('確定刪除?')">刪除</asp:LinkButton>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                    </asp:GridView>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
@@ -64,50 +65,50 @@
     </div>
     <asp:Label ID="Lbl_EID" runat="server" Visible="False"></asp:Label>
     <br />
-    <table >
+    <table>
         <tr style="height: 25px">
-            <td  colspan="7">撰寫內文</td>
+            <td colspan="7">撰寫內文</td>
         </tr>
         <tr style="height: 25px">
-            <td >文　　號</td>
-            <td >
+            <td>文　　號</td>
+            <td>
                 <asp:Label ID="Lbl_SID" runat="server"></asp:Label>
             </td>
-            <td  colspan="4">發布日期</td>
-            <td >
+            <td colspan="4">發布日期</td>
+            <td>
                 <asp:Label ID="Lbl_Date" runat="server"></asp:Label>
             </td>
         </tr>
         <tr style="height: 25px">
-            <td >&nbsp;</td>
-            <td >&nbsp;</td>
-            <td  colspan="4">&nbsp;</td>
-            <td >&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td colspan="4">&nbsp;</td>
+            <td>&nbsp;</td>
         </tr>
         <tr style="height: 25px">
-            <td >發布人</td>
-            <td >
+            <td>發布人</td>
+            <td>
                 <asp:Label ID="Lbl_Sender" runat="server"></asp:Label>
             </td>
             <td colspan="4">速　　別</td>
-            <td >
+            <td>
                 <asp:DropDownList ID="Ddl_Speed" runat="server" DataSourceID="SqlDataSource2" DataTextField="TN" DataValueField="TN"></asp:DropDownList>
             </td>
         </tr>
         <tr style="height: 25px">
-            <td >&nbsp;</td>
-            <td >&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
             <td colspan="4">&nbsp;</td>
-            <td >&nbsp;</td>
+            <td>&nbsp;</td>
         </tr>
         <tr style="height: 25px">
             <td>公文類型</td>
-            <td >
+            <td>
                 <asp:DropDownList ID="Ddp_Type" runat="server" DataSourceID="SqlDataSource1" DataTextField="TN" DataValueField="TN" Height="30px" Width="185px">
                 </asp:DropDownList>
             </td>
             <td colspan="4">&nbsp;</td>
-            <td >
+            <td>
                 <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString %>" SelectCommand="SELECT [TN] FROM [TypeGroup] WHERE ([Tp] = @Tp)">
                     <SelectParameters>
                         <asp:Parameter DefaultValue="Sp" Name="Tp" Type="String" />
@@ -116,8 +117,8 @@
             </td>
         </tr>
         <tr style="height: 25px">
-            <td >&nbsp;</td>
-            <td >
+            <td>&nbsp;</td>
+            <td>
                 <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString2 %>" SelectCommand="SELECT [TN] FROM [TypeGroup] WHERE (([Tp] = @Tp) AND ([TID] &lt;&gt; @TID))">
                     <SelectParameters>
                         <asp:Parameter DefaultValue="FT" Name="Tp" Type="String" />
@@ -129,7 +130,7 @@
             <td style="font-size: large;">&nbsp;</td>
         </tr>
         <tr style="height: 25px">
-            <td >保存期限</td>
+            <td>保存期限</td>
             <td>
                 <asp:DropDownList ID="Ddp_YOS" runat="server" Width="70px">
                     <asp:ListItem>1</asp:ListItem>
@@ -148,16 +149,16 @@
                 </asp:DropDownList>
                 年</td>
             <td colspan="4">&nbsp;</td>
-            <td >&nbsp;</td>
+            <td>&nbsp;</td>
         </tr>
         <tr style="height: 25px">
-            <td >&nbsp;</td>
+            <td>&nbsp;</td>
             <td style="font-size: large;" colspan="2">&nbsp;</td>
             <td style="font-size: large;" colspan="2">&nbsp;</td>
             <td style="font-size: large;" colspan="2">&nbsp;</td>
         </tr>
         <tr style="height: 25px">
-            <td >附　　件</td>
+            <td>附　　件</td>
             <td colspan="3">
                 <asp:FileUpload runat="server" ID="fu_upload" />
                 <br />
@@ -170,32 +171,32 @@
             </td>
         </tr>
         <tr style="height: 25px">
-            <td >&nbsp;</td>
+            <td>&nbsp;</td>
             <td style="font-size: large;" colspan="6">&nbsp;</td>
         </tr>
         <tr style="height: 25px">
-            <td >主　　旨</td>
+            <td>主　　旨</td>
             <td style="font-size: large;" colspan="6">
                 <asp:TextBox class="form-control" ID="Txt_Title" runat="server" Width="264px"></asp:TextBox>
             </td>
         </tr>
         <tr style="height: 25px">
-            <td >&nbsp;</td>
-            <td  colspan="6">&nbsp;</td>
+            <td>&nbsp;</td>
+            <td colspan="6">&nbsp;</td>
         </tr>
         <tr style="height: 25px">
-            <td >說　　明</td>
-            <td  colspan="6">
+            <td>說　　明</td>
+            <td colspan="6">
                 <asp:TextBox ID="Txt_Text" class="form-control" runat="server" Height="99px" TextMode="MultiLine"></asp:TextBox>
 
             </td>
         </tr>
         <tr style="height: 25px">
-            <td >&nbsp;</td>
-            <td  colspan="6">&nbsp;</td>
+            <td>&nbsp;</td>
+            <td colspan="6">&nbsp;</td>
         </tr>
         <tr style="height: 25px">
-            <td >擬　　辦</td>
+            <td>擬　　辦</td>
             <td style="font-size: large;" colspan="6">
                 <asp:TextBox ID="txt_Proposition" class="form-control" runat="server" Height="100px" TextMode="MultiLine"></asp:TextBox>
             </td>
@@ -314,7 +315,7 @@
 
                                             <asp:TemplateField>
                                                 <HeaderTemplate>
-                                                    <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll1" CheckBoxName="Cb_sign" HeaderText="需簽章" OnCheckedChanged="Cb_sign_CheckedChanged" AutoPostBack="True"/>
+                                                    <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll1" CheckBoxName="Cb_sign" HeaderText="需簽章" OnCheckedChanged="Cb_sign_CheckedChanged" AutoPostBack="True" />
                                                 </HeaderTemplate>
                                                 <ItemTemplate>
                                                     <asp:CheckBox ID="Cb_sign" runat="server" OnCheckedChanged="Cb_sign_CheckedChanged" AutoPostBack="True" />
@@ -322,7 +323,7 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField>
                                                 <HeaderTemplate>
-                                                    <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll" CheckBoxName="Cb_path" HeaderText="可察看進度" OnCheckedChanged="Cb_path_CheckedChanged" AutoPostBack="True"/>
+                                                    <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll" CheckBoxName="Cb_path" HeaderText="可察看進度" OnCheckedChanged="Cb_path_CheckedChanged" AutoPostBack="True" />
                                                 </HeaderTemplate>
                                                 <ItemTemplate>
                                                     <asp:CheckBox ID="Cb_path" runat="server" OnCheckedChanged="Cb_path_CheckedChanged" AutoPostBack="True" />
@@ -333,10 +334,14 @@
                                         <RowStyle HorizontalAlign="Center" />
                                     </asp:GridView>
                                     <br />
+                                    <br />
+                                    <asp:Button ID="Btn_Save" runat="server" Text="送出" OnClick="Btn_Save_Click" />
+                                    &nbsp;&nbsp;&nbsp;
+                            <asp:Button ID="Btn_Draft" runat="server" OnClick="Btn_Draft_Click" Text="儲存至草稿" />
+                                    <asp:Label ID="Lbl_Eorr" runat="server" ForeColor="Red" Text="資料輸入不完整" Visible="False"></asp:Label>
                                 </ContentTemplate>
                             </asp:UpdatePanel>
-                            <asp:Button ID="Btn_Save" runat="server" Text="送出" OnClick="Btn_Save_Click" />
-                            <asp:Label ID="Lbl_Eorr" runat="server" ForeColor="Red" Text="資料輸入不完整" Visible="False"></asp:Label>
+
                         </div>
                     </td>
                 </tr>

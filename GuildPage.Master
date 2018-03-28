@@ -519,7 +519,7 @@
                                 </div>
                             </li>
                             <li>
-                                <asp:LinkButton ID="Lb_Draft" runat="server"><span class="glyphicon glyphicon-edit"></span>草稿</asp:LinkButton>
+                                <asp:LinkButton ID="Lb_Draft" runat="server" OnClick="Lb_Draft_Click"><span class="glyphicon glyphicon-edit"></span>草稿</asp:LinkButton>
                             </li>
                             <li class="panel panel-default" id="dropdown">
                                 <asp:LinkButton href="#dropdown-lv01" data-toggle="collapse" ID="Lb_WaitProcess" runat="server"><span class="glyphicon glyphicon-list-alt"></span>待處理項目<span class="caret"></span></asp:LinkButton>

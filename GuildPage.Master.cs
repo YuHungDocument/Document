@@ -91,5 +91,10 @@ namespace WebApplication1
         {
             Response.Redirect("SelectMemberData.aspx");
         }
+
+        protected void Lb_Draft_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Draft.aspx");
+        }
     }
 }

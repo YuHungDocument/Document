@@ -69,6 +69,7 @@
     <Content Include="ChangeAgent.aspx" />
     <Content Include="ChangePwd.aspx" />
     <Content Include="Detail.aspx" />
+    <Content Include="Draft.aspx" />
     <Content Include="EmailTest.aspx" />
     <Content Include="goodpage.aspx" />
     <Content Include="GuildPage.Master" />
@@ -189,6 +190,13 @@
     </Compile>
     <Compile Include="Detail.aspx.designer.cs">
       <DependentUpon>Detail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Draft.aspx.cs">
+      <DependentUpon>Draft.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Draft.aspx.designer.cs">
+      <DependentUpon>Draft.aspx</DependentUpon>
     </Compile>
     <Compile Include="EmailTest.aspx.cs">
       <DependentUpon>EmailTest.aspx</DependentUpon>

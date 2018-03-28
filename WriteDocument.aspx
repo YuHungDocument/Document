@@ -17,10 +17,6 @@
         }
     </script>
     <style type="text/css">
-        .auto-style1 {
-            width: 800px;
-            border: 1px solid #CC6600;
-        }
         table {
             width:100%;
             border: #f6bb9e 2px solid ;

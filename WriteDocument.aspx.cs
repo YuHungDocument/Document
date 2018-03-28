@@ -10,6 +10,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.IO;
 using System.Drawing;
+using System.Net.Mail;
 
 
 namespace WebApplication1
@@ -28,6 +29,7 @@ namespace WebApplication1
         private SqlCommand command;
         string AgentEID;
         string AgentName;
+        string listmail;
         #endregion
 
         protected void Page_Load(object sender, EventArgs e)
@@ -1182,8 +1184,57 @@ namespace WebApplication1
                                     cnEID.Close();
                                 }
                             }
-                            
                             cmd.ExecuteNonQuery();
+                            using (SqlConnection mailcn = new SqlConnection(tmpdbhelper.DB_CnStr))
+                            {
+                                mailcn.Open();
+                                SqlCommand mailcmd = new SqlCommand("Select UserInfo.Email From Detail Left join UserInfo On Detail.EID = UserInfo.EID Where Detail.SID = '" + Lbl_SID.Text + "'");
+                                mailcmd.Connection = mailcn;
+                                using (SqlDataReader maildr = mailcmd.ExecuteReader())
+                                {
+                                    while(maildr.Read())
+                                    {
+                                        if(listmail==null)
+                                        {
+                                            listmail = maildr["Email"].ToString();
+                                        }
+                                        else
+                                        {
+                                            listmail = listmail.ToString() + ","+ maildr["Email"].ToString();
+                                        }                                        
+                                    }
+                                    MailMessage msg = new MailMessage();
+                                    //收件者，以逗號分隔不同收件者 ex "test@gmail.com,test2@gmail.com"
+                                    msg.To.Add(string.Join(",", listmail.ToString()));
+                                    msg.From = new MailAddress("b0972834939@gmail.com", "電子公文通知", System.Text.Encoding.UTF8);
+                                    //郵件標題 
+                                    msg.Subject = "新公文通知";
+                                    //郵件標題編碼  
+                                    msg.SubjectEncoding = System.Text.Encoding.UTF8;
+                                    //郵件內容
+                                    msg.Body = "您有新公文需簽收請前往系統確認";
+                                    msg.IsBodyHtml = true;
+                                    msg.BodyEncoding = System.Text.Encoding.UTF8;//郵件內容編碼 
+                                    msg.Priority = MailPriority.Normal;//郵件優先級 
+                                                                       //建立 SmtpClient 物件 並設定 Gmail的smtp主機及Port 
+                                    #region 其它 Host
+                                    /*
+                                     *  outlook.com smtp.live.com port:25
+                                     *  yahoo smtp.mail.yahoo.com.tw port:465
+                                    */
+                                    #endregion
+                                    SmtpClient MySmtp = new SmtpClient("smtp.gmail.com", 587);
+                                    //設定你的帳號密碼
+                                    MySmtp.Credentials = new System.Net.NetworkCredential("b0972834939@gmail.com", "zytktjmwidkfuksf");
+                                    //Gmial 的 smtp 使用 SSL
+                                    MySmtp.EnableSsl = true;
+                                    MySmtp.Send(msg);
+                                }
+
+                            }
+
+
+                                
                             cn3.Close();
 
                         }

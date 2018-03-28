@@ -20,6 +20,7 @@ namespace WebApplication1
         string RSAkey;
         string key;
         string AESiv;
+        string IsEnd;
         DbHelper tmpdbhelper = new DbHelper();
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -31,6 +32,7 @@ namespace WebApplication1
                 }
                 else
                 {
+
                     #region 內文
                     ((Label)this.Master.FindControl("Lb_Title")).Text = "內文";
                     UserInfo tmpUserInfo = null;
@@ -94,6 +96,7 @@ namespace WebApplication1
                                 }
                                 cn.Close();
                             }
+
                             FillData();
                             if (Lbl_Type.Text == "公文類型：代理人設定")
                             {
@@ -102,6 +105,34 @@ namespace WebApplication1
                                     Txt_Enterpassword.Visible = false;
                                     Btn_check.Visible = false;
                                 }
+                            }
+                        }
+                        using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+                        {
+                            cn.Open();
+                            SqlCommand cmd = new SqlCommand(@"SELECT COUNT (sign)  FROM Detail WHERE SID = @SID and sign=1");
+                            SqlCommand cmd2 = new SqlCommand(@"SELECT COUNT (SID) FROM Detail WHERE SID = @SID");
+                            cmd.Connection = cn;
+                            cmd2.Connection = cn;
+                            cmd.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
+                            cmd2.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
+                            object RecordNum = cmd.ExecuteScalar();
+                            string R1 = RecordNum.ToString();
+                            object RecordNum2 = cmd2.ExecuteScalar();
+                            string R2 = RecordNum2.ToString();
+                            SqlCommand cmd3 = new SqlCommand(@"SELECT IsEnd FROM Fil WHERE SID = @SID");
+                            cmd3.Connection = cn;
+                            cmd3.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
+                            using (SqlDataReader dr3 = cmd3.ExecuteReader())
+                            {
+                                if (dr3.Read())
+                                {
+                                    IsEnd = dr3["IsEnd"].ToString();
+                                }
+                            }
+                                    if (R1 == R2 && Lbl_SenderEID.Text== Lbl_EID.Text && IsEnd!="1")
+                            {
+                                BtnEnd.Visible = true;
                             }
                         }
                     }
@@ -642,10 +673,11 @@ namespace WebApplication1
                         using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
                         {
                             cn2.Open();
-                            SqlCommand cmd2 = new SqlCommand(@"UPDATE Detail Set sign=1 Where SID=@SID AND EID=@EID");
+                            SqlCommand cmd2 = new SqlCommand(@"UPDATE Detail Set sign=1,signtime=@signtime Where SID=@SID AND EID=@EID");
                             cmd2.Connection = cn2;
                             cmd2.Parameters.AddWithValue("@EID", Lbl_EID.Text);
                             cmd2.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+                            cmd2.Parameters.AddWithValue("@signtime", System.DateTime.Now);
                             cmd2.ExecuteNonQuery();
                         }
                         using (SqlConnection cn3 = new SqlConnection(tmpdbhelper.DB_CnStr))
@@ -985,6 +1017,21 @@ namespace WebApplication1
                         }
                     }
                 }
+            }
+        }
+
+        protected void BtnEnd_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+                cn.Open();
+                SqlCommand cmd = new SqlCommand("UpDate Fil SET IsEnd=1 Where SID=@SID");
+                cmd.Connection = cn;
+                cmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+                cmd.ExecuteNonQuery();
+                cn.Close();
+                Response.Write("<script language=javascript>alert('已成功歸檔!')</script>");
+                Response.Write("<script language=javascript>window.location.href='Detail.aspx'</script>");
             }
         }
     }

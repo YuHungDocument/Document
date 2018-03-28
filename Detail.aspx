@@ -117,6 +117,9 @@
                     <asp:Button ID="Btn_check" runat="server" OnClick="Btn_check_Click" Text="簽核" />
             &nbsp;
                     <asp:Label ID="Lbl_Eorr" runat="server" ForeColor="Red" Text="密碼錯誤" Visible="False"></asp:Label>
+            <br />
+            <br />
+            <asp:Button ID="BtnEnd" runat="server" Text="結案歸檔" OnClick="BtnEnd_Click" Visible="False" />
         </asp:Panel>
         <br />
 

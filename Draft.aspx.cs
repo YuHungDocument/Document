@@ -47,7 +47,7 @@ namespace WebApplication1
                 string keyId = Menu.DataKeys[index].Value.ToString();
 
                 Session["keyId"] = keyId;
-                Response.Redirect("Detail.aspx");
+                Response.Redirect("DraftDetail.aspx");
             }
         }
 
@@ -245,13 +245,19 @@ namespace WebApplication1
             sqlcon.Open();
             SqlDataAdapter myda = new SqlDataAdapter(sqlstr, sqlcon);
 
-            myda.Fill(myds, "Detail");
+            myda.Fill(myds, "Draft");
 
             Menu.DataSource = myds;
             Menu.DataBind();
             sqlcon.Close();
             myda.Fill(dt);
             return dt;
+        }
+
+        protected void gv_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            Menu.PageIndex = e.NewPageIndex;
+            bind();
         }
     }
 }

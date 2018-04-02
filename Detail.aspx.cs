@@ -990,6 +990,7 @@ namespace WebApplication1
         }
         #endregion
 
+        #region 改變簽核或未簽核和文字
         protected void Gv_path_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -1019,7 +1020,9 @@ namespace WebApplication1
                 }
             }
         }
+        #endregion
 
+        #region 歸檔
         protected void BtnEnd_Click(object sender, EventArgs e)
         {
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
@@ -1034,7 +1037,7 @@ namespace WebApplication1
                 Response.Write("<script language=javascript>window.location.href='Detail.aspx'</script>");
             }
         }
-
+        #endregion
 
     }
 }

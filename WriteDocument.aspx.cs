@@ -1352,25 +1352,18 @@ namespace WebApplication1
                 cmd.Parameters.AddWithValue("@SID",Lbl_SID.Text);
                 cmd.ExecuteNonQuery();
 
-                SqlCommand insertcmd = new SqlCommand("Insert into Draft(SID,Sender,Date,Speed,Text,Title,Proposition,Type,YOS,AESkey,AESiv) Values(@SID,@Sender,@Date,@Speed,@Text,@Title,@Proposition,@Type,@YOS,@AESkey,@AESiv)");
-                SymmetricAlgorithm symAlgorithm = new AesCryptoServiceProvider();
-                txtKey = Convert.ToBase64String(symAlgorithm.Key);     //hFYPyIK3uSQ=
-                txtIV = Convert.ToBase64String(symAlgorithm.IV);       //oeZlJhiaZB0=
-                                                                       //對稱加密
+                SqlCommand insertcmd = new SqlCommand("Insert into Draft(SID,Sender,Date,Speed,Text,Title,Proposition,Type,YOS) Values(@SID,@Sender,@Date,@Speed,@Text,@Title,@Proposition,@Type,@YOS)");
+
                 insertcmd.Connection = cn;
-                txt_Ciphertext_Text = AESEncryption(txtKey, txtIV, Txt_Text.Text);
-                txt_Ciphertext_Proposition = AESEncryption(txtKey, txtIV, txt_Proposition.Text);
                 insertcmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
                 insertcmd.Parameters.AddWithValue("@Sender", Lbl_EID.Text);
                 insertcmd.Parameters.AddWithValue("@Date", Lbl_Date.Text);
                 insertcmd.Parameters.AddWithValue("@Speed", Ddl_Speed.SelectedValue);
-                insertcmd.Parameters.AddWithValue("@Text", txt_Ciphertext_Text);
+                insertcmd.Parameters.AddWithValue("@Text", Txt_Text.Text);
                 insertcmd.Parameters.AddWithValue("@Title", Txt_Title.Text);
-                insertcmd.Parameters.AddWithValue("@Proposition", txt_Ciphertext_Proposition);
+                insertcmd.Parameters.AddWithValue("@Proposition", txt_Proposition.Text);
                 insertcmd.Parameters.AddWithValue("@Type", Ddp_Type.SelectedValue);
                 insertcmd.Parameters.AddWithValue("@YOS", Ddp_YOS.SelectedValue);
-                insertcmd.Parameters.AddWithValue("@AESkey", txtKey);
-                insertcmd.Parameters.AddWithValue("@AESiv", txtIV);
                 insertcmd.ExecuteNonQuery();
                 ScriptManager.RegisterClientScriptBlock(UpdatePanel1, this.GetType(), "click", "alert('成功儲存至草稿')", true);
             }

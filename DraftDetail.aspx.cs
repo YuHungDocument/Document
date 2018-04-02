@@ -76,7 +76,7 @@ namespace WebApplication1
                             cmd2.ExecuteNonQuery();
                             bind3();
                             cmd.Connection = cn;
-                            cmd.Parameters.AddWithValue("@EID", Lbl_EID.Text);
+                            cmd.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
                             using (SqlDataReader dr = cmd.ExecuteReader())
                             {
                                 if (dr.Read())
@@ -86,70 +86,8 @@ namespace WebApplication1
                                     Ddp_Type.SelectedValue = dr["Type"].ToString();
                                     Ddl_Speed.SelectedValue = dr["Speed"].ToString();
                                     Txt_Title.Text = dr["Title"].ToString();
-                                    #region 解密
-                                    try
-                                    {
-                                        StreamReader str = new StreamReader(@"" + KeyAddress + "");
-                                        string ReadAll = str.ReadToEnd();
-                                        // 建立 RSA 演算法物件的執行個體，並匯入先前建立的私鑰
-                                        RSACryptoServiceProvider rsaProviderReceiver = new RSACryptoServiceProvider();
-                                        rsaProviderReceiver.FromXmlString(ReadAll);
-                                        try
-                                        {
-
-                                            SqlCommand cmd3 = new SqlCommand(@"Select RSAkey From Detail Where EID=@EID and SID=@SID");
-                                            cmd3.Connection = cn;
-                                            cmd3.Parameters.AddWithValue("@EID", Lbl_EID.Text);
-                                            cmd3.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
-                                            using (SqlDataReader dr2 = cmd3.ExecuteReader())
-                                            {
-                                                if (dr2.Read())
-                                                {
-                                                    RSAkey = dr2["RSAkey"].ToString();
-                                                }
-                                            }
-
-                                            // 將資料解密
-
-                                            byte[] byteCipher = Convert.FromBase64String(RSAkey);
-                                            byte[] bytePlain = rsaProviderReceiver.Decrypt(byteCipher, false);
-
-                                            // 將解密後的資料，轉 UTF8 格式輸入
-                                            key = Encoding.UTF8.GetString(bytePlain);
-                                        }
-                                        catch
-                                        {
-                                            Response.Write("<script>alert('解密失敗!');location.href='WaitDocument.aspx';</script>");
-                                        }
-                                    }
-                                    catch
-                                    {
-                                        Response.Write("<script>alert('此位置找無金鑰，請從新設定!');location.href='KeyAddress.aspx';</script>");
-                                    }
-
-
-                                    if (key != null)
-                                    {
-                                        //找到解密iv
-
-                                        SqlCommand cmd5 = new SqlCommand(@"Select AESiv From Fil Where SID=@SID");
-                                        cmd5.Connection = cn;
-                                        cmd5.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
-
-                                        using (SqlDataReader dr3 = cmd5.ExecuteReader())
-                                        {
-                                            if (dr3.Read())
-                                            {
-                                                AESiv = dr3["AESiv"].ToString();
-                                            }
-                                        }
-
-                                        //對稱解密
-
-                                        Txt_Text.Text = AESDecryption(key, AESiv, dr["Text"].ToString());
-                                        txt_Proposition.Text = AESDecryption(key, AESiv, dr["Proposition"].ToString());
-                                    }
-                                    #endregion
+                                    Txt_Text.Text = dr["Text"].ToString();
+                                    txt_Proposition.Text = dr["Proposition"].ToString();
                                 }
 
                             }

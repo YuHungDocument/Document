@@ -16,7 +16,7 @@ Template 2092 Shelf
 http://www.tooplate.com/view/2092-shelf
 
 -->
-    <title>SHELF - Your Online Bookstore</title>
+    <title>電子公文系統</title>
 
     <!-- load stylesheets -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
@@ -42,7 +42,7 @@ http://www.tooplate.com/view/2092-shelf
         </div>
         <div class="container">
             <header class="tm-site-header">
-                <h1 class="tm-site-name">琴藝科技股份有限公司</h1>
+                <h1 class="tm-site-name">勤益科技股份有限公司</h1>
                 <p class="tm-site-description">歡迎蒞臨</p>
 
                 <nav class="navbar navbar-expand-md tm-main-nav-container">
@@ -55,7 +55,7 @@ http://www.tooplate.com/view/2092-shelf
                             <li class="nav-item"><a class="nav-link" href="#">首頁</a></li>
                             <li class="nav-item"><a class="nav-link" href="#">XXXOOO</a></li>
                             <li class="nav-item"><a class="nav-link" href="#">公文系統使用介紹</a></li>
-                            <li class="nav-item"><a class="nav-link active" href="#">關於我們</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">關於我們</a></li>
                             <li class="nav-item"><a class="nav-link" href="#">查看？</a></li>
                         </ul>
                     </div>

@@ -74,7 +74,7 @@ namespace WebApplication1
                             cmd2.Connection = cn;
                             cmd2.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
                             cmd2.ExecuteNonQuery();
-                            bind3();
+                            
                             cmd.Connection = cn;
                             cmd.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
                             using (SqlDataReader dr = cmd.ExecuteReader())
@@ -91,7 +91,45 @@ namespace WebApplication1
                                 }
 
                             }
+                            bind3();
                             cn.Close();
+                        }
+                        using (SqlConnection cn3 = new SqlConnection(tmpdbhelper.DB_CnStr))
+                        {
+                            cn3.Open();
+                            SqlCommand cmd3 = new SqlCommand("Select * from Preview Where SID='" + Lbl_SID.Text + "'");
+                            cmd3.Connection = cn3;
+                            using (SqlDataReader dr2 = cmd3.ExecuteReader())
+                            {
+                                Session["i"] = 0;
+                                while (dr2.Read())
+                                {
+
+                                    ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Txt_Lvl")).Text = dr2["Lvl"].ToString();
+                                    ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Txt_EID")).Text = dr2["EID"].ToString();
+                                    ((Label)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Lbl_Dep")).Text = dr2["Department"].ToString();
+                                    ((Label)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Lbl_Name")).Text = dr2["Name"].ToString();
+                                    if (dr2["status"].ToString() == "1")
+                                    {
+                                        ((CheckBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Cb_sign")).Checked = true;
+                                    }
+                                    else
+                                    {
+                                        ((CheckBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Cb_sign")).Checked = false;
+                                    }
+
+                                    if (dr2["path"].ToString() == "1")
+                                    {
+                                        ((CheckBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Cb_path")).Checked = true;
+                                    }
+                                    else
+                                    {
+                                        ((CheckBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Cb_path")).Checked = false;
+                                    }
+
+                                    Session["i"] = int.Parse(Session["i"].ToString()) + 1;
+                                }
+                            }
                         }
                     }
                     #endregion

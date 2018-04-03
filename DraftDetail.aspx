@@ -322,7 +322,7 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField>
                                                 <HeaderTemplate>
-                                                    <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll1" CheckBoxName="Cb_path" HeaderText="需簽章" OnCheckedChanged="Cb_path_CheckedChanged" AutoPostBack="True" />
+                                                    <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll"  CheckBoxName="Cb_path" HeaderText="需簽章" OnCheckedChanged="Cb_path_CheckedChanged" AutoPostBack="True"/>
                                                 </HeaderTemplate>
                                                 <ItemTemplate>
                                                     <asp:CheckBox ID="Cb_path" runat="server" OnCheckedChanged="Cb_path_CheckedChanged" AutoPostBack="True" />

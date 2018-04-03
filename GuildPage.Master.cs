@@ -47,11 +47,11 @@ namespace WebApplication1
                                     {
                                         cn2.Open();
                                         SqlCommand cmd2 = new SqlCommand(@"Update UserInfo Set agent=@agent Where EID=@EID");
-                                        cmd2.Connection = cn;
+                                        cmd2.Connection = cn2;
                                         cmd2.Parameters.AddWithValue("@EID", tmpUserInfo.EID);
                                         cmd2.Parameters.AddWithValue("@agent", "");
                                         cmd2.ExecuteNonQuery();
-                                        SqlCommand cmd3 = new SqlCommand(@"Delete *from AgentInfo Where EID=@EID");
+                                        SqlCommand cmd3 = new SqlCommand(@"Delete from AgentInfo Where EID=@EID");
                                         cmd3.Connection = cn2;
                                         cmd3.Parameters.AddWithValue("@EID", tmpUserInfo.EID);
                                         cmd3.ExecuteNonQuery();

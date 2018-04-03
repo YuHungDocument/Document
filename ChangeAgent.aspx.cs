@@ -157,7 +157,7 @@ namespace WebApplication1
                         cmd.Parameters.AddWithValue("@status", "1");
                         cmd.Parameters.AddWithValue("@RSAkey", txt_PKmessage);
                         cmd.Parameters.AddWithValue("@look", 1);
-                        cmd.Parameters.AddWithValue("@sign", 0);
+                        cmd.Parameters.AddWithValue("@sign", 1);
                         cmd.ExecuteNonQuery();
                 cn3.Close();
                 cn3.Open();

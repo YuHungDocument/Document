@@ -104,6 +104,7 @@ namespace WebApplication1
                                 {
                                     Txt_Enterpassword.Visible = false;
                                     Btn_check.Visible = false;
+
                                 }
                             }
                         }
@@ -746,6 +747,7 @@ namespace WebApplication1
                                                     cmd2.ExecuteNonQuery();
                                                     cnUpate.Close();
                                             }
+
                                         }
                                         cnAgent.Close();
                                     }
@@ -1035,6 +1037,11 @@ namespace WebApplication1
                 cn.Close();
                 Response.Write("<script language=javascript>alert('已成功歸檔!')</script>");
                 Response.Write("<script language=javascript>window.location.href='Detail.aspx'</script>");
+            }
+
+            if ()
+            {
+
             }
         }
         #endregion

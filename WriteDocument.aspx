@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/GuildPage.Master" AutoEventWireup="true" CodeBehind="WriteDocument.aspx.cs" Inherits="WebApplication1.WriteDocument" %>
+﻿<%@ Page Title="" MaintainScrollPositionOnPostback="true" Language="C#" MasterPageFile="~/GuildPage.Master" AutoEventWireup="true" CodeBehind="WriteDocument.aspx.cs" Inherits="WebApplication1.WriteDocument" %>
 
 <%@ Register Src="~/ucGridViewChoiceAll.ascx" TagPrefix="uc1" TagName="ucGridViewChoiceAll" %>
 
@@ -204,7 +204,7 @@
     </table>
     <br />
 
-    <div class="panel panel-warning" style="width: 800px">
+    <div class="panel panel-warning" style="width: 100%">
         <div class="panel-heading">填寫收件人與收發順序</div>
         <div class="panel-body">
             <!-- Modal -->
@@ -262,7 +262,7 @@
                     <!-- Modal content-->
                 </div>
             </div>
-            <table style="height: 336px">
+            <table style="border-style: none; height: 336px">
                 <tr>
                     <td runat="server" valign="top" id="Main">
                         <div style="text-align: left">
@@ -293,7 +293,8 @@
                                             <asp:BoundField DataField="SID" HeaderText="序列" Visible="false" />
                                             <asp:TemplateField HeaderText="層級">
                                                 <ItemTemplate>
-                                                    <asp:TextBox DataField="Lvl" ID="Txt_Lvl" runat="server" OnTextChanged="Txt_Lvl_TextChanged" TextMode="Number" Width="50px" AutoPostBack="True"></asp:TextBox>
+                                                    <asp:DropDownList ID="Ddl_Lvl" runat="server" OnSelectedIndexChanged="Ddl_Lvl_SelectedIndexChanged">                                                        
+                                                    </asp:DropDownList>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="人員編號">

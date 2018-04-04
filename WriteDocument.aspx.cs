@@ -34,6 +34,7 @@ namespace WebApplication1
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            Page.MaintainScrollPositionOnPostBack = true;
             if (!Page.IsPostBack)
             {
                 UserInfo tmpUserInfo = null;
@@ -1369,5 +1370,27 @@ namespace WebApplication1
             }
         }
         #endregion
+
+        protected void Ddl_Lvl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Session["Lvl"] = 0;            
+            DropDownList Ddl_Lvl =((DropDownList)GridView2.FindControl("Ddl_Lvl"));
+            using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+                cn.Open();
+                SqlCommand cmd = new SqlCommand("select Distinct Lvl From Preview");
+                cmd.Connection = cn;
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    while(dr.Read())
+                    {
+                        Session["Lvl"] = int.Parse(Session["Lvl"].ToString()) + 1;
+                        Ddl_Lvl.Items.Add(Session["Lvl"].ToString());
+                    }
+                }
+                Session["Lvl"] = int.Parse(Session["Lvl"].ToString()) + 1;
+                Ddl_Lvl.Items.Add(Session["Lvl"].ToString());
+            }
+        }
     }
 }

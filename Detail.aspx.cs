@@ -1039,10 +1039,7 @@ namespace WebApplication1
                 Response.Write("<script language=javascript>window.location.href='Detail.aspx'</script>");
             }
 
-            if ()
-            {
 
-            }
         }
         #endregion
 

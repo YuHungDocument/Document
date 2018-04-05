@@ -283,7 +283,7 @@
                                     <asp:Label ID="Lbl_GpName" runat="server" Text="Label" Visible="False"></asp:Label>
                                     <br />
                                     <br />
-                                    <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" OnRowDataBound="GridView2_RowDataBound">
+                                    <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" OnRowDataBound="GridView2_RowDataBound" ItemStyle-HorizontalAlign="Center" GridLines="Horizontal">
                                         <Columns>
                                             <asp:TemplateField HeaderText="排列" ShowHeader="False" Visible="False">
                                                 <ItemTemplate>
@@ -293,7 +293,9 @@
                                             <asp:BoundField DataField="SID" HeaderText="序列" Visible="false" />
                                             <asp:TemplateField HeaderText="層級">
                                                 <ItemTemplate>
-                                                    <asp:DropDownList ID="Ddl_Lvl" runat="server" OnSelectedIndexChanged="Ddl_Lvl_SelectedIndexChanged">                                                        
+                                                    <asp:DropDownList ID="Ddl_Lvl" runat="server" OnSelectedIndexChanged="Ddl_Lvl_SelectedIndexChanged" AppendDataBoundItems="True" AutoPostBack="True">                                                        
+                                                        <asp:ListItem Selected="True"></asp:ListItem>
+                                                        <asp:ListItem>1</asp:ListItem>
                                                     </asp:DropDownList>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
@@ -332,7 +334,7 @@
                                             </asp:TemplateField>
 
                                         </Columns>
-                                        <RowStyle HorizontalAlign="Center" />
+                                        <HeaderStyle HorizontalAlign="Center" />
                                     </asp:GridView>
                                     <br />
                                     <br />

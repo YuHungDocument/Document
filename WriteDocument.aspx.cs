@@ -37,6 +37,7 @@ namespace WebApplication1
             Page.MaintainScrollPositionOnPostBack = true;
             if (!Page.IsPostBack)
             {
+
                 UserInfo tmpUserInfo = null;
                 bind2();
                 if (Session["userinfo"] == null)
@@ -136,44 +137,44 @@ namespace WebApplication1
         }
         #endregion
 
-        #region 改變Gridview的Lvl(層級)時做的Update
-        protected void Txt_Lvl_TextChanged(object sender, EventArgs e)
-        {
-            TextBox curTextBox = (TextBox)sender;
-            int gvRowIndex = (curTextBox.NamingContainer as GridViewRow).RowIndex;
-            string UserEID = ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text.Trim();
-            string ID = ((Label)GridView2.Rows[gvRowIndex].FindControl("Label1")).Text.Trim();
-            using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
-            {
-                CheckBox Cb_sign = ((CheckBox)GridView2.Rows[gvRowIndex].FindControl("Cb_sign"));
-                CheckBox Cb_path = ((CheckBox)GridView2.Rows[gvRowIndex].FindControl("Cb_path"));
-                cn2.Open();
-                SqlCommand cmd2 = new SqlCommand("Update Preview set Lvl=@Lvl,Department=@Department,EID=@EID,Name=@Name,status=@status,path=@path Where ID=@ID");
-                cmd2.Parameters.AddWithValue("@Lvl", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_Lvl")).Text);
-                cmd2.Parameters.AddWithValue("@Department", ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Dep")).Text);
-                cmd2.Parameters.AddWithValue("@EID", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text);
-                cmd2.Parameters.AddWithValue("@Name", ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Name")).Text);
-                if (Cb_sign.Checked == true)
-                {
-                    cmd2.Parameters.AddWithValue("@status", "1");
-                }
-                else
-                {
-                    cmd2.Parameters.AddWithValue("@status", "0");
-                }
-                if (Cb_path.Checked == true)
-                {
-                    cmd2.Parameters.AddWithValue("@path", "1");
-                }
-                else
-                {
-                    cmd2.Parameters.AddWithValue("@path", "0");
-                }
-                cmd2.Parameters.AddWithValue("@ID", ID);
-                cmd2.Connection = cn2;
-                cmd2.ExecuteNonQuery();
-            }
-        }
+        #region 改變Gridview的Lvl(層級)時做的Update舊的可能會用到
+        //protected void Txt_Lvl_TextChanged(object sender, EventArgs e)
+        //{
+        //    TextBox curTextBox = (TextBox)sender;
+        //    int gvRowIndex = (curTextBox.NamingContainer as GridViewRow).RowIndex;
+        //    string UserEID = ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text.Trim();
+        //    string ID = ((Label)GridView2.Rows[gvRowIndex].FindControl("Label1")).Text.Trim();
+        //    using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
+        //    {
+        //        CheckBox Cb_sign = ((CheckBox)GridView2.Rows[gvRowIndex].FindControl("Cb_sign"));
+        //        CheckBox Cb_path = ((CheckBox)GridView2.Rows[gvRowIndex].FindControl("Cb_path"));
+        //        cn2.Open();
+        //        SqlCommand cmd2 = new SqlCommand("Update Preview set Lvl=@Lvl,Department=@Department,EID=@EID,Name=@Name,status=@status,path=@path Where ID=@ID");
+        //        cmd2.Parameters.AddWithValue("@Lvl", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_Lvl")).Text);
+        //        cmd2.Parameters.AddWithValue("@Department", ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Dep")).Text);
+        //        cmd2.Parameters.AddWithValue("@EID", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text);
+        //        cmd2.Parameters.AddWithValue("@Name", ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Name")).Text);
+        //        if (Cb_sign.Checked == true)
+        //        {
+        //            cmd2.Parameters.AddWithValue("@status", "1");
+        //        }
+        //        else
+        //        {
+        //            cmd2.Parameters.AddWithValue("@status", "0");
+        //        }
+        //        if (Cb_path.Checked == true)
+        //        {
+        //            cmd2.Parameters.AddWithValue("@path", "1");
+        //        }
+        //        else
+        //        {
+        //            cmd2.Parameters.AddWithValue("@path", "0");
+        //        }
+        //        cmd2.Parameters.AddWithValue("@ID", ID);
+        //        cmd2.Connection = cn2;
+        //        cmd2.ExecuteNonQuery();
+        //    }
+        //}
         #endregion
 
         #region Gridview的輸入EID或名字找到人
@@ -588,7 +589,7 @@ namespace WebApplication1
                         while (dr2.Read())
                         {
 
-                            ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Txt_Lvl")).Text = dr2["Lvl"].ToString();
+                            ((DropDownList)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Ddl_Lvl")).SelectedValue = dr2["Lvl"].ToString();
                             ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Txt_EID")).Text = dr2["EID"].ToString();
                             ((Label)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Lbl_Dep")).Text = dr2["Department"].ToString();
                             ((Label)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Lbl_Name")).Text = dr2["Name"].ToString();
@@ -1371,26 +1372,83 @@ namespace WebApplication1
         }
         #endregion
 
+        #region 改變Gridview的Lvl(層級)時做的Update
         protected void Ddl_Lvl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Session["Lvl"] = 0;            
-            DropDownList Ddl_Lvl =((DropDownList)GridView2.FindControl("Ddl_Lvl"));
+            DropDownList dropDown = (DropDownList)sender;
+            int gvRowIndex = (dropDown.NamingContainer as GridViewRow).RowIndex;
+            Session["Lvl"] = 1;            
+            DropDownList Ddl_Lvl =((DropDownList)GridView2.Rows[gvRowIndex].FindControl("Ddl_Lvl"));            
+            string UserEID = ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text.Trim();
+            string ID = ((Label)GridView2.Rows[gvRowIndex].FindControl("Label1")).Text.Trim();
+            using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+                CheckBox Cb_sign = ((CheckBox)GridView2.Rows[gvRowIndex].FindControl("Cb_sign"));
+                CheckBox Cb_path = ((CheckBox)GridView2.Rows[gvRowIndex].FindControl("Cb_path"));
+                cn2.Open();
+                SqlCommand cmd2 = new SqlCommand("Update Preview set Lvl=@Lvl,Department=@Department,EID=@EID,Name=@Name,status=@status,path=@path Where ID=@ID");
+                cmd2.Parameters.AddWithValue("@Lvl", Ddl_Lvl.SelectedValue);
+                cmd2.Parameters.AddWithValue("@Department", ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Dep")).Text);
+                cmd2.Parameters.AddWithValue("@EID", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text);
+                cmd2.Parameters.AddWithValue("@Name", ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Name")).Text);
+                if (Cb_sign.Checked == true)
+                {
+                    cmd2.Parameters.AddWithValue("@status", "1");
+                }
+                else
+                {
+                    cmd2.Parameters.AddWithValue("@status", "0");
+                }
+                if (Cb_path.Checked == true)
+                {
+                    cmd2.Parameters.AddWithValue("@path", "1");
+                }
+                else
+                {
+                    cmd2.Parameters.AddWithValue("@path", "0");
+                }
+                cmd2.Parameters.AddWithValue("@ID", ID);
+                cmd2.Connection = cn2;
+                cmd2.ExecuteNonQuery();
+            }
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
                 cn.Open();
-                SqlCommand cmd = new SqlCommand("select Distinct Lvl From Preview");
+                SqlCommand cmd = new SqlCommand("select count(Distinct Lvl) as Lvlcou From Preview where SID=@SID ");
+                cmd.Parameters.AddWithValue("@SID",Lbl_SID.Text);
                 cmd.Connection = cn;
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
-                    while(dr.Read())
+                    if(dr.Read())
                     {
-                        Session["Lvl"] = int.Parse(Session["Lvl"].ToString()) + 1;
-                        Ddl_Lvl.Items.Add(Session["Lvl"].ToString());
+                        Ddl_Lvl.Items.Clear();
+                        if (dr["Lvlcou"].ToString()=="1")
+                        {
+                            Session["Lvl"] =1;
+                            Ddl_Lvl.Items.Add(Session["Lvl"].ToString());
+                        }
+                        else
+                        {
+                            for (int i = 0; i < GridView2.Rows.Count; i++)
+                            {
+                                for (int j = 1; j <= int.Parse(dr["Lvlcou"].ToString()); j++)
+                                {
+                                    Session["Lvl"] = int.Parse(Session["Lvl"].ToString()) + 1;
+                                    Ddl_Lvl.Items.Add(Session["Lvl"].ToString());
+                                }
+                            }
+
+                        }
                     }
                 }
-                Session["Lvl"] = int.Parse(Session["Lvl"].ToString()) + 1;
-                Ddl_Lvl.Items.Add(Session["Lvl"].ToString());
+                for (int i = 0; i < GridView2.Rows.Count; i++)
+                {
+                    Session["Lvl"] = int.Parse(Session["Lvl"].ToString()) + 1;
+                    Ddl_Lvl.Items.Add(Session["Lvl"].ToString());
+                }
+
             }
         }
+        #endregion
     }
 }

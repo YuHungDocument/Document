@@ -281,9 +281,14 @@
 
 
                                     <asp:Label ID="Lbl_GpName" runat="server" Text="Label" Visible="False"></asp:Label>
+                                    <asp:SqlDataSource ID="SD_Lvl" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString %>" SelectCommand="SELECT [TN] FROM [TypeGroup] WHERE ([Tp] = @Tp)">
+                                        <SelectParameters>
+                                            <asp:Parameter DefaultValue="Lv" Name="Tp" Type="String" />
+                                        </SelectParameters>
+                                    </asp:SqlDataSource>
                                     <br />
                                     <br />
-                                    <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" OnRowDataBound="GridView2_RowDataBound" ItemStyle-HorizontalAlign="Center" GridLines="Horizontal">
+                                    <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" OnRowDataBound="GridView2_RowDataBound" ItemStyle-HorizontalAlign="Center" GridLines="Horizontal" >
                                         <Columns>
                                             <asp:TemplateField HeaderText="排列" ShowHeader="False" Visible="False">
                                                 <ItemTemplate>
@@ -291,14 +296,19 @@
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:BoundField DataField="SID" HeaderText="序列" Visible="false" />
-                                            <asp:TemplateField HeaderText="層級">
+                                            <asp:TemplateField>
+                                                <HeaderTemplate>
+                                                    <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll2" CheckBoxName="Cb_Select" HeaderText="選擇列" />
+                                                </HeaderTemplate>
                                                 <ItemTemplate>
-                                                    <asp:DropDownList ID="Ddl_Lvl" runat="server" OnSelectedIndexChanged="Ddl_Lvl_SelectedIndexChanged" AppendDataBoundItems="True" AutoPostBack="True">                                                        
-                                                        <asp:ListItem Selected="True"></asp:ListItem>
-                                                        <asp:ListItem>1</asp:ListItem>
-                                                    </asp:DropDownList>
+                                                    <asp:CheckBox ID="Cb_Select" runat="server" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="層級">
+                                                    <ItemTemplate>
+                                                        <asp:TextBox DataField="Lvl" ID="Txt_Lvl" runat="server" OnTextChanged="Txt_Lvl_TextChanged" TextMode="Number" Width="50px" AutoPostBack="True"></asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
                                             <asp:TemplateField HeaderText="人員編號">
                                                 <ItemTemplate>
                                                     <asp:TextBox DataField="EID" placeholder="請輸入員工編號或姓名" ID="Txt_EID" runat="server" AutoPostBack="True" OnTextChanged="Txt_EID_TextChanged"></asp:TextBox>

@@ -89,6 +89,7 @@
     <Content Include="js\jquery-1.11.3.min.js" />
     <Content Include="js\popper.min.js" />
     <Content Include="KeyAddress.aspx" />
+    <Content Include="MainPage.aspx" />
     <Content Include="password.aspx" />
     <Content Include="P\header-01.jpg" />
     <Content Include="P\個人資料.png" />
@@ -272,6 +273,13 @@
     </Compile>
     <Compile Include="KeyAddress.aspx.designer.cs">
       <DependentUpon>KeyAddress.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MainPage.aspx.cs">
+      <DependentUpon>MainPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MainPage.aspx.designer.cs">
+      <DependentUpon>MainPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="password.aspx.cs">
       <DependentUpon>password.aspx</DependentUpon>

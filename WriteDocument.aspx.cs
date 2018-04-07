@@ -37,7 +37,7 @@ namespace WebApplication1
             Page.MaintainScrollPositionOnPostBack = true;
             if (!Page.IsPostBack)
             {
-
+                
                 UserInfo tmpUserInfo = null;
                 bind2();
                 if (Session["userinfo"] == null)
@@ -142,38 +142,19 @@ namespace WebApplication1
         {
             TextBox curTextBox = (TextBox)sender;
             int gvRowIndex = (curTextBox.NamingContainer as GridViewRow).RowIndex;
-            string UserEID = ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text.Trim();
             string ID = ((Label)GridView2.Rows[gvRowIndex].FindControl("Label1")).Text.Trim();
+            TextBox Txt_Lvl = ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_Lvl"));
             using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
-                CheckBox Cb_sign = ((CheckBox)GridView2.Rows[gvRowIndex].FindControl("Cb_sign"));
-                CheckBox Cb_path = ((CheckBox)GridView2.Rows[gvRowIndex].FindControl("Cb_path"));
                 cn2.Open();
-                SqlCommand cmd2 = new SqlCommand("Update Preview set Lvl=@Lvl,Department=@Department,EID=@EID,Name=@Name,status=@status,path=@path Where ID=@ID");
-                cmd2.Parameters.AddWithValue("@Lvl", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_Lvl")).Text);
-                cmd2.Parameters.AddWithValue("@Department", ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Dep")).Text);
-                cmd2.Parameters.AddWithValue("@EID", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text);
-                cmd2.Parameters.AddWithValue("@Name", ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Name")).Text);
-                if (Cb_sign.Checked == true)
-                {
-                    cmd2.Parameters.AddWithValue("@status", "1");
-                }
-                else
-                {
-                    cmd2.Parameters.AddWithValue("@status", "0");
-                }
-                if (Cb_path.Checked == true)
-                {
-                    cmd2.Parameters.AddWithValue("@path", "1");
-                }
-                else
-                {
-                    cmd2.Parameters.AddWithValue("@path", "0");
-                }
+                SqlCommand cmd2 = new SqlCommand("Update Preview set Lvl=@Lvl Where ID=@ID");
+                cmd2.Parameters.AddWithValue("@Lvl", Txt_Lvl.Text);
+
                 cmd2.Parameters.AddWithValue("@ID", ID);
                 cmd2.Connection = cn2;
                 cmd2.ExecuteNonQuery();
             }
+            Txt_Lvl.Attributes.Add("onblur", "Txt_Lvl_TextChanged()");
         }
         #endregion
 
@@ -182,7 +163,7 @@ namespace WebApplication1
         {
             TextBox curTextBox = (TextBox)sender;
             int gvRowIndex = (curTextBox.NamingContainer as GridViewRow).RowIndex;
-            string UserEID = ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text.Trim();
+            TextBox UserEID = ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID"));
             string ID = ((Label)GridView2.Rows[gvRowIndex].FindControl("Label1")).Text.Trim();
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
@@ -190,7 +171,7 @@ namespace WebApplication1
                 SqlCommand cmd = new SqlCommand("Select * from UserInfo Where EID=@EID");
                 SqlCommand cmdAgentEID = new SqlCommand("Select * from UserInfo Where EID=@EID");
                 cmdAgentEID.Connection = cn;
-                cmdAgentEID.Parameters.AddWithValue("@EID", UserEID);
+                cmdAgentEID.Parameters.AddWithValue("@EID", UserEID.Text);
                 using (SqlDataReader dr = cmdAgentEID.ExecuteReader())
                 {
                     if (dr.Read())
@@ -203,13 +184,13 @@ namespace WebApplication1
                         }
                         else
                         {
-                            cmd.Parameters.AddWithValue("@EID", UserEID);
+                            cmd.Parameters.AddWithValue("@EID", UserEID.Text);
                         }
                        
                     }
                     else
                     {
-                        cmd.Parameters.AddWithValue("@EID", UserEID);
+                        cmd.Parameters.AddWithValue("@EID", UserEID.Text);
                     }
                     
                 }
@@ -266,7 +247,7 @@ namespace WebApplication1
                 
                 SqlCommand cmdAgentName = new SqlCommand("Select agent from UserInfo Where Name=@Name");
                 cmdAgentName.Connection = cn;
-                cmdAgentName.Parameters.AddWithValue("@Name", UserEID);
+                cmdAgentName.Parameters.AddWithValue("@Name", UserEID.Text);
                 using (SqlDataReader dr = cmdAgentName.ExecuteReader())
                 {
                     if (dr.Read())
@@ -296,13 +277,13 @@ namespace WebApplication1
                         }
                         else
                         {
-                            namemd.Parameters.AddWithValue("@Name", UserEID);
+                            namemd.Parameters.AddWithValue("@Name", UserEID.Text);
                         }
                         
                     }
                     else
                     {
-                        namemd.Parameters.AddWithValue("@Name", UserEID);
+                        namemd.Parameters.AddWithValue("@Name", UserEID.Text);
                     }
                 }
                 cn.Close();
@@ -589,7 +570,7 @@ namespace WebApplication1
                         while (dr2.Read())
                         {
 
-                            ((DropDownList)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Ddl_Lvl")).SelectedValue = dr2["Lvl"].ToString();
+                            ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Txt_Lvl")).Text = dr2["Lvl"].ToString();
                             ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Txt_EID")).Text = dr2["EID"].ToString();
                             ((Label)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Lbl_Dep")).Text = dr2["Department"].ToString();
                             ((Label)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Lbl_Name")).Text = dr2["Name"].ToString();

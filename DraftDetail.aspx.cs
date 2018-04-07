@@ -82,12 +82,26 @@ namespace WebApplication1
                                 if (dr.Read())
                                 {
                                     Lbl_SID.Text = dr["SID"].ToString();
-                                    Lbl_Sender.Text = dr["Sender"].ToString();
                                     Ddp_Type.SelectedValue = dr["Type"].ToString();
                                     Ddl_Speed.SelectedValue = dr["Speed"].ToString();
                                     Txt_Title.Text = dr["Title"].ToString();
                                     Txt_Text.Text = dr["Text"].ToString();
                                     txt_Proposition.Text = dr["Proposition"].ToString();
+                                    using (SqlConnection secn = new SqlConnection(tmpdbhelper.DB_CnStr))
+                                    {
+                                        secn.Open();
+                                        SqlCommand secmd = new SqlCommand("Select Name From UserInfo Where EID=@EID");
+                                        secmd.Connection = secn;
+                                        secmd.Parameters.AddWithValue("@EID", dr["Sender"].ToString());
+                                        using (SqlDataReader sedr = secmd.ExecuteReader())
+                                        {
+                                            if(sedr.Read())
+                                            {
+                                                Lbl_Sender.Text = sedr["Name"].ToString();
+                                            }
+                                            
+                                        }
+                                    }
                                 }
 
                             }

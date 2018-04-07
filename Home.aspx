@@ -41,16 +41,16 @@ http://www.tooplate.com/view/2092-shelf
         <div>
         </div>
         <div class="container">
-            <header class="tm-site-header">
-                <h1 class="tm-site-name">勤益科技股份有限公司</h1>
-                <p class="tm-site-description">歡迎蒞臨</p>
+            <header class="tm-site-header" style="height: 250px">
+                <h2 class="tm-site-name">勤益科技股份有限公司</h2>
+                
 
                 <nav class="navbar navbar-expand-md tm-main-nav-container">
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#tmMainNav" aria-controls="tmMainNav" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <div class="collapse navbar-collapse tm-main-nav" id="tmMainNav">
+                    <div class="collapse navbar-collapse tm-main-nav" id="tmMainNav" style="height: 50px">
                         <ul class="nav nav-fill tm-main-nav-ul">
                             <li class="nav-item"><a class="nav-link" href="#">首頁</a></li>
                             <li class="nav-item"><a class="nav-link" href="#">XXXOOO</a></li>

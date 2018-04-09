@@ -30,6 +30,9 @@ namespace WebApplication1
         string AgentEID;
         string AgentName;
         string listmail;
+        string KeyAddress;
+        string txt_RSAhash_Text;
+        string txt_RSAhash_Proposition;
         #endregion
 
         protected void Page_Load(object sender, EventArgs e)
@@ -1008,7 +1011,7 @@ namespace WebApplication1
                 using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
                 {
                     //SqlCommand cmd4 = new SqlCommand(@"update Fil set Fil.Name=Document.Name,Fil.DocumentContent=Document.DocumentContent,Fil.Extn=Document.Extn  from Document join Fil on Fil.SID=Document.SID");
-                    SqlCommand cmd3 = new SqlCommand(@"Insert INTO Fil(SID,EID,Date,Speed,Text,Title,Proposition,Type,YOS,AESkey,AESiv)VALUES(@SID,@EID,@Date,@Speed,@Text,@Title,@Proposition,@Type,@YOS,@AESkey,@AESiv)");
+                    SqlCommand cmd3 = new SqlCommand(@"Insert INTO Fil(SID,EID,Date,Speed,Text,Title,Proposition,Type,YOS,AESkey,AESiv,txt_RSAhash_Text,txt_RSAhash_Proposition)VALUES(@SID,@EID,@Date,@Speed,@Text,@Title,@Proposition,@Type,@YOS,@AESkey,@AESiv,@txt_RSAhash_Text,@txt_RSAhash_Proposition)");
                     cn2.Open();
                     cmd3.Connection = cn2;
                     //cmd4.Connection = cn2;
@@ -1018,7 +1021,51 @@ namespace WebApplication1
                     txtIV = Convert.ToBase64String(symAlgorithm.IV);       //oeZlJhiaZB0=
                                                                            //對稱加密
                     txt_Ciphertext_Text = AESEncryption(txtKey, txtIV, Txt_Text.Text);
+
                     txt_Ciphertext_Proposition = AESEncryption(txtKey, txtIV, txt_Proposition.Text);
+                    //發文者私鑰加密訊息摘要
+                    string day = DateTime.Now.ToString("yyyyMMdd");
+                    // 建立 RSA 演算法物件的執行個體，並匯入先前建立的私鑰
+                    RSACryptoServiceProvider rsaProvider = new RSACryptoServiceProvider();
+                    #region 找出金鑰位址
+                    SqlCommand cmdfindkeyaddress = new SqlCommand(@"Select KeyAddress From UserInfo Where EID=@EID");
+                    cmdfindkeyaddress.Connection = cn2;
+                    cmdfindkeyaddress.Parameters.AddWithValue("@EID", Lbl_EID.Text);
+
+                    using (SqlDataReader dr2 = cmdfindkeyaddress.ExecuteReader())
+                    {
+                        if (dr2.Read())
+                        {
+                            KeyAddress = dr2["KeyAddress"].ToString();
+                        }
+                        if (KeyAddress == "")
+                        {
+                            Response.Redirect("KeyAddress.aspx");
+                        }
+                    }
+                    #endregion
+                    try
+                    {
+                        StreamReader str = new StreamReader(@"" + KeyAddress + "");
+                        string ReadAll = str.ReadToEnd();
+                        // 建立 RSA 演算法物件的執行個體，並匯入先前建立的私鑰
+                        rsaProvider.FromXmlString(ReadAll);
+                        // 2) 讀取本文資料
+                        byte[] content_txt_Ciphertext_Text = Encoding.UTF8.GetBytes(txt_Ciphertext_Text + day);
+                        byte[] content_txt_Ciphertext_Proposition = Encoding.UTF8.GetBytes(txt_Ciphertext_Proposition + day);
+                        // 3) 呼叫 SignData 方法, 對本文進行簽章
+                        byte[] signature_Text = rsaProvider.SignData(content_txt_Ciphertext_Text, new SHA1CryptoServiceProvider());  //指定一個雜湊法
+                        byte[] signature_Proposition = rsaProvider.SignData(content_txt_Ciphertext_Proposition, new SHA1CryptoServiceProvider());  //指定一個雜湊法
+
+                        // 輸出簽章 (使用 Base64 編碼）
+                        txt_RSAhash_Text = Convert.ToBase64String(signature_Text);
+                        txt_RSAhash_Proposition = Convert.ToBase64String(signature_Proposition);
+                    }
+                    catch
+                    {
+                        Response.Write("<script>alert('此位置找無金鑰，請從新設定!');location.href='KeyAddress.aspx';</script>");
+                    }
+
                     cmd3.Parameters.AddWithValue("@SID", SID);
                     cmd3.Parameters.AddWithValue("@EID", Lbl_EID.Text);
                     cmd3.Parameters.AddWithValue("@Date", Lbl_Date.Text);
@@ -1030,6 +1077,8 @@ namespace WebApplication1
                     cmd3.Parameters.AddWithValue("@YOS", Ddp_YOS.SelectedValue);
                     cmd3.Parameters.AddWithValue("@AESkey", txtKey);
                     cmd3.Parameters.AddWithValue("@AESiv", txtIV);
+                    cmd3.Parameters.AddWithValue("@txt_RSAhash_Text", txt_RSAhash_Text);
+                    cmd3.Parameters.AddWithValue("@txt_RSAhash_Proposition", txt_RSAhash_Proposition);
                     cmd3.ExecuteNonQuery();
                     //cmd4.ExecuteNonQuery();
                 }

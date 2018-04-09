@@ -21,6 +21,9 @@ namespace WebApplication1
         string key;
         string AESiv;
         string IsEnd;
+        string senderPK;
+        string txt_RSAhash_Text;
+        string txt_RSAhash_Proposition;
         DbHelper tmpdbhelper = new DbHelper();
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -393,6 +396,7 @@ namespace WebApplication1
         public void bind()
         {
 
+
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
                 cn.Open();
@@ -466,12 +470,12 @@ namespace WebApplication1
                 using (SqlDataReader dr2 = cmd2.ExecuteReader())
                     if (dr2.Read())
                     {
-                        if (dr2["sign"].ToString() == "0" || dr2["choose"]!=null)
+                        if (dr2["sign"].ToString() == "0" || dr2["choose"] != null)
 
                         {
                             Pnl_sign.Visible = true;
-                            
-                        }                        
+
+                        }
                         else
                         {
                             Pel_Choose.Visible = true;
@@ -560,9 +564,10 @@ namespace WebApplication1
 
                     Lbl_Text.Text = AESDecryption(key, AESiv, Lbl_Text.Text);
                     Lbl_Proposition.Text = AESDecryption(key, AESiv, Lbl_Proposition.Text);
-                    Lbl_Choose.Text= AESDecryption(key, AESiv, Lbl_Choose.Text);
+                    Lbl_Choose.Text = AESDecryption(key, AESiv, Lbl_Choose.Text);
+
                 }
-        #endregion
+                #endregion
             }
         }
         #endregion
@@ -608,160 +613,204 @@ namespace WebApplication1
         #region 簽核
         protected void Btn_check_Click(object sender, EventArgs e)
         {
-            using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+            using (SqlConnection cnsign = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
-                cn.Open();
+                cnsign.Open();
+                SqlCommand cmdsign = new SqlCommand(@"Select PK From UserInfo Where EID=@EID");
+                SqlCommand cmdhash = new SqlCommand(@"Select txt_RSAhash_Text,txt_RSAhash_Proposition From Fil Where SID=@SID");
+                cmdsign.Connection = cnsign;
+                cmdhash.Connection = cnsign;
+                cmdsign.Parameters.AddWithValue("@EID", Lbl_SenderEID.Text);
+                cmdhash.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
 
-                SqlCommand cmd = new SqlCommand(@"Select Pwd From UserInfo Where EID=@EID AND Pwd = @Pwd");
-                cmd.Connection = cn;
-                cmd.Parameters.AddWithValue("@EID", Lbl_EID.Text);
-                cmd.Parameters.AddWithValue("@Pwd", Txt_Enterpassword.Text);
-
-                SqlCommand sqlcmd = new SqlCommand("Select * from Fil Where SID=@SID");
-                sqlcmd.Connection = cn;
-                sqlcmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
-
-                using (SqlDataReader dr2 = sqlcmd.ExecuteReader())
+                using (SqlDataReader dr2 = cmdsign.ExecuteReader())
                 {
                     if (dr2.Read())
                     {
-                        if (dr2["Type"].ToString() == "投票")
-                        {
-                            using (SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr))
-                            {
-                                sqlcon.Open();
-                                SqlCommand choosecmd = new SqlCommand("Update Detail set choose=@choose where EID=@EID and SID=@SID");
-                                choosecmd.Parameters.AddWithValue("@choose", DropDownList1.SelectedValue);
-                                choosecmd.Parameters.AddWithValue("@EID", Lbl_EID.Text);
-                                choosecmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
-                                choosecmd.Connection = sqlcon;
-                                choosecmd.ExecuteNonQuery();
-
-                                
-                                SqlCommand selecttotalcmd = new SqlCommand("Select * from Vote where SID=@SID and number=@number");
-                                selecttotalcmd.Parameters.AddWithValue("SID", Lbl_SID.Text);
-                                selecttotalcmd.Parameters.AddWithValue("number", DropDownList1.SelectedValue);
-                                selecttotalcmd.Connection = sqlcon;
-                                using (SqlDataReader totaldr = selecttotalcmd.ExecuteReader())
-                                {
-                                    
-                                    if (totaldr.Read())
-                                    {
-                                        Session["total"] = int.Parse(totaldr["Total"].ToString());
-                                        Session["total"] = int.Parse(Session["total"].ToString()) + 1;
-                                        using (SqlConnection upcn = new SqlConnection(tmpdbhelper.DB_CnStr))
-                                        {
-                                            upcn.Open();
-                                            SqlCommand upcmd = new SqlCommand("Update Vote set Total=@Total Where number=@number");
-                                            upcmd.Parameters.AddWithValue("@Total", Session["total"].ToString());
-                                            upcmd.Parameters.AddWithValue("number", DropDownList1.SelectedValue);
-                                            upcmd.Connection = upcn;
-                                            upcmd.ExecuteNonQuery();
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        senderPK = dr2["PK"].ToString();
                     }
                 }
-
-                
-
-                using (SqlDataReader dr = cmd.ExecuteReader())
+                using (SqlDataReader drhash = cmdhash.ExecuteReader())
                 {
-                    if (dr.Read())
+                    if (drhash.Read())
                     {
-                        using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
+                        txt_RSAhash_Text = drhash["txt_RSAhash_Text"].ToString();
+                        txt_RSAhash_Proposition = drhash["txt_RSAhash_Proposition"].ToString();
+                    }
+                }
+                // 1) 建立RSA數位簽章演算法物件
+                RSACryptoServiceProvider verifier = new RSACryptoServiceProvider();
+                verifier.FromXmlString(senderPK);     //讀取公開金鑰
+                // 2) 讀取接收到的本文資料
+                byte[] content_Text = Encoding.UTF8.GetBytes(Lbl_Text.Text + Lbl_Date);
+                byte[] content_Proposition = Encoding.UTF8.GetBytes(Lbl_Proposition.Text + Lbl_Date);
+                // 3) 讀取接收到的簽章資料
+                byte[] signature_Text = Convert.FromBase64String(txt_RSAhash_Text);
+                byte[] signature_Proposition = Convert.FromBase64String(txt_RSAhash_Proposition);
+                // 將資料解密
+                // 4) 呼叫 VerifyData 方法, 驗證本文與簽章是否相符
+                if (verifier.VerifyData(content_Text, new SHA1CryptoServiceProvider(), signature_Text) && verifier.VerifyData(content_Proposition, new SHA1CryptoServiceProvider(), signature_Proposition))
+                {
+                    using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+                    {
+                        cn.Open();
+
+                        SqlCommand cmd = new SqlCommand(@"Select Pwd From UserInfo Where EID=@EID AND Pwd = @Pwd");
+                        cmd.Connection = cn;
+                        cmd.Parameters.AddWithValue("@EID", Lbl_EID.Text);
+                        cmd.Parameters.AddWithValue("@Pwd", Txt_Enterpassword.Text);
+
+                        SqlCommand sqlcmd = new SqlCommand("Select * from Fil Where SID=@SID");
+                        sqlcmd.Connection = cn;
+                        sqlcmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+
+                        using (SqlDataReader dr2 = sqlcmd.ExecuteReader())
                         {
-                            cn2.Open();
-                            SqlCommand cmd2 = new SqlCommand(@"UPDATE Detail Set sign=1,signtime=@signtime Where SID=@SID AND EID=@EID");
-                            cmd2.Connection = cn2;
-                            cmd2.Parameters.AddWithValue("@EID", Lbl_EID.Text);
-                            cmd2.Parameters.AddWithValue("@SID", Lbl_SID.Text);
-                            cmd2.Parameters.AddWithValue("@signtime", System.DateTime.Now);
-                            cmd2.ExecuteNonQuery();
-                        }
-                        using (SqlConnection cn3 = new SqlConnection(tmpdbhelper.DB_CnStr))
-                        {
-                            cn3.Open();
-                            SqlCommand cmd3 = new SqlCommand("Select * From Detail Where SID=@SID and look=1");
-                            cmd3.Connection = cn3;
-                            cmd3.Parameters.AddWithValue("@SID", Lbl_SID.Text);
-                            using (SqlDataReader dr2 = cmd3.ExecuteReader())
+                            if (dr2.Read())
                             {
-                                Session["i"] = 0;
-                                Session["j"] = 0;
-                                while (dr2.Read())
+                                if (dr2["Type"].ToString() == "投票")
                                 {
-                                    if (dr2["sign"].ToString() == "0")
+                                    using (SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr))
                                     {
-                                        Session["i"] = int.Parse(Session["i"].ToString()) + 1;
-                                    }
-                                    Session["j"] = dr2["Lvl"].ToString();
-                                }
-                                if (Session["i"].ToString() == "0")
-                                {
-                                    Session["j"] = int.Parse(Session["j"].ToString()) + 1;
-                                    using (SqlConnection cn4 = new SqlConnection(tmpdbhelper.DB_CnStr))
-                                    {
-                                        cn4.Open();
-                                        SqlCommand cmd4 = new SqlCommand("UPDATE Detail Set look=1 Where SID=@SID and Lvl='" + Session["j"].ToString() + "'");
-                                        cmd4.Connection = cn4;
-                                        cmd4.Parameters.AddWithValue("@SID", Lbl_SID.Text);
-                                        cmd4.ExecuteNonQuery();
-                                    }
-                                }
-                                if (Lbl_Type.Text == "公文類型：代理人設定")
-                                {
-                                    using (SqlConnection cnAgent = new SqlConnection(tmpdbhelper.DB_CnStr))
-                                    {
-                                        cnAgent.Open();
-                                        SqlCommand cmdAgent = new SqlCommand(@"Select agent From UserInfo  Where EID=@EID");
-                                        cmdAgent.Connection = cnAgent;
-                                        cmdAgent.Parameters.AddWithValue("@EID", Lbl_SenderEID.Text);
-                                        using (SqlDataReader drAgent = cmdAgent.ExecuteReader())
+                                        sqlcon.Open();
+                                        SqlCommand choosecmd = new SqlCommand("Update Detail set choose=@choose where EID=@EID and SID=@SID");
+                                        choosecmd.Parameters.AddWithValue("@choose", DropDownList1.SelectedValue);
+                                        choosecmd.Parameters.AddWithValue("@EID", Lbl_EID.Text);
+                                        choosecmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+                                        choosecmd.Connection = sqlcon;
+                                        choosecmd.ExecuteNonQuery();
+
+
+                                        SqlCommand selecttotalcmd = new SqlCommand("Select * from Vote where SID=@SID and number=@number");
+                                        selecttotalcmd.Parameters.AddWithValue("SID", Lbl_SID.Text);
+                                        selecttotalcmd.Parameters.AddWithValue("number", DropDownList1.SelectedValue);
+                                        selecttotalcmd.Connection = sqlcon;
+                                        using (SqlDataReader totaldr = selecttotalcmd.ExecuteReader())
                                         {
-                                            if (drAgent.Read())
+
+                                            if (totaldr.Read())
                                             {
-                                                using (SqlConnection cnUpate = new SqlConnection(tmpdbhelper.DB_CnStr))
+                                                Session["total"] = int.Parse(totaldr["Total"].ToString());
+                                                Session["total"] = int.Parse(Session["total"].ToString()) + 1;
+                                                using (SqlConnection upcn = new SqlConnection(tmpdbhelper.DB_CnStr))
                                                 {
-                                                    cnUpate.Open();
-                                                    SqlCommand cmd2 = new SqlCommand(@"Update UserInfo Set agent=@agent Where EID=@EID");
-                                                    cmd2.Connection = cnUpate;
-                                                    cmd2.Parameters.AddWithValue("@EID", Lbl_SenderEID.Text);
-                                                    cmd2.Parameters.AddWithValue("@agent", Lbl_EID.Text);
-                                                    cmd2.ExecuteNonQuery();
-                                                    SqlCommand cmd4 = new SqlCommand(@"Insert Into AgentInfo (agent,EID,AgentName,StartTime,EndTime,send,receive) Select agent,EID,AgentName,StartTime,EndTime,send,receive From tempAgentInfo Where EID = @EID");
-                                                    cmd4.Connection = cnUpate;
-                                                    cmd4.Parameters.AddWithValue("@EID", Lbl_SenderEID.Text);
-                                                    cmd4.ExecuteNonQuery();
-                                                    cnUpate.Close();
+                                                    upcn.Open();
+                                                    SqlCommand upcmd = new SqlCommand("Update Vote set Total=@Total Where number=@number");
+                                                    upcmd.Parameters.AddWithValue("@Total", Session["total"].ToString());
+                                                    upcmd.Parameters.AddWithValue("number", DropDownList1.SelectedValue);
+                                                    upcmd.Connection = upcn;
+                                                    upcmd.ExecuteNonQuery();
                                                 }
                                             }
-                                                using (SqlConnection cnUpate = new SqlConnection(tmpdbhelper.DB_CnStr))
-                                                {
-                                                    cnUpate.Open();
-                                                    SqlCommand cmd2 = new SqlCommand(@"Delete From tempAgentInfo  Where EID=@EID");
-                                                    cmd2.Connection = cnUpate;
-                                                    cmd2.Parameters.AddWithValue("@EID", Lbl_SenderEID.Text);
-                                                    cmd2.ExecuteNonQuery();
-                                                    cnUpate.Close();
-                                            }
-
                                         }
-                                        cnAgent.Close();
                                     }
                                 }
-
-                                Response.Write("<script language=javascript>alert('簽核成功!')</script>");
-                                Response.Write("<script language=javascript>window.location.href='Detail.aspx'</script>");
                             }
                         }
+
+
+
+                        using (SqlDataReader dr = cmd.ExecuteReader())
+                        {
+
+                            if (dr.Read())
+                            {
+                                using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
+                                {
+                                    cn2.Open();
+                                    SqlCommand cmd2 = new SqlCommand(@"UPDATE Detail Set sign=1,signtime=@signtime Where SID=@SID AND EID=@EID");
+                                    cmd2.Connection = cn2;
+                                    cmd2.Parameters.AddWithValue("@EID", Lbl_EID.Text);
+                                    cmd2.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+                                    cmd2.Parameters.AddWithValue("@signtime", System.DateTime.Now);
+                                    cmd2.ExecuteNonQuery();
+                                }
+                                using (SqlConnection cn3 = new SqlConnection(tmpdbhelper.DB_CnStr))
+                                {
+                                    cn3.Open();
+                                    SqlCommand cmd3 = new SqlCommand("Select * From Detail Where SID=@SID and look=1");
+                                    cmd3.Connection = cn3;
+                                    cmd3.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+                                    using (SqlDataReader dr2 = cmd3.ExecuteReader())
+                                    {
+                                        Session["i"] = 0;
+                                        Session["j"] = 0;
+                                        while (dr2.Read())
+                                        {
+                                            if (dr2["sign"].ToString() == "0")
+                                            {
+                                                Session["i"] = int.Parse(Session["i"].ToString()) + 1;
+                                            }
+                                            Session["j"] = dr2["Lvl"].ToString();
+                                        }
+                                        if (Session["i"].ToString() == "0")
+                                        {
+                                            Session["j"] = int.Parse(Session["j"].ToString()) + 1;
+                                            using (SqlConnection cn4 = new SqlConnection(tmpdbhelper.DB_CnStr))
+                                            {
+                                                cn4.Open();
+                                                SqlCommand cmd4 = new SqlCommand("UPDATE Detail Set look=1 Where SID=@SID and Lvl='" + Session["j"].ToString() + "'");
+                                                cmd4.Connection = cn4;
+                                                cmd4.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+                                                cmd4.ExecuteNonQuery();
+                                            }
+                                        }
+                                        if (Lbl_Type.Text == "公文類型：代理人設定")
+                                        {
+                                            using (SqlConnection cnAgent = new SqlConnection(tmpdbhelper.DB_CnStr))
+                                            {
+                                                cnAgent.Open();
+                                                SqlCommand cmdAgent = new SqlCommand(@"Select agent From UserInfo  Where EID=@EID");
+                                                cmdAgent.Connection = cnAgent;
+                                                cmdAgent.Parameters.AddWithValue("@EID", Lbl_SenderEID.Text);
+                                                using (SqlDataReader drAgent = cmdAgent.ExecuteReader())
+                                                {
+                                                    if (drAgent.Read())
+                                                    {
+                                                        using (SqlConnection cnUpate = new SqlConnection(tmpdbhelper.DB_CnStr))
+                                                        {
+                                                            cnUpate.Open();
+                                                            SqlCommand cmd2 = new SqlCommand(@"Update UserInfo Set agent=@agent Where EID=@EID");
+                                                            cmd2.Connection = cnUpate;
+                                                            cmd2.Parameters.AddWithValue("@EID", Lbl_SenderEID.Text);
+                                                            cmd2.Parameters.AddWithValue("@agent", Lbl_EID.Text);
+                                                            cmd2.ExecuteNonQuery();
+                                                            SqlCommand cmd4 = new SqlCommand(@"Insert Into AgentInfo (agent,EID,AgentName,StartTime,EndTime,send,receive) Select agent,EID,AgentName,StartTime,EndTime,send,receive From tempAgentInfo Where EID = @EID");
+                                                            cmd4.Connection = cnUpate;
+                                                            cmd4.Parameters.AddWithValue("@EID", Lbl_SenderEID.Text);
+                                                            cmd4.ExecuteNonQuery();
+                                                            cnUpate.Close();
+                                                        }
+                                                    }
+                                                    using (SqlConnection cnUpate = new SqlConnection(tmpdbhelper.DB_CnStr))
+                                                    {
+                                                        cnUpate.Open();
+                                                        SqlCommand cmd2 = new SqlCommand(@"Delete From tempAgentInfo  Where EID=@EID");
+                                                        cmd2.Connection = cnUpate;
+                                                        cmd2.Parameters.AddWithValue("@EID", Lbl_SenderEID.Text);
+                                                        cmd2.ExecuteNonQuery();
+                                                        cnUpate.Close();
+                                                    }
+
+                                                }
+                                                cnAgent.Close();
+                                            }
+                                        }
+
+                                        Response.Write("<script language=javascript>alert('簽核成功!')</script>");
+                                        Response.Write("<script language=javascript>window.location.href='Detail.aspx'</script>");
+                                    }
+                                }
+                            }
+                            else
+                                Lbl_Eorr.Visible = true;
+                        }
                     }
-                    else
-                        Lbl_Eorr.Visible = true;
                 }
+                else
+                    Response.Write("<script>alert('資料已遭竄改!,簽章失敗');location.href='Detail.aspx';</script>");
             }
+
         }
         #endregion
 

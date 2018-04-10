@@ -506,7 +506,7 @@
                     <div class="side-menu-container">
                         <ul class="nav navbar-nav">
                             <li style="text-align: center"  >
-                                <a href="#"><span class="glyphicon glyphicon-home"></span>主選單</a>
+                                <a href="MainPage.aspx"><span class="glyphicon glyphicon-home"></span>主選單</a>
                             </li>
                             <li class="panel panel-default" id="dropdown">
                                 <asp:LinkButton href="#dropdown-lv00" data-toggle="collapse" ID="Lb_Write" runat="server"><span class="glyphicon glyphicon-pencil"></span>撰寫<span class="caret"></span></asp:LinkButton>

@@ -17,8 +17,8 @@
             text-decoration: none;
             padding: 16px;
             font-size: 14px;
-            color:black;
-            background-color:#67cdf3;
+            color:white;
+            background-color:#14b9f7;
         }
 
             .list-group a:hover {
@@ -60,10 +60,11 @@
     <div >
         <div class="col-sm-6">
             <ul class="list-group" style="list-style: none; width:50%">
-                <li class="list-group-item list-group-item-success">待處理</li>
-                <li><a href="#">公文&nbsp; <span class="badge" style="background-color: #FFFFFF;color:black;">10</span></a></li>
-                <li><a href="#">投票</a></li>
+                <li class="list-group-item list-group-item-success">待處理項目</li>
+                <li><a href="#">待處理公文 <span class="badge" style="background-color: #FFFFFF;color:black; "><asp:Label ID="Lbl_Doc" runat="server" Text="0"></asp:Label></span> <span class="label label-danger"><asp:Label ID="Lbl_DocNew" runat="server" Text="New" Visible="False"></asp:Label></span></a></li>
+                <li><a href="#">待處理投票 <span class="badge" style="background-color: #FFFFFF;color:black;  "><asp:Label ID="Lbl_Vote" runat="server" Text="0"></asp:Label></span><span class="label label-danger"><asp:Label ID="Lbl_VoteNew" runat="server" Text="New" Visible="False"></asp:Label></span></a></li>
             </ul>
         </div>
     </div>
+    <asp:Label ID="Lbl_EID" runat="server" Text="Label" Visible="False"></asp:Label>
 </asp:Content>

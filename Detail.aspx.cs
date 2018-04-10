@@ -24,6 +24,11 @@ namespace WebApplication1
         string senderPK;
         string txt_RSAhash_Text;
         string txt_RSAhash_Proposition;
+        string txt_Text;
+        string txt_Proposition;
+        string stringdate;
+        DateTime txtDate;
+        byte[] encryptedText;
         DbHelper tmpdbhelper = new DbHelper();
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -222,27 +227,48 @@ namespace WebApplication1
         #region AES解密功能
         public string AESDecryption(string Key, string IV, string CipherText)
         {
-            UTF32Encoding utf32Encoding = new UTF32Encoding();
-            byte[] byte_Key = Encoding.UTF8.GetBytes(Key);
-            byte[] byte_IV = Encoding.UTF8.GetBytes(IV);
-            MD5CryptoServiceProvider provider_MD5 = new MD5CryptoServiceProvider();
-            byte[] byte_KeyMD5 = provider_MD5.ComputeHash(byte_Key);
-            byte[] byte_IVMD5 = provider_MD5.ComputeHash(byte_IV);
-            using (Aes aesAlg = Aes.Create())
+            try
             {
-                //加密金鑰(32 Byte)
-                aesAlg.Key = byte_KeyMD5;
-                //初始向量(Initial Vector, iv) 
-                aesAlg.IV = byte_IVMD5;
-                //加密器
-                ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
-                //執行解密
-                byte[] encryptTextBytes = Convert.FromBase64String(CipherText);
+                UTF32Encoding utf32Encoding = new UTF32Encoding();
+                byte[] byte_Key = Encoding.UTF8.GetBytes(Key);
+                byte[] byte_IV = Encoding.UTF8.GetBytes(IV);
+                MD5CryptoServiceProvider provider_MD5 = new MD5CryptoServiceProvider();
+                byte[] byte_KeyMD5 = provider_MD5.ComputeHash(byte_Key);
+                byte[] byte_IVMD5 = provider_MD5.ComputeHash(byte_IV);
+                using (Aes aesAlg = Aes.Create())
+                {
+                    //加密金鑰(32 Byte)
+                    aesAlg.Key = byte_KeyMD5;
+                    //初始向量(Initial Vector, iv) 
+                    aesAlg.IV = byte_IVMD5;
+                    //加密器
+                    ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
+                    //執行解密
 
-                byte[] encryptedText = decryptor.TransformFinalBlock(encryptTextBytes, 0, encryptTextBytes.Length);
-                return Encoding.Unicode.GetString(encryptedText);
+                    byte[] encryptTextBytes = Convert.FromBase64String(CipherText);
+                    encryptedText = decryptor.TransformFinalBlock(encryptTextBytes, 0, encryptTextBytes.Length);
+                   
+                }
             }
+            catch
+            {
+                Response.Write("<script>alert('資料已遭竄改!,簽章失敗');location.href='WaitDocument.aspx';</script>");
+            }
+
+            if(encryptedText!=null)
+            {
+                return Encoding.Unicode.GetString(encryptedText);
+               
+            }
+            else
+            {
+                Response.Write("<script>alert('資料已遭竄改!,簽章失敗');location.href='WaitDocument.aspx';</script>");
+                return "";
+               
+            }
+            
         }
+
         public byte[] AESDecryptionFile(string Key, string IV, string CipherText)
         {
             UTF32Encoding utf32Encoding = new UTF32Encoding();
@@ -414,6 +440,7 @@ namespace WebApplication1
                         Lbl_SID.Text = dr["SID"].ToString();
                         Lbl_Title.Text = dr["Title"].ToString();
                         Lbl_Date.Text = String.Format("{0:yyyy/MM/dd}", strDate);
+                        stringdate = strDate.ToString("yyyyMMdd");
                         Lbl_Text.Text = dr["Text"].ToString();
                         Lbl_Type.Text = "公文類型：" + dr["Type"].ToString();
                         Lbl_Proposition.Text = dr["Proposition"].ToString();
@@ -617,7 +644,7 @@ namespace WebApplication1
             {
                 cnsign.Open();
                 SqlCommand cmdsign = new SqlCommand(@"Select PK From UserInfo Where EID=@EID");
-                SqlCommand cmdhash = new SqlCommand(@"Select txt_RSAhash_Text,txt_RSAhash_Proposition From Fil Where SID=@SID");
+                SqlCommand cmdhash = new SqlCommand(@"Select txt_RSAhash_Text,txt_RSAhash_Proposition,Text,Proposition,Date From Fil Where SID=@SID");
                 cmdsign.Connection = cnsign;
                 cmdhash.Connection = cnsign;
                 cmdsign.Parameters.AddWithValue("@EID", Lbl_SenderEID.Text);
@@ -636,15 +663,20 @@ namespace WebApplication1
                     {
                         txt_RSAhash_Text = drhash["txt_RSAhash_Text"].ToString();
                         txt_RSAhash_Proposition = drhash["txt_RSAhash_Proposition"].ToString();
+                        txt_Text= drhash["Text"].ToString();
+                        txt_Proposition= drhash["Proposition"].ToString();
+                        txtDate= DateTime.Parse(drhash["Date"].ToString());
+                        stringdate = txtDate.ToString("yyyyMMdd");
                     }
                 }
                 // 1) 建立RSA數位簽章演算法物件
                 RSACryptoServiceProvider verifier = new RSACryptoServiceProvider();
                 verifier.FromXmlString(senderPK);     //讀取公開金鑰
                 // 2) 讀取接收到的本文資料
-                byte[] content_Text = Encoding.UTF8.GetBytes(Lbl_Text.Text + Lbl_Date);
-                byte[] content_Proposition = Encoding.UTF8.GetBytes(Lbl_Proposition.Text + Lbl_Date);
+                byte[] content_Text = Encoding.UTF8.GetBytes(txt_Text + stringdate);
+                byte[] content_Proposition = Encoding.UTF8.GetBytes(txt_Proposition + stringdate);
                 // 3) 讀取接收到的簽章資料
+
                 byte[] signature_Text = Convert.FromBase64String(txt_RSAhash_Text);
                 byte[] signature_Proposition = Convert.FromBase64String(txt_RSAhash_Proposition);
                 // 將資料解密

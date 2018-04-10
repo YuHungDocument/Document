@@ -1024,7 +1024,7 @@ namespace WebApplication1
 
                     txt_Ciphertext_Proposition = AESEncryption(txtKey, txtIV, txt_Proposition.Text);
                     //發文者私鑰加密訊息摘要
-                    string day = DateTime.Now.ToString("yyyyMMdd");
+
                     // 建立 RSA 演算法物件的執行個體，並匯入先前建立的私鑰
                     RSACryptoServiceProvider rsaProvider = new RSACryptoServiceProvider();
                     #region 找出金鑰位址
@@ -1051,8 +1051,8 @@ namespace WebApplication1
                         // 建立 RSA 演算法物件的執行個體，並匯入先前建立的私鑰
                         rsaProvider.FromXmlString(ReadAll);
                         // 2) 讀取本文資料
-                        byte[] content_txt_Ciphertext_Text = Encoding.UTF8.GetBytes(txt_Ciphertext_Text + day);
-                        byte[] content_txt_Ciphertext_Proposition = Encoding.UTF8.GetBytes(txt_Ciphertext_Proposition + day);
+                        byte[] content_txt_Ciphertext_Text = Encoding.UTF8.GetBytes(txt_Ciphertext_Text + Lbl_Date.Text);
+                        byte[] content_txt_Ciphertext_Proposition = Encoding.UTF8.GetBytes(txt_Ciphertext_Proposition + Lbl_Date.Text);
                         // 3) 呼叫 SignData 方法, 對本文進行簽章
                         byte[] signature_Text = rsaProvider.SignData(content_txt_Ciphertext_Text, new SHA1CryptoServiceProvider());  //指定一個雜湊法
                         byte[] signature_Proposition = rsaProvider.SignData(content_txt_Ciphertext_Proposition, new SHA1CryptoServiceProvider());  //指定一個雜湊法

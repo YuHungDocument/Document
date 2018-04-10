@@ -56,6 +56,7 @@
             }
         })
     </script>
+     <script src="My97DatePicker/WdatePicker.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
@@ -206,12 +207,65 @@
                         <div class="panel panel-default" <%--style="width: 500px"--%>>
 
                             <div class="panel-heading">
+                                單位<br/>
+                                <asp:DropDownList ID="DropDownList2" runat="server" AutoPostBack="True" DataSourceID="SqlDataSource1" DataTextField="TN" DataValueField="TN"></asp:DropDownList><br/>
+                                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString %>" SelectCommand="SELECT [TN] FROM [TypeGroup] WHERE ([Tp] = @Tp) ORDER BY [TID]">
+                                    <SelectParameters>
+                                        <asp:Parameter DefaultValue="Dp" Name="Tp" Type="String" />
+                                    </SelectParameters>
+                                </asp:SqlDataSource>
+                                
+                                名稱<br/>
+                                <asp:DropDownList ID="DDL_Name" runat="server" DataTextField="Name" DataValueField="Name" DataSourceID="SqlDataSource3" AutoPostBack="True"></asp:DropDownList>
+                                <asp:DropDownList ID="DDL_EID" runat="server" AutoPostBack="True" DataSourceID="SqlDataSource2" DataTextField="EID" DataValueField="EID">
+                                </asp:DropDownList>
+                                <br/>
+                                <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString %>" SelectCommand="SELECT [EID] FROM [UserInfo] WHERE ([Name] = @Name)">
+                                    <SelectParameters>
+                                        <asp:ControlParameter ControlID="DDL_Name" Name="Name" PropertyName="SelectedValue" Type="String" />
+                                    </SelectParameters>
+                                </asp:SqlDataSource><br/>
+                               
+                                <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString %>" SelectCommand="SELECT [Name] FROM [UserInfo] WHERE ([Department] = @Department)">
+                                    <SelectParameters>
+                                        <asp:ControlParameter ControlID="DropDownList2" Name="Department" PropertyName="SelectedValue" Type="String" />
+                                    </SelectParameters>
+                                </asp:SqlDataSource><br/>
+                                <br />
+                                將從 <input type="text" name="DS" class="Wdate" id="DS" onclick="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm', minDate: '%y-%M-%d,%H,%m', maxDate: '#F{$dp.$D(\'DE\')}' })" />
+
+                               到 <input type="text" name="DE" class="Wdate" id="DE" onclick="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm', minDate: '#F{$dp.$D(\'DS\')}' })" />&nbsp; 止<br />
+                                <br />
+                                擁有權限<asp:DropDownList ID="DDL_Permission" runat="server" AutoPostBack="True">
+                                    <asp:ListItem Value="1"></asp:ListItem>
+                                    <asp:ListItem>2</asp:ListItem>
+                                    <asp:ListItem>3</asp:ListItem>
+                                    <asp:ListItem>4</asp:ListItem>
+                                    <asp:ListItem>5</asp:ListItem>
+                                </asp:DropDownList>
+                                <br />
+                                <br />
+
                             </div>
                             <div class="panel-body">
 
+                                您 <br />
+                                將 給予<asp:Label ID="endue_Name" runat="server" Text="Label"></asp:Label>
+&nbsp;
+                                <asp:Label ID="endue_EID" runat="server" Text="Label"></asp:Label>
+&nbsp;權限<asp:Label ID="endue_Permission" runat="server" Text="Label"></asp:Label>
+&nbsp;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 從<asp:Label ID="endue_DS" runat="server" Text="Label"></asp:Label>
+                                至<asp:Label ID="endue_DE" runat="server" Text="Label"></asp:Label><br />
+                                <br />
+                                <asp:Button ID="Btn_Send_Permission" runat="server" Text="send" OnClick="Btn_Send_Permission_Click" />
                             </div>
                         </div>
                     </td>
+                </tr>
+                <tr>
+                    <td class="auto-style1">
+                        &nbsp;</td>
                 </tr>
             </table>
         </div>

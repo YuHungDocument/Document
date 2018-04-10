@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -12,6 +14,13 @@ namespace WebApplication1
     public partial class ManagerPage : System.Web.UI.Page
     {
         DbHelper tmpdbhelper = new DbHelper();
+        string txtKey;
+        string txtIV;
+        string txt_Ciphertext_Text;
+        string txt_Ciphertext_Proposition;
+        string txt_PKmessage;
+        string txt_PKmessage2;
+        string Permission;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -51,6 +60,13 @@ namespace WebApplication1
 
                 }
             }
+            endue_EID.Text =DDL_EID.SelectedValue;
+            endue_Name.Text = DDL_Name.SelectedValue;
+            endue_Permission.Text = DDL_Permission.SelectedValue;
+            string ds = Request.Form["DS"];
+            endue_DS.Text = ds;
+            string de = Request.Form["DE"];
+            endue_DE.Text = de;
         }
         public void bind3()
         {
@@ -199,5 +215,153 @@ namespace WebApplication1
                 Response.Write(" <script language=JavaScript> alert( '請勿空白 '); </script> ");
             }
         }
+        //AES加密功能
+        public string AESEncryption(string Key, string IV, string PlainText)
+        {
+            byte[] byte_Key = Encoding.UTF8.GetBytes(Key);
+            byte[] byte_IV = Encoding.UTF8.GetBytes(IV);
+            MD5CryptoServiceProvider provider_MD5 = new MD5CryptoServiceProvider();
+            byte[] byte_KeyMD5 = provider_MD5.ComputeHash(byte_Key);
+            byte[] byte_IVMD5 = provider_MD5.ComputeHash(byte_IV);
+            using (Aes aesAlg = Aes.Create())
+            {
+                //加密金鑰(32 Byte)
+                aesAlg.Key = byte_KeyMD5;
+                //初始向量(Initial Vector, iv) 
+                aesAlg.IV = byte_IVMD5;
+                //加密器
+                ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
+                //執行加密
+                byte[] cryptTextBytes = Encoding.Unicode.GetBytes(PlainText);
+                byte[] cryptedText = encryptor.TransformFinalBlock(cryptTextBytes, 0, cryptTextBytes.Length);
+                return Convert.ToBase64String(cryptedText);
+            }
+        }
+        protected void Btn_Send_Permission_Click(object sender, EventArgs e)
+        {
+            UserInfo tmpUserInfo;
+            
+            tmpUserInfo = (UserInfo)Session["userinfo"];
+            string Date = DateTime.Now.ToString("yyyyMMddhhmmss");
+            using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+                SqlCommand cmd3 = new SqlCommand(@"Insert INTO Fil(SID,EID,Date,Text,Title,Proposition,Type,YOS,AESkey,AESiv)VALUES(@SID,@EID,@Date,@Text,@Title,@Proposition,@Type,@YOS,@AESkey,@AESiv)");
+                cn2.Open();
+                cmd3.Connection = cn2;
+                //建立一個 AES 演算法
+                SymmetricAlgorithm symAlgorithm = new AesCryptoServiceProvider();
+                txtKey = Convert.ToBase64String(symAlgorithm.Key);     //hFYPyIK3uSQ=
+                txtIV = Convert.ToBase64String(symAlgorithm.IV);       //oeZlJhiaZB0=
+                                                                       //對稱加密
+                Permission = endue_Permission.Text;
+                txt_Ciphertext_Text = AESEncryption(txtKey, txtIV, "授予權限單位:" + tmpUserInfo.Department + "授予權限人員:" + tmpUserInfo.Name + "\r\n" + "更改權限至:" + Permission + "\r\n" + "開始有效權限時間:" + Request.Form["DS"] + "\r\n" + "結束權限時間:" + Request.Form["DE"] + "\r\n" + "被授予權限單位:" + DropDownList2.Text + "被授予權限人:" + DDL_Name.Text + "");
+                txt_Ciphertext_Proposition = AESEncryption(txtKey, txtIV, "");
+                cmd3.Parameters.AddWithValue("@SID", Date);
+                cmd3.Parameters.AddWithValue("@EID", DDL_EID.Text);
+                cmd3.Parameters.AddWithValue("@Date", DateTime.Today.Year.ToString());
+                cmd3.Parameters.AddWithValue("@Text", txt_Ciphertext_Text);
+                cmd3.Parameters.AddWithValue("@Title", "授予權限同意函");
+                cmd3.Parameters.AddWithValue("@Proposition", txt_Ciphertext_Proposition);
+                cmd3.Parameters.AddWithValue("@Type", "授予權限");
+                cmd3.Parameters.AddWithValue("@YOS", "10");
+                cmd3.Parameters.AddWithValue("@AESkey", txtKey);
+                cmd3.Parameters.AddWithValue("@AESiv", txtIV);
+                cmd3.ExecuteNonQuery();
+            }
+            using (SqlConnection cn3 = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+
+                //找尋接收者PK並加密KEY
+                SqlCommand cmduserInfo  = new SqlCommand(@"select UserInfo.PK from UserInfo LEFT JOIN Detail ON UserInfo.EID=Detail.EID where (UserInfo.EID=@EID)");
+                SqlCommand cmduserInfo2 = new SqlCommand(@"select UserInfo.PK from UserInfo LEFT JOIN Detail ON UserInfo.EID=Detail.EID where (UserInfo.EID=@EID)");
+                cn3.Open();
+                cmduserInfo.Connection = cn3;
+                cmduserInfo.Connection = cn3;
+                cmduserInfo.Parameters.AddWithValue("@EID", tmpUserInfo.EID);
+                using (SqlDataReader dr = cmduserInfo.ExecuteReader())
+                {
+                    if (dr.Read())
+                    {
+                        string PK = dr["PK"].ToString();
+                        //以接收者PK加密KEY
+                        // 建立 RSA 演算法物件的執行個體，並匯入先前建立的公鑰
+                        RSACryptoServiceProvider rsaProviderReceiver = new RSACryptoServiceProvider();
+                        rsaProviderReceiver.FromXmlString(PK);
+
+                        // 將資料加密
+                        byte[] bytePlain = Encoding.UTF8.GetBytes(txtKey);
+                        byte[] byteCipher = rsaProviderReceiver.Encrypt(bytePlain, false);
+
+                        // 將加密後的資料，轉 Base64 格式輸入
+                        txt_PKmessage = Convert.ToBase64String(byteCipher);
+                    }
+                }
+                cn3.Close();
+                cn3.Open();
+                cmduserInfo2.Parameters.AddWithValue("@EID", endue_EID.Text);
+                cmduserInfo2.Connection = cn3;
+                using (SqlDataReader dr2 = cmduserInfo2.ExecuteReader())
+                {
+                    if (dr2.Read())
+                    {
+                        string PK = dr2["PK"].ToString();
+                        //以接收者PK加密KEY
+                        // 建立 RSA 演算法物件的執行個體，並匯入先前建立的公鑰
+                        RSACryptoServiceProvider rsaProviderReceiver = new RSACryptoServiceProvider();
+                        rsaProviderReceiver.FromXmlString(PK);
+
+                        // 將資料加密
+                        byte[] bytePlain = Encoding.UTF8.GetBytes(txtKey);
+                        byte[] byteCipher = rsaProviderReceiver.Encrypt(bytePlain, false);
+
+                        // 將加密後的資料，轉 Base64 格式輸入
+                        txt_PKmessage2 = Convert.ToBase64String(byteCipher);
+                    }
+                }
+                cn3.Close();
+                //寫回資料庫     
+                SqlCommand cmd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,sign,look,RSAkey)VALUES(@SID,@Lvl,@EID,@Department,@status,@sign,@look,@RSAkey)");
+                SqlCommand cmd2 = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,sign,look,RSAkey)VALUES(@SID,@Lvl,@EID,@Department,@status,@sign,@look,@RSAkey)");
+                cn3.Open();
+                cmd.Connection = cn3;
+                cmd.Parameters.AddWithValue("@SID", Date);
+                cmd.Parameters.AddWithValue("@Lvl", "1");
+                cmd.Parameters.AddWithValue("@EID", tmpUserInfo.EID);
+                cmd.Parameters.AddWithValue("@Department", tmpUserInfo.Department);
+                cmd.Parameters.AddWithValue("@status", "1");
+                cmd.Parameters.AddWithValue("@RSAkey", txt_PKmessage);
+                cmd.Parameters.AddWithValue("@look", 1);
+                cmd.Parameters.AddWithValue("@sign", 0);
+                cmd.ExecuteNonQuery();
+                cn3.Close();
+                cn3.Open();
+                cmd2.Connection = cn3;
+                cmd2.Parameters.AddWithValue("@SID", Date);
+                cmd2.Parameters.AddWithValue("@Lvl", "1");
+                cmd2.Parameters.AddWithValue("@EID", endue_EID.Text);
+                cmd2.Parameters.AddWithValue("@Department", DropDownList2.Text);
+                cmd2.Parameters.AddWithValue("@status", "1");
+                cmd2.Parameters.AddWithValue("@RSAkey", txt_PKmessage2);
+                cmd2.Parameters.AddWithValue("@look", 1);
+                cmd2.Parameters.AddWithValue("@sign", 1);
+                cmd2.ExecuteNonQuery();
+                cn3.Close();
+                Response.Write("<script>alert('授權同意函已發送!');location.href='WaitDocument.aspx';</script>");
+
+                using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+                {
+                    cn.Open();
+                    SqlCommand cmdChangePermission = new SqlCommand(@"Update UserInfo Set Permission = @Permission where EID = @EID");
+                    cmdChangePermission.Connection = cn;
+                    cmdChangePermission.Parameters.AddWithValue("@EID", endue_EID.Text);
+                    cmdChangePermission.Parameters.AddWithValue("@Permission", endue_Permission.Text);
+
+                    cmdChangePermission.ExecuteNonQuery();
+                    cn.Close();
+
+                }
+            }
+        }
     }
+
 }

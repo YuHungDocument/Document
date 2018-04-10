@@ -98,10 +98,10 @@ namespace WebApplication1
             using (SqlConnection cn3 = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
                 //找尋接收者PK並加密KEY
-                        SqlCommand cmduserInfo = new SqlCommand(@"select UserInfo.PK from UserInfo LEFT JOIN Detail ON UserInfo.EID=Detail.EID where (UserInfo.EID=@EID)");
+                SqlCommand cmduserInfo  = new SqlCommand(@"select UserInfo.PK from UserInfo LEFT JOIN Detail ON UserInfo.EID=Detail.EID where (UserInfo.EID=@EID)");
                 SqlCommand cmduserInfo2 = new SqlCommand(@"select UserInfo.PK from UserInfo LEFT JOIN Detail ON UserInfo.EID=Detail.EID where (UserInfo.EID=@EID)");
                 cn3.Open();
-                        cmduserInfo.Connection = cn3;
+                cmduserInfo.Connection = cn3;
                 cmduserInfo.Connection = cn3;
                 cmduserInfo.Parameters.AddWithValue("@EID", DropDownList9.Text);
                         using (SqlDataReader dr = cmduserInfo.ExecuteReader())
@@ -146,7 +146,7 @@ namespace WebApplication1
                 }
                 cn3.Close();
                         //寫回資料庫                        
-                        SqlCommand cmd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,sign,look,RSAkey)VALUES(@SID,@Lvl,@EID,@Department,@status,@sign,@look,@RSAkey)");
+                SqlCommand cmd  = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,sign,look,RSAkey)VALUES(@SID,@Lvl,@EID,@Department,@status,@sign,@look,@RSAkey)");
                 SqlCommand cmd2 = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,sign,look,RSAkey)VALUES(@SID,@Lvl,@EID,@Department,@status,@sign,@look,@RSAkey)");
                 cn3.Open();
                         cmd.Connection = cn3;

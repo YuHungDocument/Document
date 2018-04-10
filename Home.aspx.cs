@@ -52,7 +52,7 @@ namespace WebApplication1
 
 
                         Session["userinfo"] = tmpuserinfo;
-                        Response.Redirect("WaitDocument.aspx");
+                        Response.Redirect("MainPage.aspx");
                     }
                     else
                         Label2.Visible = true;

@@ -13,9 +13,10 @@ namespace WebApplication1
         DbHelper tmpdbhelper = new DbHelper();
         protected void Page_Load(object sender, EventArgs e)
         {
+            Session["UserInfo"] = null;
             if (!Page.IsPostBack)
             {
-
+               
             }
         }
 
@@ -52,7 +53,7 @@ namespace WebApplication1
 
 
                         Session["userinfo"] = tmpuserinfo;
-                        Response.Redirect("MainPage.aspx");
+                        Response.Redirect("HomeLogin.aspx");
                     }
                     else
                         Label2.Visible = true;

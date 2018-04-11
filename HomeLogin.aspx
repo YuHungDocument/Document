@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="WebApplication1.Home" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="HomeLogin.aspx.cs" Inherits="WebApplication1.HomeLogin" %>
 
 <!DOCTYPE html>
 
@@ -57,6 +57,7 @@ http://www.tooplate.com/view/2092-shelf
                             <li class="nav-item"><a class="nav-link" href="#">公文系統使用介紹</a></li>
                             <li class="nav-item"><a class="nav-link" href="#">關於我們</a></li>
                             <li class="nav-item"><a class="nav-link" href="setInfo.aspx">查看/修改個人資料</a></li>
+                             <li class="nav-item"><a class="nav-link" href="Home.aspx">登出</a></li>
                         </ul>
                     </div>
                 </nav>
@@ -73,17 +74,13 @@ http://www.tooplate.com/view/2092-shelf
                             <p class="tm-margin-b-p">
                                 <div style="border: thin solid #C0C0C0; padding: 10px; margin: auto; background-color: #E9E9E9; width: auto; height: auto;" class="auto-style1">
 
-                                    <h3>登入</h3>
+                                    <h3>
+                                        <asp:Label ID="Lbl_Name" runat="server"></asp:Label>
+&nbsp;您好</h3>
                                     <br />
-                                    <asp:TextBox class="form-control" placeholder="請輸入帳號" ID="Txt_ID" runat="server" Width="265px"></asp:TextBox>
+                                    員工編號：<asp:Label ID="Lbl_Eid" runat="server"></asp:Label>
                                     <br />
-                                    <asp:TextBox class="form-control" placeholder="請輸入密碼" ID="Txt_Password" runat="server" TextMode="Password" Width="265px"></asp:TextBox>
-                                    <br />
-                                    <asp:Button ID="Button1" runat="server" Text="登入" class="btn btn-warning" Height="36px" Width="69px" OnClick="Btn_Login_Click" />
-                                    &nbsp;&nbsp;
-                    <asp:Button ID="Button2" runat="server" Text="註冊" class="btn btn-info" Height="36px" Width="69px" OnClick="Button2_Click" />
-
-                                    <asp:Label ID="Label2" runat="server" ForeColor="Red" Text="帳號或密碼錯誤" Visible="False"></asp:Label>
+                                    部門/職稱：<asp:Label ID="Lbl_DpAndPos" runat="server"></asp:Label>
                                 </div>
                             </p>
                             <br />

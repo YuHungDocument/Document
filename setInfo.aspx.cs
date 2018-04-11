@@ -15,8 +15,16 @@ namespace WebApplication1
         {
             if (!Page.IsPostBack)//get
             {
-                bind();
-                ((Label)this.Master.FindControl("Lb_Title")).Text = "修改個資";
+                if (Session["userinfo"] == null)
+                {
+                    Response.Redirect("Home.aspx");
+                }
+                else
+                {
+                    bind();
+                    ((Label)this.Master.FindControl("Lb_Title")).Text = "修改個資";
+                }
+               
             }
         }
         protected void Button1_Click(object sender, EventArgs e)

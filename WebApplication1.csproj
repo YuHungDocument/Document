@@ -80,6 +80,7 @@
     <Content Include="font-awesome-4.7.0\HELP-US-OUT.txt" />
     <Content Include="goodpage.aspx" />
     <Content Include="GuildPage.Master" />
+    <Content Include="HomeLogin.aspx" />
     <Content Include="HostDocument.aspx" />
     <Content Include="HostVote.aspx" />
     <Content Include="img\header-01.jpg" />
@@ -252,6 +253,13 @@
     </Compile>
     <Compile Include="Home.aspx.designer.cs">
       <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HomeLogin.aspx.cs">
+      <DependentUpon>HomeLogin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HomeLogin.aspx.designer.cs">
+      <DependentUpon>HomeLogin.aspx</DependentUpon>
     </Compile>
     <Compile Include="HostDocument.aspx.cs">
       <DependentUpon>HostDocument.aspx</DependentUpon>

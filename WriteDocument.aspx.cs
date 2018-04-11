@@ -1161,7 +1161,7 @@ namespace WebApplication1
                                 cn3.Close();
                             }
                             //寫回資料庫 
-                            SqlCommand cmd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,path,sign,look,RSAkey,isAgent)VALUES(@SID,@Lvl,@EID,@Department,@status,@path,@sign,@look,@RSAkey,@isAgent)");
+                            SqlCommand cmd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,path,sign,look,RSAkey,isAgent,isread)VALUES(@SID,@Lvl,@EID,@Department,@status,@path,@sign,@look,@RSAkey,@isAgent,@isread)");
                             cn3.Open();
                             cmd.Connection = cn3;
                             cmd.Parameters.AddWithValue("@SID", SID);
@@ -1194,6 +1194,7 @@ namespace WebApplication1
                                 cmd.Parameters.AddWithValue("@look", 0);
                             }
                             cmd.Parameters.AddWithValue("@sign", 0);
+                            cmd.Parameters.AddWithValue("@isread", 0);
                             using (SqlConnection cnEID = new SqlConnection(tmpdbhelper.DB_CnStr))
                             {
                                 SqlCommand cmdEID = new SqlCommand(@"Select agent From UserInfo Where EID=@EID");

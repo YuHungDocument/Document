@@ -11,8 +11,8 @@ namespace WebApplication1
     public partial class MainPage : System.Web.UI.Page
     {
         DbHelper tmpdbhelper = new DbHelper();
-        int Wdc = 0;
-        int Votec = 0;
+        int Wdc,Votec,HWdc,HVotec = 0;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -59,7 +59,7 @@ namespace WebApplication1
                         Votec = int.Parse(Votec.ToString()) + 1;
                     }
                 }
-                SqlCommand NewDccmd = new SqlCommand("Select * from Detail Where EID='" + Lbl_EID.Text + "' and isread!=1");
+                SqlCommand NewDccmd = new SqlCommand("Select * from Detail left join Fil On Fil.SID = Detail.SID Where Detail.EID='" + Lbl_EID.Text + "' and Detail.isread='0' and Fil.Type!='投票'");
                 NewDccmd.Connection = cn;
                 using (SqlDataReader dr = NewDccmd.ExecuteReader())
                 {
@@ -68,8 +68,18 @@ namespace WebApplication1
                         Lbl_DocNew.Visible = true;
                     }
                 }
+                SqlCommand HDoccmd = new SqlCommand("Select * from Fil Where EID='" + Lbl_EID.Text + "' and Type!='投票'");
+                HDoccmd.Connection = cn;
+                using (SqlDataReader dr = HDoccmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        HWdc = int.Parse(HWdc.ToString()) + 1;
+                    }
+                }
                 Lbl_Doc.Text = Wdc.ToString();
                 Lbl_Vote.Text = Votec.ToString();
+                Lbl_HDoc.Text = HWdc.ToString();
             }
         }
     }

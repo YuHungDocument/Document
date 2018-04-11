@@ -40,7 +40,7 @@ namespace WebApplication1
             Page.MaintainScrollPositionOnPostBack = true;
             if (!Page.IsPostBack)
             {
-                
+                Btn_Save.Attributes["onclick"] = "this.disabled = true;this.value = '資料送出中..';" + Page.ClientScript.GetPostBackEventReference(Btn_Save, "");
                 UserInfo tmpUserInfo = null;
                 bind2();
                 if (Session["userinfo"] == null)
@@ -87,6 +87,23 @@ namespace WebApplication1
                                 }
 
                             }
+                            #region 找出金鑰位址
+                            SqlCommand cmdfindkeyaddress = new SqlCommand(@"Select KeyAddress From UserInfo Where EID=@EID");
+                            cmdfindkeyaddress.Connection = cn;
+                            cmdfindkeyaddress.Parameters.AddWithValue("@EID", Lbl_EID.Text);
+
+                            using (SqlDataReader dr2 = cmdfindkeyaddress.ExecuteReader())
+                            {
+                                if (dr2.Read())
+                                {
+                                    KeyAddress = dr2["KeyAddress"].ToString();
+                                }
+                                if (KeyAddress == "")
+                                {
+                                    Response.Redirect("KeyAddress.aspx");
+                                }
+                            }
+                            #endregion
                             cn.Close();
                         }
                     }
@@ -1024,10 +1041,6 @@ namespace WebApplication1
 
                     txt_Ciphertext_Proposition = AESEncryption(txtKey, txtIV, txt_Proposition.Text);
                     //發文者私鑰加密訊息摘要
-
-                    // 建立 RSA 演算法物件的執行個體，並匯入先前建立的私鑰
-                    RSACryptoServiceProvider rsaProvider = new RSACryptoServiceProvider();
-                    #region 找出金鑰位址
                     SqlCommand cmdfindkeyaddress = new SqlCommand(@"Select KeyAddress From UserInfo Where EID=@EID");
                     cmdfindkeyaddress.Connection = cn2;
                     cmdfindkeyaddress.Parameters.AddWithValue("@EID", Lbl_EID.Text);
@@ -1043,7 +1056,8 @@ namespace WebApplication1
                             Response.Redirect("KeyAddress.aspx");
                         }
                     }
-                    #endregion
+                    // 建立 RSA 演算法物件的執行個體，並匯入先前建立的私鑰
+                    RSACryptoServiceProvider rsaProvider = new RSACryptoServiceProvider();                   
                     try
                     {
                         StreamReader str = new StreamReader(@"" + KeyAddress + "");

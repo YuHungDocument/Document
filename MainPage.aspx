@@ -39,7 +39,7 @@
         <div class="list">
             <div class="col-sm-3" style="padding-top: 5px; text-align: center;">
                 <div style="border: 3px solid #6699FF;">
-                    <a href="Home.aspx" title="回首頁" style="height: 152px; padding-top: 50px"><span class="glyphicon glyphicon-home" style="font-size: xx-large;"></span>
+                    <a href="HomeLogin.aspx" title="回首頁" style="height: 152px; padding-top: 50px"><span class="glyphicon glyphicon-home" style="font-size: xx-large;"></span>
                         <br />
                         回首頁</a>
                 </div>
@@ -76,7 +76,7 @@
         <div class="col-sm-3">
             <ul class="list-group" style="list-style: none;">
                 <li class="list-group-item list-group-item-info">待處理項目</li>
-                <li><a href="HostDocument.aspx"><i class="glyphicon glyphicon-play" style="color: #C0C0C0"></i>待處理公文 <span class="badge" style="background-color: #C0C0C0;">
+                <li><a href="WaitDocument.aspx"><i class="glyphicon glyphicon-play" style="color: #C0C0C0"></i>待處理公文 <span class="badge" style="background-color: #C0C0C0;">
                     <asp:Label ID="Lbl_Doc" runat="server" Text="0"></asp:Label></span><span class="label label-danger"><asp:Label ID="Lbl_DocNew" runat="server" Text="New" Visible="False"></asp:Label></span></a></li>
                 <li><a href="WaitVote.aspx"><i class="glyphicon glyphicon-play" style="color: #C0C0C0"></i>待處理投票 <span class="badge" style="background-color: #C0C0C0">
                     <asp:Label ID="Lbl_Vote" runat="server" Text="0"></asp:Label></span><span class="label label-danger"><asp:Label ID="Lbl_VoteNew" runat="server" Text="New" Visible="False"></asp:Label></span></a></li>

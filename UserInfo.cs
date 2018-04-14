@@ -127,5 +127,12 @@ namespace WebApplication1
             get { return _Permission; }
             set { _Permission = value; }
         }
+
+        private int _temp_Permission;
+        public int temp_Permission
+        {
+            get { return _temp_Permission; }
+            set { _temp_Permission = value; }
+        }
     }
 }

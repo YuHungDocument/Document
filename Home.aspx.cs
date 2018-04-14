@@ -26,7 +26,7 @@ namespace WebApplication1
             {
                 cn.Open();
 
-                SqlCommand cmd = new SqlCommand(@"Select EID,Name,Department,position,Gender,UserID,Pwd,Email,Tel,Cel,Birthday,Address,Permission
+                SqlCommand cmd = new SqlCommand(@"Select EID,Name,Department,position,Gender,UserID,Pwd,Email,Tel,Cel,Birthday,Address,Permission,temp_Permission
                                                   From UserInfo Where UserID=@UserID And Pwd=@Pwd");
                 cmd.Connection = cn;
                 cmd.Parameters.AddWithValue("@UserID", Txt_ID.Text);
@@ -49,7 +49,14 @@ namespace WebApplication1
                         tmpuserinfo.Birthday = dr["Birthday"].ToString();
                         tmpuserinfo.Cel = dr["Cel"].ToString();
                         tmpuserinfo.Address = dr["Address"].ToString();
-                        tmpuserinfo.Permission = int.Parse(dr["Permission"].ToString());
+
+                        if (!string.IsNullOrWhiteSpace(dr["temp_Permission"].ToString()))
+                        {
+                            tmpuserinfo.temp_Permission = int.Parse(dr["temp_Permission"].ToString());
+                        }
+                        else {
+                         tmpuserinfo.Permission = int.Parse(dr["Permission"].ToString());
+                        }
 
 
                         Session["userinfo"] = tmpuserinfo;

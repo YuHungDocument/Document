@@ -346,20 +346,40 @@ namespace WebApplication1
                 cmd2.Parameters.AddWithValue("@sign", 1);
                 cmd2.ExecuteNonQuery();
                 cn3.Close();
-                Response.Write("<script>alert('授權同意函已發送!');location.href='WaitDocument.aspx';</script>");
 
                 using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
                 {
                     cn.Open();
-                    SqlCommand cmdChangePermission = new SqlCommand(@"Update UserInfo Set Permission = @Permission where EID = @EID");
+                    SqlCommand cmdChangePermission = new SqlCommand(@"Insert into Warrant(Authorizer,A_EID,recipient,R_EID,Raw_Parmission,New_Parmission,Date_Start,Date_End,effective) 
+                                                                                   Values(@Authorizer,@A_EID,@recipient,@R_EID,@Raw_Parmission,@New_Parmission,@Date_Start,@Date_End,@effective)");
                     cmdChangePermission.Connection = cn;
-                    cmdChangePermission.Parameters.AddWithValue("@EID", endue_EID.Text);
-                    cmdChangePermission.Parameters.AddWithValue("@Permission", endue_Permission.Text);
+                    cmdChangePermission.Parameters.AddWithValue("@Authorizer",tmpUserInfo.Name);
+                    cmdChangePermission.Parameters.AddWithValue("@A_EID",tmpUserInfo.EID);
+                    cmdChangePermission.Parameters.AddWithValue("@recipient",DDL_Name.SelectedValue);
+                    cmdChangePermission.Parameters.AddWithValue("@R_EID", DDL_EID.SelectedValue);
+                    string PP = Convert.ToString(tmpUserInfo.Permission);
+                    cmdChangePermission.Parameters.AddWithValue("@New_Parmission", DDL_Permission.SelectedValue);
+                    cmdChangePermission.Parameters.AddWithValue("@Raw_Parmission",PP);
+                    string date1 = Request.Form["DS"];
+                    string date2 = Request.Form["DE"];
+                    cmdChangePermission.Parameters.AddWithValue("@Date_Start",date1);
+                    
+                    cmdChangePermission.Parameters.AddWithValue("@Date_End",date2);
+                    cmdChangePermission.Parameters.AddWithValue("@effective","1");
 
                     cmdChangePermission.ExecuteNonQuery();
+
+                    SqlCommand cmduser = new SqlCommand(@"Update UserInfo SET temp_Permission = @temp_Permission where EID = @EID");
+
+                    cmduser.Connection = cn;
+                    cmduser.Parameters.AddWithValue("@temp_Permission",DDL_Permission.SelectedValue);
+                    cmduser.Parameters.AddWithValue("@EID", DDL_EID.SelectedValue);
+                    cmduser.ExecuteNonQuery();
                     cn.Close();
 
                 }
+                Response.Write("<script>alert('授權同意函已發送!');location.href='WaitDocument.aspx';</script>");
+
             }
         }
     }

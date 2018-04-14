@@ -236,7 +236,7 @@
 
                                到 <input type="text" name="DE" class="Wdate" id="DE" onclick="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm', minDate: '#F{$dp.$D(\'DS\')}' })" />&nbsp; 止<br />
                                 <br />
-                                擁有權限<asp:DropDownList ID="DDL_Permission" runat="server" AutoPostBack="True">
+                                擁有權限<asp:DropDownList ID="DDL_Permission" runat="server">
                                     <asp:ListItem Value="1"></asp:ListItem>
                                     <asp:ListItem>2</asp:ListItem>
                                     <asp:ListItem>3</asp:ListItem>

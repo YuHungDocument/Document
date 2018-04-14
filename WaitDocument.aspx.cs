@@ -23,6 +23,7 @@ namespace WebApplication1
             }
             else
             {
+                #region 內容
                 ((LinkButton)this.Master.FindControl("Lb_WaitProcess")).BackColor = Color.White;
                 ((LinkButton)this.Master.FindControl("Lb_WaitProcess")).ForeColor = Color.Black;
                 ((Label)this.Master.FindControl("Lb_Title")).Text = "待處理公文";
@@ -33,9 +34,11 @@ namespace WebApplication1
                     Lbl_EID.Text = tmpUserInfo.EID;
                     bind();
                 }
+                #endregion
             }
         }
 
+        #region 獲取資料
         private DataTable GetData()
         {
             dt = new DataTable();
@@ -56,6 +59,9 @@ namespace WebApplication1
             myda.Fill(dt);
             return dt;
         }
+        #endregion
+
+        #region 取得排序資料
         /// <summary>
         /// 取得排序資料
         /// </summary>
@@ -81,6 +87,9 @@ namespace WebApplication1
             Menu.DataBind();
 
         }
+        #endregion
+
+        #region 換頁
         /// <summary>
         /// 換頁
         /// </summary>
@@ -89,6 +98,9 @@ namespace WebApplication1
             Menu.PageIndex = e.NewPageIndex;
             bind2();
         }
+        #endregion
+
+        #region 排序
         /// <summary>
         /// 排序
         /// </summary>
@@ -132,6 +144,9 @@ namespace WebApplication1
 
             GVGetData(sd, se);
         }
+        #endregion
+
+        #region 分頁按鈕
         protected void Gridview_OnRowCreated(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.Pager)
@@ -180,6 +195,9 @@ namespace WebApplication1
                 e.Row.Controls[0].Controls[0].Controls[0].Controls[controlTmp].Controls.Add(Button_Last);
             }
         }
+        #endregion
+
+        #region 判斷按鈕類別
         protected void PageButtonClick(object sender, EventArgs e)
         {
             LinkButton clickedButton = ((LinkButton)sender);
@@ -219,7 +237,9 @@ namespace WebApplication1
             }
             bind2();
         }
-        //換分頁數
+        #endregion
+
+        #region 換分頁數
         protected void Change_Click(object sender, EventArgs e)
         {
             if (Convert.ToInt32(TxtPageSize.Text) > 0)
@@ -229,6 +249,9 @@ namespace WebApplication1
                 bind();
             }
         }
+        #endregion
+
+        #region bind
         public void bind()
         {
             dt = new DataTable();
@@ -248,6 +271,9 @@ namespace WebApplication1
             lbl_4.Text = Menu.PageCount.ToString();
             sqlcon.Close();
         }
+        #endregion
+
+        #region bind2
         public void bind2()
         {
             dt = new DataTable();
@@ -316,6 +342,9 @@ namespace WebApplication1
             lbl_3.Text = index.ToString();
             lbl_4.Text = Menu.PageCount.ToString();
         }
+        #endregion
+
+        #region 點選進入Detail
         protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "SelData")
@@ -336,7 +365,9 @@ namespace WebApplication1
                 Response.Redirect("Detail.aspx");
             }
         }
+        #endregion
 
+        #region 判斷每一行然後做改變
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             //這個if直接判斷gridview的每一列
@@ -353,12 +384,21 @@ namespace WebApplication1
                     SqlCommand cmd = new SqlCommand("Select * from Fil Where SID=@SID");
                     cmd.Connection = cn;
                     cmd.Parameters.AddWithValue("@SID", LB.Text);
+                    SqlCommand lookcmd = new SqlCommand("Select * From Detail Where isread!=1");
+                    lookcmd.Connection = cn;
+                    using (SqlDataReader dr = lookcmd.ExecuteReader())
+                    {
+                        if(dr.Read())
+                        {
+                            e.Row.Attributes.Add("style", "font-weight:bold");
+                        }
+                    }
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
                         if (dr.Read())
                         {
                             LB.ToolTip = "公文文號：" + dr["SID"].ToString();
-                            if(dr["Speed"].ToString()=="速件")
+                            if (dr["Speed"].ToString() == "速件")
                             {
                                 e.Row.Attributes.Add("OnMouseout", "this.style.background='#ADD8E6'");
                                 e.Row.Attributes.Add("style", "background-color:#ADD8E6");
@@ -395,21 +435,26 @@ namespace WebApplication1
                                         Peo.Text = dr2["Name"].ToString();
                                     }
                                 }
-                            }                         
+                            }
                         }
                     }
                 }
             }
         }
+        #endregion
 
+        #region 搜尋
         protected void Btn_Select_Click(object sender, EventArgs e)
         {
             bind2();
         }
+        #endregion
 
+        #region 顯示全部
         protected void Btn_cancel_Click(object sender, EventArgs e)
         {
             Response.Redirect("WaitProcess.aspx");
         }
+        #endregion
     }
 }

@@ -36,6 +36,7 @@
 
         .auto-style1 {
             width: 533px;
+            
         }
 
         .auto-style2 {

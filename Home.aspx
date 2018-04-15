@@ -34,6 +34,34 @@ http://www.tooplate.com/view/2092-shelf
           <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
           <![endif]-->
+    <style type="text/css">
+        .auto-style1 {
+            position: relative;
+            width: 100%;
+            min-height: 1px;
+            -ms-flex: 0 0 100%;
+            flex: 0 0 100%;
+            max-width: 100%;
+            left: 0px;
+            top: 0px;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        .auto-style2 {
+            position: relative;
+            width: 100%;
+            min-height: 1px;
+            -ms-flex: 0 0 100%;
+            flex: 0 0 100%;
+            max-width: 100%;
+            left: 0px;
+            top: 0px;
+            height: 34px;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+    </style>
 </head>
 
 <body>
@@ -42,8 +70,8 @@ http://www.tooplate.com/view/2092-shelf
         </div>
         <div class="container">
             <header class="tm-site-header" style="height: 250px">
-                <h2 class="tm-site-name">勤益科技股份有限公司</h2>
-                
+                <h3 class="tm-site-name">勤益科技股份有限公司</h3>
+
 
                 <nav class="navbar navbar-expand-md tm-main-nav-container">
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#tmMainNav" aria-controls="tmMainNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,7 +93,7 @@ http://www.tooplate.com/view/2092-shelf
 
             <div class="tm-main-content">
                 <section class="row tm-item-preview tm-margin-b-xl">
-                    <div class="col-12">
+                    <div class="auto-style2">
                         <h2 class="tm-blue-text tm-margin-b-p">我們團隊</h2>
                     </div>
                     <div class="col-md-6 col-sm-12 mb-md-0 mb-5">
@@ -158,11 +186,8 @@ http://www.tooplate.com/view/2092-shelf
 
         <!-- load JS files -->
         <script src="js/jquery-1.11.3.min.js"></script>
-        <!-- jQuery (https://jquery.com/download/) -->
         <script src="js/popper.min.js"></script>
-        <!-- Popper (https://popper.js.org/) -->
         <script src="js/bootstrap.min.js"></script>
-        <!-- Bootstrap (https://getbootstrap.com/) -->
         <script>     
 
             $(document).ready(function () {

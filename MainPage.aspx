@@ -39,7 +39,7 @@
         <div class="list">
             <div class="col-sm-3" style="padding-top: 5px; text-align: center;">
                 <div style="border: 3px solid #6699FF;">
-                    <a href="HomeLogin.aspx" title="回首頁" style="height: 152px; padding-top: 50px"><span class="glyphicon glyphicon-home" style="font-size: xx-large;"></span>
+                    <a href="HomeLogin.aspx" title="回首頁" style="height: 152px; padding-top: 50px; font-size: large;"><span class="glyphicon glyphicon-home" style="font-size: xx-large;"></span>
                         <br />
                         回首頁</a>
                 </div>
@@ -49,22 +49,22 @@
                     <div style="color: white; background-color: #6699FF;">
                         <span class="glyphicon glyphicon-pencil" style="font-size: xx-large;"></span>
                         <br />
-                        <div style="font-size:large">撰寫</div>
+                        <div style="font-size: large">撰寫</div>
                     </div>
-                        <a href="WriteDocument.aspx">公文</a>
-                        <a href="WriteVote.aspx">投票</a>
+                    <a href="WriteDocument.aspx">公文</a>
+                    <a href="WriteVote.aspx">投票</a>
                 </div>
             </div>
             <div class=" col-sm-3" style="padding-top: 5px; text-align: center;">
                 <div style="border: 3px solid #6699FF;">
-                    <a href="Home.aspx" title="所有公文及投票" style="height: 152px; padding-top: 50px"><span class="glyphicon glyphicon-file" style="font-size: xx-large;"></span>
+                    <a href="Home.aspx" title="所有公文及投票" style="height: 152px; padding-top: 50px; font-size: large;"><span class="glyphicon glyphicon-file" style="font-size: xx-large;"></span>
                         <br />
                         所有公文及投票</a>
                 </div>
             </div>
             <div class=" col-sm-3" style="padding-top: 5px; text-align: center;">
                 <div style="border: 3px solid #6699FF;">
-                    <a href="Draft.aspx" title="草稿" style="height: 152px; padding-top: 50px"><span class="glyphicon glyphicon-edit" style="font-size: xx-large;"></span>
+                    <a href="Draft.aspx" title="草稿" style="height: 152px; padding-top: 50px; font-size: large;"><span class="glyphicon glyphicon-edit" style="font-size: xx-large;"></span>
                         <br />
                         草稿</a>
                 </div>
@@ -106,28 +106,28 @@
         <div class="list">
             <div class="col-sm-3" style="padding-top: 5px; text-align: center;">
                 <div style="border: 3px solid #6699FF;">
-                    <a href="Home.aspx" title="標記重要項目" style="height: 152px; padding-top: 50px"><span class="glyphicon glyphicon-star" style="font-size: xx-large;"></span>
+                    <a href="Home.aspx" title="標記重要項目" style="height: 152px; padding-top: 50px; font-size: large;"><span class="glyphicon glyphicon-star" style="font-size: xx-large;"></span>
                         <br />
                         標記重要項目</a>
                 </div>
             </div>
             <div class="col-sm-3" style="padding-top: 5px; text-align: center;">
                 <div style="border: 3px solid #6699FF;">
-                    <a href="Home.aspx" title="個人設定" style="height: 152px; padding-top: 50px"><span class="glyphicon glyphicon-hdd" style="font-size: xx-large;"></span>
+                    <a href="Home.aspx" title="個人設定" style="height: 152px; padding-top: 50px; font-size: large;"><span class="glyphicon glyphicon-hdd" style="font-size: xx-large;"></span>
                         <br />
                         個人設定</a>
                 </div>
             </div>
             <div class=" col-sm-3" style="padding-top: 5px; text-align: center;">
                 <div style="border: 3px solid #6699FF;">
-                    <a href="Home.aspx" title="管理者介面" style="height: 152px; padding-top: 50px"><span class="glyphicon glyphicon-cog" style="font-size: xx-large;"></span>
+                    <a href="Home.aspx" title="管理者介面" style="height: 152px; padding-top: 50px; font-size: large;"><span class="glyphicon glyphicon-cog" style="font-size: xx-large;"></span>
                         <br />
                         管理者介面</a>
                 </div>
             </div>
             <div class=" col-sm-3" style="padding-top: 5px; text-align: center;">
                 <div style="border: 3px solid #6699FF;">
-                    <a href="Draft.aspx" title="後台管理" style="height: 152px; padding-top: 50px"><span class="glyphicon glyphicon-edit" style="font-size: xx-large;"></span>
+                    <a href="Draft.aspx" title="後台管理" style="height: 152px; padding-top: 50px; font-size: large;"><span class="glyphicon glyphicon-edit" style="font-size: xx-large;"></span>
                         <br />
                         後台管理</a>
                 </div>

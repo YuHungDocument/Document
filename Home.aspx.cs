@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Drawing;
 
 namespace WebApplication1
 {
@@ -77,8 +78,9 @@ namespace WebApplication1
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                e.Row.Attributes.Add("OnMouseover", "this.style.fontWeight='900';this.style.color='#FFAA33'");
-                e.Row.Attributes.Add("OnMouseout", "this.style.fontWeight='normal';this.style.color='#FFFFFF'");
+                LinkButton LB = (LinkButton)e.Row.FindControl("Lb_Title");
+                e.Row.Attributes.Add("OnMouseover", "this.style.fontWeight='900';");
+                e.Row.Attributes.Add("OnMouseout", "this.style.fontWeight='normal';");
             }
         }
     }

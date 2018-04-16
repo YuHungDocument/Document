@@ -64,9 +64,11 @@
 
         .row {
             margin-top: 0px;
+            
         }
 
         .side-menu {
+            overflow-y:scroll;
             position: fixed;
             width: 300px;
             height: 100%;

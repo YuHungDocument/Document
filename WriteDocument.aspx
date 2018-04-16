@@ -337,7 +337,14 @@
                                                     <asp:CheckBox ID="Cb_path" runat="server" OnCheckedChanged="Cb_path_CheckedChanged" AutoPostBack="True" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-
+                                            <asp:TemplateField>
+                                                <HeaderTemplate>
+                                                    <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll3"  CheckBoxName="Cb_comment" HeaderText="是否評論" OnCheckedChanged="Cb_comment_CheckedChanged" AutoPostBack="True"/>
+                                                </HeaderTemplate>
+                                                <ItemTemplate>
+                                                    <asp:CheckBox ID="Cb_comment" runat="server" AutoPostBack="true" OnCheckedChanged="Cb_comment_CheckedChanged"/>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                         </Columns>
                                         <HeaderStyle HorizontalAlign="Center" />
                                     </asp:GridView>

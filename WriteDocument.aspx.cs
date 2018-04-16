@@ -1416,6 +1416,10 @@ namespace WebApplication1
             }
         }
         #endregion
-        
+
+        protected void Cb_comment_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

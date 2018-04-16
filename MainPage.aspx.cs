@@ -23,6 +23,7 @@ namespace WebApplication1
                 }
                 else
                 {
+                    
                     ((Label)this.Master.FindControl("Lb_Title")).Text = "主頁面";
                     #region 內文
                     UserInfo tmpUserInfo = null;

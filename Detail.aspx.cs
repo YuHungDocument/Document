@@ -40,7 +40,7 @@ namespace WebApplication1
                 }
                 else
                 {
-
+                    
                     #region 內文
                     ((Label)this.Master.FindControl("Lb_Title")).Text = "內文";
                     UserInfo tmpUserInfo = null;
@@ -65,7 +65,7 @@ namespace WebApplication1
                                     {
                                         cn2.Open();
                                         SqlCommand cmd2 = new SqlCommand(@"Select Name From UserInfo  Where EID=@EID");
-                                        SqlCommand cmd3 = new SqlCommand(@"Select path,sign From Detail  Where SID=@SID And EID=@EID");
+                                        SqlCommand cmd3 = new SqlCommand(@"Select path,sign,recheckKey From Detail  Where SID=@SID And EID=@EID");
                                         cmd2.Connection = cn2;
                                         cmd2.Parameters.AddWithValue("@EID", dr["EID"].ToString());
                                         using (SqlDataReader dr2 = cmd2.ExecuteReader())
@@ -640,6 +640,47 @@ namespace WebApplication1
         #region 簽核
         protected void Btn_check_Click(object sender, EventArgs e)
         {
+            if (Session["ischeck"]==null)
+                {
+                Session["ischeck"] = "";
+            }
+            string ischeck= Session["ischeck"].ToString();
+            if (ischeck != "1"|| ischeck == "")
+            {
+                using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
+                {
+                    cn2.Open();
+                    SqlCommand cmd3 = new SqlCommand(@"Select recheckKey From Detail  Where SID=@SID And EID=@EID");
+                    cmd3.Connection = cn2;
+                    cmd3.Parameters.AddWithValue("@EID", Lbl_EID.Text);
+                    cmd3.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+                    using (SqlDataReader dr3 = cmd3.ExecuteReader())
+                    {
+                        if (dr3.Read())
+                        {
+                            if (dr3["recheckKey"].ToString() == "1")
+                            {
+                                using (SqlConnection cnaddress = new SqlConnection(tmpdbhelper.DB_CnStr))
+                                {
+                                    cnaddress.Open();
+                                    SqlCommand cmdfindkeyaddress = new SqlCommand(@"Update UserInfo Set KeyAddress=@KeyAddress Where EID=@EID");
+                                    cmdfindkeyaddress.Connection = cnaddress;
+                                    cmdfindkeyaddress.Parameters.AddWithValue("@KeyAddress", "");
+                                    cmdfindkeyaddress.Parameters.AddWithValue("@EID", Lbl_EID.Text);
+                                    KeyAddress = "";
+                                    cmdfindkeyaddress.ExecuteNonQuery();
+                                }
+                            }
+                        }
+                    }
+                    cn2.Close();
+                }
+                if (KeyAddress == "")
+                {
+                    Session["ischeck"] = "1";
+                    Response.Write("<script>alert('請重新確認金鑰位置!');location.href='KeyAddress.aspx';</script>");
+                }
+            }
             using (SqlConnection cnsign = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
                 cnsign.Open();

@@ -1028,7 +1028,7 @@ namespace WebApplication1
                 using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
                 {
                     //SqlCommand cmd4 = new SqlCommand(@"update Fil set Fil.Name=Document.Name,Fil.DocumentContent=Document.DocumentContent,Fil.Extn=Document.Extn  from Document join Fil on Fil.SID=Document.SID");
-                    SqlCommand cmd3 = new SqlCommand(@"Insert INTO Fil(SID,EID,Date,Speed,Text,Title,Proposition,Type,YOS,AESkey,AESiv,txt_RSAhash_Text,txt_RSAhash_Proposition)VALUES(@SID,@EID,@Date,@Speed,@Text,@Title,@Proposition,@Type,@YOS,@AESkey,@AESiv,@txt_RSAhash_Text,@txt_RSAhash_Proposition)");
+                    SqlCommand cmd3 = new SqlCommand(@"Insert INTO Fil(SID,EID,Date,Speed,Text,Title,Proposition,Type,YOS,AESkey,AESiv,txt_RSAhash_Text,txt_RSAhash_Proposition,IsEnd)VALUES(@SID,@EID,@Date,@Speed,@Text,@Title,@Proposition,@Type,@YOS,@AESkey,@AESiv,@txt_RSAhash_Text,@txt_RSAhash_Proposition,@IsEnd)");
                     cn2.Open();
                     cmd3.Connection = cn2;
                     //cmd4.Connection = cn2;
@@ -1093,6 +1093,7 @@ namespace WebApplication1
                     cmd3.Parameters.AddWithValue("@AESiv", txtIV);
                     cmd3.Parameters.AddWithValue("@txt_RSAhash_Text", txt_RSAhash_Text);
                     cmd3.Parameters.AddWithValue("@txt_RSAhash_Proposition", txt_RSAhash_Proposition);
+                    cmd3.Parameters.AddWithValue("@IsEnd", "0");
                     cmd3.ExecuteNonQuery();
                     //cmd4.ExecuteNonQuery();
                 }
@@ -1175,7 +1176,7 @@ namespace WebApplication1
                                 cn3.Close();
                             }
                             //寫回資料庫 
-                            SqlCommand cmd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,path,sign,look,RSAkey,isAgent,isread)VALUES(@SID,@Lvl,@EID,@Department,@status,@path,@sign,@look,@RSAkey,@isAgent,@isread)");
+                            SqlCommand cmd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,path,sign,look,RSAkey,isAgent,isread,recheckKey)VALUES(@SID,@Lvl,@EID,@Department,@status,@path,@sign,@look,@RSAkey,@isAgent,@isread,@recheckKey)");
                             cn3.Open();
                             cmd.Connection = cn3;
                             cmd.Parameters.AddWithValue("@SID", SID);
@@ -1190,6 +1191,14 @@ namespace WebApplication1
                             else
                             {
                                 cmd.Parameters.AddWithValue("@status", "0");
+                            }
+                            if (ChB_Check.Checked == true)
+                            {
+                                cmd.Parameters.AddWithValue("@recheckKey", "1");
+                            }
+                            else
+                            {
+                                cmd.Parameters.AddWithValue("@recheckKey", "0");
                             }
                             if (Cb_path.Checked == true)
                             {
@@ -1207,6 +1216,7 @@ namespace WebApplication1
                             {
                                 cmd.Parameters.AddWithValue("@look", 0);
                             }
+
                             cmd.Parameters.AddWithValue("@sign", 0);
                             cmd.Parameters.AddWithValue("@isread", 0);
                             using (SqlConnection cnEID = new SqlConnection(tmpdbhelper.DB_CnStr))

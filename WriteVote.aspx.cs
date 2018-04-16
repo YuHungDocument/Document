@@ -38,6 +38,8 @@ namespace WebApplication1
                 }
                 else
                 {
+                    //設定還原頁
+                    ViewState["URL"] = Request.UrlReferrer.ToString();
                     #region 內容
                     Session["number"] = 1;
                     Session["max"] = 1;

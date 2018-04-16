@@ -22,6 +22,7 @@ namespace WebApplication1
                 }
                 else
                 {
+                    ViewState["URL"] = Request.UrlReferrer.ToString();
                     ((Label)this.Master.FindControl("Lb_Title")).Text = "設定金鑰位置";
                 }
             }
@@ -46,7 +47,8 @@ namespace WebApplication1
                     cmd.Parameters.AddWithValue("@KeyAddress", address);
                     cmd.Parameters.AddWithValue("@EID", EID);
                     cmd.ExecuteNonQuery();//執行命令
-                    Response.Write("<script>alert('金鑰建立成功!');location.href='WaitDocument.aspx';</script>");
+                    Response.Write("<script>alert('修改成功!'); location.href='"+ViewState["URL"]+"'; </script>");
+
                 }
             }
             else

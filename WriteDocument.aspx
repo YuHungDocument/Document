@@ -282,6 +282,7 @@
 
                                     <asp:Label ID="Lbl_GpName" runat="server" Text="Label" Visible="False"></asp:Label>
                                     <br />
+                                    <asp:CheckBox ID="ChB_Check" runat="server" Text="簽核時是否重新檢查金鑰" />
                                     <br />
                                     <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" OnRowDataBound="GridView2_RowDataBound" ItemStyle-HorizontalAlign="Center" GridLines="Horizontal">
                                         <Columns>

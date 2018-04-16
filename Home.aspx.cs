@@ -72,5 +72,14 @@ namespace WebApplication1
         {
             Response.Redirect("Register.aspx");
         }
+
+        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                e.Row.Attributes.Add("OnMouseover", "this.style.fontWeight='900';this.style.color='#FFAA33'");
+                e.Row.Attributes.Add("OnMouseout", "this.style.fontWeight='normal';this.style.color='#FFFFFF'");
+            }
+        }
     }
 }

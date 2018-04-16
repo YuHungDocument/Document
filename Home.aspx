@@ -61,6 +61,9 @@ http://www.tooplate.com/view/2092-shelf
             padding-left: 15px;
             padding-right: 15px;
         }
+        hr{
+            border-color:white;
+        }
     </style>
 </head>
 
@@ -121,7 +124,23 @@ http://www.tooplate.com/view/2092-shelf
                     </div>
                     <div class="col-md-6 col-sm-12 tm-highlight tm-small-pad">
                         <h2 class="tm-margin-b-p">佈告欄</h2>
-                        <p class="tm-margin-b-p">這是第一個方塊</p>
+                        <hr />
+                        <p class="tm-margin-b-p">
+                            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" GridLines="None" ShowHeader="False"  Width="100%" OnRowDataBound="GridView1_RowDataBound">
+                                <Columns>
+                                    <asp:BoundField DataField="Department" ItemStyle-Width="20%" />
+                                    <asp:TemplateField ItemStyle-Width="70%" ControlStyle-ForeColor="White" >
+                                        <ItemTemplate>
+                                            <asp:LinkButton ID="Lb_Title" runat="server" Text='<%# Bind("BTitle") %>'></asp:LinkButton>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
+                                    <asp:BoundField DataField="Date" DataFormatString="{0:yyyy/MM/dd}" ItemStyle-Width="10%"/>
+
+                                </Columns>
+                            </asp:GridView>
+                            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString %>" SelectCommand="SELECT Top 10 * FROM [Bulletin] ORDER BY [BID] DESC"></asp:SqlDataSource>
+                        </p>
                         <p>這是第二個方塊(不要用可刪)</p>
                     </div>
                 </section>

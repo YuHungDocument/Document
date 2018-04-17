@@ -378,26 +378,19 @@ namespace WebApplication1
                 Label LB = (Label)e.Row.FindControl("Lbl_SID");
                 Label Dep = (Label)e.Row.FindControl("Lbl_Dep");
                 Label Peo = (Label)e.Row.FindControl("Lbl_Peo");
+                LinkButton Lb_Title = (LinkButton)e.Row.FindControl("Lb_SID");
                 using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
                 {
                     cn.Open();
                     SqlCommand cmd = new SqlCommand("Select * from Fil Where SID=@SID");
                     cmd.Connection = cn;
                     cmd.Parameters.AddWithValue("@SID", LB.Text);
-                    SqlCommand lookcmd = new SqlCommand("Select * From Detail Where isread!=1");
-                    lookcmd.Connection = cn;
-                    using (SqlDataReader dr = lookcmd.ExecuteReader())
-                    {
-                        if(dr.Read())
-                        {
-                            e.Row.Attributes.Add("style", "font-weight:bold");
-                        }
-                    }
+
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
                         if (dr.Read())
                         {
-                            LB.ToolTip = "公文文號：" + dr["SID"].ToString();
+                            Lb_Title.ToolTip = "公文文號：" + dr["SID"].ToString();
                             if (dr["Speed"].ToString() == "速件")
                             {
                                 e.Row.Attributes.Add("OnMouseout", "this.style.background='#ADD8E6'");
@@ -436,6 +429,17 @@ namespace WebApplication1
                                     }
                                 }
                             }
+                        }
+                    }
+                    SqlCommand lookcmd = new SqlCommand("Select * From Detail Where SID=@SID and EID=@EID and isread='0'");
+                    lookcmd.Connection = cn;
+                    lookcmd.Parameters.AddWithValue("@SID",LB.Text);
+                    lookcmd.Parameters.AddWithValue("@EID", Lbl_EID.Text);
+                    using (SqlDataReader dr = lookcmd.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            e.Row.Attributes.Add("style", "font-weight:bold");
                         }
                     }
                 }

@@ -30,7 +30,7 @@
     <div class="col-sm-12">
         擬辦：
         <br />
-        　　　<asp:Label ID="Lbl_Proposition" runat="server"></asp:Label>
+        <asp:Label ID="Lbl_Proposition" runat="server"></asp:Label>
         <br />
         <br />
         <asp:Panel ID="Pel_Choose" runat="server" Visible="False">
@@ -120,8 +120,40 @@
             <br />
             <br />
             <asp:Button ID="BtnEnd" runat="server" Text="結案歸檔" OnClick="BtnEnd_Click" Visible="False" />
+
         </asp:Panel>
         <br />
-
+        <br />
+        <asp:Label ID="Label1" runat="server" Font-Size="X-Large" Text="意見及評論"></asp:Label>
+        <asp:LinkButton ID="Lb_Sort" runat="server" OnClick="Lb_Sort_Click">由舊到新排序</asp:LinkButton>
+        <asp:LinkButton ID="Lb_Dsort" runat="server" OnClick="Lb_Dsort_Click" Visible="False">由新到舊排序</asp:LinkButton>
+        <br />
+        <hr />
+        <br />
+        <asp:Panel ID="Pel_Comment" runat="server" Visible="False">
+            <asp:TextBox ID="Txt_comment" runat="server" Height="127px" TextMode="MultiLine" Width="863px"></asp:TextBox>
+            <br />
+            <br />
+            <asp:Button ID="Btn_Comment" runat="server" Text="送出評論" OnClick="Btn_Comment_Click" />
+        </asp:Panel>
+        <br />
+        <asp:DataList ID="DataList1" runat="server" DataSourceID="SqlDataSource1">
+            <ItemTemplate>
+               <asp:Label ID="NameLabel" runat="server" Font-Bold="True" Font-Size="Large" Text='<%# Eval("Name") %>' />
+                <asp:Label ID="DateLabel" runat="server" ForeColor="#999999" Text='<%# Eval("Date") %>' />
+                <br />
+                　　<asp:Label ID="UserCommentLabel"  Font-Size="Large" runat="server" Text='<%# Eval("UserComment") %>' />
+                <br />
+                <br />
+            </ItemTemplate>
+        </asp:DataList>
+        <br />
+        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString %>" SelectCommand="SELECT * FROM [Comment] WHERE ([SID] = @SID) ORDER BY [CID] DESC">
+            <SelectParameters>
+                <asp:ControlParameter ControlID="Lbl_SID" Name="SID" PropertyName="Text" Type="String" />
+            </SelectParameters>
+        </asp:SqlDataSource>
+        <br />
+        
     </div>
 </asp:Content>

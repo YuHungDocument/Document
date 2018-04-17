@@ -1107,6 +1107,7 @@ namespace WebApplication1
                         string Name = ((Label)GridView2.Rows[i].FindControl("Lbl_Name")).Text.Trim();
                         CheckBox Cb_sign = ((CheckBox)GridView2.Rows[i].FindControl("Cb_sign"));
                         CheckBox Cb_path = ((CheckBox)GridView2.Rows[i].FindControl("Cb_path"));
+                        CheckBox Cb_comment = ((CheckBox)GridView2.Rows[i].FindControl("Cb_comment"));
                         if (SID != "" && Lvl != "" )
                         {
                             //找尋接收者PK並加密KEY
@@ -1176,7 +1177,7 @@ namespace WebApplication1
                                 cn3.Close();
                             }
                             //寫回資料庫 
-                            SqlCommand cmd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,path,sign,look,RSAkey,isAgent,isread,recheckKey)VALUES(@SID,@Lvl,@EID,@Department,@status,@path,@sign,@look,@RSAkey,@isAgent,@isread,@recheckKey)");
+                            SqlCommand cmd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,path,sign,look,RSAkey,isAgent,isread,recheckKey,comment)VALUES(@SID,@Lvl,@EID,@Department,@status,@path,@sign,@look,@RSAkey,@isAgent,@isread,@recheckKey,@comment)");
                             cn3.Open();
                             cmd.Connection = cn3;
                             cmd.Parameters.AddWithValue("@SID", SID);
@@ -1200,6 +1201,16 @@ namespace WebApplication1
                             {
                                 cmd.Parameters.AddWithValue("@recheckKey", "0");
                             }
+
+                            if (Cb_comment.Checked == true)
+                            {
+                                cmd.Parameters.AddWithValue("@comment", "1");
+                            }
+                            else
+                            {
+                                cmd.Parameters.AddWithValue("@comment", "0");
+                            }
+
                             if (Cb_path.Checked == true)
                             {
                                 cmd.Parameters.AddWithValue("@path", "1");

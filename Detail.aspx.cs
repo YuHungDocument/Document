@@ -65,7 +65,7 @@ namespace WebApplication1
                                     {
                                         cn2.Open();
                                         SqlCommand cmd2 = new SqlCommand(@"Select Name From UserInfo  Where EID=@EID");
-                                        SqlCommand cmd3 = new SqlCommand(@"Select path,sign,recheckKey From Detail  Where SID=@SID And EID=@EID");
+                                        SqlCommand cmd3 = new SqlCommand(@"Select path,sign,recheckKey,comment From Detail  Where SID=@SID And EID=@EID");
                                         cmd2.Connection = cn2;
                                         cmd2.Parameters.AddWithValue("@EID", dr["EID"].ToString());
                                         using (SqlDataReader dr2 = cmd2.ExecuteReader())
@@ -94,6 +94,10 @@ namespace WebApplication1
                                                 if (dr3["path"].ToString() == "1")
                                                 {
                                                     bind3();
+                                                }
+                                                if(dr3["comment"].ToString()=="1")
+                                                {
+                                                    Pel_Comment.Visible = true;
                                                 }
                                             }
 
@@ -1163,7 +1167,37 @@ namespace WebApplication1
 
 
         }
+
         #endregion
 
+        protected void Lb_Sort_Click(object sender, EventArgs e)
+        {
+            SqlDataSource1.SelectCommand = "SELECT * FROM[Comment] WHERE([SID] = @SID) ORDER BY[CID] ASC";
+            Lb_Dsort.Visible = true;
+            Lb_Sort.Visible = false;
+        }
+
+        protected void Lb_Dsort_Click(object sender, EventArgs e)
+        {
+            SqlDataSource1.SelectCommand = "SELECT * FROM[Comment] WHERE([SID] = @SID) ORDER BY[CID] DESC";
+            Lb_Dsort.Visible = false;
+            Lb_Sort.Visible = true;
+        }        
+
+        protected void Btn_Comment_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+                cn.Open();
+                SqlCommand cmd = new SqlCommand("Insert into Comment (SID,Name,UserComment,Date) Values (@SID,@Name,@UserComment,@Date)");
+                cmd.Connection = cn;
+                cmd.Parameters.AddWithValue("@SID",Lbl_SID.Text);
+                cmd.Parameters.AddWithValue("@Name", Lbl_EID.Text);
+                cmd.Parameters.AddWithValue("@UserComment", Txt_comment.Text);
+                cmd.Parameters.AddWithValue("@Date", DateTime.Today);
+                cmd.ExecuteNonQuery();
+                Response.Redirect("Detail.aspx");
+            }
+        }
     }
 }

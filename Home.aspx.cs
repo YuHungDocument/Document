@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Drawing;
+using System.Data.SqlClient;
 
 namespace WebApplication1
 {
@@ -17,7 +16,7 @@ namespace WebApplication1
             Session["UserInfo"] = null;
             if (!Page.IsPostBack)
             {
-               
+
             }
         }
 
@@ -55,8 +54,9 @@ namespace WebApplication1
                         {
                             tmpuserinfo.temp_Permission = int.Parse(dr["temp_Permission"].ToString());
                         }
-                        else {
-                         tmpuserinfo.Permission = int.Parse(dr["Permission"].ToString());
+                        else
+                        {
+                            tmpuserinfo.Permission = int.Parse(dr["Permission"].ToString());
                         }
 
 
@@ -81,6 +81,20 @@ namespace WebApplication1
                 LinkButton LB = (LinkButton)e.Row.FindControl("Lb_Title");
                 e.Row.Attributes.Add("OnMouseover", "this.style.fontWeight='900';");
                 e.Row.Attributes.Add("OnMouseout", "this.style.fontWeight='normal';");
+            }
+        }
+
+        protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "SelData")
+            {
+                //這樣就可以讀到RowIndex
+                int index = ((GridViewRow)
+                ((LinkButton)e.CommandSource).NamingContainer).RowIndex;
+                //這樣就可以取得Keys值了
+                string keyId = GridView1.DataKeys[index].Value.ToString();
+                Session["BID"] = keyId;
+                Response.Redirect("BulletinDetail.aspx");
             }
         }
     }

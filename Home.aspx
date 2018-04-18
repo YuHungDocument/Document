@@ -1,101 +1,8 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="WebApplication1.Home" %>
-
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--
-
-Template 2092 Shelf
-
-http://www.tooplate.com/view/2092-shelf
-
--->
-    <title>電子公文系統</title>
-
-    <!-- load stylesheets -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
-    <!-- Google web font "Open Sans" -->
-    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <!-- Bootstrap style -->
-    <link rel="stylesheet" href="css/tooplate-style.css">
-    <!-- Templatemo style -->
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-          <![endif]-->
-    <style type="text/css">
-        .auto-style1 {
-            position: relative;
-            width: 100%;
-            min-height: 1px;
-            -ms-flex: 0 0 100%;
-            flex: 0 0 100%;
-            max-width: 100%;
-            left: 0px;
-            top: 0px;
-            padding-left: 15px;
-            padding-right: 15px;
-        }
-
-        .auto-style2 {
-            position: relative;
-            width: 100%;
-            min-height: 1px;
-            -ms-flex: 0 0 100%;
-            flex: 0 0 100%;
-            max-width: 100%;
-            left: 0px;
-            top: 0px;
-            height: 34px;
-            padding-left: 15px;
-            padding-right: 15px;
-        }
-
-        hr {
-            border-color: white;
-        }
-    </style>
-</head>
-
-<body>
-    <form id="form1" runat="server">
-        <div>
-        </div>
-        <div class="container">
-            <header class="tm-site-header" style="height: 250px">
-                <h3 class="tm-site-name">勤益科技股份有限公司</h3>
-
-
-                <nav class="navbar navbar-expand-md tm-main-nav-container">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#tmMainNav" aria-controls="tmMainNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fa fa-bars"></i>
-                    </button>
-
-                    <div class="collapse navbar-collapse tm-main-nav" id="tmMainNav" style="height: 50px">
-                        <ul class="nav nav-fill tm-main-nav-ul">
-                            <li class="nav-item"><a class="nav-link" href="#">首頁</a></li>
-                            <li class="nav-item"><a class="nav-link" href="MainPage.aspx">電子公文系統</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">公文系統使用介紹</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">關於我們</a></li>
-                            <li class="nav-item"><a class="nav-link" href="setInfo.aspx">查看/修改個人資料</a></li>
-                        </ul>
-                    </div>
-                </nav>
-
-            </header>
-
-            <div class="tm-main-content">
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Home.Master" AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="WebApplication1.Home" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+                
                 <section class="row tm-item-preview tm-margin-b-xl">
                     <div class="auto-style2">
                         <h2 class="tm-blue-text tm-margin-b-p">我們團隊</h2>
@@ -127,12 +34,12 @@ http://www.tooplate.com/view/2092-shelf
                         <h2 class="tm-margin-b-p">佈告欄</h2>
                         <hr />
                         <p class="tm-margin-b-p">
-                            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" GridLines="None" ShowHeader="False" Width="100%" OnRowDataBound="GridView1_RowDataBound" ShowFooter="True">
+                            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" GridLines="None" ShowHeader="False" Width="100%" OnRowDataBound="GridView1_RowDataBound" ShowFooter="True" DataKeyNames="BID" OnRowCommand="GridView1_RowCommand">
                                 <Columns>
                                     <asp:BoundField DataField="Department" ItemStyle-Width="20%" />
                                     <asp:TemplateField ItemStyle-Width="70%" ControlStyle-ForeColor="White">
                                         <ItemTemplate>
-                                            <asp:LinkButton ID="Lb_Title" runat="server" Text='<%# Bind("BTitle") %>'></asp:LinkButton>
+                                            <asp:LinkButton ID="Lb_Title" runat="server" Text='<%# Bind("BTitle") %>' CommandName="SelData"></asp:LinkButton>
                                         </ItemTemplate>
 
                                     </asp:TemplateField>
@@ -200,16 +107,8 @@ http://www.tooplate.com/view/2092-shelf
                     </article>
                 </div>
 
-            </div>
 
-            <footer>
-                Copyright © <span class="tm-current-year">2018</span> /04/01 
-                
-                - <a href="#" target="_parent">可放超連結</a>
-            </footer>
-        </div>
-
-        <!-- load JS files -->
+    <!-- load JS files -->
         <script src="js/jquery-1.11.3.min.js"></script>
         <script src="js/popper.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
@@ -223,9 +122,4 @@ http://www.tooplate.com/view/2092-shelf
             });
 
         </script>
-
-
-    </form>
-</body>
-
-</html>
+</asp:Content>

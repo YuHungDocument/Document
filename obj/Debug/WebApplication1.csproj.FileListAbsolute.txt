@@ -61,3 +61,5 @@ C:\Users\SS\Desktop\Document\Document\project\WebApplication1\bin\WebApplication
 C:\Users\SS\Desktop\Document\Document\project\WebApplication1\bin\WebApplication1.pdb
 C:\Users\SS\Desktop\Document\Document\project\WebApplication1\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\SS\Desktop\Document\Document\project\WebApplication1\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\Amd\Desktop\Document\Document\project\WebApplication1\bin\CKEditor.NET.dll
+C:\Users\Amd\Desktop\Document\Document\project\WebApplication1\bin\CKEditor.NET.pdb

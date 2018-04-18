@@ -70,6 +70,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AllPage.aspx" />
     <Content Include="Bulletin.aspx" />
     <Content Include="ChangeAgent.aspx" />
     <Content Include="ChangePwd.aspx" />
@@ -449,7 +450,6 @@
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="SelectMemberData.aspx" />
-    <Content Include="sender.aspx" />
     <Content Include="WaitDocument.aspx" />
     <Content Include="WaitVote.aspx" />
     <Content Include="Web.config">
@@ -457,6 +457,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AllPage.aspx.cs">
+      <DependentUpon>AllPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AllPage.aspx.designer.cs">
+      <DependentUpon>AllPage.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Bulletin.aspx.cs">
       <DependentUpon>Bulletin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -598,13 +605,6 @@
     </Compile>
     <Compile Include="SelectMemberData.aspx.designer.cs">
       <DependentUpon>SelectMemberData.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="sender.aspx.cs">
-      <DependentUpon>sender.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="sender.aspx.designer.cs">
-      <DependentUpon>sender.aspx</DependentUpon>
     </Compile>
     <Compile Include="set.aspx.cs">
       <DependentUpon>set.aspx</DependentUpon>

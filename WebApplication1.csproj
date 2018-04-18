@@ -72,6 +72,7 @@
   <ItemGroup>
     <Content Include="AllPage.aspx" />
     <Content Include="Bulletin.aspx" />
+    <Content Include="BulletinDetail.aspx" />
     <Content Include="ChangeAgent.aspx" />
     <Content Include="ChangePwd.aspx" />
     <Content Include="ckeditor\adapters\jquery.js" />
@@ -390,6 +391,7 @@
     <Content Include="ckeditor\README.md" />
     <Content Include="ckeditor\samples\plugins\htmlwriter\assets\outputforflash\outputforflash.fla" />
     <Content Include="ckeditor\skins\moono\readme.md" />
+    <Content Include="Home.Master" />
     <None Include="packages.config" />
     <Content Include="ChangeGroup.aspx" />
     <Content Include="ChangePermission.aspx" />
@@ -471,6 +473,13 @@
     </Compile>
     <Compile Include="Bulletin.aspx.designer.cs">
       <DependentUpon>Bulletin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BulletinDetail.aspx.cs">
+      <DependentUpon>BulletinDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BulletinDetail.aspx.designer.cs">
+      <DependentUpon>BulletinDetail.aspx</DependentUpon>
     </Compile>
     <Compile Include="ChangeAgent.aspx.cs">
       <DependentUpon>ChangeAgent.aspx</DependentUpon>
@@ -556,6 +565,13 @@
     </Compile>
     <Compile Include="Home.aspx.designer.cs">
       <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Home.Master.cs">
+      <DependentUpon>Home.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Home.Master.designer.cs">
+      <DependentUpon>Home.Master</DependentUpon>
     </Compile>
     <Compile Include="HomeLogin.aspx.cs">
       <DependentUpon>HomeLogin.aspx</DependentUpon>

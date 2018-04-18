@@ -308,7 +308,21 @@ namespace WebApplication1
             {
                 wherestr = " and Date <='" + date2 + "'";
             }
-
+            if (!string.IsNullOrWhiteSpace(Request.Form["d3"]))
+            {
+                if (!string.IsNullOrWhiteSpace(Request.Form["d4"]))
+                {
+                    wherestr = wherestr + " and DeadLine Between'" + date3 + "'AND'" + date4 + "'";
+                }
+                else
+                {
+                    wherestr = wherestr + " and DeadLine >='" + date3 + "'";
+                }
+            }
+            else if (!string.IsNullOrWhiteSpace(Request.Form["d4"]))
+            {
+                wherestr = wherestr + " and DeadLine <='" + date4 + "'";
+            }
             if (!string.IsNullOrWhiteSpace(Txt_SID.Text))
             {
                 wherestr = wherestr + " and ( SID Like'%" + SID + "%')";
@@ -457,7 +471,7 @@ namespace WebApplication1
         #region 顯示全部
         protected void Btn_cancel_Click(object sender, EventArgs e)
         {
-            Response.Redirect("WaitProcess.aspx");
+            Response.Redirect("AllPage.aspx");
         }
         #endregion
     }

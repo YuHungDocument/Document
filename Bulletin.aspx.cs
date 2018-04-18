@@ -46,5 +46,6 @@ namespace WebApplication1
                 cmd.Parameters.AddWithValue("@EID", Lbl_EID.Text);
                 cmd.ExecuteNonQuery();
             }
+        }
     }
 }

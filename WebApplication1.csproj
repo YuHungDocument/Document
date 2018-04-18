@@ -340,6 +340,7 @@
     <Content Include="ckeditor\skins\moono\images\lock.png" />
     <Content Include="ckeditor\skins\moono\images\refresh.png" />
     <Content Include="ckeditor\styles.js" />
+    <Content Include="css\all.css" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\tooplate-style.css" />
     <Content Include="Detail.aspx" />
@@ -358,6 +359,7 @@
     <Content Include="img\header-01.jpg" />
     <Content Include="img\shelf-bg.jpg" />
     <Content Include="img\star.png" />
+    <Content Include="js\all.js" />
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\jquery-1.11.3.min.js" />
     <Content Include="js\popper.min.js" />

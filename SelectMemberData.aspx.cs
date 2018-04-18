@@ -60,13 +60,13 @@ namespace WebApplication1
 
                 }
             }
-            endue_EID.Text =DDL_EID.SelectedValue;
-            endue_Name.Text = DDL_Name.SelectedValue;
-            endue_Permission.Text = DDL_Permission.SelectedValue;
-            string ds = Request.Form["DS"];
-            endue_DS.Text = ds;
-            string de = Request.Form["DE"];
-            endue_DE.Text = de;
+            //endue_EID.Text =DDL_EID.SelectedValue;
+            //endue_Name.Text = DDL_Name.SelectedValue;
+            //endue_Permission.Text = DDL_Permission.SelectedValue;
+            //string ds = Request.Form["DS"];
+            //endue_DS.Text = ds;
+            //string de = Request.Form["DE"];
+            //endue_DE.Text = de;
         }
         public void bind3()
         {
@@ -253,7 +253,7 @@ namespace WebApplication1
                 txtKey = Convert.ToBase64String(symAlgorithm.Key);     //hFYPyIK3uSQ=
                 txtIV = Convert.ToBase64String(symAlgorithm.IV);       //oeZlJhiaZB0=
                                                                        //對稱加密
-                Permission = endue_Permission.Text;
+                Permission = DDL_Permission.SelectedValue;
                 txt_Ciphertext_Text = AESEncryption(txtKey, txtIV, "授予權限單位:" + tmpUserInfo.Department + "授予權限人員:" + tmpUserInfo.Name + "\r\n" + "更改權限至:" + Permission + "\r\n" + "開始有效權限時間:" + Request.Form["DS"] + "\r\n" + "結束權限時間:" + Request.Form["DE"] + "\r\n" + "被授予權限單位:" + DropDownList2.Text + "被授予權限人:" + DDL_Name.Text + "");
                 txt_Ciphertext_Proposition = AESEncryption(txtKey, txtIV, "");
                 cmd3.Parameters.AddWithValue("@SID", Date);
@@ -298,7 +298,7 @@ namespace WebApplication1
                 }
                 cn3.Close();
                 cn3.Open();
-                cmduserInfo2.Parameters.AddWithValue("@EID", endue_EID.Text);
+                cmduserInfo2.Parameters.AddWithValue("@EID", DDL_EID.SelectedValue);
                 cmduserInfo2.Connection = cn3;
                 using (SqlDataReader dr2 = cmduserInfo2.ExecuteReader())
                 {
@@ -338,7 +338,7 @@ namespace WebApplication1
                 cmd2.Connection = cn3;
                 cmd2.Parameters.AddWithValue("@SID", Date);
                 cmd2.Parameters.AddWithValue("@Lvl", "1");
-                cmd2.Parameters.AddWithValue("@EID", endue_EID.Text);
+                cmd2.Parameters.AddWithValue("@EID", DDL_EID.SelectedValue);
                 cmd2.Parameters.AddWithValue("@Department", DropDownList2.Text);
                 cmd2.Parameters.AddWithValue("@status", "1");
                 cmd2.Parameters.AddWithValue("@RSAkey", txt_PKmessage2);

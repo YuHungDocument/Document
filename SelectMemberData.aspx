@@ -1,8 +1,11 @@
 ﻿ <%@ Page Language="C#" MasterPageFile="~/GuildPage.Master" AutoEventWireup="true" CodeBehind="SelectMemberData.aspx.cs" Inherits="WebApplication1.ManagerPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link href="css/all.css" rel="stylesheet" />
+    <script src="js/all.js"></script>
     <script src="My97DatePicker/WdatePicker.js"></script>
-    <style>
+<%--    <script src="My97DatePicker/WdatePicker.js"></script>--%>
+<%--    <style>
         /* Icon when the collapsible content is shown */
         .btn:after {
             font-family: "Glyphicons Halflings";
@@ -41,8 +44,8 @@
         .panel panel-default {
             width: 500px
         }
-    </style>
-    <script>
+    </style>--%>
+  <%--  <script>
         $(document).on('click', '.panel-heading.clickable', function (e) {
             var $this = $(this);
             if (!$this.hasClass('panel-collapsed')) {
@@ -56,7 +59,7 @@
             }
         })
     </script>
-     <script src="My97DatePicker/WdatePicker.js"></script>
+    --%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
@@ -249,14 +252,7 @@
                             </div>
                             <div class="panel-body">
 
-                                您 <br />
-                                將 給予<asp:Label ID="endue_Name" runat="server" Text="Label"></asp:Label>
-&nbsp;
-                                <asp:Label ID="endue_EID" runat="server" Text="Label"></asp:Label>
-&nbsp;權限<asp:Label ID="endue_Permission" runat="server" Text="Label"></asp:Label>
-&nbsp;<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 從<asp:Label ID="endue_DS" runat="server" Text="Label"></asp:Label>
-                                至<asp:Label ID="endue_DE" runat="server" Text="Label"></asp:Label><br />
+                                <br />
                                 <br />
                                 <asp:Button ID="Btn_Send_Permission" runat="server" Text="send" OnClick="Btn_Send_Permission_Click" />
                             </div>

@@ -10,150 +10,150 @@
 namespace WebApplication1 {
     
     
-    public partial class GuildPage {
+    public partial class AllPage {
         
         /// <summary>
-        /// head 控制項。
+        /// Ddl_speed 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
+        protected global::System.Web.UI.WebControls.DropDownList Ddl_speed;
         
         /// <summary>
-        /// form1 控制項。
+        /// Txt_SID 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.TextBox Txt_SID;
         
         /// <summary>
-        /// Lb_Logout 控制項。
+        /// Ddl_Type 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Lb_Logout;
+        protected global::System.Web.UI.WebControls.DropDownList Ddl_Type;
         
         /// <summary>
-        /// Lb_UserInfo 控制項。
+        /// Txt_Title 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Lb_UserInfo;
+        protected global::System.Web.UI.WebControls.TextBox Txt_Title;
         
         /// <summary>
-        /// Lb_Write 控制項。
+        /// Btn_Select 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Lb_Write;
+        protected global::System.Web.UI.WebControls.Button Btn_Select;
         
         /// <summary>
-        /// Lb_All 控制項。
+        /// Btn_cancel 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Lb_All;
+        protected global::System.Web.UI.WebControls.Button Btn_cancel;
         
         /// <summary>
-        /// Lb_Draft 控制項。
+        /// TxtPageSize 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Lb_Draft;
+        protected global::System.Web.UI.WebControls.TextBox TxtPageSize;
         
         /// <summary>
-        /// Lb_WaitProcess 控制項。
+        /// Change 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Lb_WaitProcess;
+        protected global::System.Web.UI.WebControls.Button Change;
         
         /// <summary>
-        /// Lb_Host 控制項。
+        /// Menu 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Lb_Host;
+        protected global::System.Web.UI.WebControls.GridView Menu;
         
         /// <summary>
-        /// Lb_End 控制項。
+        /// lbl_1 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Lb_End;
+        protected global::System.Web.UI.WebControls.Label lbl_1;
         
         /// <summary>
-        /// Lb_Import 控制項。
+        /// lbl_2 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Lb_Import;
+        protected global::System.Web.UI.WebControls.Label lbl_2;
         
         /// <summary>
-        /// Lb_Set 控制項。
+        /// lbl_3 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Lb_Set;
+        protected global::System.Web.UI.WebControls.Label lbl_3;
         
         /// <summary>
-        /// Lb_Manager 控制項。
+        /// lbl_4 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Lb_Manager;
+        protected global::System.Web.UI.WebControls.Label lbl_4;
         
         /// <summary>
-        /// LinkButton1 控制項。
+        /// SqlDataSource2 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton LinkButton1;
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource2;
         
         /// <summary>
-        /// Lb_Title 控制項。
+        /// Lbl_EID 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Lb_Title;
+        protected global::System.Web.UI.WebControls.Label Lbl_EID;
         
         /// <summary>
-        /// ContentPlaceHolder1 控制項。
+        /// SqlDataSource3 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentPlaceHolder1;
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource3;
     }
 }

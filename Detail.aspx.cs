@@ -16,6 +16,7 @@ namespace WebApplication1
 {
     public partial class Detail : System.Web.UI.Page
     {
+        #region 一連串宣告
         string KeyAddress;
         string RSAkey;
         string key;
@@ -30,6 +31,7 @@ namespace WebApplication1
         DateTime txtDate;
         byte[] encryptedText;
         DbHelper tmpdbhelper = new DbHelper();
+        #endregion
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -1170,6 +1172,7 @@ namespace WebApplication1
 
         #endregion
 
+        #region 排序
         protected void Lb_Sort_Click(object sender, EventArgs e)
         {
             SqlDataSource1.SelectCommand = "SELECT * FROM[Comment] WHERE([SID] = @SID) ORDER BY[CID] ASC";
@@ -1182,8 +1185,10 @@ namespace WebApplication1
             SqlDataSource1.SelectCommand = "SELECT * FROM[Comment] WHERE([SID] = @SID) ORDER BY[CID] DESC";
             Lb_Dsort.Visible = false;
             Lb_Sort.Visible = true;
-        }        
+        }
+        #endregion
 
+        #region 評論
         protected void Btn_Comment_Click(object sender, EventArgs e)
         {
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
@@ -1199,5 +1204,6 @@ namespace WebApplication1
                 Response.Redirect("Detail.aspx");
             }
         }
+        #endregion
     }
 }

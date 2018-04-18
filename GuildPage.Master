@@ -523,6 +523,9 @@
                                 </div>
                             </li>
                             <li>
+                                <asp:LinkButton ID="Lb_All" runat="server" OnClick="Lb_All_Click"><span class="glyphicon glyphicon-book"></span>所有公文及投票</asp:LinkButton>
+                            </li>
+                            <li>
                                 <asp:LinkButton ID="Lb_Draft" runat="server" OnClick="Lb_Draft_Click"><span class="glyphicon glyphicon-edit"></span>草稿</asp:LinkButton>
                             </li>
                             <li class="panel panel-default" id="dropdown">

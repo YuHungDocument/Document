@@ -124,6 +124,7 @@ namespace WebApplication1
             }
         }
 
+        #region 登出
         protected void Lb_Logout_Click(object sender, EventArgs e)
         {
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
@@ -142,7 +143,9 @@ namespace WebApplication1
             Response.Redirect("Home.aspx");
 
         }
+        #endregion
 
+        #region  各項連結
         protected void LinkButton1_Click(object sender, EventArgs e)
         {
             Response.Redirect("SelectMemberData.aspx");
@@ -152,5 +155,12 @@ namespace WebApplication1
         {
             Response.Redirect("Draft.aspx");
         }
+
+        protected void Lb_All_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("AllPage.aspx");
+        }
+        #endregion
     }
+
 }

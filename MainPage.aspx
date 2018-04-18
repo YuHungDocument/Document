@@ -57,7 +57,7 @@
             </div>
             <div class=" col-sm-3" style="padding-top: 5px; text-align: center;">
                 <div style="border: 3px solid #6699FF;">
-                    <a href="Home.aspx" title="所有公文及投票" style="height: 152px; padding-top: 50px; font-size: large;"><span class="glyphicon glyphicon-file" style="font-size: xx-large;"></span>
+                    <a href="AllPage.aspx" title="所有公文及投票" style="height: 152px; padding-top: 50px; font-size: large;"><span class="glyphicon glyphicon-book" style="font-size: xx-large;"></span>
                         <br />
                         所有公文及投票</a>
                 </div>

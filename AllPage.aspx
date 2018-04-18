@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/GuildPage.Master" AutoEventWireup="true" CodeBehind="HostDocument.aspx.cs" Inherits="WebApplication1.HostDocument" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/GuildPage.Master" AutoEventWireup="true" CodeBehind="AllPage.aspx.cs" Inherits="WebApplication1.AllPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script src="My97DatePicker/WdatePicker.js"></script>
@@ -68,13 +68,17 @@
                     <td class="auto-style1">
                         <div class="panel panel-default" style="width: 500px">
                             <div class="panel-heading">
-                                日期查詢
+                                日期與速別查詢
                             </div>
                             <div class="panel-body">
-                                發文日期：
-    <input type="text" name="d1" class="Wdate form-control" id="d1" onclick="WdatePicker({ maxDate: '#F{$dp.$D(\'d2\')||\'%y-%M-%d\'}' })" />
+                                發布日期：
+                            <input type="text" name="d1" class="Wdate form-control" id="d1" onclick="WdatePicker({ maxDate: '#F{$dp.$D(\'d2\')||\'%y-%M-%d\'}' })" />
                                 到
-                                        <input type="text" name="d2" class="Wdate form-control" id="d2" onclick="WdatePicker({ minDate: '#F{$dp.$D(\'d1\')}', maxDate: '%y-%M-%d' })" />
+                            <input type="text" name="d2" class="Wdate form-control" id="d2" onclick="WdatePicker({ minDate: '#F{$dp.$D(\'d1\')}', maxDate: '%y-%M-%d' })" />
+                                                                        截止日期：
+    <input type="text" name="d3" class="Wdate form-control" id="d3" onclick="WdatePicker({ maxDate: '#F{$dp.$D(\'d4\')}' })" />
+                                        到
+                                        <input type="text" name="d4" class="Wdate form-control" id="d4" onclick="WdatePicker({ minDate: '#F{$dp.$D(\'d3\')}' })" />
                                 <br />
                                 速別：
                                 <asp:DropDownList ID="Ddl_speed" runat="server" DataSourceID="SqlDataSource3" DataTextField="TN" DataValueField="TN" class="col-xs-offset-0 form-control" Width="200px"></asp:DropDownList>
@@ -111,15 +115,16 @@
         筆資料
             <asp:Button ID="Change" runat="server" CausesValidation="False" class="btn btn-default" OnClick="Change_Click" Text="更改" />
     </div>
-    <asp:GridView ID="Menu" Style="border: 2px #ccc solid; border-radius: 10px;" runat="server" AutoGenerateColumns="False" DataKeyNames="SID" OnRowCommand="GridView1_RowCommand" AllowSorting="True" OnRowDataBound="GridView1_RowDataBound" GridLines="None" Width="100%" EmptyDataText="暫無主辦項目"
+    <asp:GridView ID="Menu" Style="border: 2px #ccc solid; border-radius: 10px;" runat="server" AutoGenerateColumns="False" DataKeyNames="SID" OnRowCommand="GridView1_RowCommand" AllowSorting="True" OnRowDataBound="GridView1_RowDataBound" GridLines="None" Width="100%" EmptyDataText="暫無待處理項目"
         AllowPaging="True" OnRowCreated="Gridview_OnRowCreated"
         OnSorting="Gv_Sorting" PageSize="3" OnPageIndexChanging="gv_PageIndexChanging">
-        <FooterStyle BackColor="#CCCCCC" ForeColor="Black" />
-        <PagerStyle BackColor="#ffffff" HorizontalAlign="Center" />
+        <FooterStyle ForeColor="Black" />
+        <PagerStyle HorizontalAlign="Center" />
         <SortedAscendingHeaderStyle CssClass="asc" />
         <SortedDescendingHeaderStyle CssClass="dsc" />
         <Columns>
             <asp:BoundField DataField="Date" DataFormatString="{0:D}" HeaderText="公告日期" SortExpression="Date" />
+            <asp:BoundField DataField="DeadLine" DataFormatString="{0:D}" HeaderText="結束日期" SortExpression="Date" />
             <asp:TemplateField HeaderText="速別">
                 <ItemTemplate>
                     <asp:Label Text='<%#Eval("Speed")%>' ID="Lbl_Speed" runat="server"></asp:Label>
@@ -152,7 +157,7 @@
             </asp:TemplateField>
         </Columns>
         <EmptyDataRowStyle BorderStyle="None" Font-Size="Large" />
-        <HeaderStyle BackColor="#F2F2F2" Font-Size="Large" />
+        <HeaderStyle Font-Size="Large" />
         <RowStyle Font-Size="Large" BackColor="White" />
     </asp:GridView>
     <div>
@@ -167,16 +172,18 @@
         頁
     </div>
 
-    <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString %>" SelectCommand="SELECT [TN] FROM [TypeGroup] WHERE ([Tp] = @Tp)">
+    <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString2 %>" SelectCommand="SELECT [TN] FROM [TypeGroup] WHERE (([Tp] = @Tp) AND ([TID] &lt;&gt; @TID))">
         <SelectParameters>
             <asp:Parameter DefaultValue="FT" Name="Tp" Type="String" />
+            <asp:Parameter DefaultValue="6" Name="TID" Type="Int32" />
         </SelectParameters>
     </asp:SqlDataSource>
+
+
+    <asp:Label ID="Lbl_EID" runat="server" Text="Label" Visible="False"></asp:Label>
     <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString %>" SelectCommand="SELECT [TN] FROM [TypeGroup] WHERE ([Tp] = @Tp)">
         <SelectParameters>
             <asp:Parameter DefaultValue="Sp" Name="Tp" Type="String" />
         </SelectParameters>
     </asp:SqlDataSource>
-
-    <asp:Label ID="Lbl_EID" runat="server" Text="Label" Visible="False"></asp:Label>
 </asp:Content>

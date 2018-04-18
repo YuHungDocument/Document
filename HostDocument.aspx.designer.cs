@@ -13,6 +13,15 @@ namespace WebApplication1 {
     public partial class HostDocument {
         
         /// <summary>
+        /// Ddl_speed 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList Ddl_speed;
+        
+        /// <summary>
         /// Txt_SID 控制項。
         /// </summary>
         /// <remarks>
@@ -128,6 +137,15 @@ namespace WebApplication1 {
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource2;
+        
+        /// <summary>
+        /// SqlDataSource3 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource3;
         
         /// <summary>
         /// Lbl_EID 控制項。

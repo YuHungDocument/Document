@@ -131,7 +131,7 @@
         <hr />
         <br />
         <asp:Panel ID="Pel_Comment" runat="server" Visible="False">
-            <asp:TextBox ID="Txt_comment" runat="server" Height="127px" TextMode="MultiLine" Width="863px"></asp:TextBox>
+            <asp:TextBox ID="Txt_comment" runat="server" Height="53px" TextMode="MultiLine" Width="669px"></asp:TextBox>
             <br />
             <br />
             <asp:Button ID="Btn_Comment" runat="server" Text="送出評論" OnClick="Btn_Comment_Click" />

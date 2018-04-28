@@ -164,6 +164,7 @@
                 <br />
                 <asp:Button Text="上傳檔案"
                     ID="btn_upload" runat="server" OnClick="btn_upload_Click" />
+                <asp:Label ID="Lbl_FileCount" runat="server"></asp:Label>
                 <br />
             </td>
             <td colspan="3">

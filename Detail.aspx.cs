@@ -1195,11 +1195,20 @@ namespace WebApplication1
             {
                 cn.Open();
                 SqlCommand cmd = new SqlCommand("Insert into Comment (SID,Name,UserComment,Date) Values (@SID,@Name,@UserComment,@Date)");
+                SqlCommand namecmd = new SqlCommand("Select Name From UserInfo Where EID=@EID");
+                namecmd.Connection = cn;
+                namecmd.Parameters.AddWithValue("@EID", Lbl_EID.Text);
+                using (SqlDataReader dr = namecmd.ExecuteReader())
+                {
+                    if(dr.Read())
+                    {
+                        cmd.Parameters.AddWithValue("@Name", dr["Name"].ToString());
+                    }
+                }
                 cmd.Connection = cn;
                 cmd.Parameters.AddWithValue("@SID",Lbl_SID.Text);
-                cmd.Parameters.AddWithValue("@Name", Lbl_EID.Text);
                 cmd.Parameters.AddWithValue("@UserComment", Txt_comment.Text);
-                cmd.Parameters.AddWithValue("@Date", DateTime.Today);
+                cmd.Parameters.AddWithValue("@Date", DateTime.Now);
                 cmd.ExecuteNonQuery();
                 Response.Redirect("Detail.aspx");
             }

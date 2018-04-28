@@ -15,10 +15,6 @@
             content: "\e080";
         }
 
-        .row {
-            padding: 0 10px;
-        }
-
         .clickable {
             cursor: pointer;
         }

@@ -62,10 +62,7 @@
             outline: none;
         }
 
-        .row {
-            margin-top: 0px;
-            
-        }
+
 
         .side-menu {
             overflow-y:scroll;
@@ -73,6 +70,7 @@
             width: 300px;
             height: 100%;
             margin-top: 52px;
+            bottom:5px;
             background-color: #808080;
             border-right: 1px solid #e7e7e7;
         }
@@ -467,7 +465,6 @@
 <body>
     <form id="form1" runat="server">
         <div class="topnav">
-            <div class="container">
                 <div>
                     <a class="navbar-brand" href="HomeLogin.aspx" style="font-size: medium">電子公文</a>
                 </div>
@@ -479,7 +476,7 @@
                         <asp:LinkButton ToolTip="個人資料" ID="Lb_UserInfo" runat="server"><span class="glyphicon glyphicon-user"></span></asp:LinkButton>
                     </li>
                 </ul>
-            </div>
+            
         </div>
 
 
@@ -558,7 +555,7 @@
                                 <div id="dropdown-lv03" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
-                                            <li><a href="#" style="background-color: #80BFFF">已結案公文</a></li>
+                                            <li><a href="EndDocument.aspx" style="background-color: #80BFFF">已結案公文</a></li>
                                             <li><a href="#" style="background-color: #409FFF">已結束投票</a></li>
                                         </ul>
                                     </div>

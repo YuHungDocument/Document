@@ -65,3 +65,4 @@ C:\Users\Amd\Desktop\Document\Document\project\WebApplication1\bin\CKEditor.NET.
 C:\Users\Amd\Desktop\Document\Document\project\WebApplication1\bin\CKEditor.NET.pdb
 C:\Users\admin\Desktop\Document\project\WebApplication1\bin\CKEditor.NET.pdb
 C:\Users\SS\Desktop\Document\Document\project\WebApplication1\bin\CKEditor.NET.pdb
+C:\Users\b0972\Desktop\project\WebApplication1\bin\CKEditor.NET.pdb

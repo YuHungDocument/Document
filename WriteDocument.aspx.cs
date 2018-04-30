@@ -499,6 +499,8 @@ namespace WebApplication1
                     FNO_INDEX += 1;
                     Session["FNOSession"] = FNO_INDEX;
                     FillData();
+                    int filecount = int.Parse(FNO_INDEX.ToString()) - 1;
+                    Lbl_FileCount.Text = "已上傳"+filecount+"個檔案";
                 }
             }
         }

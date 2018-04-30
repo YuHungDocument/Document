@@ -65,12 +65,12 @@
 
 
         .side-menu {
-            overflow-y:scroll;
+            overflow: scroll;
             position: fixed;
             width: 300px;
             height: 100%;
-            margin-top: 52px;
-            bottom:5px;
+            margin-top:52px;
+            padding-bottom:50px;
             background-color: #808080;
             border-right: 1px solid #e7e7e7;
         }
@@ -95,6 +95,7 @@
                 width: 100%;
                 background-color: #808080;
                 border-bottom: 1px solid #e7e7e7;
+
             }
 
                 .side-menu .navbar-nav li a {
@@ -225,6 +226,7 @@
         .side-body {
             margin-left: 290px;
             margin-top: 15px;
+            margin-bottom: 3px;
         }
         /* small screen */
         @media (max-width: 768px) {
@@ -464,7 +466,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <div class="topnav">
+        <div class="topnav">            
                 <div>
                     <a class="navbar-brand" href="HomeLogin.aspx" style="font-size: medium">電子公文</a>
                 </div>
@@ -476,7 +478,6 @@
                         <asp:LinkButton ToolTip="個人資料" ID="Lb_UserInfo" runat="server"><span class="glyphicon glyphicon-user"></span></asp:LinkButton>
                     </li>
                 </ul>
-            
         </div>
 
 
@@ -485,7 +486,7 @@
             <!-- uncomment code for absolute positioning tweek see top comment in css -->
             <!-- <div class="absolute-wrapper"> </div> -->
             <!-- Menu -->
-            <div class="side-menu" style="font-size: large">
+            <div class="side-menu" style="font-size: large; margin-top: 52px">
 
                 <nav class="navbar navbar-default" role="navigation">
                     <!-- Brand and toggle get grouped for better mobile display -->
@@ -504,7 +505,7 @@
                     <!-- Main Menu -->
                     <div class="side-menu-container">
                         <ul class="nav navbar-nav">
-                            <li style="text-align: center"  >
+                            <li style="text-align: center">
                                 <a href="MainPage.aspx"><span class="glyphicon glyphicon-home"></span>主選單</a>
                             </li>
                             <li class="panel panel-default" id="dropdown">

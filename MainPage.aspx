@@ -39,7 +39,7 @@
         <div class="list">
             <div class="col-sm-3" style="padding-top: 5px; text-align: center;">
                 <div style="border: 3px solid #6699FF;">
-                    <a href="HomeLogin.aspx" title="回首頁" style="height: 152px; padding-top: 50px; font-size: large;"><span class="glyphicon glyphicon-home" style="font-size: xx-large;"></span>
+                    <a href="Home.aspx" title="回首頁" style="height: 152px; padding-top: 50px; font-size: large;"><span class="glyphicon glyphicon-home" style="font-size: xx-large;"></span>
                         <br />
                         回首頁</a>
                 </div>

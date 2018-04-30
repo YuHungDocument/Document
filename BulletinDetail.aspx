@@ -14,4 +14,7 @@
     <asp:Label ID="Lbl_Date" runat="server"></asp:Label>
     <hr />
     <asp:Label ID="Lbl_Context" runat="server"></asp:Label>
+    <br />
+    <br />
+
 </asp:Content>

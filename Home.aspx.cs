@@ -13,10 +13,27 @@ namespace WebApplication1
         DbHelper tmpdbhelper = new DbHelper();
         protected void Page_Load(object sender, EventArgs e)
         {
-            Session["UserInfo"] = null;
+            
             if (!Page.IsPostBack)
             {
-
+                if (Session["userinfo"] == null)
+                {
+                    Pel_Login.Visible = true;
+                    Pel_UserInfo.Visible = false;
+                }
+                else
+                {
+                    UserInfo tmpUserInfo = null;
+                    if (Session["userinfo"] is UserInfo)
+                    {
+                        tmpUserInfo = (UserInfo)Session["userinfo"];
+                        Lbl_Name.Text = tmpUserInfo.Name;
+                        Lbl_Eid.Text = tmpUserInfo.EID;
+                        Lbl_DpAndPos.Text = tmpUserInfo.Department + "/" + tmpUserInfo.position;
+                    }
+                    Pel_Login.Visible = false;
+                    Pel_UserInfo.Visible = true;
+                }
             }
         }
 
@@ -61,7 +78,7 @@ namespace WebApplication1
 
 
                         Session["userinfo"] = tmpuserinfo;
-                        Response.Redirect("HomeLogin.aspx");
+                        Response.Redirect("Home.aspx");
                     }
                     else
                         Label2.Visible = true;

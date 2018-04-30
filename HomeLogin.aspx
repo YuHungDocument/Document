@@ -43,7 +43,7 @@ http://www.tooplate.com/view/2092-shelf
         <div class="container">
             <header class="tm-site-header" style="height: 250px">
                 <h2 class="tm-site-name">勤益科技股份有限公司</h2>
-                
+
 
                 <nav class="navbar navbar-expand-md tm-main-nav-container">
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#tmMainNav" aria-controls="tmMainNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,7 +57,7 @@ http://www.tooplate.com/view/2092-shelf
                             <li class="nav-item"><a class="nav-link" href="#">公文系統使用介紹</a></li>
                             <li class="nav-item"><a class="nav-link" href="#">關於我們</a></li>
                             <li class="nav-item"><a class="nav-link" href="setInfo.aspx">查看/修改個人資料</a></li>
-                             <li class="nav-item"><a class="nav-link" href="Home.aspx">登出</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Home.aspx">登出</a></li>
                         </ul>
                     </div>
                 </nav>
@@ -72,11 +72,11 @@ http://www.tooplate.com/view/2092-shelf
                     <div class="col-md-6 col-sm-12 mb-md-0 mb-5">
                         <div class="mr-lg-5">
                             <p class="tm-margin-b-p">
-                                <div style="border: thin solid #C0C0C0; padding: 10px; margin: auto; background-color: #E9E9E9; width: auto; height: auto;" class="auto-style1">
+                                <div  style="border: thin solid #C0C0C0; padding: 10px; margin: auto; background-color: #E9E9E9; width: auto; height: auto;" class="auto-style1">
 
                                     <h3>
                                         <asp:Label ID="Lbl_Name" runat="server"></asp:Label>
-&nbsp;您好</h3>
+                                        &nbsp;您好</h3>
                                     <br />
                                     員工編號：<asp:Label ID="Lbl_Eid" runat="server"></asp:Label>
                                     <br />

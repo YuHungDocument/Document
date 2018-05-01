@@ -581,8 +581,16 @@
                             <li>
                                 <asp:LinkButton ID="Lb_Manager" runat="server"><span class="glyphicon glyphicon-cog"></span>管理者介面</asp:LinkButton>
                             </li>
-                            <li>
-                                <asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click" Visible="False"><span class="glyphicon glyphicon-cog"></span>後台管理</asp:LinkButton>
+                              <li class="panel panel-default" id="dropdown">
+                                <asp:LinkButton href="#dropdown-lv05" data-toggle="collapse" ID="LinkButton1" runat="server"><span class="glyphicon glyphicon-hdd"></span>後臺管理<span class="caret"></span></asp:LinkButton>
+                                <!-- Dropdown level 1 -->
+                                <div id="dropdown-lv05" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <ul class="nav navbar-nav">
+                                            <li><a href="Bulletin.aspx" style="background-color: #80BFFF">公佈欄管理</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </li>
                         </ul>
                     </div>

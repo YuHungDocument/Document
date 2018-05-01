@@ -8,7 +8,7 @@
             text-decoration: none;
             padding: 16px;
             font-size: 14px;
-            background-color: #81a9f8;
+            background-image: linear-gradient(to top, #00c6fb 0%, #005bea 100%);
             color: white;
         }
 
@@ -46,7 +46,7 @@
             </div>
             <div class="col-sm-3" style="padding-top: 5px; text-align: center;">
                 <div style="border: 3px solid #6699FF;">
-                    <div style="color: white; background-color: #6699FF;">
+                    <div style="color: white; background-color: #66a6ff;">
                         <span class="glyphicon glyphicon-pencil" style="font-size: xx-large;"></span>
                         <br />
                         <div style="font-size: large">撰寫</div>
@@ -110,24 +110,31 @@
                         <br />
                         標記重要項目</a>
                 </div>
+
             </div>
             <div class="col-sm-3" style="padding-top: 5px; text-align: center;">
                 <div style="border: 3px solid #6699FF;">
-                    <a href="Home.aspx" title="個人設定" style="height: 152px; padding-top: 50px; font-size: large;"><span class="glyphicon glyphicon-hdd" style="font-size: xx-large;"></span>
+                    <div style="color: white; background-color: #66a6ff;">
+                        <span class="glyphicon glyphicon-hdd" style="font-size: xx-large;"></span>
                         <br />
-                        個人設定</a>
+                        <div style="font-size: large">個人設定</div>
+                    </div>
+                    <a href="set.aspx">帳戶設定</a>
+                    <a href="setInfo.aspx">個資設定</a>
+                    <a href="SetAgent.aspx">代理人設定</a>
+                    <a href="KeyAddress.aspx">金鑰設定</a>
                 </div>
             </div>
             <div class=" col-sm-3" style="padding-top: 5px; text-align: center;">
                 <div style="border: 3px solid #6699FF;">
-                    <a href="Home.aspx" title="管理者介面" style="height: 152px; padding-top: 50px; font-size: large;"><span class="glyphicon glyphicon-cog" style="font-size: xx-large;"></span>
+                    <a href="SelectMemberData.aspx" title="管理者介面" style="height: 152px; padding-top: 50px; font-size: large;"><span class="glyphicon glyphicon-cog" style="font-size: xx-large;"></span>
                         <br />
                         管理者介面</a>
                 </div>
             </div>
             <div class=" col-sm-3" style="padding-top: 5px; text-align: center;">
                 <div style="border: 3px solid #6699FF;">
-                    <a href="Draft.aspx" title="後台管理" style="height: 152px; padding-top: 50px; font-size: large;"><span class="glyphicon glyphicon-edit" style="font-size: xx-large;"></span>
+                    <a href="Bulletin.aspx" title="後台管理" style="height: 152px; padding-top: 50px; font-size: large;"><span class="glyphicon glyphicon-edit" style="font-size: xx-large;"></span>
                         <br />
                         後台管理</a>
                 </div>

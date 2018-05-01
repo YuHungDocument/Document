@@ -602,6 +602,7 @@ namespace WebApplication1
                     }
                 }
             }
+            UpdatePanel1.Update();
         }
         #endregion
 
@@ -656,6 +657,7 @@ namespace WebApplication1
                     }
                 }
             }
+            UpdatePanel1.Update();
         }
         #endregion
 
@@ -1436,6 +1438,7 @@ namespace WebApplication1
                 insertcmd.ExecuteNonQuery();
                 ScriptManager.RegisterClientScriptBlock(UpdatePanel1, this.GetType(), "click", "alert('成功儲存至草稿')", true);
             }
+            Response.Write("<script language=javascript>alert('成功儲存至草稿');</" + "script>");
         }
         #endregion
 

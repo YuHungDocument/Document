@@ -10,7 +10,7 @@
 namespace WebApplication1 {
     
     
-    public partial class WaitVote {
+    public partial class EndVote {
         
         /// <summary>
         /// Txt_SID 控制項。

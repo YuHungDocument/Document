@@ -350,6 +350,7 @@
     <Content Include="editbullitin.aspx" />
     <Content Include="EmailTest.aspx" />
     <Content Include="EndDocument.aspx" />
+    <Content Include="EndVote.aspx" />
     <Content Include="font-awesome-4.7.0\css\font-awesome.css" />
     <Content Include="font-awesome-4.7.0\css\font-awesome.min.css" />
     <Content Include="font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
@@ -554,6 +555,13 @@
     </Compile>
     <Compile Include="EndDocument.aspx.designer.cs">
       <DependentUpon>EndDocument.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EndVote.aspx.cs">
+      <DependentUpon>EndVote.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EndVote.aspx.designer.cs">
+      <DependentUpon>EndVote.aspx</DependentUpon>
     </Compile>
     <Compile Include="goodpage.aspx.cs">
       <DependentUpon>goodpage.aspx</DependentUpon>

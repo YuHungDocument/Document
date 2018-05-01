@@ -44,26 +44,26 @@
             <h2 class="tm-margin-b-p">佈告欄</h2>
             <hr />
             <p class="tm-margin-b-p">
-                <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" GridLines="None" ShowHeader="False" Width="100%" OnRowDataBound="GridView1_RowDataBound" ShowFooter="True" DataKeyNames="BID" OnRowCommand="GridView1_RowCommand">
+                <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" GridLines="None" ShowHeader="False" Width="100%" OnRowDataBound="GridView1_RowDataBound" ShowFooter="True" OnRowCommand="GridView1_RowCommand" DataKeyNames="BID">
                     <Columns>
-                        <asp:BoundField DataField="Department" ItemStyle-Width="20%" />
-                        <asp:TemplateField ItemStyle-Width="70%" ControlStyle-ForeColor="White">
+                        <asp:TemplateField ControlStyle-ForeColor="White">
                             <ItemTemplate>
-                                <asp:LinkButton ID="Lb_Title" runat="server" Text='<%# Bind("BTitle") %>' CommandName="SelData"></asp:LinkButton>
+                                <asp:LinkButton ID="Lb_Title" runat="server" Text='<%# Bind("bull") %>' CommandName="SelData"></asp:LinkButton>
                             </ItemTemplate>
 
                         </asp:TemplateField>
-
-                        <asp:BoundField DataField="Date" DataFormatString="{0:yyyy/MM/dd}" ItemStyle-Width="10%" />
+                        <asp:TemplateField ControlStyle-ForeColor="White" ItemStyle-HorizontalAlign="Right">
+                            <ItemTemplate>
+                                <asp:LinkButton ID="Lb_Date" runat="server" Text='<%# Bind("ConDate") %>' CommandName="SelData"></asp:LinkButton>
+                            </ItemTemplate>
+                        </asp:TemplateField>
                         <asp:TemplateField ControlStyle-ForeColor="White">
                             <FooterTemplate>
                                 <asp:Button ID="Button3" class="btn btn-info" runat="server" Text="More..." />
                             </FooterTemplate>
                         </asp:TemplateField>
                     </Columns>
-
                 </asp:GridView>
-                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString %>" SelectCommand="SELECT Top 10 * FROM [Bulletin] ORDER BY [BID] DESC"></asp:SqlDataSource>
             </p>
         </div>
     </section>

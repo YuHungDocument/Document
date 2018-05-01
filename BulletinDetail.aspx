@@ -16,5 +16,8 @@
     <asp:Label ID="Lbl_Context" runat="server"></asp:Label>
     <br />
     <br />
-
+    <hr />
+    <asp:Button ID="Button1" runat="server" Text="回前頁" OnClick="Button1_Click" />
+    <br />
+    
 </asp:Content>

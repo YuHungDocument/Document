@@ -283,7 +283,7 @@
                             </asp:UpdatePanel>
                             <br />
                             <br />
-                            <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+                            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                                 <ContentTemplate>
                                     <asp:CheckBox ID="ChB_Check" runat="server" Text="簽核時是否重新檢查金鑰" />
                                     <br />

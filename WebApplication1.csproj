@@ -369,6 +369,7 @@
     <Content Include="js\popper.min.js" />
     <Content Include="KeyAddress.aspx" />
     <Content Include="MainPage.aspx" />
+    <Content Include="NEWHOME.aspx" />
     <Content Include="password.aspx" />
     <Content Include="P\8.jpg" />
     <Content Include="P\header-01.jpg" />
@@ -625,6 +626,13 @@
     </Compile>
     <Compile Include="MainPage.aspx.designer.cs">
       <DependentUpon>MainPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NEWHOME.aspx.cs">
+      <DependentUpon>NEWHOME.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NEWHOME.aspx.designer.cs">
+      <DependentUpon>NEWHOME.aspx</DependentUpon>
     </Compile>
     <Compile Include="password.aspx.cs">
       <DependentUpon>password.aspx</DependentUpon>

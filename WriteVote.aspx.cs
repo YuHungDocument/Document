@@ -908,8 +908,19 @@ namespace WebApplication1
                 cmd.Parameters.AddWithValue("@number", int.Parse(Session["number"].ToString()));
                 cmd.Connection = cn;
                 cmd.ExecuteNonQuery();
-                
-                bind4();
+                SqlCommand votecmd = new SqlCommand("Select * From Vote Where SID='" + Lbl_SID.Text + "'");
+                votecmd.Connection = cn;
+
+                    bind4();
+                using (SqlDataReader dr = votecmd.ExecuteReader())
+                {
+                    int i = 0;
+                    while (dr.Read())
+                    {
+                        ((TextBox)GridView5.Rows[i].FindControl("Txt_content")).Text = dr["Vname"].ToString();
+                        i = int.Parse(i.ToString()) + 1;
+                    }
+                }
             }
         }
         #endregion
@@ -1232,43 +1243,96 @@ namespace WebApplication1
         #region 投票選項刪除
         protected void GridView5_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            string sqlstr = "delete from Vote where number=@number";
-            SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
-            SqlCommand sqlcom = new SqlCommand(sqlstr, sqlcon);
-            //這樣就可以取得Keys值了
-            string keyId = GridView5.DataKeys[e.RowIndex].Value.ToString();
-            sqlcom.Parameters.AddWithValue("@number", int.Parse(keyId));
-            sqlcon.Open();
-            sqlcom.ExecuteNonQuery();
-
-            using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+            int votecount = 0;
+            using (SqlConnection ifcn = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
-                Session["number"] = 1;
-                cn.Open();
-                SqlCommand cmdselect = new SqlCommand("Select * From Vote Where SID=@SID");
-                cmdselect.Parameters.AddWithValue("@SID", Lbl_SID.Text);
-                cmdselect.Connection = cn;
-                using (SqlDataReader dr = cmdselect.ExecuteReader())
+                
+                ifcn.Open();
+                SqlCommand cmd = new SqlCommand("Select * from Vote Where SID='" + Lbl_SID.Text + "'");
+                cmd.Connection = ifcn;
+                using (SqlDataReader dr = cmd.ExecuteReader())
                 {
                     while(dr.Read())
                     {
-                        using (SqlConnection cnupdate = new SqlConnection(tmpdbhelper.DB_CnStr))
+                        votecount = int.Parse(votecount.ToString()) + 1;
+                    }
+                }
+            }
+            if(votecount==1)
+            {
+                ScriptManager.RegisterClientScriptBlock(UpdatePanel2, this.GetType(), "click", "alert('剩餘最後一個選項，不能刪除')", true);
+            }
+            else
+            {
+                string sqlstr = "delete from Vote where number=@number";
+                SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
+                SqlCommand sqlcom = new SqlCommand(sqlstr, sqlcon);
+                //這樣就可以取得Keys值了
+                string keyId = GridView5.DataKeys[e.RowIndex].Value.ToString();
+                sqlcom.Parameters.AddWithValue("@number", int.Parse(keyId));
+                sqlcon.Open();
+                sqlcom.ExecuteNonQuery();
+
+                using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+                {
+                    Session["number"] = 1;
+                    cn.Open();
+                    SqlCommand cmdselect = new SqlCommand("Select * From Vote Where SID=@SID");
+                    cmdselect.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+                    cmdselect.Connection = cn;
+                    using (SqlDataReader dr = cmdselect.ExecuteReader())
+                    {
+                        while (dr.Read())
                         {
-                            Session["max"] = int.Parse(Session["number"].ToString());
-                            cnupdate.Open();
-                            SqlCommand cmdupdate = new SqlCommand("UpDate Vote Set number=@number where number=@nb");
-                            cmdupdate.Connection = cnupdate;
-                            cmdupdate.Parameters.AddWithValue("@number",int.Parse(Session["number"].ToString()));
-                            cmdupdate.Parameters.AddWithValue("@nb",int.Parse(dr["number"].ToString()));
-                            cmdupdate.ExecuteNonQuery();
-                            Session["number"] = int.Parse(Session["number"].ToString())+1;
+                            using (SqlConnection cnupdate = new SqlConnection(tmpdbhelper.DB_CnStr))
+                            {
+                                Session["max"] = int.Parse(Session["number"].ToString());
+                                cnupdate.Open();
+                                SqlCommand cmdupdate = new SqlCommand("UpDate Vote Set number=@number where number=@nb");
+                                cmdupdate.Connection = cnupdate;
+                                cmdupdate.Parameters.AddWithValue("@number", int.Parse(Session["number"].ToString()));
+                                cmdupdate.Parameters.AddWithValue("@nb", int.Parse(dr["number"].ToString()));
+                                cmdupdate.ExecuteNonQuery();
+                                Session["number"] = int.Parse(Session["number"].ToString()) + 1;
+                            }
+                        }
+                    }
+                    bind4();
+                    SqlCommand votecmd = new SqlCommand("Select * From Vote Where SID='" + Lbl_SID.Text + "'");
+                    votecmd.Connection = cn;
+                    using (SqlDataReader dr = votecmd.ExecuteReader())
+                    {
+                        int i = 0;
+                        while (dr.Read())
+                        {
+                            ((TextBox)GridView5.Rows[i].FindControl("Txt_content")).Text = dr["Vname"].ToString();
+                            i = int.Parse(i.ToString()) + 1;
                         }
                     }
                 }
             }
-            bind4();
+
+            
         }
         #endregion
 
+        #region 投票內容存進資料庫
+        protected void Txt_content_TextChanged(object sender, EventArgs e)
+        {
+            TextBox curTextBox = (TextBox)sender;
+            int gvRowIndex = (curTextBox.NamingContainer as GridViewRow).RowIndex;
+            string number = ((Label)GridView5.Rows[gvRowIndex].FindControl("Lbl_number")).Text.Trim();
+            using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+                cn.Open();
+                SqlCommand cmd = new SqlCommand("Update Vote set Vname=@Vname where SID='"+Lbl_SID.Text+"' and number=@number");
+                cmd.Connection = cn;
+                cmd.Parameters.AddWithValue("@number", number);
+                cmd.Parameters.AddWithValue("@Vname", ((TextBox)GridView5.Rows[gvRowIndex].FindControl("Txt_content")).Text);
+                cmd.ExecuteNonQuery();
+
+            }
+        }
+        #endregion
     }
 }

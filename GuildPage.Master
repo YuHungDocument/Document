@@ -469,7 +469,7 @@
     <form id="form1" method="post" runat="server">
         <div class="topnav">            
                 <div>
-                    <a class="navbar-brand" href="HomeLogin.aspx" style="font-size: medium">電子公文</a>
+                    <a class="navbar-brand" href="HomeLogin.aspx" style="font-size: medium"><asp:Label ID="Lbl_CompanyName" runat="server" Text=""></asp:Label></a>
                 </div>
                 <ul>
                     <li>

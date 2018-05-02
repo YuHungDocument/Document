@@ -10,6 +10,6 @@
 namespace WebApplication1 {
     
     
-    public partial class back_mainpage {
+    public partial class Back_mainpage {
     }
 }

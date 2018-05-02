@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace WebApplication1
 {
-    public partial class back_mainpage : System.Web.UI.Page
+    public partial class Back_mainpage : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

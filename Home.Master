@@ -62,7 +62,8 @@
         <div>
             <div class="container">
                 <header class="tm-site-header" style="height: 250px">
-                    <h3 class="tm-site-name">勤益科技股份有限公司</h3>
+                    <h3 class="tm-site-name">
+                        <asp:Label ID="Label1" runat="server" Text="羽宏科技股份有限公司"></asp:Label></h3>
 
 
                     <nav class="navbar navbar-expand-md tm-main-nav-container">

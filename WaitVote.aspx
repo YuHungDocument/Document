@@ -105,7 +105,7 @@
                 筆資料
             <asp:Button ID="Change" runat="server" CausesValidation="False" class="btn btn-default" OnClick="Change_Click" Text="更改" />
             </div>
-            <asp:GridView ID="Menu" Style="border: 2px #ccc solid; border-radius: 10px;" runat="server" AutoGenerateColumns="False" DataKeyNames="SID" OnRowCommand="GridView1_RowCommand" AllowSorting="True" OnRowDataBound="GridView1_RowDataBound" GridLines="None" Width="100%" EmptyDataText="暫無待處理項目"
+            <asp:GridView ID="Menu" Style="border: 2px #ccc solid; border-radius: 10px;" runat="server" AutoGenerateColumns="False" DataKeyNames="SID" OnRowCommand="GridView1_RowCommand" AllowSorting="True" OnRowDataBound="GridView1_RowDataBound" GridLines="None" Width="100%" EmptyDataText="暫無待處理投票"
                 AllowPaging="True" OnRowCreated="Gridview_OnRowCreated"
                 OnSorting="Gv_Sorting" PageSize="3" OnPageIndexChanging="gv_PageIndexChanging">
                 <FooterStyle BackColor="#CCCCCC" ForeColor="Black" />
@@ -161,7 +161,5 @@
                     <asp:Parameter DefaultValue="FT" Name="Tp" Type="String" />
                 </SelectParameters>
             </asp:SqlDataSource>
-
-    <asp:Label ID="Lbl_null" runat="server" Text="尚無待處理公文" Visible="False"></asp:Label>
     <asp:Label ID="Lbl_EID" runat="server" Text="Label" Visible="False"></asp:Label>
 </asp:Content>

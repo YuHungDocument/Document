@@ -13,6 +13,15 @@ namespace WebApplication1 {
     public partial class Home {
         
         /// <summary>
+        /// Pel_Login 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel Pel_Login;
+        
+        /// <summary>
         /// Txt_ID 控制項。
         /// </summary>
         /// <remarks>
@@ -58,6 +67,42 @@ namespace WebApplication1 {
         protected global::System.Web.UI.WebControls.Label Label2;
         
         /// <summary>
+        /// Pel_UserInfo 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel Pel_UserInfo;
+        
+        /// <summary>
+        /// Lbl_Name 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Lbl_Name;
+        
+        /// <summary>
+        /// Lbl_Eid 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Lbl_Eid;
+        
+        /// <summary>
+        /// Lbl_DpAndPos 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Lbl_DpAndPos;
+        
+        /// <summary>
         /// GridView1 控制項。
         /// </summary>
         /// <remarks>
@@ -65,14 +110,5 @@ namespace WebApplication1 {
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GridView1;
-        
-        /// <summary>
-        /// SqlDataSource1 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource1;
     }
 }

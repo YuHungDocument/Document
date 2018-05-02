@@ -10,123 +10,123 @@
 namespace WebApplication1 {
     
     
-    public partial class WaitVote {
+    public partial class NEWHOME {
         
         /// <summary>
-        /// Txt_SID 控制項。
+        /// form1 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Txt_SID;
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// Txt_Title 控制項。
+        /// GridView1 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Txt_Title;
+        protected global::System.Web.UI.WebControls.GridView GridView1;
         
         /// <summary>
-        /// Btn_Select 控制項。
+        /// SqlDataSource1 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Btn_Select;
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource1;
         
         /// <summary>
-        /// Btn_cancel 控制項。
+        /// Pel_Login 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Btn_cancel;
+        protected global::System.Web.UI.WebControls.Panel Pel_Login;
         
         /// <summary>
-        /// TxtPageSize 控制項。
+        /// Txt_ID 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TxtPageSize;
+        protected global::System.Web.UI.WebControls.TextBox Txt_ID;
         
         /// <summary>
-        /// Change 控制項。
+        /// Txt_Password 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Change;
+        protected global::System.Web.UI.WebControls.TextBox Txt_Password;
         
         /// <summary>
-        /// Menu 控制項。
+        /// Button1 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView Menu;
+        protected global::System.Web.UI.WebControls.Button Button1;
         
         /// <summary>
-        /// lbl_1 控制項。
+        /// Button2 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_1;
+        protected global::System.Web.UI.WebControls.Button Button2;
         
         /// <summary>
-        /// lbl_2 控制項。
+        /// Label2 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_2;
+        protected global::System.Web.UI.WebControls.Label Label2;
         
         /// <summary>
-        /// lbl_3 控制項。
+        /// Pel_UserInfo 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_3;
+        protected global::System.Web.UI.WebControls.Panel Pel_UserInfo;
         
         /// <summary>
-        /// lbl_4 控制項。
+        /// Lbl_Name 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_4;
+        protected global::System.Web.UI.WebControls.Label Lbl_Name;
         
         /// <summary>
-        /// SqlDataSource2 控制項。
+        /// Lbl_Eid 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource2;
+        protected global::System.Web.UI.WebControls.Label Lbl_Eid;
         
         /// <summary>
-        /// Lbl_EID 控制項。
+        /// Lbl_DpAndPos 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Lbl_EID;
+        protected global::System.Web.UI.WebControls.Label Lbl_DpAndPos;
     }
 }

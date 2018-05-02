@@ -15,6 +15,7 @@
 
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <style>
         * {
             margin: 0;
@@ -65,12 +66,12 @@
 
 
         .side-menu {
-            overflow-y:scroll;
+            overflow: scroll;
             position: fixed;
             width: 300px;
             height: 100%;
-            margin-top: 52px;
-            bottom:5px;
+            margin-top:52px;
+            padding-bottom:50px;
             background-color: #808080;
             border-right: 1px solid #e7e7e7;
         }
@@ -95,6 +96,7 @@
                 width: 100%;
                 background-color: #808080;
                 border-bottom: 1px solid #e7e7e7;
+
             }
 
                 .side-menu .navbar-nav li a {
@@ -225,6 +227,7 @@
         .side-body {
             margin-left: 290px;
             margin-top: 15px;
+            margin-bottom: 3px;
         }
         /* small screen */
         @media (max-width: 768px) {
@@ -463,8 +466,8 @@
     </asp:ContentPlaceHolder>
 </head>
 <body>
-    <form id="form1" runat="server">
-        <div class="topnav">
+    <form id="form1" method="post" runat="server">
+        <div class="topnav">            
                 <div>
                     <a class="navbar-brand" href="HomeLogin.aspx" style="font-size: medium">電子公文</a>
                 </div>
@@ -476,7 +479,6 @@
                         <asp:LinkButton ToolTip="個人資料" ID="Lb_UserInfo" runat="server"><span class="glyphicon glyphicon-user"></span></asp:LinkButton>
                     </li>
                 </ul>
-            
         </div>
 
 
@@ -485,7 +487,7 @@
             <!-- uncomment code for absolute positioning tweek see top comment in css -->
             <!-- <div class="absolute-wrapper"> </div> -->
             <!-- Menu -->
-            <div class="side-menu" style="font-size: large">
+            <div class="side-menu" style="font-size: large; margin-top: 52px">
 
                 <nav class="navbar navbar-default" role="navigation">
                     <!-- Brand and toggle get grouped for better mobile display -->
@@ -504,7 +506,7 @@
                     <!-- Main Menu -->
                     <div class="side-menu-container">
                         <ul class="nav navbar-nav">
-                            <li style="text-align: center"  >
+                            <li style="text-align: center">
                                 <a href="MainPage.aspx"><span class="glyphicon glyphicon-home"></span>主選單</a>
                             </li>
                             <li class="panel panel-default" id="dropdown">
@@ -556,7 +558,7 @@
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
                                             <li><a href="EndDocument.aspx" style="background-color: #80BFFF">已結案公文</a></li>
-                                            <li><a href="#" style="background-color: #409FFF">已結束投票</a></li>
+                                            <li><a href="EndVote.aspx" style="background-color: #409FFF">已結束投票</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -580,8 +582,16 @@
                             <li>
                                 <asp:LinkButton ID="Lb_Manager" runat="server"><span class="glyphicon glyphicon-cog"></span>管理者介面</asp:LinkButton>
                             </li>
-                            <li>
-                                <asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click" Visible="False"><span class="glyphicon glyphicon-cog"></span>後台管理</asp:LinkButton>
+                              <li class="panel panel-default" id="dropdown">
+                                <asp:LinkButton href="#dropdown-lv05" data-toggle="collapse" ID="LinkButton1" runat="server"><span class="glyphicon glyphicon-hdd"></span>後臺管理<span class="caret"></span></asp:LinkButton>
+                                <!-- Dropdown level 1 -->
+                                <div id="dropdown-lv05" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <ul class="nav navbar-nav">
+                                            <li><a href="Bulletin.aspx" style="background-color: #80BFFF">公佈欄管理</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </li>
                         </ul>
                     </div>
@@ -602,9 +612,8 @@
                 </div>
             </div>
 
-
-
         </div>
+
     </form>
 </body>
 </html>

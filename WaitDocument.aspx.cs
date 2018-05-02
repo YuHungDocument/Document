@@ -17,25 +17,29 @@ namespace WebApplication1
         DbHelper tmpdbhelper = new DbHelper();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["userinfo"] == null)
+            if(!Page.IsPostBack)
             {
-                Response.Redirect("Home.aspx");
-            }
-            else
-            {
-                #region 內容
-                ((LinkButton)this.Master.FindControl("Lb_WaitProcess")).BackColor = Color.White;
-                ((LinkButton)this.Master.FindControl("Lb_WaitProcess")).ForeColor = Color.Black;
-                ((Label)this.Master.FindControl("Lb_Title")).Text = "待處理公文";
-                UserInfo tmpUserInfo = null;
-                if (Session["userinfo"] is UserInfo)
+                if (Session["userinfo"] == null)
                 {
-                    tmpUserInfo = (UserInfo)Session["userinfo"];
-                    Lbl_EID.Text = tmpUserInfo.EID;
-                    bind();
+                    Response.Redirect("Home.aspx");
                 }
-                #endregion
+                else
+                {
+                    #region 內容
+                    ((LinkButton)this.Master.FindControl("Lb_WaitProcess")).BackColor = Color.White;
+                    ((LinkButton)this.Master.FindControl("Lb_WaitProcess")).ForeColor = Color.Black;
+                    ((Label)this.Master.FindControl("Lb_Title")).Text = "待處理公文";
+                    UserInfo tmpUserInfo = null;
+                    if (Session["userinfo"] is UserInfo)
+                    {
+                        tmpUserInfo = (UserInfo)Session["userinfo"];
+                        Lbl_EID.Text = tmpUserInfo.EID;
+                        bind();
+                    }
+                    #endregion
+                }
             }
+
         }
 
         #region 獲取資料

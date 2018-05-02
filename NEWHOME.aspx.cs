@@ -5,16 +5,14 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
-using System.Data;
 
 namespace WebApplication1
 {
-    public partial class Home : System.Web.UI.Page
+    public partial class NEWHOME : System.Web.UI.Page
     {
         DbHelper tmpdbhelper = new DbHelper();
         protected void Page_Load(object sender, EventArgs e)
         {
-            
             if (!Page.IsPostBack)
             {
                 if (Session["userinfo"] == null)
@@ -35,7 +33,6 @@ namespace WebApplication1
                     Pel_Login.Visible = false;
                     Pel_UserInfo.Visible = true;
                 }
-                bind();
             }
         }
 
@@ -115,19 +112,6 @@ namespace WebApplication1
                 Session["BID"] = keyId;
                 Response.Redirect("BulletinDetail.aspx");
             }
-        }
-
-        public void bind()
-        {
-            string sqlstr = "select top 10 BID,CONCAT(Department, '　', BTitle) as bull,CONVERT(varchar(10) , Date, 111 ) as ConDate from Bulletin";
-            SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
-            SqlDataAdapter myda = new SqlDataAdapter(sqlstr, sqlcon);
-            DataSet myds = new DataSet();
-            sqlcon.Open();
-            myda.Fill(myds, "Bulletin");
-            GridView1.DataSource = myds;
-            GridView1.DataBind();
-            sqlcon.Close();
         }
     }
 }

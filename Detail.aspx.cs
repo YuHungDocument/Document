@@ -1158,8 +1158,10 @@ namespace WebApplication1
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
                 cn.Open();
-                SqlCommand cmd = new SqlCommand("UpDate Fil SET IsEnd=1 Where SID=@SID");
+                SqlCommand cmd = new SqlCommand("UpDate Fil SET IsEnd=1,EndDate=@EndDate Where SID=@SID");
+
                 cmd.Connection = cn;
+                cmd.Parameters.AddWithValue("@EndDate", System.DateTime.Now);
                 cmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
                 cmd.ExecuteNonQuery();
                 cn.Close();

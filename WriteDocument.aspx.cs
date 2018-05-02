@@ -499,6 +499,8 @@ namespace WebApplication1
                     FNO_INDEX += 1;
                     Session["FNOSession"] = FNO_INDEX;
                     FillData();
+                    int filecount = int.Parse(FNO_INDEX.ToString()) - 1;
+                    Lbl_FileCount.Text = "已上傳"+filecount+"個檔案";
                 }
             }
         }
@@ -600,6 +602,7 @@ namespace WebApplication1
                     }
                 }
             }
+            
         }
         #endregion
 
@@ -654,6 +657,7 @@ namespace WebApplication1
                     }
                 }
             }
+            UpdatePanel1.Update();
         }
         #endregion
 
@@ -1432,7 +1436,7 @@ namespace WebApplication1
                 insertcmd.Parameters.AddWithValue("@Type", Ddp_Type.SelectedValue);
                 insertcmd.Parameters.AddWithValue("@YOS", Ddp_YOS.SelectedValue);
                 insertcmd.ExecuteNonQuery();
-                ScriptManager.RegisterClientScriptBlock(UpdatePanel1, this.GetType(), "click", "alert('成功儲存至草稿')", true);
+                ScriptManager.RegisterClientScriptBlock(UpdatePanel3, this.GetType(), "click", "alert('成功儲存至草稿')", true);
             }
         }
         #endregion

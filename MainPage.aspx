@@ -128,14 +128,7 @@
             </div>
             <div class=" col-sm-3" style="padding-top: 5px; text-align: center;">
                 <div style="border: 3px solid #6699FF;">
-                    <a href="SelectMemberData.aspx" title="管理者介面" style="height: 152px; padding-top: 50px; font-size: large;"><span class="glyphicon glyphicon-cog" style="font-size: xx-large;"></span>
-                        <br />
-                        管理者介面</a>
-                </div>
-            </div>
-            <div class=" col-sm-3" style="padding-top: 5px; text-align: center;">
-                <div style="border: 3px solid #6699FF;">
-                    <a href="Bulletin.aspx" title="後台管理" style="height: 152px; padding-top: 50px; font-size: large;"><span class="glyphicon glyphicon-edit" style="font-size: xx-large;"></span>
+                    <a href="SelectMemberData.aspx" title="後台管理" style="height: 152px; padding-top: 50px; font-size: large;"><span class="glyphicon glyphicon-edit" style="font-size: xx-large;"></span>
                         <br />
                         後台管理</a>
                 </div>

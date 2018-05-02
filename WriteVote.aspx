@@ -151,7 +151,7 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="選項內容">
                                                 <ItemTemplate>
-                                                    <asp:TextBox ID="Txt_content" runat="server" DataField="Vname"></asp:TextBox>
+                                                    <asp:TextBox ID="Txt_content" runat="server" DataField="Vname" OnTextChanged="Txt_content_TextChanged"></asp:TextBox>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="刪除" ShowHeader="False">

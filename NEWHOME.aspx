@@ -6,7 +6,15 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
-
+        <!-- load stylesheets -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
+    <!-- Google web font "Open Sans" -->
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Bootstrap style -->
+    <link rel="stylesheet" href="css/tooplate-style.css">
+    <!-- Templatemo style -->
     <style>
         body {
             margin: 0;
@@ -205,9 +213,10 @@
                 <div class="rightcolumn">
                     <div class="card" style="background-color: #ef8b1e">
                         <h2>登入</h2>
-                        <asp:Panel ID="Pel_Login" runat="server" Style="border: thin solid #C0C0C0; padding: 10px; margin: auto; background-color: #E9E9E9; width: auto; height: auto;" class="auto-style1">
+                        <asp:Panel ID="Pel_Login" runat="server" Style=" padding: 10px; margin: auto;  width: auto; height: auto;" class="auto-style1">
                             <br />
                             <asp:TextBox class="form-control" placeholder="請輸入帳號" ID="Txt_ID" runat="server" Width="265px"></asp:TextBox>
+                            <br />
                             <br />
                             <asp:TextBox class="form-control" placeholder="請輸入密碼" ID="Txt_Password" runat="server" TextMode="Password" Width="265px"></asp:TextBox>
                             <br />

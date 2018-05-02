@@ -596,7 +596,14 @@ namespace WebApplication1
                             {
                                 ((CheckBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Cb_path")).Checked = false;
                             }
-
+                            if (dr2["Comment"].ToString() == "1")
+                            {
+                                ((CheckBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Cb_comment")).Checked = true;
+                            }
+                            else
+                            {
+                                ((CheckBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Cb_comment")).Checked = false;
+                            }
                             Session["i"] = int.Parse(Session["i"].ToString()) + 1;
                         }
                     }

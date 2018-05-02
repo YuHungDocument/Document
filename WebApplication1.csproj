@@ -71,7 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AllPage.aspx" />
-    <Content Include="back_mainpage.aspx" />
+    <Content Include="Back_mainpage.aspx" />
     <Content Include="Bulletin.aspx" />
     <Content Include="BulletinDetail.aspx" />
     <Content Include="ChangeAgent.aspx" />
@@ -473,12 +473,12 @@
     <Compile Include="AllPage.aspx.designer.cs">
       <DependentUpon>AllPage.aspx</DependentUpon>
     </Compile>
-    <Compile Include="back_mainpage.aspx.cs">
-      <DependentUpon>back_mainpage.aspx</DependentUpon>
+    <Compile Include="Back_mainpage.aspx.cs">
+      <DependentUpon>Back_mainpage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="back_mainpage.aspx.designer.cs">
-      <DependentUpon>back_mainpage.aspx</DependentUpon>
+    <Compile Include="Back_mainpage.aspx.designer.cs">
+      <DependentUpon>Back_mainpage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Bulletin.aspx.cs">
       <DependentUpon>Bulletin.aspx</DependentUpon>

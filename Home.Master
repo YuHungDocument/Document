@@ -61,7 +61,7 @@
     <form id="form1" runat="server">
         <div>
             <div class="container">
-                <header class="tm-site-header" style="height: 250px">
+                <header class="tm-site-header">
                     <h3 class="tm-site-name">
                         <asp:Label ID="Label1" runat="server" Text="羽宏科技股份有限公司"></asp:Label></h3>
 
@@ -78,7 +78,8 @@
                                 <li class="nav-item"><a class="nav-link" href="#">公文系統使用介紹</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#">關於我們</a></li>
                                 <li class="nav-item"><a class="nav-link" href="setInfo.aspx">查看/修改個人資料</a></li>
-                                <li class="nav-item"><asp:LinkButton ID="Lb_Logout" runat="server" class="nav-link" OnClick="Lb_Logout_Click" Visible="False">登出</asp:LinkButton></li>
+                                <li class="nav-item">
+                                    <asp:LinkButton ID="Lb_Logout" runat="server" class="nav-link" OnClick="Lb_Logout_Click" Visible="False">登出</asp:LinkButton></li>
                             </ul>
                         </div>
                     </nav>

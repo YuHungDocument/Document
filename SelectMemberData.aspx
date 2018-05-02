@@ -18,7 +18,7 @@
             content: "\e080";
         }
 
-        .row {
+        .row 
             padding: 0 10px;
         }
 

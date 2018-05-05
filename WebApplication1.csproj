@@ -359,6 +359,7 @@
     <Content Include="goodpage.aspx" />
     <Content Include="GuildPage.Master" />
     <Content Include="HomeLogin.aspx" />
+    <Content Include="HomeTest.aspx" />
     <Content Include="HostDocument.aspx" />
     <Content Include="HostVote.aspx" />
     <Content Include="img\header-01.jpg" />
@@ -398,6 +399,7 @@
     <Content Include="ckeditor\samples\plugins\htmlwriter\assets\outputforflash\outputforflash.fla" />
     <Content Include="ckeditor\skins\moono\readme.md" />
     <Content Include="Home.Master" />
+    <Content Include="HomeTest.Master" />
     <None Include="packages.config" />
     <Content Include="ChangeGroup.aspx" />
     <Content Include="ChangePermission.aspx" />
@@ -606,6 +608,20 @@
     </Compile>
     <Compile Include="HomeLogin.aspx.designer.cs">
       <DependentUpon>HomeLogin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HomeTest.aspx.cs">
+      <DependentUpon>HomeTest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HomeTest.aspx.designer.cs">
+      <DependentUpon>HomeTest.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HomeTest.Master.cs">
+      <DependentUpon>HomeTest.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HomeTest.Master.designer.cs">
+      <DependentUpon>HomeTest.Master</DependentUpon>
     </Compile>
     <Compile Include="HostDocument.aspx.cs">
       <DependentUpon>HostDocument.aspx</DependentUpon>

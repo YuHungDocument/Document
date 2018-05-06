@@ -375,6 +375,7 @@
     <Content Include="password.aspx" />
     <Content Include="P\8.jpg" />
     <Content Include="P\header-01.jpg" />
+    <Content Include="P\rsa-red-logo.png" />
     <Content Include="P\個人資料.png" />
     <Content Include="P\金鑰位置.png" />
     <Content Include="P\鑰匙.png" />

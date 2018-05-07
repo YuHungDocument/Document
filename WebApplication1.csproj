@@ -342,6 +342,7 @@
     <Content Include="ckeditor\skins\moono\images\lock.png" />
     <Content Include="ckeditor\skins\moono\images\refresh.png" />
     <Content Include="ckeditor\styles.js" />
+    <Content Include="Connect.aspx" />
     <Content Include="css\all.css" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\tooplate-style.css" />
@@ -352,6 +353,7 @@
     <Content Include="EmailTest.aspx" />
     <Content Include="EndDocument.aspx" />
     <Content Include="EndVote.aspx" />
+    <Content Include="Environmentalparameters.aspx" />
     <Content Include="font-awesome-4.7.0\css\font-awesome.css" />
     <Content Include="font-awesome-4.7.0\css\font-awesome.min.css" />
     <Content Include="font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
@@ -525,6 +527,13 @@
     <Compile Include="ChangePwd.aspx.designer.cs">
       <DependentUpon>ChangePwd.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Connect.aspx.cs">
+      <DependentUpon>Connect.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Connect.aspx.designer.cs">
+      <DependentUpon>Connect.aspx</DependentUpon>
+    </Compile>
     <Compile Include="DbHelper.cs" />
     <Compile Include="Detail.aspx.cs">
       <DependentUpon>Detail.aspx</DependentUpon>
@@ -574,6 +583,13 @@
     </Compile>
     <Compile Include="EndVote.aspx.designer.cs">
       <DependentUpon>EndVote.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Environmentalparameters.aspx.cs">
+      <DependentUpon>Environmentalparameters.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Environmentalparameters.aspx.designer.cs">
+      <DependentUpon>Environmentalparameters.aspx</DependentUpon>
     </Compile>
     <Compile Include="goodpage.aspx.cs">
       <DependentUpon>goodpage.aspx</DependentUpon>

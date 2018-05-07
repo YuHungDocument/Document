@@ -12,7 +12,7 @@
                 </a>
             </div>
             <div class="col-sm-2">
-                 <a href="Home.aspx" title="公佈欄管理">
+                 <a href="editbullitin.aspx" title="公佈欄管理">
                     <div class="glyphicon glyphicon-th-list"></div>
                     <div class="item">公佈欄管理</div>
                 </a>
@@ -30,7 +30,7 @@
                 </a>
             </div>
              <div class="col-sm-2">
-                <a href="Home.aspx" title="系統參數">
+                <a href="Environmentalparameters.aspx" title="系統參數">
                     <div class="glyphicon glyphicon-wrench"></div>
                     <div class="item">系統參數</div>
                 </a>

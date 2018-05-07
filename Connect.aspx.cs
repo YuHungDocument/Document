@@ -25,16 +25,7 @@ namespace WebApplication1
                 }
                 else
                 {
-                    cn.Open();
-                    SqlCommand cmd = new SqlCommand(@"Insert Into  Connect(Main,Name,Company,Tel,mail,message)VALUES(@Main,@Name,@Company,@Tel,@mail,@message)");
-                    cmd.Connection = cn;
-                    cmd.Parameters.AddWithValue("@Main", Dp_Title.Text);
-                    cmd.Parameters.AddWithValue("@Name", Txt_Name.Text);
-                    cmd.Parameters.AddWithValue("@Company", Txt_Company.Text);
-                    cmd.Parameters.AddWithValue("@Tel", Txt_Tel.Text);
-                    cmd.Parameters.AddWithValue("@mail", Txt_mail.Text);
-                    cmd.Parameters.AddWithValue("@message", Txt_message.Text);
-                    cmd.ExecuteNonQuery();
+                    
 
                     Response.Write("<script>alert('已成功送出，我們將盡快回復您的問題!');location.href='Connect.aspx';</script>");
                 }

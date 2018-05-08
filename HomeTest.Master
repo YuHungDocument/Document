@@ -18,7 +18,7 @@
             $("#gotop").click(function () {
                 jQuery("html,body").animate({
                     scrollTop: 0
-                }, 1000);
+                }, 500);
             });
             $(window).scroll(function () {
                 if ($(this).scrollTop() > 200) {
@@ -92,6 +92,7 @@
                         <li><a href="#">產品簡介</a></li>
                         <li><a href="#">關於我們</a></li>
                         <li><a href="#">聯絡我們</a></li>
+                        <li><a href="Register.aspx">註冊</a></li>
                         <li>
                             <asp:LinkButton ID="LinkButton1" runat="server">登入</asp:LinkButton>
                         </li>

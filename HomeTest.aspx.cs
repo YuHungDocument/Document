@@ -39,8 +39,8 @@ namespace WebApplication1
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 LinkButton LB = (LinkButton)e.Row.FindControl("Lb_Title");
-                e.Row.Attributes.Add("OnMouseover", "this.style.fontWeight='900';");
-                e.Row.Attributes.Add("OnMouseout", "this.style.fontWeight='normal';");
+                e.Row.Attributes.Add("OnMouseover", "this.style.background='#E1FFE1'");
+                e.Row.Attributes.Add("OnMouseout", "this.style.background='#FFFFFF'");
             }
         }
 

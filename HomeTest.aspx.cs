@@ -1,0 +1,61 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace WebApplication1
+{
+    public partial class HomeTest1 : System.Web.UI.Page
+    {
+        DbHelper tmpdbhelper = new DbHelper();
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if(!Page.IsPostBack)
+            {
+                bind();
+            }
+        }
+
+        public void bind()
+        {
+
+                string sqlstr = "select top 10 BID,CONCAT(Department, '　', BTitle) as bull,CONVERT(varchar(10) , Date, 111 ) as ConDate from Bulletin";
+                SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
+                SqlDataAdapter myda = new SqlDataAdapter(sqlstr, sqlcon);
+                DataSet myds = new DataSet();
+                sqlcon.Open();
+                myda.Fill(myds, "Bulletin");
+                GridView1.DataSource = myds;
+                GridView1.DataBind();
+                sqlcon.Close();            
+        }
+
+        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                LinkButton LB = (LinkButton)e.Row.FindControl("Lb_Title");
+                e.Row.Attributes.Add("OnMouseover", "this.style.fontWeight='900';");
+                e.Row.Attributes.Add("OnMouseout", "this.style.fontWeight='normal';");
+            }
+        }
+
+        protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "SelData")
+            {
+                //這樣就可以讀到RowIndex
+                int index = ((GridViewRow)
+                ((LinkButton)e.CommandSource).NamingContainer).RowIndex;
+                //這樣就可以取得Keys值了
+                string keyId = GridView1.DataKeys[index].Value.ToString();
+                Session["BID"] = keyId;
+                Response.Redirect("BulletinDetail.aspx");
+            }
+        }
+    }
+}

@@ -345,6 +345,7 @@
     <Content Include="ckeditor\skins\moono\images\lock.png" />
     <Content Include="ckeditor\skins\moono\images\refresh.png" />
     <Content Include="ckeditor\styles.js" />
+    <Content Include="Connect.aspx" />
     <Content Include="css\all.css" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\tooplate-style.css" />
@@ -355,6 +356,7 @@
     <Content Include="EmailTest.aspx" />
     <Content Include="EndDocument.aspx" />
     <Content Include="EndVote.aspx" />
+    <Content Include="Environmentalparameters.aspx" />
     <Content Include="font-awesome-4.7.0\css\font-awesome.css" />
     <Content Include="font-awesome-4.7.0\css\font-awesome.min.css" />
     <Content Include="font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
@@ -362,6 +364,7 @@
     <Content Include="goodpage.aspx" />
     <Content Include="GuildPage.Master" />
     <Content Include="HomeLogin.aspx" />
+    <Content Include="HomeTest.aspx" />
     <Content Include="HostDocument.aspx" />
     <Content Include="HostVote.aspx" />
     <Content Include="img\header-01.jpg" />
@@ -378,6 +381,7 @@
     <Content Include="password.aspx" />
     <Content Include="P\8.jpg" />
     <Content Include="P\header-01.jpg" />
+    <Content Include="P\rsa-red-logo.png" />
     <Content Include="P\個人資料.png" />
     <Content Include="P\金鑰位置.png" />
     <Content Include="P\鑰匙.png" />
@@ -402,6 +406,7 @@
     <Content Include="ckeditor\samples\plugins\htmlwriter\assets\outputforflash\outputforflash.fla" />
     <Content Include="ckeditor\skins\moono\readme.md" />
     <Content Include="Home.Master" />
+    <Content Include="HomeTest.Master" />
     <None Include="packages.config" />
     <Content Include="ChangeGroup.aspx" />
     <Content Include="ChangePermission.aspx" />
@@ -544,6 +549,13 @@
     <Compile Include="ChangePwd.aspx.designer.cs">
       <DependentUpon>ChangePwd.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Connect.aspx.cs">
+      <DependentUpon>Connect.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Connect.aspx.designer.cs">
+      <DependentUpon>Connect.aspx</DependentUpon>
+    </Compile>
     <Compile Include="DbHelper.cs" />
     <Compile Include="Detail.aspx.cs">
       <DependentUpon>Detail.aspx</DependentUpon>
@@ -594,6 +606,13 @@
     <Compile Include="EndVote.aspx.designer.cs">
       <DependentUpon>EndVote.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Environmentalparameters.aspx.cs">
+      <DependentUpon>Environmentalparameters.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Environmentalparameters.aspx.designer.cs">
+      <DependentUpon>Environmentalparameters.aspx</DependentUpon>
+    </Compile>
     <Compile Include="goodpage.aspx.cs">
       <DependentUpon>goodpage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -628,6 +647,20 @@
     </Compile>
     <Compile Include="HomeLogin.aspx.designer.cs">
       <DependentUpon>HomeLogin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HomeTest.aspx.cs">
+      <DependentUpon>HomeTest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HomeTest.aspx.designer.cs">
+      <DependentUpon>HomeTest.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HomeTest.Master.cs">
+      <DependentUpon>HomeTest.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HomeTest.Master.designer.cs">
+      <DependentUpon>HomeTest.Master</DependentUpon>
     </Compile>
     <Compile Include="HostDocument.aspx.cs">
       <DependentUpon>HostDocument.aspx</DependentUpon>

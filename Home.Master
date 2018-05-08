@@ -63,7 +63,7 @@
             <div class="container">
                 <header class="tm-site-header">
                     <h3 class="tm-site-name">
-                        <asp:Label ID="Label1" runat="server" Text="羽宏科技股份有限公司"></asp:Label></h3>
+                        <asp:Label ID="Label1" runat="server"></asp:Label></h3>
 
 
                     <nav class="navbar navbar-expand-md tm-main-nav-container">
@@ -76,6 +76,7 @@
                                 <li class="nav-item"><a class="nav-link" href="Home.aspx">首頁</a></li>
                                 <li class="nav-item"><a class="nav-link" href="MainPage.aspx">電子公文系統</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#">公文系統使用介紹</a></li>
+                                <li class="nav-item"><a class="nav-link" href="Connect.aspx">聯絡我們</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#">關於我們</a></li>
                                 <li class="nav-item"><a class="nav-link" href="setInfo.aspx">查看/修改個人資料</a></li>
                                 <li class="nav-item">

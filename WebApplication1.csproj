@@ -70,8 +70,11 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AddFt.aspx" />
+    <Content Include="AddPo.aspx" />
+    <Content Include="AddUnit.aspx" />
     <Content Include="AllPage.aspx" />
-    <Content Include="Back_mainpage.aspx" />
+    <Content Include="back_mainpage.aspx" />
     <Content Include="Bulletin.aspx" />
     <Content Include="BulletinDetail.aspx" />
     <Content Include="ChangeAgent.aspx" />
@@ -367,6 +370,7 @@
     <Content Include="js\all.js" />
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\jquery-1.11.3.min.js" />
+    <Content Include="js\jquery-3.3.1.min.js" />
     <Content Include="js\popper.min.js" />
     <Content Include="KeyAddress.aspx" />
     <Content Include="MainPage.aspx" />
@@ -466,6 +470,24 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddFt.aspx.cs">
+      <DependentUpon>AddFt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddFt.aspx.designer.cs">
+      <DependentUpon>AddFt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddPo.aspx.cs">
+      <DependentUpon>AddPo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddPo.aspx.designer.cs">
+      <DependentUpon>AddPo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddUnit.aspx.cs">
+      <DependentUpon>AddUnit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddUnit.aspx.designer.cs">
+      <DependentUpon>AddUnit.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AllPage.aspx.cs">
       <DependentUpon>AllPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -473,12 +495,12 @@
     <Compile Include="AllPage.aspx.designer.cs">
       <DependentUpon>AllPage.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Back_mainpage.aspx.cs">
-      <DependentUpon>Back_mainpage.aspx</DependentUpon>
+    <Compile Include="back_mainpage.aspx.cs">
+      <DependentUpon>back_mainpage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Back_mainpage.aspx.designer.cs">
-      <DependentUpon>Back_mainpage.aspx</DependentUpon>
+    <Compile Include="back_mainpage.aspx.designer.cs">
+      <DependentUpon>back_mainpage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Bulletin.aspx.cs">
       <DependentUpon>Bulletin.aspx</DependentUpon>

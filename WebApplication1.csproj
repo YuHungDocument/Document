@@ -70,9 +70,6 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AddFt.aspx" />
-    <Content Include="AddPo.aspx" />
-    <Content Include="AddUnit.aspx" />
     <Content Include="AllPage.aspx" />
     <Content Include="back_mainpage.aspx" />
     <Content Include="Bulletin.aspx" />
@@ -475,24 +472,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddFt.aspx.cs">
-      <DependentUpon>AddFt.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="AddFt.aspx.designer.cs">
-      <DependentUpon>AddFt.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="AddPo.aspx.cs">
-      <DependentUpon>AddPo.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="AddPo.aspx.designer.cs">
-      <DependentUpon>AddPo.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="AddUnit.aspx.cs">
-      <DependentUpon>AddUnit.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="AddUnit.aspx.designer.cs">
-      <DependentUpon>AddUnit.aspx</DependentUpon>
-    </Compile>
     <Compile Include="AllPage.aspx.cs">
       <DependentUpon>AllPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

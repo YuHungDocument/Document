@@ -13,12 +13,12 @@
         }
 
         #serect {
-            height: 500px;
+            height: 400px;
         }
 
         .thumbnail {
             padding: 0 0 15px 0;
-            border: none;
+            border: solid 1px #ccc;
             border-radius: 0;
         }
 
@@ -30,10 +30,7 @@
             .thumbnail strong {
                 font-size: large;
             }
-
-        .bg-1 {
-            background-color: #2d2d30;
-        }
+            
     </style>
 
     <script> 
@@ -76,67 +73,64 @@
         </a>
     </div>
     <br />
-    <div class="bg-1">
-        <div class="row">
-            <div class="col-sm-4">
-                <div class="thumbnail">
-                    <asp:Image ID="Image1" runat="server" Width="400" Height="300" ImageUrl="~/P/document.jpeg" />
-                    <p><strong>公文系統</strong></p>
-                    <p>簡易的公文系統，前往立即使用</p>
-                    <asp:Button ID="Button1" class="btn" runat="server" Text="前往" />
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="thumbnail">
-                    <asp:Image ID="Image2" runat="server" Width="400" Height="300" ImageUrl="~/P/document.jpeg" />
-                    <p><strong>New York</strong></p>
-                    <p>Saturday 28 November 2015</p>
-                    <button class="btn" data-toggle="modal" data-target="#myModal">Buy Tickets</button>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="thumbnail">
-                    <asp:Image ID="Image3" runat="server" Width="400" Height="300" ImageUrl="~/P/document.jpeg" />
-                    <p><strong>New York</strong></p>
-                    <p>Saturday 28 November 2015</p>
-                    <button class="btn" data-toggle="modal" data-target="#myModal">Buy Tickets</button>
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <br />
     <div id="serect">
         <div class="col-md-6 col-sm-12">
             <h3>News|最新消息</h3>
-            <hr />
-            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" GridLines="None" ShowHeader="false" Width="100%" OnRowDataBound="GridView1_RowDataBound" ShowFooter="True" OnRowCommand="GridView1_RowCommand" DataKeyNames="BID" BackColor="White">
+            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" GridLines="Horizontal" ShowHeader="False" Width="100%" OnRowDataBound="GridView1_RowDataBound" OnRowCommand="GridView1_RowCommand" DataKeyNames="NID" BackColor="White" BorderStyle="None" BorderColor="#CCCCCC">
                 <Columns>
+                    <asp:BoundField DataField="Date" DataFormatString="{0:yyyy-MM-dd}" ItemStyle-Width="120px">
+                        <ItemStyle ForeColor="Orange" />
+                    </asp:BoundField>
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:LinkButton ID="Lb_Title" runat="server" Text='<%# Bind("bull") %>' CommandName="SelData"></asp:LinkButton>
+                            <asp:LinkButton ID="Lb_Title" runat="server"  Text='<%# Bind("NTitle") %>' CommandName="SelData"></asp:LinkButton>
                         </ItemTemplate>
-
+                        <ControlStyle ForeColor="Black" />
                     </asp:TemplateField>
-                    <asp:TemplateField ItemStyle-HorizontalAlign="Right" FooterStyle-HorizontalAlign="Right">
+                    <asp:TemplateField>
                         <ItemTemplate>
-                            <asp:LinkButton ID="Lb_Date" runat="server" Text='<%# Bind("ConDate") %>' CommandName="SelData"></asp:LinkButton>
+                            <asp:LinkButton ID="Lb_space" runat="server" CommandName="SelData"></asp:LinkButton>
                         </ItemTemplate>
-                        <FooterTemplate>
-                            <asp:Button ID="Button3" class="btn btn-info" runat="server" Text="More..." />
-                        </FooterTemplate>
-
-                        <FooterStyle HorizontalAlign="Right"></FooterStyle>
-
-                        <ItemStyle HorizontalAlign="Right"></ItemStyle>
+                        <ControlStyle ForeColor="Black" />
                     </asp:TemplateField>
                 </Columns>
-                <RowStyle Height="30px" />
+                <FooterStyle BorderStyle="None" />
+                <HeaderStyle BorderStyle="None" />
+                <RowStyle Height="40px" BorderStyle="None" Font-Size="Large" />
             </asp:GridView>
+            <br />
+            <asp:Button ID="Button3" class="btn btn-info" runat="server" Text="更多資訊" />
         </div>
         <div class="col-md-6 col-sm-12">
         </div>
-
     </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="thumbnail" style="border-top: 5px solid #ff0000">
+                <asp:Image ID="Image1" runat="server" Width="400" Height="300" ImageUrl="~/P/document.jpeg" />
+                <p><strong>公文系統</strong></p>
+                <p>簡易的公文系統，前往立即使用</p>
+                <asp:Button ID="Button1" class="btn" runat="server" Text="前往了解" />
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="thumbnail" style="border-top: 5px solid #ff6a00">
+                <asp:Image ID="Image2" runat="server" Width="400" Height="300" ImageUrl="~/P/aboutus.png" />
+                <p><strong>關於我們</strong></p>
+                <p>有關我們的資訊，都可以從這裡去了解</p>
+                <asp:Button ID="Button2" class="btn" runat="server" Text="前往了解" />
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="thumbnail" style="border-top: 5px solid #ffd800">
+                <asp:Image ID="Image3" runat="server" Width="400" Height="300" ImageUrl="~/P/usedocument.png" />
+                <p><strong>操作方式</strong></p>
+                <p>有什麼不懂得來這裡看就對了</p>
+                <asp:Button ID="Button4" class="btn" runat="server" Text="前往了解" />
+            </div>
+        </div>
+    </div>
+    <br />
+
 
 </asp:Content>

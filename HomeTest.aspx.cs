@@ -22,9 +22,9 @@ namespace WebApplication1
 
         public void bind()
         {
-
-                string sqlstr = "select top 10 BID,CONCAT(Department, '　', BTitle) as bull,CONVERT(varchar(10) , Date, 111 ) as ConDate from Bulletin";
-                SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
+            string sqlstr = "select top 5 NID,Date,NTitle from News";
+            //string sqlstr = "select top 10 BID,CONCAT(Department, '　', BTitle) as bull,CONVERT(varchar(10) , Date, 111 ) as ConDate from Bulletin";
+            SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
                 SqlDataAdapter myda = new SqlDataAdapter(sqlstr, sqlcon);
                 DataSet myds = new DataSet();
                 sqlcon.Open();

@@ -99,11 +99,10 @@
                 </div>
             </div>
         </div>        
-        <div style="background-color: #d1d1d1">
+        <div class="container" >
             <br />
             <br />
-            <br />
-            <div class="container" style="background-color: #ffffff">
+            <div  >
                 <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                 </asp:ContentPlaceHolder>
                 <div id="gotop">˄</div>

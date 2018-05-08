@@ -13,6 +13,24 @@ namespace WebApplication1 {
     public partial class HomeTest1 {
         
         /// <summary>
+        /// GridView1 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridView1;
+        
+        /// <summary>
+        /// Button3 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button3;
+        
+        /// <summary>
         /// Image1 控制項。
         /// </summary>
         /// <remarks>
@@ -40,6 +58,15 @@ namespace WebApplication1 {
         protected global::System.Web.UI.WebControls.Image Image2;
         
         /// <summary>
+        /// Button2 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button2;
+        
+        /// <summary>
         /// Image3 控制項。
         /// </summary>
         /// <remarks>
@@ -49,12 +76,12 @@ namespace WebApplication1 {
         protected global::System.Web.UI.WebControls.Image Image3;
         
         /// <summary>
-        /// GridView1 控制項。
+        /// Button4 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView1;
+        protected global::System.Web.UI.WebControls.Button Button4;
     }
 }

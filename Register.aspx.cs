@@ -122,10 +122,5 @@ namespace WebApplication1
             }
             Response.Write(" <script language=JavaScript> alert( ' 尚有空的欄位未填寫 '); </script> ");
         }
-
-        protected void Button2_Click1(object sender, EventArgs e)
-        {
-            Response.Write("Home.aspx");
-        }
     }
 }

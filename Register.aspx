@@ -215,7 +215,7 @@
                             <asp:Button runat="server" OnClick="Button1_Click" Text="註冊" CssClass="btn btn-default" BackColor="#CCCCCC" Height="45px" Width="93px" />
                              
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                             <asp:Button ID="Button2" runat="server" Text="返回" BackColor="#CCCCCC" Height="45px" Width="93px" CausesValidation="False" />
+                             <asp:Button ID="Button2" runat="server" Text="返回" BackColor="#CCCCCC" Height="45px" Width="93px" CausesValidation="False" PostBackUrl="~/Home.aspx" />
                             
                         </div>
                     </div>

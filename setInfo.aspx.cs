@@ -15,13 +15,14 @@ namespace WebApplication1
         {
             if (!Page.IsPostBack)//get
             {
+                bind();
                 if (Session["userinfo"] == null)
                 {
                     Response.Redirect("Home.aspx");
                 }
                 else
                 {
-                    bind();
+                   
                     ((Label)this.Master.FindControl("Lb_Title")).Text = "修改個資";
                 }
                
@@ -35,26 +36,28 @@ namespace WebApplication1
               && !string.IsNullOrWhiteSpace(Cel.Text)
               )
             {
-                string tmpSQL = @"UpDate UserInfo Set Name=@Name,Email=@Email,Tel=@Tel,Cel=@Cel where EID=@EID";//建立SQL語法修改輸入的資料
+                string tmpSQL = @"UpDate UserInfo Set Name=@Name,Email=@Email,Tel=@Tel,Cel=@Cel where UserID=@UserID";//建立SQL語法修改輸入的資料
                 using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))//建立連線
                 {
                     cn.Open();//開啟
                     SqlCommand cmd = new SqlCommand();
                     cmd.CommandText = tmpSQL;
                     //把物件的值抓進參數裡面↓
-                    cmd.Parameters.AddWithValue("@EID", LbId.Text);
+                    cmd.Parameters.AddWithValue("@UserID", LbId.Text);
                     cmd.Parameters.AddWithValue("@Name", UserName.Text);
                     cmd.Parameters.AddWithValue("@Email", Email.Text);
                     cmd.Parameters.AddWithValue("@Tel", Tel.Text);
                     cmd.Parameters.AddWithValue("@Cel", Cel.Text);
                     cmd.Connection = cn;
                     cmd.ExecuteNonQuery();
-
-
+                }
+                using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))//建立連線
+                {
+                    cn2.Open();
                     SqlCommand cmd2 = new SqlCommand(@"Select EID,Name,UserID,Pwd,Email,Tel,Cel,Birthday
-                                                   From UserInfo Where EID=@EID");
-                    cmd2.Connection = cn;
-                    cmd2.Parameters.AddWithValue("@Id", LbId.Text);
+                                                   From UserInfo Where UserID=@UserID");
+                    cmd2.Connection = cn2;
+                    cmd2.Parameters.AddWithValue("@UserID", LbId.Text);
                     using (SqlDataReader dr = cmd2.ExecuteReader())
                     {
                         if (dr.Read())
@@ -70,8 +73,9 @@ namespace WebApplication1
                             tmpuserinfo.Cel = dr["Cel"].ToString();
 
                             Session["userinfo"] = tmpuserinfo;
+                           
                         }
-                        Response.Redirect("setinfo.aspx");
+                        Response.Write("<script>alert('資料修改成功!');location.href='setinfo.aspx';</script>");
                     }
                 }
             }

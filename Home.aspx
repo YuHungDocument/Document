@@ -139,10 +139,10 @@
 
             <table style="margin-top:50px" class="nav-justified">
                 <tr>
-                    <td><a href="#"><span class="circle_in_black glyphicon glyphicon-userglyphicon glyphicon-user"></span>
+                    <td><a href="Register.aspx"><span class="circle_in_black glyphicon glyphicon-userglyphicon glyphicon-user"></span>
                         <br />
                         加入我們</a></td>
-                    <td><a href="Register.aspx"><span class="circle_in_black glyphicon glyphicon-th-list"></span>
+                    <td><a href="#"><span class="circle_in_black glyphicon glyphicon-th-list"></span>
                         <br />
                         網頁導覽</a></td>
                     <td><a href="#"><span class="circle_in_black glyphicon glyphicon-leaf"></span>
@@ -150,7 +150,7 @@
                         服務專區</a></td>
                 </tr>
                 <tr>
-                    <td><a href="#"><span class="circle_in_black glyphicon glyphicon-briefcase"></span>
+                    <td><a href="MainPage.aspx"><span class="circle_in_black glyphicon glyphicon-briefcase"></span>
                         <br />
                         公文系統</a></td>
                     <td><a href="#"><span class="circle_in_black glyphicon glyphicon glyphicon-pencil"></span>
@@ -170,7 +170,7 @@
                 <asp:Image ID="Image1" runat="server" Width="400" Height="300" ImageUrl="~/P/document.png" />
                 <p><strong>公文系統</strong></p>
                 <p>簡易的公文系統，前往立即使用</p>
-                <asp:Button ID="Button1" class="btn" runat="server" Text="前往了解" />
+                <asp:Button ID="Button1" class="btn" runat="server" Text="前往了解" PostBackUrl="~/MainPage.aspx" />
             </div>
         </div>
         <div class="col-sm-4">

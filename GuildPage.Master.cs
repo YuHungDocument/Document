@@ -19,6 +19,19 @@ namespace WebApplication1
             }
             else
             {
+                using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+                {
+                    cn.Open();
+                    SqlCommand cmd = new SqlCommand(@"Select ComName from ParameterSetting where ComNumber=1");
+                    cmd.Connection = cn;
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            Lbl_CompanyName.Text = dr["ComName"].ToString();
+                        }
+                    }
+                }
                 UserInfo tmpUserInfo = null;
                 if (Session["userinfo"] is UserInfo)
                 {

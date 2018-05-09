@@ -11,32 +11,45 @@ namespace WebApplication1
     public partial class Home1 : System.Web.UI.MasterPage
     {
         DbHelper tmpdbhelper = new DbHelper();
+
+        public object ClientScript { get; private set; }
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+            if(!Page.IsPostBack)
             {
-                cn.Open();
-                SqlCommand cmd = new SqlCommand(@"Select ComName from ParameterSetting where ComNumber=1");
-                cmd.Connection = cn;
-                using (SqlDataReader dr = cmd.ExecuteReader())
+                using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
                 {
-                    if (dr.Read())
+                    cn.Open();
+                    SqlCommand cmd = new SqlCommand(@"Select ComName from ParameterSetting where ComNumber=1");
+                    cmd.Connection = cn;
+                    using (SqlDataReader dr = cmd.ExecuteReader())
                     {
-                        Label1.Text = dr["ComName"].ToString();
+                        if (dr.Read())
+                        {
+                            Label1.Text = dr["ComName"].ToString();
+                        }
                     }
                 }
+                if (Session["userinfo"] == null)
+                {
+                    LinkButton.Visible = true;                    
+                    lissy.Style.Add("display", "none");
+                }
+                else
+                {
+                    LinkButton.Visible = false;                    
+                    UserInfo tmpUserInfo = null;
+                    lissy.Style.Add("display", "block");
+                    if (Session["userinfo"] is UserInfo)
+                    {
+                        tmpUserInfo = (UserInfo)Session["userinfo"];
+                        Lbl_Name.Text ="歡迎!"+tmpUserInfo.Name;
+                    }
+
+                }
             }
-            if (Session["userinfo"] == null)
-            {
-                LinkButton.Visible = true;
-                Lb_Logout.Visible = false;
-            }
-            else
-            {
-                LinkButton.Visible = false;
-                Lb_Logout.Visible = true;
-               
-            }
+
         }
 
         protected void Lb_Logout_Click(object sender, EventArgs e)
@@ -44,5 +57,6 @@ namespace WebApplication1
             Session["userinfo"] = null;
             Response.Redirect("Home.aspx");
         }
+
     }
 }

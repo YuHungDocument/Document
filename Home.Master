@@ -5,99 +5,112 @@
 <html>
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>電子公文系統</title>
-    <!-- load stylesheets -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
-    <!-- Google web font "Open Sans" -->
-    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <!-- Bootstrap style -->
-    <link rel="stylesheet" href="css/tooplate-style.css">
-    <!-- Templatemo style -->
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="Scripts/jquery-1.9.1.js"></script>
+    <script src="Scripts/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#gotop").click(function () {
+                jQuery("html,body").animate({
+                    scrollTop: 0
+                }, 500);
+            });
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 200) {
+                    $('#gotop').fadeIn("fast");
+                } else {
+                    $('#gotop').stop().fadeOut("fast");
+                }
+            });
+        });
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-          <![endif]-->
-    <style type="text/css">
-        .auto-style1 {
-            position: relative;
-            width: 100%;
-            min-height: 1px;
-            -ms-flex: 0 0 100%;
-            flex: 0 0 100%;
-            max-width: 100%;
-            left: 0px;
-            top: 0px;
-            padding-left: 15px;
-            padding-right: 15px;
-        }
-
-        .auto-style2 {
-            position: relative;
-            width: 100%;
-            min-height: 1px;
-            -ms-flex: 0 0 100%;
-            flex: 0 0 100%;
-            max-width: 100%;
-            left: 0px;
-            top: 0px;
-            height: 34px;
-            padding-left: 15px;
-            padding-right: 15px;
-        }
-
-        hr {
-            border-color: white;
-        }
-    </style>
+    </script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
+    <style>
+        body {
+            font-family: Microsoft JhengHei;
+        }
+
+        .navbar-right {
+            font-size: large;
+        }
+
+        .navbar {
+            background-color: rgba(255,255,255,255.8);
+            opacity: 0.92;
+            color: black;
+        }
+
+        .nav li a {
+            border-bottom: solid 2px #ffffff;
+        }
+
+            .nav li a:hover {
+                border-bottom: solid 2px #ff6a00;
+            }
+
+        h1 {
+            font-weight: bold;
+        }
+
+        #gotop {
+            display: none;
+            position: fixed;
+            right: 40px;
+            bottom: 40px;
+            padding: 10px 15px;
+            font-size: 20px;
+            background: #F64359;
+            color: white;
+            cursor: pointer;
+            border-radius: 50px;
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
-        <div>
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container">
-                <header class="tm-site-header">
-                    <h3 class="tm-site-name">
-                        <asp:Label ID="Label1" runat="server"></asp:Label></h3>
-
-
-                    <nav class="navbar navbar-expand-md tm-main-nav-container">
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#tmMainNav" aria-controls="tmMainNav" aria-expanded="false" aria-label="Toggle navigation">
-                            <i class="fa fa-bars"></i>
-                        </button>
-
-                        <div class="collapse navbar-collapse tm-main-nav" id="tmMainNav" style="height: 50px">
-                            <ul class="nav nav-fill tm-main-nav-ul">
-                                <li class="nav-item"><a class="nav-link" href="Home.aspx">首頁</a></li>
-                                <li class="nav-item"><a class="nav-link" href="MainPage.aspx">電子公文系統</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#">公文系統使用介紹</a></li>
-                                <li class="nav-item"><a class="nav-link" href="Connect.aspx">聯絡我們</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#">關於我們</a></li>
-                                <li class="nav-item"><a class="nav-link" href="setInfo.aspx">查看/修改個人資料</a></li>
-                                <li class="nav-item">
-                                    <asp:LinkButton ID="Lb_Logout" runat="server" class="nav-link" OnClick="Lb_Logout_Click" Visible="False">登出</asp:LinkButton></li>
-                            </ul>
-                        </div>
-                    </nav>
-
-                </header>
-                <div class="tm-main-content">
-                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-                    </asp:ContentPlaceHolder>
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="HomeTest.aspx">
+                        <asp:Label ID="Label1" runat="server"></asp:Label></a>
                 </div>
-                <footer>
-                    Copyright © <span class="tm-current-year">2018</span> /04/01 
-                
-                - <a href="#" target="_parent">可放超連結</a>
-                </footer>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="Home.aspx">首頁</a></li>
+                        <li><a href="#">最新消息</a></li>
+                        <li><a href="#">產品簡介</a></li>
+                        <li><a href="#">關於我們</a></li>
+                        <li><a href="Connect.aspx">聯絡我們</a></li>
+                        <li><a href="Register.aspx">註冊</a></li>
+                        <li>
+                            <asp:LinkButton ID="LinkButton" runat="server" PostBackUrl="~/Login.aspx">登入</asp:LinkButton>
+                             <asp:LinkButton ID="Lb_Logout" runat="server" Visible="False">登出</asp:LinkButton>
+                        </li>
+                    </ul>
+                </div>
             </div>
-
-        </div>
+        </div>        
+        <div class="container" >
+            <br />
+            <br />
+            <div  >
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+                <div id="gotop">˄</div>
+            </div>            
+        </div>        
     </form>
 </body>
 </html>

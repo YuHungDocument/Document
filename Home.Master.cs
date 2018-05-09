@@ -28,10 +28,12 @@ namespace WebApplication1
             }
             if (Session["userinfo"] == null)
             {
+                LinkButton.Visible = true;
                 Lb_Logout.Visible = false;
             }
             else
             {
+                LinkButton.Visible = false;
                 Lb_Logout.Visible = true;
                
             }

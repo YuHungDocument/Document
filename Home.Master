@@ -35,6 +35,7 @@
     <style>
         body {
             font-family: Microsoft JhengHei;
+            font-size:large;
         }
 
         .navbar-right {

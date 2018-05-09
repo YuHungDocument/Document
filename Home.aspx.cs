@@ -28,7 +28,7 @@ namespace WebApplication1
             SqlDataAdapter myda = new SqlDataAdapter(sqlstr, sqlcon);
             DataSet myds = new DataSet();
             sqlcon.Open();
-            myda.Fill(myds, "Bulletin");
+            myda.Fill(myds, "New");
             GridView1.DataSource = myds;
             GridView1.DataBind();
             sqlcon.Close();
@@ -53,7 +53,7 @@ namespace WebApplication1
                 ((LinkButton)e.CommandSource).NamingContainer).RowIndex;
                 //這樣就可以取得Keys值了
                 string keyId = GridView1.DataKeys[index].Value.ToString();
-                Session["BID"] = keyId;
+                Session["NID"] = keyId;
                 Response.Redirect("BulletinDetail.aspx");
             }
         }

@@ -33,12 +33,12 @@ namespace WebApplication1
                 }
                 if (Session["userinfo"] == null)
                 {
-                    LinkButton.Visible = true;                    
+                                       
                     lissy.Style.Add("display", "none");
                 }
                 else
                 {
-                    LinkButton.Visible = false;                    
+                                      
                     UserInfo tmpUserInfo = null;
                     lissy.Style.Add("display", "block");
                     if (Session["userinfo"] is UserInfo)

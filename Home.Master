@@ -72,6 +72,46 @@
             cursor: pointer;
             border-radius: 50px;
         }
+
+        .dropdown {
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 300px;
+        }
+
+        .dropdown-menu > li > a {
+            color: #428bca;
+        }
+
+        .dropdown ul.dropdown-menu {
+            border-radius: 4px;
+            box-shadow: none;
+            margin-top: 20px;
+            width: 300px;
+        }
+
+            .dropdown ul.dropdown-menu:before {
+                content: "";
+                border-bottom: 10px solid #fff;
+                border-right: 10px solid transparent;
+                border-left: 10px solid transparent;
+                position: absolute;
+                top: -10px;
+                right: 16px;
+                z-index: 10;
+            }
+
+            .dropdown ul.dropdown-menu:after {
+                content: "";
+                border-bottom: 12px solid #ccc;
+                border-right: 12px solid transparent;
+                border-left: 12px solid transparent;
+                position: absolute;
+                top: -12px;
+                right: 14px;
+                z-index: 9;
+            }
     </style>
 </head>
 <body>
@@ -90,14 +130,11 @@
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="Home.aspx">首頁</a></li>
+                        <li><a href="#">公司簡介</a></li>
                         <li><a href="#">最新消息</a></li>
-                        <li><a href="#">系統功能</a></li>
+                        <li><a href="#">產品介紹</a></li>
                         <li><a href="#">關於我們</a></li>
                         <li><a href="Connect.aspx">聯絡我們</a></li>
-                        <li><a href="Register.aspx">註冊</a></li>
-                        <li>
-                            <asp:LinkButton ID="LinkButton" runat="server" PostBackUrl="~/Login.aspx">登入</asp:LinkButton>
-                        </li>
                         <li class="dropdown" id="lissy" runat="server">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user pull-right"></span>
                                 <asp:Label ID="Lbl_Name" runat="server" Text=""></asp:Label></a>

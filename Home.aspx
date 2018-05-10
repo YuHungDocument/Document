@@ -139,7 +139,7 @@
 
             <table style="margin-top:50px" class="nav-justified">
                 <tr>
-                    <td><a href="Register.aspx"><span class="circle_in_black glyphicon glyphicon-userglyphicon glyphicon-user"></span>
+                    <td><a href="Register.aspx"><span class="circle_in_black glyphicon glyphicon-hand-right"></span>
                         <br />
                         加入我們</a></td>
                     <td><a href="#"><span class="circle_in_black glyphicon glyphicon-th-list"></span>
@@ -156,9 +156,9 @@
                     <td><a href="#"><span class="circle_in_black glyphicon glyphicon glyphicon-pencil"></span>
                         <br />
                         關於我們</a></td>
-                    <td><a href="#"><span class="circle_in_black glyphicon glyphicon-triangle-right"></span>
+                    <td><a href="Login.aspx"><span class="circle_in_black glyphicon glyphicon-user"></span>
                         <br />
-                        其他消息</a></td>
+                        員工專區</a></td>
                 </tr>
             </table>
 

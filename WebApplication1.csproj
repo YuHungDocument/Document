@@ -421,6 +421,7 @@
     <Content Include="Login.aspx" />
     <Content Include="MainPage.aspx" />
     <Content Include="NEWHOME.aspx" />
+    <Content Include="News.aspx" />
     <Content Include="obj\Debug\WebApplication1.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\WebApplication1.dll" />
     <Content Include="obj\Debug\WebApplication1.pdb" />
@@ -433,6 +434,7 @@
     <Content Include="P\個人資料.png" />
     <Content Include="P\金鑰位置.png" />
     <Content Include="P\鑰匙.png" />
+    <Content Include="Register.aspx" />
     <Content Include="set.aspx" />
     <Content Include="SetAgent.aspx" />
     <Content Include="setInfo.aspx" />
@@ -503,7 +505,6 @@
     <Content Include="P\p.jpg" />
     <Content Include="P\灰.jpg" />
     <Content Include="P\黃.png" />
-    <Content Include="Register.aspx" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -749,6 +750,13 @@
     </Compile>
     <Compile Include="NEWHOME.aspx.designer.cs">
       <DependentUpon>NEWHOME.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="News.aspx.cs">
+      <DependentUpon>News.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="News.aspx.designer.cs">
+      <DependentUpon>News.aspx</DependentUpon>
     </Compile>
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />

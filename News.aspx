@@ -25,7 +25,6 @@
     <br />
     <a href="Home.aspx">首頁</a>/最新消息
     <hr />
-    <br />
     <div class="container">
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False"  BorderStyle="None" DataKeyNames="NID" Width="100%" Font-Size="X-Large" GridLines="Horizontal">
             <Columns>

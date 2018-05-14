@@ -18,7 +18,7 @@
                 </a>
             </div>
             <div class="col-sm-2">
-                 <a href="Home.aspx" title="改變權限">
+                 <a href="SelectMemberData.aspx" title="改變權限">
                     <div class="glyphicon glyphicon-resize-vertical"></div>
                     <div class="item">改變權限</div>
                 </a>

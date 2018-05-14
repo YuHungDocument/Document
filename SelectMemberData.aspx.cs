@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -13,14 +14,19 @@ namespace WebApplication1
 {
     public partial class ManagerPage : System.Web.UI.Page
     {
-        DbHelper tmpdbhelper = new DbHelper();
+        string txt_Ciphertext_DocumentContent;
         string txtKey;
         string txtIV;
         string txt_Ciphertext_Text;
         string txt_Ciphertext_Proposition;
         string txt_PKmessage;
         string txt_PKmessage2;
-        string Permission;
+        string work;
+        string KeyAddress;
+        string txt_RSAhash_Text;
+        string txt_RSAhash_Proposition;
+        String Date2;
+        DbHelper tmpdbhelper = new DbHelper();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -245,20 +251,68 @@ namespace WebApplication1
             string Date = DateTime.Now.ToString("yyyyMMddhhmmss");
             using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
-                SqlCommand cmd3 = new SqlCommand(@"Insert INTO Fil(SID,EID,Date,Text,Title,Proposition,Type,YOS,AESkey,AESiv)VALUES(@SID,@EID,@Date,@Text,@Title,@Proposition,@Type,@YOS,@AESkey,@AESiv)");
+                SqlCommand cmd3 = new SqlCommand(@"Insert INTO Fil(SID,EID,Date,Text,Title,Proposition,Type,YOS,AESkey,AESiv,txt_RSAhash_Text,txt_RSAhash_Proposition,IsEnd)VALUES(@SID,@EID,@Date,@Text,@Title,@Proposition,@Type,@YOS,@AESkey,@AESiv,@txt_RSAhash_Text,@txt_RSAhash_Proposition,@IsEnd)");
                 cn2.Open();
                 cmd3.Connection = cn2;
                 //建立一個 AES 演算法
                 SymmetricAlgorithm symAlgorithm = new AesCryptoServiceProvider();
                 txtKey = Convert.ToBase64String(symAlgorithm.Key);     //hFYPyIK3uSQ=
                 txtIV = Convert.ToBase64String(symAlgorithm.IV);       //oeZlJhiaZB0=
-                                                                       //對稱加密
-                Permission = DDL_Permission.SelectedValue;
+                                                                     //對稱加密
+                string  Permission = DDL_Permission.SelectedValue;
                 txt_Ciphertext_Text = AESEncryption(txtKey, txtIV, "授予權限單位:" + tmpUserInfo.Department + "授予權限人員:" + tmpUserInfo.Name + "\r\n" + "更改權限至:" + Permission + "\r\n" + "開始有效權限時間:" + Request.Form["DS"] + "\r\n" + "結束權限時間:" + Request.Form["DE"] + "\r\n" + "被授予權限單位:" + DropDownList2.Text + "被授予權限人:" + DDL_Name.Text + "");
                 txt_Ciphertext_Proposition = AESEncryption(txtKey, txtIV, "");
+
+                //發文者私鑰加密訊息摘要
+                SqlCommand cmdfindkeyaddress = new SqlCommand(@"Select KeyAddress From UserInfo Where EID=@EID");
+                cmdfindkeyaddress.Connection = cn2;
+                cmdfindkeyaddress.Parameters.AddWithValue("@EID", tmpUserInfo.EID);
+                using (SqlDataReader dr2 = cmdfindkeyaddress.ExecuteReader())
+                {
+                    if (dr2.Read())
+                    {
+                        KeyAddress = dr2["KeyAddress"].ToString();
+                    }
+                    if (KeyAddress == "")
+                    {
+                        Response.Redirect("KeyAddress.aspx");
+                    }
+                }
+                // 建立 RSA 演算法物件的執行個體，並匯入先前建立的私鑰
+                RSACryptoServiceProvider rsaProvider = new RSACryptoServiceProvider();
+                try
+                {
+                    StreamReader str = new StreamReader(@"" + KeyAddress + "");
+                    string ReadAll = str.ReadToEnd();
+                    // 建立 RSA 演算法物件的執行個體，並匯入先前建立的私鑰
+                    rsaProvider.FromXmlString(ReadAll);
+                    // 2) 讀取本文資料 
+                    Date2 = DateTime.Today.Year.ToString();
+                    if (DateTime.Today.Month < 10)
+                        Date2 += "0" + DateTime.Today.Month.ToString();
+                    else Date2 += DateTime.Today.Month.ToString();
+                    if (DateTime.Today.Day < 10)
+                        Date2 += "0" + DateTime.Today.Day.ToString();
+                    else
+                        Date2 += DateTime.Today.Day.ToString();
+                    byte[] content_txt_Ciphertext_Text = Encoding.UTF8.GetBytes(txt_Ciphertext_Text + Date2);
+                    byte[] content_txt_Ciphertext_Proposition = Encoding.UTF8.GetBytes(txt_Ciphertext_Proposition + Date2);
+                    // 3) 呼叫 SignData 方法, 對本文進行簽章
+                    byte[] signature_Text = rsaProvider.SignData(content_txt_Ciphertext_Text, new SHA1CryptoServiceProvider());  //指定一個雜湊法
+                    byte[] signature_Proposition = rsaProvider.SignData(content_txt_Ciphertext_Proposition, new SHA1CryptoServiceProvider());  //指定一個雜湊法
+
+                    // 輸出簽章 (使用 Base64 編碼）
+                    txt_RSAhash_Text = Convert.ToBase64String(signature_Text);
+                    txt_RSAhash_Proposition = Convert.ToBase64String(signature_Proposition);
+                }
+                catch
+                {
+                    Response.Write("<script>alert('此位置找無金鑰，請從新設定!');location.href='KeyAddress.aspx';</script>");
+                }
+
                 cmd3.Parameters.AddWithValue("@SID", Date);
                 cmd3.Parameters.AddWithValue("@EID", DDL_EID.Text);
-                cmd3.Parameters.AddWithValue("@Date", DateTime.Today.Year.ToString());
+                cmd3.Parameters.AddWithValue("@Date", Date2);
                 cmd3.Parameters.AddWithValue("@Text", txt_Ciphertext_Text);
                 cmd3.Parameters.AddWithValue("@Title", "授予權限同意函");
                 cmd3.Parameters.AddWithValue("@Proposition", txt_Ciphertext_Proposition);
@@ -266,8 +320,12 @@ namespace WebApplication1
                 cmd3.Parameters.AddWithValue("@YOS", "10");
                 cmd3.Parameters.AddWithValue("@AESkey", txtKey);
                 cmd3.Parameters.AddWithValue("@AESiv", txtIV);
+                cmd3.Parameters.AddWithValue("@txt_RSAhash_Text", txt_RSAhash_Text);
+                cmd3.Parameters.AddWithValue("@txt_RSAhash_Proposition", txt_RSAhash_Proposition);
+                cmd3.Parameters.AddWithValue("@IsEnd", "0");
                 cmd3.ExecuteNonQuery();
             }
+
             using (SqlConnection cn3 = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
 
@@ -282,6 +340,26 @@ namespace WebApplication1
                 {
                     if (dr.Read())
                     {
+                        #region
+                        //using (SqlConnection cn4 = new SqlConnection(tmpdbhelper.DB_CnStr))
+                        //{
+                        //    SqlCommand cmdfindfile = new SqlCommand(@"select DocumentContent from tempDocument Where SID=@SID");
+
+                        //    cn4.Open();
+                        //    cmdfindfile.Connection = cn4;
+                        //    cmdfindfile.Parameters.AddWithValue("@SID", SID);
+
+                        //    using (SqlDataReader dr2 = cmdfindfile.ExecuteReader())
+                        //    {
+                        //        if (dr2.Read())
+                        //        {
+                        //            byte[] DocumentContent = (byte[])dr2["DocumentContent"];
+                        //            txt_Ciphertext_DocumentContent = AESEncryption(txtKey, txtIV, DocumentContent);
+                        //        }
+                        //    }
+                        //    cn4.Close();
+                        //}
+                        #region
                         string PK = dr["PK"].ToString();
                         //以接收者PK加密KEY
                         // 建立 RSA 演算法物件的執行個體，並匯入先前建立的公鑰
@@ -319,7 +397,9 @@ namespace WebApplication1
                     }
                 }
                 cn3.Close();
-                //寫回資料庫     
+                //寫回資料庫   
+                
+
                 SqlCommand cmd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,sign,look,RSAkey)VALUES(@SID,@Lvl,@EID,@Department,@status,@sign,@look,@RSAkey)");
                 SqlCommand cmd2 = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,sign,look,RSAkey)VALUES(@SID,@Lvl,@EID,@Department,@status,@sign,@look,@RSAkey)");
                 cn3.Open();

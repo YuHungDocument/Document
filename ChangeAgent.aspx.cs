@@ -65,6 +65,9 @@ namespace WebApplication1
 
         protected void Btn_Save_Click(object sender, EventArgs e)
         {
+            UserInfo tmpUserInfo;
+            tmpUserInfo = (UserInfo)Session["userinfo"];
+
             string Date = DateTime.Now.ToString("yyyyMMddhhmmss");
             using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
@@ -90,7 +93,7 @@ namespace WebApplication1
                 //發文者私鑰加密訊息摘要
                 SqlCommand cmdfindkeyaddress = new SqlCommand(@"Select KeyAddress From UserInfo Where EID=@EID");
                 cmdfindkeyaddress.Connection = cn2;
-                cmdfindkeyaddress.Parameters.AddWithValue("@EID", DropDownList9.Text);
+                cmdfindkeyaddress.Parameters.AddWithValue("@EID",tmpUserInfo.EID);
                 using (SqlDataReader dr2 = cmdfindkeyaddress.ExecuteReader())
                 {
                     if (dr2.Read())

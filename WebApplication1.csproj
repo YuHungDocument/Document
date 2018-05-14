@@ -70,6 +70,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AboutUs.aspx" />
     <Content Include="AllPage.aspx" />
     <Content Include="back_mainpage.aspx" />
     <Content Include="bin\CKEditor.NET.dll" />
@@ -540,6 +541,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutUs.aspx.cs">
+      <DependentUpon>AboutUs.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AboutUs.aspx.designer.cs">
+      <DependentUpon>AboutUs.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AllPage.aspx.cs">
       <DependentUpon>AllPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

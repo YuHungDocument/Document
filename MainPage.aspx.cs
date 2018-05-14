@@ -19,7 +19,7 @@ namespace WebApplication1
             {
                 if (Session["userinfo"] == null)
                 {
-                    Response.Redirect("Home.aspx");
+                    Response.Redirect("Login.aspx");
                 }
                 else
                 {

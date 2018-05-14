@@ -9,8 +9,7 @@
         /* Icon when the collapsible content is shown */
         .btn:after {
             font-family: "Glyphicons Halflings";
-            content: "\e114";
-            float: right;
+            c
             margin-left: 15px;
         }
         /* Icon when the collapsible content is hidden */
@@ -77,7 +76,6 @@
                         <div class="panel panel-default" <%--style="width: 500px"--%>>
                             <div class="panel-heading">
                                 <asp:TextBox ID="TB_Inquire" runat="server"></asp:TextBox>
-                                <asp:Button ID="Button1" runat="server" Text="查詢" OnClick="Button1_Click" />
                             </div>
 
                             <div class="panel-body" style="width: 80vw">
@@ -155,7 +153,8 @@
                 </tr>
             </table>
         </div>
-    </div>
+    </div>ontent: "\e114";
+            float: right;
 
     <div class="panel panel-primary">
         <div class="panel-heading pull clickable">

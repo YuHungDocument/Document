@@ -70,7 +70,6 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="C_Permission.aspx" />
     <Content Include="AllPage.aspx" />
     <Content Include="back_mainpage.aspx" />
     <Content Include="bin\CKEditor.NET.dll" />
@@ -541,13 +540,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="C_Permission.aspx.cs">
-      <DependentUpon>C_Permission.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="C_Permission.aspx.designer.cs">
-      <DependentUpon>C_Permission.aspx</DependentUpon>
-    </Compile>
     <Compile Include="AllPage.aspx.cs">
       <DependentUpon>AllPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

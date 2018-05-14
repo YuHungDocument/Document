@@ -38,6 +38,10 @@
             font-size: large;
         }
 
+        .content {
+            min-height: calc(100vh - 150px);
+        }
+
         .navbar-right {
             font-size: large;
         }
@@ -112,57 +116,86 @@
                 right: 14px;
                 z-index: 9;
             }
+
+        .footer {
+            height: 150px;
+            background-color: #808080;
+            color: white;
+        }
+
+        .button {
+            border: solid 1px #ff6a00;
+            background-color: white;
+            color: #ff6a00;
+            width: 250px;
+            border-radius:5px;
+        }
+
+            .button:hover {
+                background-color: #ff6a00;
+                color: white;
+            }
+
+        a:hover {
+            color: orange;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
-        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="Home.aspx">
-                        <asp:Label ID="Label1" runat="server"></asp:Label></a>
-                </div>
-                <div class="collapse navbar-collapse" id="myNavbar">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="Home.aspx">首頁</a></li>
-                        <li><a href="#">公司簡介</a></li>
-                        <li><a href="#">最新消息</a></li>
-                        <li><a href="#">產品介紹</a></li>
-                        <li><a href="#">關於我們</a></li>
-                        <li><a href="Connect.aspx">聯絡我們</a></li>
-                        <li class="dropdown" id="lissy" runat="server">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user pull-right"></span>
-                                <asp:Label ID="Lbl_Name" runat="server" Text=""></asp:Label></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="MainPage.aspx">進入公文系統 <span class="glyphicon glyphicon-briefcase pull-right"></span></a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">使用者設定 <span class="glyphicon glyphicon-cog pull-right"></span></a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">訊息 <span class="badge pull-right">
-                                    <asp:Label ID="Lbl_message" runat="server" Text="0"></asp:Label></span></a></li>
-                                <li class="divider"></li>
-                                <li>
-                                    <asp:LinkButton ID="Lb_Logout" runat="server" OnClick="Lb_Logout_Click">登出</asp:LinkButton></li>
-                            </ul>
-                        </li>
-                    </ul>
+        <div class="content">
+            <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="Home.aspx">
+                            <asp:Label ID="Label1" runat="server"></asp:Label></a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="myNavbar">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="Home.aspx">首頁</a></li>
+                            <li><a href="#">公司簡介</a></li>
+                            <li><a href="#">最新消息</a></li>
+                            <li><a href="#">產品介紹</a></li>
+                            <li><a href="#">關於我們</a></li>
+                            <li><a href="Connect.aspx">聯絡我們</a></li>
+                            <li class="dropdown" id="lissy" runat="server">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user pull-right"></span>
+                                    <asp:Label ID="Lbl_Name" runat="server" Text=""></asp:Label></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="MainPage.aspx">進入公文系統 <span class="glyphicon glyphicon-briefcase pull-right"></span></a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">使用者設定 <span class="glyphicon glyphicon-cog pull-right"></span></a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">訊息 <span class="badge pull-right">
+                                        <asp:Label ID="Lbl_message" runat="server" Text="0"></asp:Label></span></a></li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <asp:LinkButton ID="Lb_Logout" runat="server" OnClick="Lb_Logout_Click">登出</asp:LinkButton></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="container">
-            <br />
-            <br />
-            <div>
+            <div class="container">
+                <br />
+                <br />
                 <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                 </asp:ContentPlaceHolder>
+
                 <div id="gotop">˄</div>
             </div>
         </div>
+        <div class="footer container-fluid">
+            網頁導覽
+        </div>
     </form>
+
 </body>
 </html>

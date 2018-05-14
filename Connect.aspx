@@ -3,6 +3,9 @@
     </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
         <div class="contact-form-box clearfix">
+            <br />
+            <a href="Home.aspx">首頁</a>/聯絡我們
+            <hr />
                 <div class="form-left">
                   <div class="contact-header">
                     <div class="header-info">

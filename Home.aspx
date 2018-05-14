@@ -170,7 +170,7 @@
                 <asp:Image ID="Image1" runat="server" Width="400" Height="300" ImageUrl="~/P/document.png" />
                 <p><strong>公文系統</strong></p>
                 <p>簡易的公文系統，前往立即使用</p>
-                <asp:Button ID="Button1" class="btn" runat="server" Text="前往了解" PostBackUrl="~/MainPage.aspx" />
+                <div style="text-align:center;"><asp:Button class="button" ID="Button1"  runat="server" Text="前往了解" PostBackUrl="~/MainPage.aspx" /></div>
             </div>
         </div>
         <div class="col-sm-4">
@@ -178,7 +178,7 @@
                 <asp:Image ID="Image2" runat="server" Width="400" Height="300" ImageUrl="~/P/aboutus.png" />
                 <p><strong>關於我們</strong></p>
                 <p>有關我們的資訊，都可以從這裡去了解</p>
-                <asp:Button ID="Button2" class="btn" runat="server" Text="前往了解" />
+                <div style="text-align:center;"><asp:Button ID="Button2" class="button" runat="server" Text="前往了解" /></div>
             </div>
         </div>
         <div class="col-sm-4">
@@ -186,7 +186,7 @@
                 <asp:Image ID="Image3" runat="server" Width="400" Height="300" ImageUrl="~/P/usedocument.png" />
                 <p><strong>操作方式</strong></p>
                 <p>有什麼不懂得來這裡看就對了</p>
-                <asp:Button ID="Button4" class="btn" runat="server" Text="前往了解" />
+                <div style="text-align:center;"><asp:Button ID="Button4" class="button" runat="server" Text="前往了解" /></div>
             </div>
         </div>
     </div>

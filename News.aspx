@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
         table tr {
-            border-bottom: 1px solid #c3c3c3;
+            
             
         }
 
@@ -25,12 +25,14 @@
     <br />
     <a href="Home.aspx">首頁</a>/最新消息
     <hr />
+    <h3>最新消息</h3>
+    <br />
     <div class="container">
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False"  BorderStyle="None" DataKeyNames="NID" Width="100%" Font-Size="X-Large" GridLines="Horizontal">
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False"  BorderStyle="None" DataKeyNames="NID" Width="100%" Font-Size="X-Large" GridLines="Horizontal" BackColor="White">
             <Columns>
                 <asp:TemplateField  >
                     <HeaderTemplate>
-                        <div style="text-align:center; background-color:#4dd902">標題</div>
+                        <div style="text-align:center; background-color:#dddddd">標題</div>
                     </HeaderTemplate>
                     <ItemTemplate>
                         <asp:LinkButton ForeColor="Black" runat="server" Text='<%#Eval("NTitle")%>'></asp:LinkButton>
@@ -39,7 +41,7 @@
 
                 <asp:TemplateField ItemStyle-Width="150px" >
                                         <HeaderTemplate>
-                        <div style="text-align:center; background-color:#4dd902">發布日期</div>
+                        <div style="text-align:center; background-color:#dddddd">發布日期</div>
                     </HeaderTemplate>
                     <ItemTemplate>
                         <div style="text-align:center"><asp:LinkButton ForeColor="Blue" runat="server" Text='<%#Eval("Date","{0:yyyy/MM/dd}")%>'></asp:LinkButton></div>

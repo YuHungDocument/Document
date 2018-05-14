@@ -153,7 +153,7 @@
                     <td><a href="MainPage.aspx"><span class="circle_in_black glyphicon glyphicon-briefcase"></span>
                         <br />
                         公文系統</a></td>
-                    <td><a href="#"><span class="circle_in_black glyphicon glyphicon glyphicon-pencil"></span>
+                    <td><a href="AboutUs.aspx"><span class="circle_in_black glyphicon glyphicon glyphicon-pencil"></span>
                         <br />
                         關於我們</a></td>
                     <td><a href="Login.aspx"><span class="circle_in_black glyphicon glyphicon-user"></span>

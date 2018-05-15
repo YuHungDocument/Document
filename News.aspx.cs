@@ -33,16 +33,69 @@ namespace WebApplication1
             GridView1.DataBind();
         }
 
-
-
-        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+        protected void GridView1_DataBound(object sender, EventArgs e)
         {
-            GridViewRow pagerRow = GridView1.BottomPagerRow;
-            if (GridView1.PageIndex == 0)
+            GridViewRow pagerRow = GridView1.TopPagerRow;
+
+            // Retrieve the DropDownList and Label controls from the row.
+            DropDownList pageList = (DropDownList)pagerRow.Cells[0].FindControl("Ddl_Page");
+            Label pageLabel = (Label)pagerRow.Cells[0].FindControl("Lbl_View");
+            if (pageList != null)
             {
-                LinkButton Lb_Frist = (LinkButton)pagerRow.FindControl("Lb_Frist");
-                Lb_Frist.Visible = false;  //--目前位於第一頁，所以需隱形，看不見。無法繼續「上一頁」。
+
+                // Create the values for the DropDownList control based on 
+                // the  total number of pages required to display the data
+                // source.
+                for (int i = 0; i < GridView1.PageCount; i++)
+                {
+
+                    // Create a ListItem object to represent a page.
+                    int pageNumber = i + 1;
+                    ListItem item = new ListItem(pageNumber.ToString());
+
+                    // If the ListItem object matches the currently selected
+                    // page, flag the ListItem object as being selected. Because
+                    // the DropDownList control is recreated each time the pager
+                    // row gets created, this will persist the selected item in
+                    // the DropDownList control.   
+                    if (i == GridView1.PageIndex)
+                    {
+                        item.Selected = true;
+                    }
+
+                    // Add the ListItem object to the Items collection of the 
+                    // DropDownList.
+                    pageList.Items.Add(item);
+
+                }
+
             }
+
+            if (pageLabel != null)
+            {
+
+                // Calculate the current page number.
+                int currentPage = GridView1.PageIndex + 1;
+
+                // Update the Label control with the current page information.
+                pageLabel.Text = "第 " + currentPage.ToString() +" 頁 " +" 共 " +GridView1.PageCount.ToString()+" 頁 ";
+
+            }
+        }
+
+
+
+        protected void Ddl_Page_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Retrieve the pager row.
+            GridViewRow pagerRow = GridView1.TopPagerRow;
+
+            // Retrieve the PageDropDownList DropDownList from the pager row.
+            DropDownList pageList = (DropDownList)pagerRow.Cells[0].FindControl("Ddl_Page");
+
+            // Set the PageIndex property to display that page selected by the user.
+            GridView1.PageIndex = pageList.SelectedIndex;
+            bind();
         }
     }
 }

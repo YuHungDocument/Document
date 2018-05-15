@@ -6,9 +6,7 @@
             border-color: #d7d7d7
         }
 
-        table {
-            border-color: white;
-        }
+
 
             table tr td {
                 height: 50px;
@@ -28,13 +26,11 @@
     <br />
     <a href="Home.aspx">首頁</a>/最新消息
     <hr />
-    <h3>最新消息</h3>
-    <div style="text-align: right">
-        <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
-    </div>
+    <h2>最新消息</h2>
+
     <p></p>
     <div class="container">
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" BorderStyle="None" DataKeyNames="NID" Width="100%" Font-Size="X-Large" GridLines="Horizontal" BackColor="White" AllowPaging="True" PageSize="5" OnRowDataBound="GridView1_RowDataBound">
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" BorderStyle="None" DataKeyNames="NID" Width="100%" Font-Size="X-Large" GridLines="Horizontal" BackColor="White" AllowPaging="True" PageSize="5" OnDataBound="GridView1_DataBound"  >
             <Columns>
                 <asp:TemplateField>
                     <HeaderTemplate>
@@ -69,30 +65,25 @@
                 </asp:TemplateField>
             </Columns>
 
-            <PagerTemplate>
-                <div style="text-align: center; background-color: white;">
-                    <ul class="pagination">
-                        <li>
-                            <asp:LinkButton ID="Lb_Frist" runat="server" CommandArgument="Frist" CommandName="page">第一頁</asp:LinkButton></li>
-                                                <li>
-                            <asp:LinkButton ID="Lb_Pre" runat="server" CommandArgument="Pre" CommandName="page">上一頁</asp:LinkButton></li>
-                        <li>
-                            <asp:LinkButton ID="Lb_01" runat="server" Text="1"  CommandArgument="One" CommandName="page"></asp:LinkButton></li>
-                        <li>
-                            <asp:LinkButton ID="Lb_02" runat="server" Text="2"  CommandArgument="Two" CommandName="page"></asp:LinkButton></li>
-                        <li>
-                            <asp:LinkButton ID="Lb_03" runat="server" Text="3"  CommandArgument="Third" CommandName="page"></asp:LinkButton></li>
-                        <li>
-                            <asp:LinkButton ID="Lb_04" runat="server" Text="4"  CommandArgument="Four" CommandName="page"></asp:LinkButton></li>
-                        <li>
-                            <asp:LinkButton ID="Lb_05" runat="server" Text="5"  CommandArgument="Five" CommandName="page"></asp:LinkButton></li>
-                                                <li>
-                            <asp:LinkButton ID="Lb_Next" runat="server" CommandArgument="Next" CommandName="page">下一頁</asp:LinkButton></li>
-                        <li>
-                            <asp:LinkButton ID="Lb_Last" runat="server" CommandArgument="Last" CommandName="page">最後一頁</asp:LinkButton></li>
-                    </ul>
-                </div>
+            <PagerSettings Position="Top" />
 
+            <PagerStyle BorderStyle="None" BorderColor="White" />
+
+            <PagerTemplate>
+                <div class="col-sm-6" style=" background-color:white">
+                    <asp:DropDownList ID="Ddl_Type" runat="server" AutoPostBack="True">
+                        <asp:ListItem>全部類別</asp:ListItem>
+                        <asp:ListItem>新聞發布</asp:ListItem>
+                        <asp:ListItem>系統公告</asp:ListItem>
+                        <asp:ListItem>更新消息</asp:ListItem>
+                        <asp:ListItem>其他訊息</asp:ListItem>
+                    </asp:DropDownList>
+                    &nbsp;&nbsp; 切換頁數<asp:DropDownList ID="Ddl_Page" runat="server" AutoPostBack="True" OnSelectedIndexChanged="Ddl_Page_SelectedIndexChanged"></asp:DropDownList>
+                    
+                </div>
+                
+                <div class="col-sm-6" style="text-align:right;background-color:white"><asp:Label ID="Lbl_View" runat="server" Text="Label"></asp:Label></div>
+                <p></p>
             </PagerTemplate>
 
         </asp:GridView>

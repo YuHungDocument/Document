@@ -17,7 +17,9 @@ namespace WebApplication1
             if (!Page.IsPostBack)
             {
                 bind();
+                
             }
+            
         }
 
         public void bind()
@@ -39,6 +41,7 @@ namespace WebApplication1
 
             // Retrieve the DropDownList and Label controls from the row.
             DropDownList pageList = (DropDownList)pagerRow.Cells[0].FindControl("Ddl_Page");
+            DropDownList TypeList = (DropDownList)pagerRow.Cells[0].FindControl("Ddl_Type");
             Label pageLabel = (Label)pagerRow.Cells[0].FindControl("Lbl_View");
             if (pageList != null)
             {
@@ -68,9 +71,9 @@ namespace WebApplication1
                     pageList.Items.Add(item);
 
                 }
-
+                
             }
-
+            
             if (pageLabel != null)
             {
 
@@ -78,9 +81,9 @@ namespace WebApplication1
                 int currentPage = GridView1.PageIndex + 1;
 
                 // Update the Label control with the current page information.
-                pageLabel.Text = "第 " + currentPage.ToString() +" 頁 " +" 共 " +GridView1.PageCount.ToString()+" 頁 ";
-
+                pageLabel.Text = " 共 " +GridView1.PageCount.ToString()+" 頁 ";
             }
+            
         }
 
 
@@ -96,6 +99,47 @@ namespace WebApplication1
             // Set the PageIndex property to display that page selected by the user.
             GridView1.PageIndex = pageList.SelectedIndex;
             bind();
+        }
+
+        protected void Ddl_Type_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            if (Ddl_Type.SelectedValue != "全部類別")
+            {
+                string sqlstr = "Select * from News Where NType='" + Ddl_Type.SelectedValue + "' Order by NID desc";
+
+                SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
+                SqlCommand cmd = new SqlCommand(sqlstr, sqlcon);
+                DataSet myds = new DataSet();
+                sqlcon.Open();
+                SqlDataAdapter myda = new SqlDataAdapter(sqlstr, sqlcon);
+                myda.Fill(myds, "News");
+                GridView1.DataSource = myds;
+                GridView1.DataBind();
+            }
+            else
+            {
+                bind();
+            }
+        }
+        
+        public void bind2()
+        {
+
+
+        }
+
+        protected void GridView1_PreRender(object sender, EventArgs e)
+        {
+            GridView grid = (GridView)sender;
+            if (grid != null)
+            {
+                GridViewRow pagerRow = (GridViewRow)grid.TopPagerRow;
+                if (pagerRow != null)
+                {
+                    pagerRow.Visible = true;
+                }
+            }
         }
     }
 }

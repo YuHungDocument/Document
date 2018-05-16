@@ -13,14 +13,12 @@
 .col-sm-2 {
     display: inline-block;
     border-radius: 4px;
-    background-color: #b0f8de;
     border: none;
-    color: #FFFFFF;
     text-align: center;
     font-size: 28px;
-    padding: 20px;
+    padding: 80px;
     width: 400px;
-    
+    background: -webkit-radial-gradient( circle,#f5f5f5,#00ffed);
     transition: all 0.5s;
     cursor: pointer;
     margin: 50px;

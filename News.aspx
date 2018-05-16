@@ -13,7 +13,8 @@
                 line-height: 50px;
             }
 
-            table tr a {
+            table tr td a {
+
                 display: block;
             }
 
@@ -43,7 +44,7 @@
                     </asp:DropDownList>
                 </div>
                 <p></p>
-                <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" BorderStyle="None" DataKeyNames="NID" Width="100%" Font-Size="X-Large" GridLines="Horizontal" BackColor="White" AllowPaging="True" PageSize="5" OnDataBound="GridView1_DataBound" OnPreRender="GridView1_PreRender">
+                <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" BorderStyle="None" DataKeyNames="NID" Width="100%" Font-Size="X-Large" GridLines="Horizontal" BackColor="White" AllowPaging="True" PageSize="5" OnDataBound="GridView1_DataBound" OnPreRender="GridView1_PreRender" OnRowCommand="GridView1_RowCommand">
                     <Columns>
                         <asp:TemplateField>
                             <HeaderTemplate>
@@ -51,7 +52,7 @@
                             </HeaderTemplate>
                             <ItemTemplate>
                                 <div style="text-align: center">
-                                    <asp:LinkButton ForeColor="Black" runat="server" Text='<%#Eval("NType")%>'></asp:LinkButton>
+                                    <asp:LinkButton ForeColor="Black" runat="server" CommandName="SelData" Text='<%#Eval("NType")%>'></asp:LinkButton>
                                 </div>
                             </ItemTemplate>
                         </asp:TemplateField>
@@ -60,7 +61,7 @@
                                 <div style="text-align: center; background-color: #e9e9e9">標題</div>
                             </HeaderTemplate>
                             <ItemTemplate>
-                                <asp:LinkButton ForeColor="Black" runat="server" Text='<%#Eval("NTitle")%>'></asp:LinkButton>
+                                <asp:LinkButton ForeColor="Black" runat="server" CommandName="SelData" Text='<%#Eval("NTitle")%>'></asp:LinkButton>
                             </ItemTemplate>
                         </asp:TemplateField>
 
@@ -70,7 +71,7 @@
                             </HeaderTemplate>
                             <ItemTemplate>
                                 <div style="text-align: center">
-                                    <asp:LinkButton ForeColor="Blue" runat="server" Text='<%#Eval("Date","{0:yyyy/MM/dd}")%>'></asp:LinkButton>
+                                    <asp:LinkButton ForeColor="Blue" runat="server" CommandName="SelData" Text='<%#Eval("Date","{0:yyyy/MM/dd}")%>'></asp:LinkButton>
                                 </div>
                             </ItemTemplate>
 

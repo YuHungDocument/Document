@@ -133,7 +133,7 @@
                 <RowStyle BorderStyle="None" Font-Size="Large" />
             </asp:GridView>
             <br />
-            <asp:Button ID="Button3" class="btn btn-info" runat="server" Text="更多資訊" />
+            <asp:Button ID="Button3" class="btn btn-info" runat="server" Text="更多資訊" OnClick="Button3_Click" />
         </div>
         <div class="col-md-6 col-sm-12">
 

@@ -515,8 +515,8 @@
                                 <div id="dropdown-lv00" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
-                                            <li><a href="WriteDocument.aspx" style="background-color: #80BFFF">公文</a></li>
-                                            <li><a href="WriteVote.aspx" style="background-color: #409FFF">投票</a></li>
+                                            <li><a href="WriteDocument.aspx" style="background-color: #793f35">公文</a></li>
+                                            <li><a href="WriteVote.aspx" style="background-color:  #793f35">投票</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -533,8 +533,8 @@
                                 <div id="dropdown-lv01" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
-                                            <li><a href="WaitDocument.aspx" style="background-color: #80BFFF">待處理公文</a></li>
-                                            <li><a href="WaitVote.aspx" style="background-color: #409FFF">待處理投票</a></li>
+                                            <li><a href="WaitDocument.aspx" style="background-color: #793f35">待處理公文</a></li>
+                                            <li><a href="WaitVote.aspx" style="background-color: #793f35">待處理投票</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -545,8 +545,8 @@
                                 <div id="dropdown-lv02" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
-                                            <li><a href="HostDocument.aspx" style="background-color: #80BFFF">主辦公文</a></li>
-                                            <li><a href="HostVote.aspx" style="background-color: #409FFF">主辦投票</a></li>
+                                            <li><a href="HostDocument.aspx" style="background-color: #793f35">主辦公文</a></li>
+                                            <li><a href="HostVote.aspx" style="background-color: #793f35">主辦投票</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -557,8 +557,8 @@
                                 <div id="dropdown-lv03" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
-                                            <li><a href="EndDocument.aspx" style="background-color: #80BFFF">已結案公文</a></li>
-                                            <li><a href="EndVote.aspx" style="background-color: #409FFF">已結束投票</a></li>
+                                            <li><a href="EndDocument.aspx" style="background-color: #793f35">已結案公文</a></li>
+                                            <li><a href="EndVote.aspx" style="background-color: #793f35">已結束投票</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -571,10 +571,10 @@
                                 <div id="dropdown-lv04" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
-                                            <li><a href="set.aspx" style="background-color: #80BFFF">帳戶設定</a></li>
-                                            <li><a href="setInfo.aspx" style="background-color: #409FFF">個資設定</a></li>
-                                            <li><a href="SetAgent.aspx" style="background-color: #0080FF">代理人設定</a></li>
-                                            <li><a href="KeyAddress.aspx" style="background-color: #0060BF">金鑰設定</a></li>
+                                            <li><a href="set.aspx" style="background-color: #793f35">帳戶設定</a></li>
+                                            <li><a href="setInfo.aspx" style="background-color: #793f35">個資設定</a></li>
+                                            <li><a href="SetAgent.aspx" style="background-color: #793f35">代理人設定</a></li>
+                                            <li><a href="KeyAddress.aspx" style="background-color: #793f35">金鑰設定</a></li>
                                         </ul>
                                     </div>
                                 </div>

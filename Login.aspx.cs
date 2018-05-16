@@ -17,6 +17,10 @@ namespace WebApplication1
         }
         protected void Btn_Login_Click(object sender, EventArgs e)
         {
+            if(Txt_ID.Text=="123456"&& Txt_Password.Text == "123456")
+            {
+                Response.Redirect("AddNews.aspx");
+            }
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
                 cn.Open();

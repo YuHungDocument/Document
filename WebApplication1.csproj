@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AboutUs.aspx" />
+    <Content Include="AddNews.aspx" />
     <Content Include="AllPage.aspx" />
     <Content Include="back_mainpage.aspx" />
     <Content Include="bin\CKEditor.NET.dll" />
@@ -548,6 +549,13 @@
     </Compile>
     <Compile Include="AboutUs.aspx.designer.cs">
       <DependentUpon>AboutUs.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddNews.aspx.cs">
+      <DependentUpon>AddNews.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddNews.aspx.designer.cs">
+      <DependentUpon>AddNews.aspx</DependentUpon>
     </Compile>
     <Compile Include="AllPage.aspx.cs">
       <DependentUpon>AllPage.aspx</DependentUpon>

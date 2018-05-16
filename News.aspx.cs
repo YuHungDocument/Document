@@ -141,5 +141,19 @@ namespace WebApplication1
                 }
             }
         }
+        protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "SelData")
+            {
+                //這樣就可以讀到RowIndex
+                int index = ((GridViewRow)
+                ((LinkButton)e.CommandSource).NamingContainer).RowIndex;
+                //這樣就可以取得Keys值了
+                string keyId = GridView1.DataKeys[index].Value.ToString();
+                Session["NID"] = keyId;
+                Response.Redirect("BulletinDetail.aspx");
+            }
+        }
+
     }
 }

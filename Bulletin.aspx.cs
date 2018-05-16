@@ -45,6 +45,7 @@ namespace WebApplication1
                 cmd.Parameters.AddWithValue("@Date", DateTime.Today);
                 cmd.Parameters.AddWithValue("@EID", Lbl_EID.Text);
                 cmd.ExecuteNonQuery();
+                Response.Write("<script>alert('已成功新增公告!');location.href='Bulletin.aspx';</script>");
             }
         }
     }

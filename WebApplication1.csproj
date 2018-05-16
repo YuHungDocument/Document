@@ -396,6 +396,7 @@
     <Content Include="Draft.aspx" />
     <Content Include="DraftDetail.aspx" />
     <Content Include="editbullitin.aspx" />
+    <Content Include="Edit_U.aspx" />
     <Content Include="EmailTest.aspx" />
     <Content Include="EndDocument.aspx" />
     <Content Include="EndVote.aspx" />
@@ -639,6 +640,13 @@
     </Compile>
     <Compile Include="editbullitin.aspx.designer.cs">
       <DependentUpon>editbullitin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Edit_U.aspx.cs">
+      <DependentUpon>Edit_U.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Edit_U.aspx.designer.cs">
+      <DependentUpon>Edit_U.aspx</DependentUpon>
     </Compile>
     <Compile Include="EmailTest.aspx.cs">
       <DependentUpon>EmailTest.aspx</DependentUpon>

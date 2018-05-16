@@ -13,7 +13,7 @@
 .col-sm-2 {
     display: inline-block;
     border-radius: 4px;
-    background-color: #abe9e9;
+    background-color: #b0f8de;
     border: none;
     color: #FFFFFF;
     text-align: center;
@@ -49,4 +49,8 @@
         .col-sm-2:hover div:after {
             opacity: 1;
             right: 0;
+        }
+        .item{
+            /*background-image:repeating-linear-gradient(to top ,green,white);*/
+            
         }

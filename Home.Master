@@ -39,7 +39,7 @@
         }
 
         .content {
-            min-height: calc(100vh - 150px);
+            min-height: calc(100vh - 170px);
         }
 
         .navbar-right {
@@ -118,7 +118,7 @@
             }
 
         .footer {
-            height: 150px;
+            height: 170px;
             background-color: #808080;
             color: white;
         }
@@ -190,11 +190,19 @@
                 </asp:ContentPlaceHolder>
 
                 <div id="gotop">˄</div>
+
             </div>
         </div>
         <div class="footer">
             <div class="container">
-                網頁導覽
+                <div class="col-sm-6">
+                    <p>國立勤益科技大學National Chin-Yi University of Technology</p>
+                    <p>地址：41170臺中市太平區坪林里中山路二段 57號 (交通資訊)</p>
+                    <p>No.57, Sec. 2, Zhongshan Rd., Taiping Dist., Taichung 41170, Taiwan (R.O.C.)</p>
+                    <p>電話: (04)23924505 (分機表)FAX:(04) 23923363 TANet 98110000 </p>
+                </div>
+
+                <div class="col-sm-6" style="padding-top:140px;text-align: right">Copyright © 2018 宇鴻科技. 保留一切權利。</div>
             </div>
 
         </div>

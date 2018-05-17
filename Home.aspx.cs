@@ -22,7 +22,7 @@ namespace WebApplication1
 
         public void bind()
         {
-            string sqlstr = "select top 5 NID,Date,NTitle from News";
+            string sqlstr = "select top 5 NID,Date,NTitle from News order by NID desc";
             //string sqlstr = "select top 10 BID,CONCAT(Department, '　', BTitle) as bull,CONVERT(varchar(10) , Date, 111 ) as ConDate from Bulletin";
             SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
             SqlDataAdapter myda = new SqlDataAdapter(sqlstr, sqlcon);
@@ -61,6 +61,16 @@ namespace WebApplication1
         protected void Button3_Click(object sender, EventArgs e)
         {
             Response.Redirect("News.aspx");
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("AboutUs.aspx");
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("MainPage.aspx");
         }
     }
 }

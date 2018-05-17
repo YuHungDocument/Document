@@ -153,8 +153,7 @@
                 </tr>
             </table>
         </div>
-    </div>ontent: "\e114";
-            float: right;
+    </div>
 
     <div class="panel panel-primary">
         <div class="panel-heading pull clickable">

@@ -24,7 +24,7 @@
                 </a>
             </div>
             <div class="col-sm-2">
-                <a href="Home.aspx" title="新增">
+                <a href="Edit_U.aspx" title="新增">
                     <div class="glyphicon glyphicon-plus-sign   "></div>
                     <div class="item">編輯</div>
                 </a>

@@ -52,3 +52,6 @@
             /*background-image:repeating-linear-gradient(to top ,green,white);*/
             
         }
+.panel panel-primary {
+    width: 1000px;
+}

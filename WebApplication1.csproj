@@ -477,6 +477,7 @@
     <Content Include="obj\Debug\WebApplication1.csproj.CopyComplete" />
     <Content Include="obj\Debug\WebApplication1.csproj.CoreCompileInputs.cache" />
     <Content Include="obj\Debug\WebApplication1.csprojResolveAssemblyReference.cache" />
+    <Content Include="Management.Master" />
     <None Include="packages.config" />
     <Content Include="ChangeGroup.aspx" />
     <Content Include="ChangePermission.aspx" />
@@ -768,6 +769,13 @@
     </Compile>
     <Compile Include="MainPage.aspx.designer.cs">
       <DependentUpon>MainPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Management.Master.cs">
+      <DependentUpon>Management.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Management.Master.designer.cs">
+      <DependentUpon>Management.Master</DependentUpon>
     </Compile>
     <Compile Include="NEWHOME.aspx.cs">
       <DependentUpon>NEWHOME.aspx</DependentUpon>

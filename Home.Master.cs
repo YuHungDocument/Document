@@ -32,19 +32,17 @@ namespace WebApplication1
                     }
                 }
                 if (Session["userinfo"] == null)
-                {
-                                       
-                    lissy.Style.Add("display", "none");
+                {                                       
+                    
                 }
                 else
                 {
                                       
                     UserInfo tmpUserInfo = null;
-                    lissy.Style.Add("display", "block");
+                    
                     if (Session["userinfo"] is UserInfo)
                     {
-                        tmpUserInfo = (UserInfo)Session["userinfo"];
-                        Lbl_Name.Text ="歡迎!"+tmpUserInfo.Name;
+                        tmpUserInfo = (UserInfo)Session["userinfo"];                        
                     }
 
                 }

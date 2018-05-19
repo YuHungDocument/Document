@@ -389,6 +389,7 @@
     <Content Include="ckeditor\skins\moono\images\lock.png" />
     <Content Include="ckeditor\skins\moono\images\refresh.png" />
     <Content Include="ckeditor\styles.js" />
+    <Content Include="CompanyIntroduction.aspx" />
     <Content Include="Connect.aspx" />
     <Content Include="css\all.css" />
     <Content Include="css\bootstrap.min.css" />
@@ -406,7 +407,6 @@
     <Content Include="font-awesome-4.7.0\css\font-awesome.min.css" />
     <Content Include="font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
     <Content Include="font-awesome-4.7.0\HELP-US-OUT.txt" />
-    <Content Include="goodpage.aspx" />
     <Content Include="GuildPage.Master" />
     <Content Include="HomeLogin.aspx" />
     <Content Include="HomeTest.aspx" />
@@ -429,6 +429,7 @@
     <Content Include="obj\Debug\WebApplication1.dll" />
     <Content Include="obj\Debug\WebApplication1.pdb" />
     <Content Include="password.aspx" />
+    <Content Include="Product.aspx" />
     <Content Include="P\8.jpg" />
     <Content Include="P\document.png" />
     <Content Include="P\header-01.jpg" />
@@ -613,6 +614,13 @@
     <Compile Include="ChangePwd.aspx.designer.cs">
       <DependentUpon>ChangePwd.aspx</DependentUpon>
     </Compile>
+    <Compile Include="CompanyIntroduction.aspx.cs">
+      <DependentUpon>CompanyIntroduction.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CompanyIntroduction.aspx.designer.cs">
+      <DependentUpon>CompanyIntroduction.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Connect.aspx.cs">
       <DependentUpon>Connect.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -683,13 +691,6 @@
     </Compile>
     <Compile Include="Environmentalparameters.aspx.designer.cs">
       <DependentUpon>Environmentalparameters.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="goodpage.aspx.cs">
-      <DependentUpon>goodpage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="goodpage.aspx.designer.cs">
-      <DependentUpon>goodpage.aspx</DependentUpon>
     </Compile>
     <Compile Include="GuildPage.Master.cs">
       <DependentUpon>GuildPage.Master</DependentUpon>
@@ -791,6 +792,13 @@
     </Compile>
     <Compile Include="password.aspx.designer.cs">
       <DependentUpon>password.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Product.aspx.cs">
+      <DependentUpon>Product.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Product.aspx.designer.cs">
+      <DependentUpon>Product.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Register.aspx.cs">

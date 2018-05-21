@@ -40,7 +40,19 @@ namespace WebApplication1
 
                     if (Session["userinfo"] is UserInfo)
                     {
+                        UserInfo tmpUserInfo;
+                        tmpUserInfo = (UserInfo)Session["userinfo"];
                         ((Label)this.Master.FindControl("Lb_Title")).Text = "部門管理";
+                        if(tmpUserInfo.Permission < 5)
+                        {
+                            Response.Write("<script>alert('沒有足夠權限');location.href='Home.aspx';</script>");
+
+                        }
+                        if (tmpUserInfo.temp_Permission < 5)
+                        {
+                            Response.Write("<script>alert('沒有足夠權限');location.href='Home.aspx';</script>");
+
+                        }
                     }
                 }
             }
@@ -164,7 +176,7 @@ namespace WebApplication1
 
                         //SqlCommand cmda = new SqlCommand(@"select EID from UserInfo where Department = @Dp and position=@position ");
                         //cmda.Connection = cn3;
-                        //cmda.Parameters.AddWithValue("@Dp",tmpUserInfo.Department);
+                        //cmda.Parameters.AddWithValue("@Dp", tmpUserInfo.Department);
                         //cmda.Parameters.AddWithValue("@position", "經理");
 
                         //using (SqlDataReader dr2 = cmda.ExecuteReader())
@@ -233,6 +245,7 @@ namespace WebApplication1
                         //    cmd1.Parameters.AddWithValue("@EID", dr2);
 
                         //}
+
                         cmd1.Parameters.AddWithValue("@EID", 20180509042543);
                         cmd1.Parameters.AddWithValue("@Department", tmpUserInfo.Department);
                         cmd1.Parameters.AddWithValue("@status", "1");

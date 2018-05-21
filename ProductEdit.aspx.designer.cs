@@ -13,21 +13,21 @@ namespace WebApplication1 {
     public partial class ProductEdit {
         
         /// <summary>
-        /// FileUpload1 控制項。
+        /// DataList1 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload FileUpload1;
+        protected global::System.Web.UI.WebControls.DataList DataList1;
         
         /// <summary>
-        /// Button1 控制項。
+        /// SqlDataSource1 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource1;
     }
 }

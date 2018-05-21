@@ -141,7 +141,7 @@
                     </div>
                     <div class="collapse navbar-collapse" id="myNavbar">
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="Home.aspx">最新消息管理</a></li>
+                            <li><a href="AddNewsMessage.aspx">最新消息管理</a></li>
                             <li><a href="CompanyIntroduction.aspx">公司介紹管理</a></li>
                             <li><a href="News.aspx">產品介紹管理</a></li>
                             <li><a href="#">關於我們管理</a></li>

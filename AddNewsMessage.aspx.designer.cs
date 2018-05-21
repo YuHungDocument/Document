@@ -10,42 +10,42 @@
 namespace WebApplication1 {
     
     
-    public partial class HomeTest {
+    public partial class AddNewsMessage {
         
         /// <summary>
-        /// head 控制項。
+        /// Txt_Title 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
+        protected global::System.Web.UI.WebControls.TextBox Txt_Title;
         
         /// <summary>
-        /// form1 控制項。
+        /// Dp_Type 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.DropDownList Dp_Type;
         
         /// <summary>
-        /// LinkButton1 控制項。
+        /// txt_Connect 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton LinkButton1;
+        protected global::CKEditor.NET.CKEditorControl txt_Connect;
         
         /// <summary>
-        /// ContentPlaceHolder1 控制項。
+        /// Btn_Save 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentPlaceHolder1;
+        protected global::System.Web.UI.WebControls.Button Btn_Save;
     }
 }

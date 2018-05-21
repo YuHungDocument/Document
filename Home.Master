@@ -161,7 +161,7 @@
                             <li><a href="Home.aspx">首頁</a></li>
                             <li><a href="CompanyIntroduction.aspx">公司簡介</a></li>
                             <li><a href="News.aspx">最新消息</a></li>
-                            <li><a href="#">產品介紹</a></li>
+                            <li><a href="Product.aspx">產品介紹</a></li>
                             <li><a href="AboutUs.aspx">關於我們</a></li>
                             <li><a href="Connect.aspx">聯絡我們</a></li>
 <%--                            <li class="dropdown" id="lissy" runat="server">

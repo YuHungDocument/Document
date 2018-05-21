@@ -13,7 +13,6 @@ namespace WebApplication1
 {
     public partial class ProductEdit : System.Web.UI.Page
     {
-        DbHelper tmpdbhelper = new DbHelper();
         protected void Page_Load(object sender, EventArgs e)
         {
 

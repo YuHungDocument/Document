@@ -15,6 +15,40 @@ namespace WebApplication1
         {
 
         }
+        //public void Select_signtime()
+        //{
+        //    using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+        //    {
+        //        UserInfo tmpuserinfo = new UserInfo();
+        //        cn.Open();
+        //        SqlCommand cmd0 = new SqlCommand(@"select SID from Fil where EID = @EID and Title = @Title");
+        //        cmd0.Connection = cn;
+        //        cmd0.Parameters.AddWithValue("@EID", tmpuserinfo.EID);
+        //        cmd0.Parameters.AddWithValue("@Title", "授予權限同意函");
+
+        //        using (SqlDataReader drsign = cmd0.ExecuteReader())
+        //        {
+        //            if (drsign.Read())
+        //            {
+        //                SqlCommand cmdsign = new SqlCommand(@"select Detail.signtime from Detail left JOIN Fil ON Fil.SID=Detail.SID where (Detail.SID=@SID AND Detail.EID !=@EID);");
+
+        //                cmdsign.Connection = cn;
+        //                cmdsign.Parameters.AddWithValue("@SID", drsign);
+        //                cmdsign.Parameters.AddWithValue("@EID", tmpuserinfo.EID);
+
+        //                using (SqlDataReader drsign1 = cmdsign.ExecuteReader())
+        //                {
+        //                    if (drsign1.Read())
+        //                    {
+                                
+        //                    }
+        //                }
+        //            }
+        //        }
+
+        //    }
+        //}
+
         protected void Btn_Login_Click(object sender, EventArgs e)
         {
             if(Txt_ID.Text=="123456"&& Txt_Password.Text == "123456")
@@ -48,7 +82,6 @@ namespace WebApplication1
                         tmpuserinfo.Birthday = dr["Birthday"].ToString();
                         tmpuserinfo.Cel = dr["Cel"].ToString();
                         tmpuserinfo.Address = dr["Address"].ToString();
-
                         if (!string.IsNullOrWhiteSpace(dr["temp_Permission"].ToString()))
                         {
                             tmpuserinfo.temp_Permission = int.Parse(dr["temp_Permission"].ToString());
@@ -57,6 +90,8 @@ namespace WebApplication1
                         {
                             tmpuserinfo.Permission = int.Parse(dr["Permission"].ToString());
                         }
+
+
 
 
                         Session["userinfo"] = tmpuserinfo;

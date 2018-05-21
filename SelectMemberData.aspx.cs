@@ -300,8 +300,8 @@ namespace WebApplication1
                     Response.Write("<script>alert('change同意函已發送!');location.href='SetAgent.aspx';</script>");
 
                 }
-
-            }
+            
+         }
 
         }
     }

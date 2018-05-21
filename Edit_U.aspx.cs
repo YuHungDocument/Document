@@ -43,16 +43,13 @@ namespace WebApplication1
                         UserInfo tmpUserInfo;
                         tmpUserInfo = (UserInfo)Session["userinfo"];
                         ((Label)this.Master.FindControl("Lb_Title")).Text = "部門管理";
-                        if(tmpUserInfo.Permission < 5)
+                        if(tmpUserInfo.Permission < 5 && tmpUserInfo.temp_Permission < 5)
                         {
                             Response.Write("<script>alert('沒有足夠權限');location.href='Home.aspx';</script>");
 
                         }
-                        if (tmpUserInfo.temp_Permission < 5)
-                        {
-                            Response.Write("<script>alert('沒有足夠權限');location.href='Home.aspx';</script>");
-
-                        }
+                        
+                       
                     }
                 }
             }
@@ -156,7 +153,7 @@ namespace WebApplication1
                     cmd3.Parameters.AddWithValue("@Text", txt_Ciphertext_Text);
                     cmd3.Parameters.AddWithValue("@Title", "架構異動同意函");
                     cmd3.Parameters.AddWithValue("@Proposition", txt_Ciphertext_Proposition);
-                    cmd3.Parameters.AddWithValue("@Type", "change設定");
+                    cmd3.Parameters.AddWithValue("@Type", "組織架構設定");
                     cmd3.Parameters.AddWithValue("@YOS", "10");
                     cmd3.Parameters.AddWithValue("@AESkey", txtKey);
                     cmd3.Parameters.AddWithValue("@AESiv", txtIV);
@@ -266,10 +263,65 @@ namespace WebApplication1
                         cmd2.Parameters.AddWithValue("@sign", 1);
                         cmd2.ExecuteNonQuery();
                         cn3.Close();
-                        Response.Write("<script>alert('change同意函已發送!');location.href='SetAgent.aspx';</script>");
+                        Response.Write("<script>alert('change同意函已發送!');location.href='MainPage.aspx';</script>");
 
                     }
+                    if (!string.IsNullOrWhiteSpace(TextBox2.Text))
+                    {
 
+
+                        using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+                        {
+                            cn.Open();
+
+                            SqlCommand cmd2 = new SqlCommand(@"Select TID , TN from TypeGroup where Tp = @Tp ORDER BY TID DESC ");
+                            cmd2.Connection = cn;
+                            cmd2.Parameters.AddWithValue("@Tp", DropDownList1.SelectedValue);
+
+                            using (SqlDataReader dr = cmd2.ExecuteReader())
+                            {
+                                if (dr.Read())
+                                {
+                                    TextBox3.Text = dr["TID"].ToString();
+                                    TextBox4.Text = dr["TN"].ToString();
+
+                                }
+
+                            }
+                            SqlCommand cmdedit = new SqlCommand(@"select TN  from TypeGroup where TN = @TN");
+                            cmdedit.Connection = cn;
+                            cmdedit.Parameters.AddWithValue("@TN", TextBox2.Text);
+                            using (SqlDataReader dr = cmdedit.ExecuteReader())
+                            {
+                                if (dr.Read())
+                                {
+                                    Response.Write(" <script language=JavaScript> alert( '已存在 '); </script> ");
+
+                                }
+                                else
+                                {
+                                    dr.Close();
+                                    string sqlstr = @"Insert Into tmpTypeGroup( TID, TN, Tp,SID ) Values ( @TID,@TN ,@Tp,@SID) ";
+
+
+                                    SqlCommand cmd = new SqlCommand(sqlstr, cn);
+                                    cmd.CommandText = sqlstr;
+                                    cmd.Parameters.AddWithValue("@TN", TextBox2.Text);
+                                    cmd.Parameters.AddWithValue("@Tp", DropDownList1.SelectedValue);
+                                    cmd.Parameters.AddWithValue("@TID", int.Parse(TextBox3.Text) + 1);
+                                    cmd.Parameters.AddWithValue("@SID",Date );
+                                    cmd.ExecuteNonQuery();//執行命令
+
+                                    
+
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Response.Write(" <script language=JavaScript> alert( '請勿空白 '); </script> ");
+                    }
                 }
 
             }

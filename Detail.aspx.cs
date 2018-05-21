@@ -875,7 +875,28 @@ namespace WebApplication1
                                                 cnAgent.Close();
                                             }
                                         }
+                                        if (Lbl_Type.Text == "公文類型：組織架構設定")
+                                        {
+                                            using (SqlConnection cnedit = new SqlConnection(tmpdbhelper.DB_CnStr))
+                                            {
+                                                cnedit.Open();
+                                                SqlCommand cmdedit = new SqlCommand(@"insert into TypeGroup (Tp,TID,TN) select Tp,TID,TN From tmpTypeGroup ");
+                                                                               
+                                                cmdedit.Connection = cnedit;
+                                                cmdedit.ExecuteNonQuery();
+                                                cnedit.Close();
+                                            }
+                                            using (SqlConnection cnUpate = new SqlConnection(tmpdbhelper.DB_CnStr))
+                                            {
+                                                cnUpate.Open();
+                                                SqlCommand cmd2 = new SqlCommand(@"Delete  From tmpTypeGroup  Where SID=@SID");
 
+                                                cmd2.Connection = cnUpate;
+                                                cmd2.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+                                                cmd2.ExecuteNonQuery();
+                                                cnUpate.Close();
+                                            }
+                                        }
                                         Response.Write("<script language=javascript>alert('簽核成功!')</script>");
                                         Response.Write("<script language=javascript>window.location.href='Detail.aspx'</script>");
                                     }

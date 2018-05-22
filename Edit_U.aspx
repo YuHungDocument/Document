@@ -1,8 +1,61 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/GuildPage.Master" AutoEventWireup="true" CodeBehind="Edit_U.aspx.cs" Inherits="WebApplication1.Edit_U" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
+      <style>
+        /* Icon when the collapsible content is shown */
+        .btn:after {
+            font-family: "Glyphicons Halflings";
+            
+            margin-left: 15px;
+        }
+        /* Icon when the collapsible content is hidden */
+        .btn.collapsed:after {
+            content: "\e080";
+        }
+
+        .row {
+            padding: 0 10px;
+        }
+
+        .clickable {
+            cursor: pointer;
+        }
+
+        .panel-heading span {
+            margin-top: -20px;
+            font-size: 15px;
+        }
+
+        html {
+            height: 100%;
+        }
+        .auto-style1 {
+            width: 533px;
+        }
+
+        .panel-primary {
+            width: 30vw;
+        }
+
+    </style>
+  <script>
+        $(document).on('click', '.panel-heading.clickable', function (e) {
+            var $this = $(this);
+            if (!$this.hasClass('panel-collapsed')) {
+                $this.parents('.panel').find('.panel-body').slideUp();
+                $this.addClass('panel-collapsed');
+                $this.find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+            } else {
+                $this.parents('.panel').find('.panel-body').slideDown();
+                $this.removeClass('panel-collapsed');
+                $this.find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+            }
+        })
+    </script>
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <link href="css/all.css" rel="stylesheet" />
+   
     <div class="panel">
         <div class="panel panel-primary">
         <div class="panel-heading pull clickable">

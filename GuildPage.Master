@@ -417,7 +417,7 @@
                 padding: 18px;
                 margin: 0;
                 border-radius: 0;
-                background-color: #f3f3f3;
+                /*background-color: #f3f3f3;*/
             }
             /* Search */
             #search .panel-body .navbar-form {

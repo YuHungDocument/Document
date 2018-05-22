@@ -83,13 +83,16 @@
         <tr>
             <td class="auto-style1">產品介紹</td>
             <td>
-                <CKEditor:CKEditorControl ID="CKEditorControl1" runat="server">
-                </CKEditor:CKEditorControl>
+                <CKEditor:CKEditorControl ID="CKEditorControl1" runat="server"></CKEditor:CKEditorControl>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="CKEditorControl1" ErrorMessage="*此為必要輸入欄位" ForeColor="Red" Display="Dynamic"></asp:RequiredFieldValidator>
             </td>
         </tr>
     </table>
-
+    <br />
     <asp:Button ID="Btn_Insert" runat="server" Text="新增產品" OnClick="Btn_Insert_Click" />
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <asp:Button ID="Btn_Return" runat="server" Text="返回" OnClick="Btn_Return_Click" ValidationGroup="NO"  />
     <asp:Label ID="Lbl_Eorr" runat="server"></asp:Label>
+    <br />
+    <br />
 </asp:Content>

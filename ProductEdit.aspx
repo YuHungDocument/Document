@@ -6,6 +6,7 @@
     <br />
     <asp:DataList ID="DataList1" runat="server" DataKeyField="PID" DataSourceID="SqlDataSource1" RepeatDirection="Horizontal">
         <ItemTemplate>
+            <asp:ImageButton ID="ImageButton1" style="height:250px; max-width:100%" runat="server" ImageUrl='<%# "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("ProductImg")) %>' />
             <br />
             產品名稱
             <br />
@@ -15,10 +16,10 @@
             <br />
             <asp:Label ID="ProductTypeLabel" runat="server" Text='<%# Eval("ProductType") %>' />
             <br />
-            價格:
+            Nt $
             <asp:Label ID="ProductPriceLabel" runat="server" Text='<%# Eval("ProductPrice") %>' />
             <br />
-            <asp:ImageButton ID="ImageButton1" Height="100px" Width="100px" runat="server" ImageUrl='<%# "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("ProductImg")) %>' />
+            
 
             <br />
             <br />

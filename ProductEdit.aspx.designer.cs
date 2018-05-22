@@ -13,6 +13,15 @@ namespace WebApplication1 {
     public partial class ProductEdit {
         
         /// <summary>
+        /// Btn_Inset 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Btn_Inset;
+        
+        /// <summary>
         /// DataList1 控制項。
         /// </summary>
         /// <remarks>

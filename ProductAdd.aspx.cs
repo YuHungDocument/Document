@@ -71,7 +71,7 @@ namespace WebApplication1
         //    }
         //}
 
-        public void bind()
+        public void ImgView()
         {
             using (SqlConnection con = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
@@ -163,8 +163,9 @@ namespace WebApplication1
                     con.Open();
                     cmd.ExecuteNonQuery();
                     con.Close();
-                    Response.Redirect("ProductEdit.aspx");
+                    Response.Write("<script>alert('新增產品成功!');location.href='ProductEdit.aspx';</script>");
                 }
+
             }
             else
             {
@@ -172,6 +173,11 @@ namespace WebApplication1
                 Lbl_Eorr.ForeColor = System.Drawing.Color.Red;
                 Lbl_Eorr.Text = "資料輸入未完全";
             }
+        }
+
+        protected void Btn_Return_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ProductEdit.aspx");
         }
     }
 }

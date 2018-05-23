@@ -169,7 +169,7 @@ namespace WebApplication1
                         SqlCommand cmduserInfo2 = new SqlCommand(@"select UserInfo.PK from UserInfo LEFT JOIN Detail ON UserInfo.EID=Detail.EID where (UserInfo.EID=@EID)");
                         cn3.Open();
 
-                        cmduserInfo.Parameters.AddWithValue("@EID", 20180509042543);
+                        cmduserInfo.Parameters.AddWithValue("@EID", 20180321051644);
 
                         //SqlCommand cmda = new SqlCommand(@"select EID from UserInfo where Department = @Dp and position=@position ");
                         //cmda.Connection = cn3;
@@ -243,7 +243,7 @@ namespace WebApplication1
 
                         //}
 
-                        cmd1.Parameters.AddWithValue("@EID", 20180509042543);
+                        cmd1.Parameters.AddWithValue("@EID", 20180321051644);
                         cmd1.Parameters.AddWithValue("@Department", tmpUserInfo.Department);
                         cmd1.Parameters.AddWithValue("@status", "1");
                         cmd1.Parameters.AddWithValue("@RSAkey", txt_PKmessage);

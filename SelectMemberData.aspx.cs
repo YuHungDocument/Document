@@ -172,37 +172,37 @@ namespace WebApplication1
                             Response.Redirect("KeyAddress.aspx");
                         }
                     }
+                // 建立 RSA 演算法物件的執行個體，並匯入先前建立的私鑰
+                RSACryptoServiceProvider rsaProvider = new RSACryptoServiceProvider();
+                try
+                {
+                    StreamReader str = new StreamReader(@"" + KeyAddress + "");
+                    string ReadAll = str.ReadToEnd();
                     // 建立 RSA 演算法物件的執行個體，並匯入先前建立的私鑰
-                    RSACryptoServiceProvider rsaProvider = new RSACryptoServiceProvider();
-                    try
-                    {
-                        StreamReader str = new StreamReader(@"" + KeyAddress + "");
-                        string ReadAll = str.ReadToEnd();
-                        // 建立 RSA 演算法物件的執行個體，並匯入先前建立的私鑰
-                        rsaProvider.FromXmlString(ReadAll);
-                        // 2) 讀取本文資料 
-                        Date2 = DateTime.Today.Year.ToString();
-                        if (DateTime.Today.Month < 10)
-                            Date2 += "0" + DateTime.Today.Month.ToString();
-                        else Date2 += DateTime.Today.Month.ToString();
-                        if (DateTime.Today.Day < 10)
-                            Date2 += "0" + DateTime.Today.Day.ToString();
-                        else
-                            Date2 += DateTime.Today.Day.ToString();
-                        byte[] content_txt_Ciphertext_Text = Encoding.UTF8.GetBytes(txt_Ciphertext_Text + Date2);
-                        byte[] content_txt_Ciphertext_Proposition = Encoding.UTF8.GetBytes(txt_Ciphertext_Proposition + Date2);
-                        // 3) 呼叫 SignData 方法, 對本文進行簽章
-                        byte[] signature_Text = rsaProvider.SignData(content_txt_Ciphertext_Text, new SHA1CryptoServiceProvider());  //指定一個雜湊法
-                        byte[] signature_Proposition = rsaProvider.SignData(content_txt_Ciphertext_Proposition, new SHA1CryptoServiceProvider());  //指定一個雜湊法
+                    rsaProvider.FromXmlString(ReadAll);
+                    // 2) 讀取本文資料 
+                    Date2 = DateTime.Today.Year.ToString();
+                    if (DateTime.Today.Month < 10)
+                        Date2 += "0" + DateTime.Today.Month.ToString();
+                    else Date2 += DateTime.Today.Month.ToString();
+                    if (DateTime.Today.Day < 10)
+                        Date2 += "0" + DateTime.Today.Day.ToString();
+                    else
+                        Date2 += DateTime.Today.Day.ToString();
+                    byte[] content_txt_Ciphertext_Text = Encoding.UTF8.GetBytes(txt_Ciphertext_Text + Date2);
+                    byte[] content_txt_Ciphertext_Proposition = Encoding.UTF8.GetBytes(txt_Ciphertext_Proposition + Date2);
+                    // 3) 呼叫 SignData 方法, 對本文進行簽章
+                    byte[] signature_Text = rsaProvider.SignData(content_txt_Ciphertext_Text, new SHA1CryptoServiceProvider());  //指定一個雜湊法
+                    byte[] signature_Proposition = rsaProvider.SignData(content_txt_Ciphertext_Proposition, new SHA1CryptoServiceProvider());  //指定一個雜湊法
 
-                        // 輸出簽章 (使用 Base64 編碼）
-                        txt_RSAhash_Text = Convert.ToBase64String(signature_Text);
-                        txt_RSAhash_Proposition = Convert.ToBase64String(signature_Proposition);
-                    }
-                    catch
-                    {
-                        Response.Write("<script>alert('此位置找無金鑰，請從新設定!');location.href='KeyAddress.aspx';</script>");
-                    }
+                    // 輸出簽章 (使用 Base64 編碼）
+                    txt_RSAhash_Text = Convert.ToBase64String(signature_Text);
+                    txt_RSAhash_Proposition = Convert.ToBase64String(signature_Proposition);
+                }
+                catch
+                {
+                    Response.Write("<script>alert('此位置找無金鑰，請從新設定!');location.href='KeyAddress.aspx';</script>");
+                }
 
                     cmd3.Parameters.AddWithValue("@SID", Date);
                     cmd3.Parameters.AddWithValue("@EID", tmpUserInfo.EID);
@@ -210,7 +210,7 @@ namespace WebApplication1
                     cmd3.Parameters.AddWithValue("@Text", txt_Ciphertext_Text);
                     cmd3.Parameters.AddWithValue("@Title", "change同意函");
                     cmd3.Parameters.AddWithValue("@Proposition", txt_Ciphertext_Proposition);
-                    cmd3.Parameters.AddWithValue("@Type", "change設定");
+                    cmd3.Parameters.AddWithValue("@Type", "Permission設定");
                     cmd3.Parameters.AddWithValue("@YOS", "10");
                     cmd3.Parameters.AddWithValue("@AESkey", txtKey);
                     cmd3.Parameters.AddWithValue("@AESiv", txtIV);
@@ -282,7 +282,7 @@ namespace WebApplication1
                     cmd.Parameters.AddWithValue("@status", "1");
                     cmd.Parameters.AddWithValue("@RSAkey", txt_PKmessage);
                     cmd.Parameters.AddWithValue("@look", 1);
-                    cmd.Parameters.AddWithValue("@sign", 1);
+                    cmd.Parameters.AddWithValue("@sign", 0);
                     cmd.ExecuteNonQuery();
                     cn3.Close();
                     cn3.Open();
@@ -294,15 +294,41 @@ namespace WebApplication1
                     cmd2.Parameters.AddWithValue("@status", "1");
                     cmd2.Parameters.AddWithValue("@RSAkey", txt_PKmessage2);
                     cmd2.Parameters.AddWithValue("@look", 1);
-                    cmd2.Parameters.AddWithValue("@sign", 0);
+                    cmd2.Parameters.AddWithValue("@sign", 1);
                     cmd2.ExecuteNonQuery();
                     cn3.Close();
+
+using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+                cn.Open();
+                SqlCommand cmdW = new SqlCommand(@"insert into Warrant (Authorizer,A_EID,recipient,R_EID,New_Parmission,Date_Start,Date_End,effective) values (@Authorizer,@A_EID,@recipient,@R_EID,@New_Parmission,@Date_Start,@Date_End,@effective)");
+                    cmdW.Connection = cn;
+                    cmdW.Parameters.AddWithValue("@Authorizer",tmpUserInfo.Name);
+                    cmdW.Parameters.AddWithValue("@A_EID",tmpUserInfo.EID);
+                    cmdW.Parameters.AddWithValue("@recipient",DDL_Name.SelectedValue);
+                    cmdW.Parameters.AddWithValue("@R_EID",DDL_EID.SelectedValue);
+                    //cmd2.Parameters.AddWithValue("@Raw_Parmisson",);
+                    cmdW.Parameters.AddWithValue("@New_Parmission",DDL_Permission.SelectedValue);
+
+                string date1 = Request.Form["DS"];
+                string date2 = Request.Form["DE"];
+
+
+                    cmdW.Parameters.AddWithValue("@Date_Start", date1);
+                    cmdW.Parameters.AddWithValue("@Date_End", date2);
+                    cmdW.Parameters.AddWithValue("@effective",'1');
+                    cmdW.ExecuteNonQuery();
+                cn.Close();
+
+            }
+
                     Response.Write("<script>alert('change同意函已發送!');location.href='SetAgent.aspx';</script>");
 
                 }
             
          }
 
-        }
+        
     }
+}
   

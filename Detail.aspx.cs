@@ -897,7 +897,22 @@ namespace WebApplication1
                                                 cnUpate.Close();
                                             }
                                         }
-                                        Response.Write("<script language=javascript>alert('簽核成功!')</script>");
+
+                                        if (Lbl_Type.Text == "公文類型：Permission設定")
+                                        {
+                                            using (SqlConnection cnedit = new SqlConnection(tmpdbhelper.DB_CnStr))
+                                            {
+                                                cnedit.Open();
+                                                SqlCommand cmdedit = new SqlCommand(@"update UserInfo SET UserInfo.temp_Permission = Warrant.New_Parmission From Warrant where Warrant.R_EID =  UserInfo.EID ");
+
+                                                cmdedit.Connection = cnedit;
+                                                cmdedit.ExecuteNonQuery();
+                                                cnedit.Close();
+                                            }
+                                         }
+
+
+                                            Response.Write("<script language=javascript>alert('簽核成功!')</script>");
                                         Response.Write("<script language=javascript>window.location.href='Detail.aspx'</script>");
                                     }
                                 }

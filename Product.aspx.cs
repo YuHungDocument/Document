@@ -31,5 +31,14 @@ namespace WebApplication1
         {
             Response.Redirect("product.aspx");
         }
+
+        protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
+        {
+            DataListItem dli = (sender as ImageButton).NamingContainer as DataListItem;
+            Label PID = dli.FindControl("Lbl_PID") as Label;
+
+            Session["PID"] = PID.Text;
+            Response.Redirect("ProductDetail.aspx");
+        }
     }
 }

@@ -8,12 +8,12 @@ using System.Data.SqlClient;
 
 namespace WebApplication1
 {
-    public partial class ProductView : System.Web.UI.Page
+    public partial class ProductDetail : System.Web.UI.Page
     {
         DbHelper tmpdbhelper = new DbHelper();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!Page.IsPostBack)
+            if (!Page.IsPostBack)
             {
                 bind();
             }
@@ -32,8 +32,8 @@ namespace WebApplication1
                 {
                     if (dr.Read())
                     {
-                        Lbl_Price.Text = "建議售價：" +dr["ProductPrice"].ToString();
-                        Lbl_Type.Text ="車款："+ dr["ProductType"].ToString();
+                        Lbl_Price.Text = "建議售價：" + dr["ProductPrice"].ToString();
+                        Lbl_Type.Text = "車款：" + dr["ProductType"].ToString();
                         Lbl_Name.Text = dr["ProductName"].ToString();
                         Lbl_NamePath.Text = dr["ProductName"].ToString();
                         Lbl_Context.Text = dr["ProductContext"].ToString();

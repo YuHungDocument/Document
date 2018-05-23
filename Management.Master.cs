@@ -11,12 +11,19 @@ namespace WebApplication1
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!Page.IsPostBack)
+            {
+                if (Session["managerID"] == null)
+                {
+                    Response.Redirect("Home.aspx");
+                }
+            }
         }
 
         protected void Lb_LogOut_Click(object sender, EventArgs e)
         {
-
+            Session["managerID"] = null;
+            Response.Redirect("Home.aspx");
         }
     }
 }

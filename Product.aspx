@@ -80,12 +80,13 @@
         <asp:DataList ID="DataList1" runat="server" DataKeyField="PID" DataSourceID="SqlDataSource1" RepeatDirection="Horizontal" RepeatColumns="2">
             <ItemTemplate>
                 <div style="text-align: center; padding-left:10px;">
-                    <asp:ImageButton ID="ImageButton1" style="height:250px; max-width:100%" runat="server" ImageUrl='<%# "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("ProductImg")) %>' />
+                    <asp:ImageButton ID="ImageButton1" style="height:250px; max-width:100%" runat="server" ImageUrl='<%# "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("ProductImg")) %>' OnClick="ImageButton1_Click" />
                     <br />
                     <asp:Label ID="ProductNameLabel" runat="server" Text='<%# Eval("ProductName") %>' />                    
                     <br />
                     <div style="color:#999999">建議售價：NT $
             <asp:Label ID="ProductPriceLabel" runat="server" Text='<%# Eval("ProductPrice") %>' ForeColor="#999999" /></div>
+                    <asp:Label ID="Lbl_PID" runat="server" Text='<%# Eval("PID") %>' Visible="false"></asp:Label>
                     <br />
                 </div>
 

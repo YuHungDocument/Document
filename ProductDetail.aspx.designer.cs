@@ -10,7 +10,7 @@
 namespace WebApplication1 {
     
     
-    public partial class ProductView {
+    public partial class ProductDetail {
         
         /// <summary>
         /// Lbl_NamePath 控制項。

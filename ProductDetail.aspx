@@ -1,18 +1,14 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Management.Master" AutoEventWireup="true" CodeBehind="ProductView.aspx.cs" Inherits="WebApplication1.ProductView" %>
-
-<%@ Register Assembly="CKEditor.NET" Namespace="CKEditor.NET" TagPrefix="CKEditor" %>
-
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Home.Master" AutoEventWireup="true" CodeBehind="ProductDetail.aspx.cs" Inherits="WebApplication1.ProductDetail" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <style>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+        <style>
 
         .auto-style1 {
             width: 348px;
         }
 
     </style>
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
     <br />
     <a href="Home.aspx">首頁</a>/<a href="Product.aspx">產品介紹</a>/<asp:Label ID="Lbl_NamePath" runat="server" Text="Label"></asp:Label>
     <hr />
@@ -42,6 +38,4 @@
             </td>
         </tr>
     </table>
-
-
 </asp:Content>

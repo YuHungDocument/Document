@@ -145,7 +145,7 @@
                     <td><a href="#"><span class="circle_in_black glyphicon glyphicon-th-list"></span>
                         <br />
                         網頁導覽</a></td>
-                    <td><a href="#"><span class="circle_in_black glyphicon glyphicon-leaf"></span>
+                    <td><a href="Connect.aspx"><span class="circle_in_black glyphicon glyphicon-leaf"></span>
                         <br />
                         服務專區</a></td>
                 </tr>

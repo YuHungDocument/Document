@@ -28,7 +28,7 @@ namespace WebApplication1
                 cmd.Parameters.AddWithValue("@Context", txt_Connect.Text);
                 cmd.Parameters.AddWithValue("@Date", DateTime.Today);
                 cmd.ExecuteNonQuery();
-                Response.Write("<script>alert('已成功新增訊息!');location.href='AddNews.aspx';</script>");
+                Response.Write("<script>alert('已成功新增訊息!');location.href='AddNewsMessage.aspx';</script>");
             }
         }
     }

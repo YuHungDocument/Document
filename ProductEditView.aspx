@@ -1,9 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Management.Master" AutoEventWireup="true" CodeBehind="ProductAdd.aspx.cs" Inherits="WebApplication1.ProductAdd" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Management.Master" AutoEventWireup="true" CodeBehind="ProductEditView.aspx.cs" Inherits="WebApplication1.ProductEditView" %>
 
 <%@ Register Assembly="CKEditor.NET" Namespace="CKEditor.NET" TagPrefix="CKEditor" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <style type="text/css">
+        <style type="text/css">
         .auto-style1 {
             width: 183px;
         }
@@ -27,7 +26,7 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
+    
     <br />
     <table class="nav-justified">
         <tr>
@@ -58,12 +57,13 @@
             <td>
                 <asp:DropDownList ID="DropDownList1" runat="server" DataSourceID="SqlDataSource1" DataTextField="TN" DataValueField="TN">
                 </asp:DropDownList>
-                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString %>" SelectCommand="SELECT [TN] FROM [TypeGroup] WHERE ([Tp] = @Tp)">
+                            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString %>" SelectCommand="SELECT [TN] FROM [TypeGroup] WHERE ([Tp] = @Tp)">
                     <SelectParameters>
                         <asp:Parameter DefaultValue="BT" Name="Tp" Type="String" />
                     </SelectParameters>
                 </asp:SqlDataSource>
             </td>
+
         </tr>
         <tr>
             <td class="auto-style1">&nbsp;</td>
@@ -73,8 +73,8 @@
             <td class="auto-style1">上傳圖檔</td>
             <td>
                 <asp:FileUpload ID="FileUpload1" runat="server" onchange="previewFile()" /><%--<asp:Button ID="Btn_UpLoad" runat="server" Text="上傳" OnClick="Btn_UpLoad_Click" ValidationGroup="Upload" />--%>
-                <asp:Image ID="Image1" runat="server" Style="max-width: 500px; max-height: 250px;" />
-                
+                <asp:Image ID="Image1" runat="server" Style="max-width: 500px; max-height: 250px;" ImageUrl='<%# "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("ProductImg")) %>'/>
+
             </td>
         </tr>
         <tr>
@@ -90,8 +90,10 @@
         </tr>
     </table>
     <br />
-    <asp:Button ID="Btn_Insert" runat="server" Text="新增產品" OnClick="Btn_Insert_Click" />
-    &nbsp;&nbsp;&nbsp;&nbsp;
+    <asp:Button ID="Btn_UpLoad" runat="server" Text="修改" OnClick="Btn_UpLoad_Click" />
+        &nbsp;&nbsp;
+    <asp:Button ID="Btn_Delete" runat="server" Text="刪除產品" onclientclick="return confirm('確定要刪除嗎？')" OnClick="Btn_Delete_Click" />
+    &nbsp;&nbsp;
     <asp:Button ID="Btn_Return" runat="server" Text="返回" OnClick="Btn_Return_Click" ValidationGroup="NO"  />
     <asp:Label ID="Lbl_Eorr" runat="server"></asp:Label>
     <br />

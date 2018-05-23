@@ -29,7 +29,7 @@ namespace WebApplication1
             Label PID = dli.FindControl("Lbl_ID") as Label;
 
             Session["PID"] = PID.Text;
-            Response.Redirect("ProductView.aspx");
+            Response.Redirect("ProductEditView.aspx");
         }
     }
 }

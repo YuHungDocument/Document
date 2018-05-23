@@ -10,7 +10,7 @@
 namespace WebApplication1 {
     
     
-    public partial class ProductAdd {
+    public partial class ProductEditView {
         
         /// <summary>
         /// Txt_Name 控制項。
@@ -112,13 +112,22 @@ namespace WebApplication1 {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
         
         /// <summary>
-        /// Btn_Insert 控制項。
+        /// Btn_UpLoad 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Btn_Insert;
+        protected global::System.Web.UI.WebControls.Button Btn_UpLoad;
+        
+        /// <summary>
+        /// Btn_Delete 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Btn_Delete;
         
         /// <summary>
         /// Btn_Return 控制項。

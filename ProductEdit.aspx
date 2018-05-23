@@ -34,7 +34,7 @@
                 車款：
             <asp:Label ID="ProductTypeLabel" runat="server" Text='<%# Eval("ProductType") %>' />
                 <br />
-                Nt $
+                NT $
             <asp:Label ID="ProductPriceLabel" runat="server" Text='<%# Eval("ProductPrice") %>' />
                 <asp:Label ID="Lbl_ID" runat="server" Text='<%# Eval("PID") %>' Visible="false" />
                 <br />

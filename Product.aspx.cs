@@ -11,7 +11,34 @@ namespace WebApplication1
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if(! Page.IsPostBack)
+            {
+                DataList1.DataBind();
 
+            }
+           
+        }
+        protected void TNLb_Click(object sender, EventArgs e)
+        {
+            DataListItem dli = (sender as LinkButton).NamingContainer as DataListItem;
+            LinkButton BT = dli.FindControl("TNLb") as LinkButton;
+            Session["BT"] = BT.Text;
+            SqlDataSource1.SelectCommand = "SELECT * FROM [Product] Where [ProductType]='" + Session["BT"] + "'";
+
+        }
+
+        protected void TNALL_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("product.aspx");
+        }
+
+        protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
+        {
+            DataListItem dli = (sender as ImageButton).NamingContainer as DataListItem;
+            Label PID = dli.FindControl("Lbl_PID") as Label;
+
+            Session["PID"] = PID.Text;
+            Response.Redirect("ProductDetail.aspx");
         }
     }
 }

@@ -55,13 +55,15 @@
         <tr>
             <td class="auto-style1">選擇車種</td>
             <td>
-                <asp:DropDownList ID="DropDownList1" runat="server">
-                    <asp:ListItem>--請選擇車款--</asp:ListItem>
-                    <asp:ListItem>登山車</asp:ListItem>
-                    <asp:ListItem>公路車</asp:ListItem>
-                    <asp:ListItem>淑女車</asp:ListItem>
-                    <asp:ListItem>折疊車</asp:ListItem>
-                </asp:DropDownList></td>
+                <asp:DropDownList ID="DropDownList1" runat="server" DataSourceID="SqlDataSource1" DataTextField="TN" DataValueField="TN">
+                </asp:DropDownList>
+                            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString %>" SelectCommand="SELECT [TN] FROM [TypeGroup] WHERE ([Tp] = @Tp)">
+                    <SelectParameters>
+                        <asp:Parameter DefaultValue="BT" Name="Tp" Type="String" />
+                    </SelectParameters>
+                </asp:SqlDataSource>
+            </td>
+
         </tr>
         <tr>
             <td class="auto-style1">&nbsp;</td>
@@ -89,7 +91,9 @@
     </table>
     <br />
     <asp:Button ID="Btn_UpLoad" runat="server" Text="修改" OnClick="Btn_UpLoad_Click" />
-        &nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;
+    <asp:Button ID="Btn_Delete" runat="server" Text="刪除產品" onclientclick="return confirm('確定要刪除嗎？')" OnClick="Btn_Delete_Click" />
+    &nbsp;&nbsp;
     <asp:Button ID="Btn_Return" runat="server" Text="返回" OnClick="Btn_Return_Click" ValidationGroup="NO"  />
     <asp:Label ID="Lbl_Eorr" runat="server"></asp:Label>
     <br />

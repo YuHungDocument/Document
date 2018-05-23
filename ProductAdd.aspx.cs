@@ -107,63 +107,72 @@ namespace WebApplication1
             string fileExtension = Path.GetExtension(filename);
             int fileSize = postedFile.ContentLength;
 
-
-                Stream stream = postedFile.InputStream;
-                BinaryReader binaryReader = new BinaryReader(stream);
-                Byte[] bytes = binaryReader.ReadBytes((int)stream.Length);
-
-                using (SqlConnection con = new SqlConnection(tmpdbhelper.DB_CnStr))
+                if (fileExtension.ToLower() == ".jpg" || fileExtension.ToLower() == ".gif"
+                    || fileExtension.ToLower() == ".png" || fileExtension.ToLower() == ".bmp")
                 {
-                    SqlCommand cmd = new SqlCommand("spUploadImage", con);
-                    cmd.CommandType = CommandType.StoredProcedure;
+                    Stream stream = postedFile.InputStream;
+                    BinaryReader binaryReader = new BinaryReader(stream);
+                    Byte[] bytes = binaryReader.ReadBytes((int)stream.Length);
 
-                    SqlParameter paramName = new SqlParameter()
+                    using (SqlConnection con = new SqlConnection(tmpdbhelper.DB_CnStr))
                     {
-                        ParameterName = @"ProductName",
-                        Value = Txt_Name.Text
-                    };
-                    cmd.Parameters.Add(paramName);
+                        SqlCommand cmd = new SqlCommand("spUploadImage", con);
+                        cmd.CommandType = CommandType.StoredProcedure;
 
-                    SqlParameter paramSize = new SqlParameter()
-                    {
-                        ParameterName = "@ProductType",
-                        Value = DropDownList1.SelectedValue
-                    };
-                    cmd.Parameters.Add(paramSize);
+                        SqlParameter paramName = new SqlParameter()
+                        {
+                            ParameterName = @"ProductName",
+                            Value = Txt_Name.Text
+                        };
+                        cmd.Parameters.Add(paramName);
 
-                    SqlParameter paramPrice = new SqlParameter()
-                    {
-                        ParameterName = "@ProductPrice",
-                        Value = Txt_Price.Text
-                    };
-                    cmd.Parameters.Add(paramPrice);
+                        SqlParameter paramSize = new SqlParameter()
+                        {
+                            ParameterName = "@ProductType",
+                            Value = DropDownList1.SelectedValue
+                        };
+                        cmd.Parameters.Add(paramSize);
 
-                    SqlParameter paramContext = new SqlParameter()
-                    {
-                        ParameterName = "@ProductContext",
-                        Value = CKEditorControl1.Text
-                    };
-                    cmd.Parameters.Add(paramContext);
+                        SqlParameter paramPrice = new SqlParameter()
+                        {
+                            ParameterName = "@ProductPrice",
+                            Value = Txt_Price.Text
+                        };
+                        cmd.Parameters.Add(paramPrice);
 
-                    SqlParameter paramImageData = new SqlParameter()
-                    {
-                        ParameterName = "@ProductImg",
-                        Value = bytes
-                    };
-                    cmd.Parameters.Add(paramImageData);
+                        SqlParameter paramContext = new SqlParameter()
+                        {
+                            ParameterName = "@ProductContext",
+                            Value = CKEditorControl1.Text
+                        };
+                        cmd.Parameters.Add(paramContext);
 
-                    SqlParameter paramNewId = new SqlParameter()
-                    {
-                        ParameterName = "@NewId",
-                        Value = -1,
-                        Direction = ParameterDirection.Output
-                    };
-                    cmd.Parameters.Add(paramNewId);
+                        SqlParameter paramImageData = new SqlParameter()
+                        {
+                            ParameterName = "@ProductImg",
+                            Value = bytes
+                        };
+                        cmd.Parameters.Add(paramImageData);
 
-                    con.Open();
-                    cmd.ExecuteNonQuery();
-                    con.Close();
-                    Response.Write("<script>alert('新增產品成功!');location.href='ProductEdit.aspx';</script>");
+                        SqlParameter paramNewId = new SqlParameter()
+                        {
+                            ParameterName = "@NewId",
+                            Value = -1,
+                            Direction = ParameterDirection.Output
+                        };
+                        cmd.Parameters.Add(paramNewId);
+
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                        Response.Write("<script>alert('新增產品成功!');location.href='ProductEdit.aspx';</script>");
+                    }
+                }
+                else
+                {
+                    Lbl_Eorr.Visible = true;
+                    Lbl_Eorr.ForeColor = System.Drawing.Color.Red;
+                    Lbl_Eorr.Text = "照片檔案只能存放jpg gif png bmp類型";
                 }
 
             }

@@ -34,7 +34,7 @@
         <h3>參數設定</h3>
         <ul>
             <li><a href="Environmentalparameters.aspx">企業名稱設定</a></li>
-            <li><a href="#">聯絡問題設定</a></li>
+            <li><a href="SetConnect.aspx">聯絡問題設定</a></li>
             <li><a href="#">產品種類設定</a></li>
         </ul>
     </div>

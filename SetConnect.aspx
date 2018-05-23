@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Management.Master" AutoEventWireup="true" CodeBehind="SetConnect.aspx.cs" Inherits="WebApplication1.SetConnect" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-     <style>
+      <style>
         .sidenav ul {
             list-style-type: none; /* 不顯示清單符號 */
             margin: 0px;
@@ -30,7 +30,7 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="sidenav col-sm-2">
+     <div class="sidenav col-sm-2">
         <h3>參數設定</h3>
         <ul>
             <li><a href="Environmentalparameters.aspx">企業名稱設定</a></li>
@@ -39,17 +39,52 @@
         </ul>
     </div>
      <p>
-    <p>
-        <asp:GridView ID="GridView1" runat="server" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" DataSourceID="SqlDataSource1">
-            <Columns>
-                <asp:CommandField ShowSelectButton="True" />
-                <asp:DynamicField DataField="TN" HeaderText="TN" />
-            </Columns>
-        </asp:GridView>
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString %>" SelectCommand="SELECT [TN] FROM [TypeGroup] WHERE ([Tp] = @Tp)">
-            <SelectParameters>
-                <asp:Parameter DefaultValue="CT" Name="Tp" Type="String" />
-            </SelectParameters>
-        </asp:SqlDataSource>
+         <h3>現有聯絡主旨:</h3>
+         <asp:GridView ID="GridView1" runat="server" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="Tp,TID" DataSourceID="SqlDataSource1" CellPadding="4" ForeColor="Black" GridLines="Horizontal" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" Width="800px">
+             <Columns>
+                <asp:CommandField  ShowEditButton="True" />
+                 <asp:TemplateField  SortExpression="TN">
+                      <HeaderTemplate>
+                                <div style="text-align: center;">聯絡標題</div>
+                            </HeaderTemplate>
+                     <EditItemTemplate>
+                         <asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("TN") %>'></asp:TextBox>
+                     </EditItemTemplate>
+                     <ItemTemplate>
+                         <asp:Label ID="Label1" runat="server" Text='<%# Bind("TN") %>'></asp:Label>
+                     </ItemTemplate>
+                 </asp:TemplateField>
+                   <asp:CommandField ShowDeleteButton="True" />
+                
+             </Columns>
+             <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
+             <HeaderStyle BackColor="#333333" Font-Bold="True" ForeColor="White" HorizontalAlign="Center" />
+             <PagerStyle BackColor="White" ForeColor="Black" HorizontalAlign="Right" />
+             <RowStyle HorizontalAlign="Center" />
+             <SelectedRowStyle BackColor="#CC3333" Font-Bold="True" ForeColor="White" />
+             <SortedAscendingCellStyle BackColor="#F7F7F7" />
+             <SortedAscendingHeaderStyle BackColor="#4B4B4B" />
+             <SortedDescendingCellStyle BackColor="#E5E5E5" />
+             <SortedDescendingHeaderStyle BackColor="#242121" />
+     </asp:GridView>
 
+     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString %>" DeleteCommand="DELETE FROM [TypeGroup] WHERE [Tp] = @Tp AND [TID] = @TID" InsertCommand="INSERT INTO [TypeGroup] ([Tp], [TID], [TN]) VALUES (@Tp, @TID, @TN)" SelectCommand="SELECT * FROM [TypeGroup] WHERE ([Tp] = @Tp)And [TID]!=0" UpdateCommand="UPDATE [TypeGroup] SET [TN] = @TN WHERE [Tp] = @Tp AND [TID] = @TID">
+         <DeleteParameters>
+             <asp:Parameter Name="Tp" Type="String" />
+             <asp:Parameter Name="TID" Type="Int32" />
+         </DeleteParameters>
+         <InsertParameters>
+             <asp:Parameter Name="Tp" Type="String" />
+             <asp:Parameter Name="TID" Type="Int32" />
+             <asp:Parameter Name="TN" Type="String" />
+         </InsertParameters>
+         <SelectParameters>
+             <asp:Parameter DefaultValue="CT" Name="Tp" Type="String" />
+         </SelectParameters>
+         <UpdateParameters>
+             <asp:Parameter Name="TN" Type="String" />
+             <asp:Parameter Name="Tp" Type="String" />
+             <asp:Parameter Name="TID" Type="Int32" />
+         </UpdateParameters>
+     </asp:SqlDataSource>
 </asp:Content>

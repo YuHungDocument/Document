@@ -432,6 +432,7 @@
     <Content Include="Product.aspx" />
     <Content Include="ProductAdd.aspx" />
     <Content Include="ProductEdit.aspx" />
+    <Content Include="ProductEditView.aspx" />
     <Content Include="ProductView.aspx" />
     <Content Include="P\8.jpg" />
     <Content Include="P\document.png" />
@@ -816,6 +817,13 @@
     </Compile>
     <Compile Include="ProductEdit.aspx.designer.cs">
       <DependentUpon>ProductEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProductEditView.aspx.cs">
+      <DependentUpon>ProductEditView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProductEditView.aspx.designer.cs">
+      <DependentUpon>ProductEditView.aspx</DependentUpon>
     </Compile>
     <Compile Include="ProductView.aspx.cs">
       <DependentUpon>ProductView.aspx</DependentUpon>

@@ -446,8 +446,10 @@
     <Content Include="Register.aspx" />
     <Content Include="set.aspx" />
     <Content Include="SetAgent.aspx" />
+    <Content Include="SetConnect.aspx" />
     <Content Include="setInfo.aspx" />
     <Content Include="ucGridViewChoiceAll.ascx" />
+    <Content Include="WebNavigation.aspx" />
     <Content Include="WriteDocument.aspx" />
     <Content Include="WriteVote.aspx" />
     <Content Include="font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
@@ -869,6 +871,13 @@
     <Compile Include="SetAgent.aspx.designer.cs">
       <DependentUpon>SetAgent.aspx</DependentUpon>
     </Compile>
+    <Compile Include="SetConnect.aspx.cs">
+      <DependentUpon>SetConnect.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SetConnect.aspx.designer.cs">
+      <DependentUpon>SetConnect.aspx</DependentUpon>
+    </Compile>
     <Compile Include="setInfo.aspx.cs">
       <DependentUpon>setInfo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -897,6 +906,13 @@
     </Compile>
     <Compile Include="WaitVote.aspx.designer.cs">
       <DependentUpon>WaitVote.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebNavigation.aspx.cs">
+      <DependentUpon>WebNavigation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebNavigation.aspx.designer.cs">
+      <DependentUpon>WebNavigation.aspx</DependentUpon>
     </Compile>
     <Compile Include="WriteDocument.aspx.cs">
       <DependentUpon>WriteDocument.aspx</DependentUpon>

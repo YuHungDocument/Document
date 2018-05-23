@@ -142,7 +142,7 @@
                     <td><a href="Register.aspx"><span class="circle_in_black glyphicon glyphicon-hand-right"></span>
                         <br />
                         加入我們</a></td>
-                    <td><a href="#"><span class="circle_in_black glyphicon glyphicon-th-list"></span>
+                    <td><a href="Navigation.aspx"><span class="circle_in_black glyphicon glyphicon-th-list"></span>
                         <br />
                         網頁導覽</a></td>
                     <td><a href="Connect.aspx"><span class="circle_in_black glyphicon glyphicon-leaf"></span>

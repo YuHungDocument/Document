@@ -145,6 +145,7 @@
                             <li><a href="CompanyIntroduction.aspx">公司介紹管理</a></li>
                             <li><a href="ProductEdit.aspx">產品管理</a></li>
                             <li><a href="#">關於我們管理</a></li>
+                            <li><a href="Environmentalparameters.aspx">參數設定</a></li>
                             <li>
                                 <asp:LinkButton ID="Lb_LogOut" runat="server" OnClick="Lb_LogOut_Click">登出</asp:LinkButton></li>
                         </ul>

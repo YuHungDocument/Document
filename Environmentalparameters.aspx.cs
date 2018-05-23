@@ -15,18 +15,12 @@ namespace WebApplication1
         {
             if (!Page.IsPostBack)
             {
-                if (Session["userinfo"] == null)
+                if (Session["managerID"] == null)
                 {
                     Response.Redirect("Home.aspx");
                 }
                 else
                 {
-                    ((Label)this.Master.FindControl("Lb_Title")).Text = "系統參數設定";
-                    UserInfo tmpUserInfo = null;
-                    if (Session["userinfo"] is UserInfo)
-                    {
-                        tmpUserInfo = (UserInfo)Session["userinfo"];
-                    }
                     using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
                     {
                         cn.Open();

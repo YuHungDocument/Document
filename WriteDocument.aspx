@@ -19,7 +19,7 @@
     <style type="text/css">
         table {
             width: 100%;
-            border: #f6bb9e 2px solid;
+            border: #ffffff 1px solid;
         }
 
         .entryForm td, entryForm th {
@@ -281,12 +281,61 @@
                                     <asp:Label ID="Lbl_GpName" runat="server" Text="Label" Visible="False"></asp:Label>
                                 </ContentTemplate>
                             </asp:UpdatePanel>
+
                             <br />
                             <br />
                             <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                                 <ContentTemplate>
                                     <asp:CheckBox ID="ChB_Check" runat="server" Text="簽核時是否重新檢查金鑰" />
                                     <br />
+                                    <asp:GridView ID="GridView5" runat="server" AutoGenerateColumns="False" GridLines="Horizontal">
+                                        <Columns>
+                                            <asp:TemplateField HeaderText="排列" ShowHeader="False" Visible="False">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="Label1" runat="server" Text='<%# Bind("ID") %>'></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:BoundField DataField="SID" HeaderText="序列" Visible="false" />                                           
+                                            
+                                            <asp:TemplateField HeaderText="層級">
+                                                <ItemTemplate>
+                                                    <asp:TextBox DataField="Lvl" ID="Txt_Lvl" runat="server" OnTextChanged="Txt_Lvl_TextChanged" TextMode="Number" Width="50px" AutoPostBack="True"></asp:TextBox>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="人員編號">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="Lbl_ID" runat="server"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="部門">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="Lbl_Dep" runat="server"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="員工姓名">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="Lbl_Name" runat="server"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField>
+                                                <ItemTemplate>
+                                                    <asp:CheckBox ID="Cb_sign" runat="server" OnCheckedChanged="Cb_sign_CheckedChanged" AutoPostBack="True" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField>
+                                                <ItemTemplate>
+                                                    <asp:CheckBox ID="Cb_path" runat="server" OnCheckedChanged="Cb_path_CheckedChanged" AutoPostBack="True" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField>
+                                                <ItemTemplate>
+                                                    <asp:CheckBox ID="Cb_comment" runat="server" AutoPostBack="true" OnCheckedChanged="Cb_comment_CheckedChanged" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
+                                        <HeaderStyle HorizontalAlign="Center" />
+                                    </asp:GridView>
+
                                     <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" OnRowDataBound="GridView2_RowDataBound" ItemStyle-HorizontalAlign="Center" GridLines="Horizontal">
                                         <Columns>
                                             <asp:TemplateField HeaderText="排列" ShowHeader="False" Visible="False">
@@ -295,14 +344,6 @@
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:BoundField DataField="SID" HeaderText="序列" Visible="false" />
-                                            <asp:TemplateField>
-                                                <HeaderTemplate>
-                                                    <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll2" CheckBoxName="Cb_Select" HeaderText="選擇列" />
-                                                </HeaderTemplate>
-                                                <ItemTemplate>
-                                                    <asp:CheckBox ID="Cb_Select" runat="server" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
                                             <asp:TemplateField HeaderText="層級">
                                                 <ItemTemplate>
                                                     <asp:TextBox DataField="Lvl" ID="Txt_Lvl" runat="server" OnTextChanged="Txt_Lvl_TextChanged" TextMode="Number" Width="50px" AutoPostBack="True"></asp:TextBox>
@@ -343,10 +384,10 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField>
                                                 <HeaderTemplate>
-                                                    <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll3"  CheckBoxName="Cb_comment" HeaderText="是否評論" OnCheckedChanged="Cb_comment_CheckedChanged" AutoPostBack="True"/>
+                                                    <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll3" CheckBoxName="Cb_comment" HeaderText="是否評論" OnCheckedChanged="Cb_comment_CheckedChanged" AutoPostBack="True" />
                                                 </HeaderTemplate>
                                                 <ItemTemplate>
-                                                    <asp:CheckBox ID="Cb_comment" runat="server" AutoPostBack="true" OnCheckedChanged="Cb_comment_CheckedChanged"/>
+                                                    <asp:CheckBox ID="Cb_comment" runat="server" AutoPostBack="true" OnCheckedChanged="Cb_comment_CheckedChanged" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>

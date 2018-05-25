@@ -473,10 +473,10 @@
                 </div>
                 <ul>
                     <li>
-                        <asp:LinkButton ID="Lb_Logout" runat="server" OnClick="Lb_Logout_Click"><span class="glyphicon glyphicon-log-out"></span>登出</asp:LinkButton>
+                        <asp:LinkButton ID="Lb_Logout" runat="server" OnClick="Lb_Logout_Click">登出</asp:LinkButton>
                     </li>
                     <li>
-                        <asp:LinkButton ToolTip="個人資料" ID="Lb_UserInfo" runat="server"><span class="glyphicon glyphicon-user"></span></asp:LinkButton>
+                        <asp:LinkButton ToolTip="個人資料" ID="Lb_UserInfo" runat="server"></asp:LinkButton>
                     </li>
                 </ul>
         </div>

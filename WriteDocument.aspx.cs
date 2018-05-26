@@ -1136,11 +1136,8 @@ namespace WebApplication1
                     cmd3.Parameters.AddWithValue("@txt_RSAhash_Text", txt_RSAhash_Text);
                     cmd3.Parameters.AddWithValue("@txt_RSAhash_Proposition", txt_RSAhash_Proposition);
                     cmd3.Parameters.AddWithValue("@IsEnd", "0");
-                    cmd3.ExecuteNonQuery();
-                    //cmd4.ExecuteNonQuery();
-                }
-                using (SqlConnection cn3 = new SqlConnection(tmpdbhelper.DB_CnStr))
-                {
+                    using (SqlConnection cn3 = new SqlConnection(tmpdbhelper.DB_CnStr))
+                    {
 
                         for (int i = 0; i < GridView2.Rows.Count; i++)
                         {
@@ -1317,7 +1314,7 @@ namespace WebApplication1
                                     }
 
                                 }
-                                cn3.Close();                               
+                                cn3.Close();
                             }
                             else
                             {
@@ -1326,7 +1323,7 @@ namespace WebApplication1
                             }
                         }
 
-                        
+
 
                         //找尋接收者PK並加密KEY
                         SqlCommand cmduserInfo = new SqlCommand(@"select UserInfo.PK from UserInfo LEFT JOIN Detail ON UserInfo.EID=Detail.EID where (UserInfo.EID=@EID)");
@@ -1446,6 +1443,7 @@ namespace WebApplication1
                             }
                         }
                         cmd.ExecuteNonQuery();
+                        cmd3.ExecuteNonQuery();
                         MailMessage msg = new MailMessage();
                         //收件者，以逗號分隔不同收件者 ex "test@gmail.com,test2@gmail.com"
                         msg.To.Add(listmail.ToString());
@@ -1473,9 +1471,13 @@ namespace WebApplication1
                         MySmtp.EnableSsl = true;
                         MySmtp.Send(msg);
                         Response.Redirect("WaitDocument.aspx");
-                 
 
+
+                    }
+                    
+                    //cmd4.ExecuteNonQuery();
                 }
+                
             }
             else
             {

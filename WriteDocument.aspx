@@ -305,7 +305,7 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="發布人編號">
                                                 <ItemTemplate>
-                                                    <asp:Label ID="Lbl_ID" Text='<%# Bind("EID") %>' runat="server"></asp:Label>
+                                                    <asp:Label ID="Lbl_EID" Text='<%# Bind("EID") %>' runat="server"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:TemplateField HeaderText="發布人部門">

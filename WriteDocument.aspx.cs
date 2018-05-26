@@ -1109,6 +1109,137 @@ namespace WebApplication1
                 }
                 using (SqlConnection cn3 = new SqlConnection(tmpdbhelper.DB_CnStr))
                 {
+                    string Lvl5 = ((TextBox)GridView5.Rows[0].FindControl("Txt_Lvl")).Text.Trim();
+                    string EID5 = ((Label)GridView5.Rows[0].FindControl("Lbl_EID")).Text.Trim();
+                    string Department5 = ((Label)GridView5.Rows[0].FindControl("Lbl_Dep")).Text.Trim();
+                    string Name5 = ((Label)GridView5.Rows[0].FindControl("Lbl_Name")).Text.Trim();
+                    CheckBox Cb_sign5 = ((CheckBox)GridView5.Rows[0].FindControl("Cb_sign"));
+                    CheckBox Cb_path5 = ((CheckBox)GridView5.Rows[0].FindControl("Cb_path"));
+                    CheckBox Cb_comment5 = ((CheckBox)GridView5.Rows[0].FindControl("Cb_comment"));
+                    if(Lvl5 !="")
+                    {
+                        //找尋接收者PK並加密KEY
+                        SqlCommand cmduserInfo = new SqlCommand(@"select UserInfo.PK from UserInfo LEFT JOIN Detail ON UserInfo.EID=Detail.EID where (UserInfo.EID=@EID)");
+                        cn3.Open();
+                        cmduserInfo.Connection = cn3;
+                        cmduserInfo.Parameters.AddWithValue("@EID", EID5);
+                        using (SqlDataReader dr = cmduserInfo.ExecuteReader())
+                        {
+                            if (dr.Read())
+                            {
+                                using (SqlConnection cn4 = new SqlConnection(tmpdbhelper.DB_CnStr))
+                                {
+                                    SqlCommand cmdfindfile = new SqlCommand(@"select DocumentContent from tempDocument Where SID=@SID");
+
+                                    cn4.Open();
+                                    cmdfindfile.Connection = cn4;
+                                    cmdfindfile.Parameters.AddWithValue("@SID", SID);
+
+                                    using (SqlDataReader dr2 = cmdfindfile.ExecuteReader())
+                                    {
+                                        if (dr2.Read())
+                                        {
+                                            byte[] DocumentContent = (byte[])dr2["DocumentContent"];
+                                            txt_Ciphertext_DocumentContent = AESEncryption(txtKey, txtIV, DocumentContent);
+                                        }
+                                    }
+                                    cn4.Close();
+                                }
+                                string PK = dr["PK"].ToString();
+                                //以接收者PK加密KEY
+                                // 建立 RSA 演算法物件的執行個體，並匯入先前建立的公鑰
+                                RSACryptoServiceProvider rsaProviderReceiver = new RSACryptoServiceProvider();
+                                rsaProviderReceiver.FromXmlString(PK);
+
+                                // 將資料加密
+                                byte[] bytePlain = Encoding.UTF8.GetBytes(txtKey);
+                                byte[] byteCipher = rsaProviderReceiver.Encrypt(bytePlain, false);
+
+                                // 將加密後的資料，轉 Base64 格式輸入
+                                txt_PKmessage = Convert.ToBase64String(byteCipher);
+                            }
+                        }
+
+                        //寫回資料庫 
+                        SqlCommand cmd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,path,sign,look,RSAkey,isAgent,isread,recheckKey,comment)VALUES(@SID,@Lvl,@EID,@Department,@status,@path,@sign,@look,@RSAkey,@isAgent,@isread,@recheckKey,@comment)");
+                        
+                        cmd.Connection = cn3;
+                        cmd.Parameters.AddWithValue("@SID", SID);
+                        cmd.Parameters.AddWithValue("@Lvl", Lvl5);
+                        cmd.Parameters.AddWithValue("@EID", EID5);
+                        cmd.Parameters.AddWithValue("@Department", Department5);
+                        cmd.Parameters.AddWithValue("@RSAkey", txt_PKmessage);
+                        if (Cb_sign5.Checked == true)
+                        {
+                            cmd.Parameters.AddWithValue("@status", "1");
+                            cmd.Parameters.AddWithValue("@sign", 0);
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@status", "0");
+                            cmd.Parameters.AddWithValue("@sign", 1);
+                        }
+                        if (ChB_Check.Checked == true)
+                        {
+                            cmd.Parameters.AddWithValue("@recheckKey", "1");
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@recheckKey", "0");
+                        }
+
+                        if (Cb_comment5.Checked == true)
+                        {
+                            cmd.Parameters.AddWithValue("@comment", "1");
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@comment", "0");
+                        }
+
+                        if (Cb_path5.Checked == true)
+                        {
+                            cmd.Parameters.AddWithValue("@path", "1");
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@path", "0");
+                        }
+                        if (Lvl5 == "1")
+                        {
+                            cmd.Parameters.AddWithValue("@look", 1);
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@look", 0);
+                        }
+
+
+                        cmd.Parameters.AddWithValue("@isread", 0);
+                        using (SqlConnection cnEID = new SqlConnection(tmpdbhelper.DB_CnStr))
+                        {
+                            SqlCommand cmdEID = new SqlCommand(@"Select agent From UserInfo Where EID=@EID");
+                            cnEID.Open();
+                            cmdEID.Connection = cnEID;
+                            cmdEID.Parameters.AddWithValue("@EID", EID5);
+                            using (SqlDataReader drEID = cmdEID.ExecuteReader())
+                            {
+                                if (drEID.Read())
+                                {
+                                    if (drEID["agent"].ToString() != "")
+                                    {
+                                        cmd.Parameters.AddWithValue("@isAgent", "1");
+                                    }
+                                    else
+                                    {
+                                        cmd.Parameters.AddWithValue("@isAgent", "0");
+                                    }
+                                }
+                                cnEID.Close();
+                            }
+                        }
+                        cmd.ExecuteNonQuery();
+                    }
                     for (int i = 0; i < GridView2.Rows.Count; i++)
                     {
                         string Lvl = ((TextBox)GridView2.Rows[i].FindControl("Txt_Lvl")).Text.Trim();
@@ -1122,7 +1253,7 @@ namespace WebApplication1
                         {
                             //找尋接收者PK並加密KEY
                             SqlCommand cmduserInfo = new SqlCommand(@"select UserInfo.PK from UserInfo LEFT JOIN Detail ON UserInfo.EID=Detail.EID where (UserInfo.EID=@EID)");
-                            cn3.Open();
+
                             cmduserInfo.Connection = cn3;
                             cmduserInfo.Parameters.AddWithValue("@EID", EID);
                             using (SqlDataReader dr = cmduserInfo.ExecuteReader())

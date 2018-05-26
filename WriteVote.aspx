@@ -17,7 +17,7 @@
         }
     </script>
     <style>
-                table {
+        table {
             width: 100%;
             border: #ffffff 1px solid;
             border-bottom: 1px #dddddd solid;
@@ -26,7 +26,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-                            <asp:Label ID="Lbl_EID" runat="server" Text="Label" Visible="False"></asp:Label>
+    <asp:Label ID="Lbl_EID" runat="server" Text="Label" Visible="False"></asp:Label>
     <div class="modal fade" id="FileModal" role="dialog" style="top: 18%;">
         <div class="modal-dialog">
             <!-- Modal content-->
@@ -37,21 +37,21 @@
                 </div>
                 <div class="modal-body">
                     <asp:GridView CssClass="table" runat="server" ID="gv_showTempFile" AutoGenerateColumns="false" OnRowDeleting="gv_RowDeleting"
-                                DataKeyNames="FNO">
-                                <Columns>
-                                    <asp:TemplateField HeaderText="已上傳的檔案">
-                                        <ItemTemplate>
-                                            <asp:LinkButton ID="btn_filename" OnClick="OpenDoc" runat="server" Text='<%# Eval("Name") %>'></asp:LinkButton>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="刪除">
-                                        <ItemTemplate>
-                                            <asp:LinkButton ID="lbDelete" runat="server" CommandName="Delete"
-                                                OnClientClick="javascript:return confirm('確定刪除?')">刪除</asp:LinkButton>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                </Columns>
-                            </asp:GridView>
+                        DataKeyNames="FNO">
+                        <Columns>
+                            <asp:TemplateField HeaderText="已上傳的檔案">
+                                <ItemTemplate>
+                                    <asp:LinkButton ID="btn_filename" OnClick="OpenDoc" runat="server" Text='<%# Eval("Name") %>'></asp:LinkButton>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="刪除">
+                                <ItemTemplate>
+                                    <asp:LinkButton ID="lbDelete" runat="server" CommandName="Delete"
+                                        OnClientClick="javascript:return confirm('確定刪除?')">刪除</asp:LinkButton>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                    </asp:GridView>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
@@ -60,7 +60,7 @@
 
         </div>
     </div>
-                            <br />
+    <br />
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="top: 18%;">
         <div class="container" style="width: 500px; height: 500px">
@@ -154,22 +154,23 @@
         <tr style="height: 25px">
             <td>保存期限</td>
             <td>
-                <span style="font-size: 16px; font-family: DFKai-SB"><asp:DropDownList ID="Ddp_YOS" runat="server" Height="30px" Width="70px">
-                            <asp:ListItem>1</asp:ListItem>
-                            <asp:ListItem>2</asp:ListItem>
-                            <asp:ListItem>3</asp:ListItem>
-                            <asp:ListItem>4</asp:ListItem>
-                            <asp:ListItem>5</asp:ListItem>
-                            <asp:ListItem>6</asp:ListItem>
-                            <asp:ListItem>7</asp:ListItem>
-                            <asp:ListItem>8</asp:ListItem>
-                            <asp:ListItem>9</asp:ListItem>
-                            <asp:ListItem>10</asp:ListItem>
-                            <asp:ListItem>15</asp:ListItem>
-                            <asp:ListItem>20</asp:ListItem>
-                            <asp:ListItem>永久</asp:ListItem>
-                        </asp:DropDownList>
-                            </span>年</td>
+                <span style="font-size: 16px; font-family: DFKai-SB">
+                    <asp:DropDownList ID="Ddp_YOS" runat="server" Height="30px" Width="70px">
+                        <asp:ListItem>1</asp:ListItem>
+                        <asp:ListItem>2</asp:ListItem>
+                        <asp:ListItem>3</asp:ListItem>
+                        <asp:ListItem>4</asp:ListItem>
+                        <asp:ListItem>5</asp:ListItem>
+                        <asp:ListItem>6</asp:ListItem>
+                        <asp:ListItem>7</asp:ListItem>
+                        <asp:ListItem>8</asp:ListItem>
+                        <asp:ListItem>9</asp:ListItem>
+                        <asp:ListItem>10</asp:ListItem>
+                        <asp:ListItem>15</asp:ListItem>
+                        <asp:ListItem>20</asp:ListItem>
+                        <asp:ListItem>永久</asp:ListItem>
+                    </asp:DropDownList>
+                </span>年</td>
             <td colspan="4">&nbsp;</td>
             <td>&nbsp;</td>
         </tr>
@@ -182,10 +183,10 @@
         <tr style="height: 25px">
             <td>附　　件</td>
             <td colspan="3">
-                                <asp:FileUpload runat="server" ID="fu_upload" />
+                <asp:FileUpload runat="server" ID="fu_upload" />
                 <br />
-                            <asp:Button Text="上傳檔案"
-                                ID="btn_upload" runat="server" OnClick="btn_upload_Click" />
+                <asp:Button Text="上傳檔案"
+                    ID="btn_upload" runat="server" OnClick="btn_upload_Click" />
                 <asp:Label ID="Lbl_FileCount" runat="server"></asp:Label>
                 <br />
             </td>
@@ -201,7 +202,7 @@
             <td>主　　旨</td>
             <td style="font-size: large;" colspan="6">
                 <asp:TextBox class="form-control" ID="Txt_Title" runat="server" Width="300px"></asp:TextBox>
-                        </td>
+            </td>
         </tr>
         <tr style="height: 25px">
             <td>&nbsp;</td>
@@ -210,7 +211,7 @@
         <tr style="height: 25px">
             <td>說　　明</td>
             <td colspan="6">
-                <asp:TextBox ID="Txt_Text" class="form-control" runat="server" Height="99px" TextMode="MultiLine" ></asp:TextBox>
+                <asp:TextBox ID="Txt_Text" class="form-control" runat="server" Height="99px" TextMode="MultiLine"></asp:TextBox>
 
             </td>
         </tr>
@@ -218,21 +219,21 @@
             <td>&nbsp;</td>
             <td colspan="6">&nbsp;</td>
         </tr>
-        </table>
+    </table>
     <table class="nav-justified" style="height: 336px">
         <tr>
             <td runat="server" valign="top" id="Main">
-                <table class="nav-justified" style="width: 900px; height: 110px">
+                <table class="nav-justified" style="width: 100%; height: 110px">
 
                     <tr>
                         <td style="height: 22px">
                             <asp:UpdatePanel ID="UpdatePanel2" runat="server">
                                 <ContentTemplate>
-                                    <asp:GridView ID="GridView5" Width="100%" runat="server" AutoGenerateColumns="False" class="table" DataKeyNames="number" OnRowDeleting="GridView5_RowDeleting" GridLines="Horizontal">
+                                    <asp:GridView ID="GridView5" runat="server" AutoGenerateColumns="False" class="table" DataKeyNames="number" OnRowDeleting="GridView5_RowDeleting" GridLines="Horizontal">
                                         <Columns>
                                             <asp:TemplateField HeaderText="選項">
                                                 <HeaderTemplate>
-                                                    選項<asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click">+</asp:LinkButton>
+                                                    選項<asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click">(新增選項)</asp:LinkButton>
                                                 </HeaderTemplate>
                                                 <ItemTemplate>
                                                     <asp:Label ID="Lbl_number" runat="server" Text='<%# Bind("number") %>'></asp:Label>
@@ -281,6 +282,54 @@
                                         <asp:Label ID="Lbl_GpName" runat="server" Text="Label" Visible="False"></asp:Label>
                                         <br />
                                         <br />
+                                        <asp:GridView ID="GridView1" class="table" runat="server" AutoGenerateColumns="False" GridLines="Horizontal">
+                                            <Columns>
+                                                <asp:TemplateField HeaderText="排列" ShowHeader="False" Visible="False">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("ID") %>'></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:BoundField DataField="SID" HeaderText="序列" Visible="false" />
+
+                                                <asp:TemplateField HeaderText="層級">
+                                                    <ItemTemplate>
+                                                        <asp:TextBox DataField="Lvl" ID="Txt_Lvl" runat="server" OnTextChanged="Txt_Lvl_TextChanged" TextMode="Number" Width="50px" AutoPostBack="True"></asp:TextBox>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="發布人編號">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Lbl_EID" Text='<%# Bind("EID") %>' runat="server"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="發布人部門">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Lbl_Dep" Text='<%# Bind("Department") %>' runat="server"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="發布人姓名">
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="Lbl_Name" Text='<%# Bind("Name") %>' runat="server"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="需簽章">
+                                                    <ItemTemplate>
+                                                        <asp:CheckBox ID="Cb_sign" runat="server" OnCheckedChanged="Cb_sign_CheckedChanged" AutoPostBack="True" />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="可察看進度">
+                                                    <ItemTemplate>
+                                                        <asp:CheckBox ID="Cb_path" runat="server" OnCheckedChanged="Cb_path_CheckedChanged" AutoPostBack="True" />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="是否評論">
+                                                    <ItemTemplate>
+                                                        <asp:CheckBox ID="Cb_comment" runat="server" AutoPostBack="true" OnCheckedChanged="Cb_comment_CheckedChanged" />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <HeaderStyle HorizontalAlign="Center" />
+                                        </asp:GridView>
+
                                         <asp:GridView ID="GridView2" Width="100%" class="table" runat="server" AutoGenerateColumns="False" GridLines="Horizontal">
                                             <Columns>
                                                 <asp:TemplateField HeaderText="排列" ShowHeader="False" Visible="False">
@@ -327,9 +376,15 @@
                                                         <asp:CheckBox ID="Cb_path" runat="server" OnCheckedChanged="Cb_path_CheckedChanged" AutoPostBack="True" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-
+                                                <asp:TemplateField>
+                                                    <HeaderTemplate>
+                                                        <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll3" CheckBoxName="Cb_comment" HeaderText="是否評論" OnCheckedChanged="Cb_comment_CheckedChanged" AutoPostBack="True" />
+                                                    </HeaderTemplate>
+                                                    <ItemTemplate>
+                                                        <asp:CheckBox ID="Cb_comment" runat="server" AutoPostBack="true" OnCheckedChanged="Cb_comment_CheckedChanged" />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
                                             </Columns>
-                                            <RowStyle HorizontalAlign="Center" />
                                         </asp:GridView>
                                         <br />
                                     </ContentTemplate>

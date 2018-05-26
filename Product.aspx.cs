@@ -24,6 +24,7 @@ namespace WebApplication1
             LinkButton BT = dli.FindControl("TNLb") as LinkButton;
             Session["BT"] = BT.Text;
             SqlDataSource1.SelectCommand = "SELECT * FROM [Product] Where [ProductType]='" + Session["BT"] + "'";
+            Lbl_Type.Text = Session["BT"].ToString();
 
         }
 

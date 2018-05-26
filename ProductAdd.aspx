@@ -8,6 +8,7 @@
             width: 183px;
         }
     </style>
+    
     <script type="text/javascript">
         function previewFile() {
             var preview = document.querySelector('#<%=Image1.ClientID %>');
@@ -25,6 +26,7 @@
                                                 }
         }
     </script>
+    <script type="text/javascript">ckeditor.replace(ed)</script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -74,7 +76,7 @@
             <td>
                 <asp:FileUpload ID="FileUpload1" runat="server" onchange="previewFile()" /><%--<asp:Button ID="Btn_UpLoad" runat="server" Text="上傳" OnClick="Btn_UpLoad_Click" ValidationGroup="Upload" />--%>
                 <asp:Image ID="Image1" runat="server" Style="max-width: 500px; max-height: 250px;" />
-                
+
             </td>
         </tr>
         <tr>
@@ -84,6 +86,7 @@
         <tr>
             <td class="auto-style1">產品介紹</td>
             <td>
+                
                 <CKEditor:CKEditorControl ID="CKEditorControl1" runat="server"></CKEditor:CKEditorControl>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="CKEditorControl1" ErrorMessage="*此為必要輸入欄位" ForeColor="Red" Display="Dynamic"></asp:RequiredFieldValidator>
             </td>
@@ -92,7 +95,7 @@
     <br />
     <asp:Button ID="Btn_Insert" runat="server" Text="新增產品" OnClick="Btn_Insert_Click" />
     &nbsp;&nbsp;&nbsp;&nbsp;
-    <asp:Button ID="Btn_Return" runat="server" Text="返回" OnClick="Btn_Return_Click" ValidationGroup="NO"  />
+    <asp:Button ID="Btn_Return" runat="server" Text="返回" OnClick="Btn_Return_Click" ValidationGroup="NO" />
     <asp:Label ID="Lbl_Eorr" runat="server"></asp:Label>
     <br />
     <br />

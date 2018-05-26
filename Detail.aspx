@@ -9,10 +9,9 @@
         &nbsp;
             <label for="male" style="color: #999999">文號：</label><asp:Label ID="Lbl_SID" runat="server" ForeColor="#999999"></asp:Label>
         <asp:Label ID="Lbl_EID" runat="server" Visible="False"></asp:Label>
-        &nbsp;主辦人文號:
-        <asp:Label ID="Lbl_SenderEID" runat="server"></asp:Label>
+        
         &nbsp;
-        <asp:Label ID="Lbl_SenderName" runat="server"></asp:Label>
+        <asp:Label ID="Lbl_SenderName" runat="server"></asp:Label>(<asp:Label ID="Lbl_SenderEID" runat="server"></asp:Label>)
         &nbsp;
         <asp:Label ID="Lbl_Type" runat="server" BackColor="#FFD5AA" Font-Names="標楷體" Font-Size="Medium"></asp:Label>
 

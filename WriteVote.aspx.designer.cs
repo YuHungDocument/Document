@@ -31,6 +31,15 @@ namespace WebApplication1 {
         protected global::System.Web.UI.WebControls.Label Lbl_EID;
         
         /// <summary>
+        /// gv_showTempFile 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gv_showTempFile;
+        
+        /// <summary>
         /// DropDownList1 控制項。
         /// </summary>
         /// <remarks>
@@ -58,15 +67,6 @@ namespace WebApplication1 {
         protected global::System.Web.UI.WebControls.Button Btn_Insert;
         
         /// <summary>
-        /// Main 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTableCell Main;
-        
-        /// <summary>
         /// Lbl_SID 控制項。
         /// </summary>
         /// <remarks>
@@ -83,6 +83,15 @@ namespace WebApplication1 {
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Lbl_Date;
+        
+        /// <summary>
+        /// Lbl_Sender 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Lbl_Sender;
         
         /// <summary>
         /// d1 控制項。
@@ -103,15 +112,6 @@ namespace WebApplication1 {
         protected global::System.Web.UI.WebControls.DropDownList Ddp_YOS;
         
         /// <summary>
-        /// Lbl_Sender 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Lbl_Sender;
-        
-        /// <summary>
         /// fu_upload 控制項。
         /// </summary>
         /// <remarks>
@@ -130,13 +130,13 @@ namespace WebApplication1 {
         protected global::System.Web.UI.WebControls.Button btn_upload;
         
         /// <summary>
-        /// gv_showTempFile 控制項。
+        /// Lbl_FileCount 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gv_showTempFile;
+        protected global::System.Web.UI.WebControls.Label Lbl_FileCount;
         
         /// <summary>
         /// Txt_Title 控制項。
@@ -155,6 +155,15 @@ namespace WebApplication1 {
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox Txt_Text;
+        
+        /// <summary>
+        /// Main 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell Main;
         
         /// <summary>
         /// UpdatePanel2 控制項。

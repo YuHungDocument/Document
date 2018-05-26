@@ -74,7 +74,7 @@ namespace WebApplication1
                                         {
                                             if (dr2.Read())
                                             {
-                                                Lbl_SenderName.Text = "主辦人姓名：" + dr2["Name"].ToString();
+                                                Lbl_SenderName.Text = "主辦人：" + dr2["Name"].ToString();
                                             }
 
                                             cn2.Close();

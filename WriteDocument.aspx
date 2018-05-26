@@ -16,6 +16,20 @@
             }
         }
     </script>
+    <script>
+        $(document).on('click', '.panel-heading.clickable', function (e) {
+            var $this = $(this);
+            if (!$this.hasClass('panel-collapsed')) {
+                $this.parents('.panel').find('.panel-body').slideUp();
+                $this.addClass('panel-collapsed');
+                $this.find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+            } else {
+                $this.parents('.panel').find('.panel-body').slideDown();
+                $this.removeClass('panel-collapsed');
+                $this.find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+            }
+        })
+    </script>
     <style type="text/css">
         table {
             width: 100%;
@@ -23,9 +37,26 @@
             border-bottom: 1px #dddddd solid;
         }
 
-        .entryForm td, entryForm th {
-            padding: 5px 10px;
-            border: #f6bb9e 1px solid;
+
+                .btn:after {
+            font-family: "Glyphicons Halflings";
+            content: "\e114";
+            float: right;
+            margin-left: 15px;
+        }
+        /* Icon when the collapsible content is hidden */
+        .btn.collapsed:after {
+            content: "\e080";
+        }
+
+
+        .clickable {
+            cursor: pointer;
+        }
+
+        .panel-heading span {
+            margin-top: -20px;
+            font-size: 15px;
         }
     </style>
 </asp:Content>
@@ -66,144 +97,149 @@
     </div>
     <asp:Label ID="Lbl_EID" runat="server" Visible="False"></asp:Label>
     <br />
-    <table>
-        <tr style="height: 25px">
-            <td colspan="7">撰寫內文</td>
-        </tr>
-        <tr style="height: 25px">
-            <td>文　　號</td>
-            <td>
-                <asp:Label ID="Lbl_SID" runat="server"></asp:Label>
-            </td>
-            <td colspan="4">發布日期</td>
-            <td>
-                <asp:Label ID="Lbl_Date" runat="server"></asp:Label>
-            </td>
-        </tr>
-        <tr style="height: 25px">
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td colspan="4">&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr style="height: 25px">
-            <td>發布人</td>
-            <td>
-                <asp:Label ID="Lbl_Sender" runat="server"></asp:Label>
-            </td>
-            <td colspan="4">速　　別</td>
-            <td>
-                <asp:DropDownList ID="Ddl_Speed" runat="server" DataSourceID="SqlDataSource2" DataTextField="TN" DataValueField="TN"></asp:DropDownList>
-            </td>
-        </tr>
-        <tr style="height: 25px">
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td colspan="4">&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr style="height: 25px">
-            <td>公文類型</td>
-            <td>
-                <asp:DropDownList ID="Ddp_Type" runat="server" DataSourceID="SqlDataSource1" DataTextField="TN" DataValueField="TN" Height="30px" Width="185px">
-                </asp:DropDownList>
-            </td>
-            <td colspan="4">&nbsp;</td>
-            <td>
-                <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString %>" SelectCommand="SELECT [TN] FROM [TypeGroup] WHERE ([Tp] = @Tp)">
-                    <SelectParameters>
-                        <asp:Parameter DefaultValue="Sp" Name="Tp" Type="String" />
-                    </SelectParameters>
-                </asp:SqlDataSource>
-            </td>
-        </tr>
-        <tr style="height: 25px">
-            <td>&nbsp;</td>
-            <td>
-                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString2 %>" SelectCommand="SELECT [TN] FROM [TypeGroup] WHERE (([Tp] = @Tp) AND ([TID] &lt;&gt; @TID))">
-                    <SelectParameters>
-                        <asp:Parameter DefaultValue="FT" Name="Tp" Type="String" />
-                        <asp:Parameter DefaultValue="6" Name="TID" Type="Int32" />
-                    </SelectParameters>
-                </asp:SqlDataSource>
-            </td>
-            <td colspan="4">&nbsp;</td>
-            <td style="font-size: large;">&nbsp;</td>
-        </tr>
-        <tr style="height: 25px">
-            <td>保存期限</td>
-            <td>
-                <asp:DropDownList ID="Ddp_YOS" runat="server" Width="70px">
-                    <asp:ListItem>1</asp:ListItem>
-                    <asp:ListItem>2</asp:ListItem>
-                    <asp:ListItem>3</asp:ListItem>
-                    <asp:ListItem>4</asp:ListItem>
-                    <asp:ListItem>5</asp:ListItem>
-                    <asp:ListItem>6</asp:ListItem>
-                    <asp:ListItem>7</asp:ListItem>
-                    <asp:ListItem>8</asp:ListItem>
-                    <asp:ListItem>9</asp:ListItem>
-                    <asp:ListItem>10</asp:ListItem>
-                    <asp:ListItem>15</asp:ListItem>
-                    <asp:ListItem>20</asp:ListItem>
-                    <asp:ListItem>永久</asp:ListItem>
-                </asp:DropDownList>
-                年</td>
-            <td colspan="4">&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr style="height: 25px">
-            <td>&nbsp;</td>
-            <td style="font-size: large;" colspan="2">&nbsp;</td>
-            <td style="font-size: large;" colspan="2">&nbsp;</td>
-            <td style="font-size: large;" colspan="2">&nbsp;</td>
-        </tr>
-        <tr style="height: 25px">
-            <td>附　　件</td>
-            <td colspan="3">
-                <asp:FileUpload runat="server" ID="fu_upload" />
-                <br />
-                <asp:Button Text="上傳檔案"
-                    ID="btn_upload" runat="server" OnClick="btn_upload_Click" />
-                <asp:Label ID="Lbl_FileCount" runat="server"></asp:Label>
-                <br />
-            </td>
-            <td colspan="3">
-                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#FileModal">顯示上傳檔案</button>
-            </td>
-        </tr>
-        <tr style="height: 25px">
-            <td>&nbsp;</td>
-            <td style="font-size: large;" colspan="6">&nbsp;</td>
-        </tr>
-        <tr style="height: 25px">
-            <td>主　　旨</td>
-            <td style="font-size: large;" colspan="6">
-                <asp:TextBox class="form-control" ID="Txt_Title" runat="server" Width="264px"></asp:TextBox>
-            </td>
-        </tr>
-        <tr style="height: 25px">
-            <td>&nbsp;</td>
-            <td colspan="6">&nbsp;</td>
-        </tr>
-        <tr style="height: 25px">
-            <td>說　　明</td>
-            <td colspan="6">
-                <asp:TextBox ID="Txt_Text" class="form-control" runat="server" Height="99px" TextMode="MultiLine"></asp:TextBox>
+    <div class="panel panel-warning">
+        <div class="panel-heading pull clickable panel">
+            <h3 class="panel-title "><span>撰寫內文<i class="glyphicon glyphicon-chevron-up"></i></span></h3>
+        </div>
+        <div class="panel-body">
+            <table style="border: none">
+                <tr style="height: 25px">
+                    <td>文　　號</td>
+                    <td>
+                        <asp:Label ID="Lbl_SID" runat="server"></asp:Label>
+                    </td>
+                    <td colspan="4">發布日期</td>
+                    <td>
+                        <asp:Label ID="Lbl_Date" runat="server"></asp:Label>
+                    </td>
+                </tr>
+                <tr style="height: 25px">
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td colspan="4">&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr style="height: 25px">
+                    <td>發布人</td>
+                    <td>
+                        <asp:Label ID="Lbl_Sender" runat="server"></asp:Label>
+                    </td>
+                    <td colspan="4">速　　別</td>
+                    <td>
+                        <asp:DropDownList ID="Ddl_Speed" runat="server" DataSourceID="SqlDataSource2" DataTextField="TN" DataValueField="TN"></asp:DropDownList>
+                    </td>
+                </tr>
+                <tr style="height: 25px">
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td colspan="4">&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr style="height: 25px">
+                    <td>公文類型</td>
+                    <td>
+                        <asp:DropDownList ID="Ddp_Type" runat="server" DataSourceID="SqlDataSource1" DataTextField="TN" DataValueField="TN" Height="30px" Width="185px">
+                        </asp:DropDownList>
+                    </td>
+                    <td colspan="4">&nbsp;</td>
+                    <td>
+                        <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString %>" SelectCommand="SELECT [TN] FROM [TypeGroup] WHERE ([Tp] = @Tp)">
+                            <SelectParameters>
+                                <asp:Parameter DefaultValue="Sp" Name="Tp" Type="String" />
+                            </SelectParameters>
+                        </asp:SqlDataSource>
+                    </td>
+                </tr>
+                <tr style="height: 25px">
+                    <td>&nbsp;</td>
+                    <td>
+                        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString2 %>" SelectCommand="SELECT [TN] FROM [TypeGroup] WHERE (([Tp] = @Tp) AND ([TID] &lt;&gt; @TID))">
+                            <SelectParameters>
+                                <asp:Parameter DefaultValue="FT" Name="Tp" Type="String" />
+                                <asp:Parameter DefaultValue="6" Name="TID" Type="Int32" />
+                            </SelectParameters>
+                        </asp:SqlDataSource>
+                    </td>
+                    <td colspan="4">&nbsp;</td>
+                    <td style="font-size: large;">&nbsp;</td>
+                </tr>
+                <tr style="height: 25px">
+                    <td>保存期限</td>
+                    <td>
+                        <asp:DropDownList ID="Ddp_YOS" runat="server" Width="70px">
+                            <asp:ListItem>1</asp:ListItem>
+                            <asp:ListItem>2</asp:ListItem>
+                            <asp:ListItem>3</asp:ListItem>
+                            <asp:ListItem>4</asp:ListItem>
+                            <asp:ListItem>5</asp:ListItem>
+                            <asp:ListItem>6</asp:ListItem>
+                            <asp:ListItem>7</asp:ListItem>
+                            <asp:ListItem>8</asp:ListItem>
+                            <asp:ListItem>9</asp:ListItem>
+                            <asp:ListItem>10</asp:ListItem>
+                            <asp:ListItem>15</asp:ListItem>
+                            <asp:ListItem>20</asp:ListItem>
+                            <asp:ListItem>永久</asp:ListItem>
+                        </asp:DropDownList>
+                        年</td>
+                    <td colspan="4">&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr style="height: 25px">
+                    <td>&nbsp;</td>
+                    <td style="font-size: large;" colspan="2">&nbsp;</td>
+                    <td style="font-size: large;" colspan="2">&nbsp;</td>
+                    <td style="font-size: large;" colspan="2">&nbsp;</td>
+                </tr>
+                <tr style="height: 25px">
+                    <td>附　　件</td>
+                    <td colspan="3">
+                        <asp:FileUpload runat="server" ID="fu_upload" />
+                        <br />
+                        <asp:Button Text="上傳檔案"
+                            ID="btn_upload" runat="server" OnClick="btn_upload_Click" />
+                        <asp:Label ID="Lbl_FileCount" runat="server"></asp:Label>
+                        <br />
+                    </td>
+                    <td colspan="3">
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#FileModal">顯示上傳檔案</button>
+                    </td>
+                </tr>
+                <tr style="height: 25px">
+                    <td>&nbsp;</td>
+                    <td style="font-size: large;" colspan="6">&nbsp;</td>
+                </tr>
+                <tr style="height: 25px">
+                    <td>主　　旨</td>
+                    <td style="font-size: large;" colspan="6">
+                        <asp:TextBox class="form-control" ID="Txt_Title" runat="server" Width="300px"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr style="height: 25px">
+                    <td>&nbsp;</td>
+                    <td colspan="6">&nbsp;</td>
+                </tr>
+                <tr style="height: 25px">
+                    <td>說　　明</td>
+                    <td colspan="6">
+                        <asp:TextBox ID="Txt_Text" class="form-control" runat="server" Height="99px" TextMode="MultiLine"></asp:TextBox>
 
-            </td>
-        </tr>
-        <tr style="height: 25px">
-            <td>&nbsp;</td>
-            <td colspan="6">&nbsp;</td>
-        </tr>
-        <tr style="height: 25px">
-            <td>擬　　辦</td>
-            <td style="font-size: large;" colspan="6">
-                <asp:TextBox ID="txt_Proposition" class="form-control" runat="server" Height="100px" TextMode="MultiLine"></asp:TextBox>
-            </td>
-        </tr>
-    </table>
+                    </td>
+                </tr>
+                <tr style="height: 25px">
+                    <td>&nbsp;</td>
+                    <td colspan="6">&nbsp;</td>
+                </tr>
+                <tr style="height: 25px">
+                    <td>擬　　辦</td>
+                    <td style="font-size: large;" colspan="6">
+                        <asp:TextBox ID="txt_Proposition" class="form-control" runat="server" Height="100px" TextMode="MultiLine"></asp:TextBox>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
     <br />
 
     <div class="panel panel-warning" style="width: 100%">
@@ -296,8 +332,8 @@
                                                     <asp:Label ID="Label1" runat="server" Text='<%# Bind("ID") %>'></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:BoundField DataField="SID" HeaderText="序列" Visible="false" />                                           
-                                            
+                                            <asp:BoundField DataField="SID" HeaderText="序列" Visible="false" />
+
                                             <asp:TemplateField HeaderText="層級">
                                                 <ItemTemplate>
                                                     <asp:TextBox DataField="Lvl" ID="Txt_Lvl" runat="server" OnTextChanged="Txt_Lvl_TextChanged" TextMode="Number" Width="50px" AutoPostBack="True"></asp:TextBox>
@@ -317,7 +353,7 @@
                                                 <ItemTemplate>
                                                     <asp:Label ID="Lbl_Name" Text='<%# Bind("Name") %>' runat="server"></asp:Label>
                                                 </ItemTemplate>
-                                            </asp:TemplateField >
+                                            </asp:TemplateField>
                                             <asp:TemplateField HeaderText="需簽章">
                                                 <ItemTemplate>
                                                     <asp:CheckBox ID="Cb_sign" runat="server" OnCheckedChanged="Cb_sign_CheckedChanged" AutoPostBack="True" />

@@ -16,10 +16,50 @@
             }
         }
     </script>
+    <style>
+                table {
+            width: 100%;
+            border: #ffffff 1px solid;
+            border-bottom: 1px #dddddd solid;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
                             <asp:Label ID="Lbl_EID" runat="server" Text="Label" Visible="False"></asp:Label>
+    <div class="modal fade" id="FileModal" role="dialog" style="top: 18%;">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">所有上傳檔案</h4>
+                </div>
+                <div class="modal-body">
+                    <asp:GridView CssClass="table" runat="server" ID="gv_showTempFile" AutoGenerateColumns="false" OnRowDeleting="gv_RowDeleting"
+                                DataKeyNames="FNO">
+                                <Columns>
+                                    <asp:TemplateField HeaderText="已上傳的檔案">
+                                        <ItemTemplate>
+                                            <asp:LinkButton ID="btn_filename" OnClick="OpenDoc" runat="server" Text='<%# Eval("Name") %>'></asp:LinkButton>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="刪除">
+                                        <ItemTemplate>
+                                            <asp:LinkButton ID="lbDelete" runat="server" CommandName="Delete"
+                                                OnClientClick="javascript:return confirm('確定刪除?')">刪除</asp:LinkButton>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                </Columns>
+                            </asp:GridView>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
                             <br />
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="top: 18%;">
@@ -76,19 +116,45 @@
             <!-- Modal content-->
         </div>
     </div>
-    <table class="nav-justified" style="height: 336px">
-        <tr>
-            <td runat="server" valign="top" id="Main">
-                <table class="nav-justified" style="width: 900px; height: 110px">
-                    <tr>
-                        <td class="text-left" style="width: 225px; height: 30px">文　　號：<asp:Label ID="Lbl_SID" runat="server"></asp:Label>
-                        </td>
-                        <td style="width: 300px; height: 30px; padding-top: 5px;">發布日期：<asp:Label ID="Lbl_Date" runat="server"></asp:Label>
-                            </td>
-                        <td style="height: 30px" colspan="2">&nbsp; 截止日期：<input type="text" runat="server" class="Wdate" id="d1" onclick="WdatePicker({ minDate: '%y-%M-{%d}' })" /></td>
-                    </tr>
-                    <tr>
-                        <td style="width: 225px; height: 56px">保存期限：<span style="font-size: 16px; font-family: DFKai-SB"><asp:DropDownList ID="Ddp_YOS" runat="server" Height="30px" Width="70px">
+    <table>
+        <tr style="height: 25px">
+            <td colspan="7">撰寫內文</td>
+        </tr>
+        <tr style="height: 25px">
+            <td>文　　號</td>
+            <td>
+                <asp:Label ID="Lbl_SID" runat="server"></asp:Label>
+            </td>
+            <td colspan="4">發布日期</td>
+            <td>
+                <asp:Label ID="Lbl_Date" runat="server"></asp:Label>
+            </td>
+        </tr>
+        <tr style="height: 25px">
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td colspan="4">&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr style="height: 25px">
+            <td>發布人</td>
+            <td>
+                <asp:Label ID="Lbl_Sender" runat="server"></asp:Label>
+            </td>
+            <td colspan="4">截止日期</td>
+            <td>
+                <input type="text" runat="server" class="Wdate" id="d1" onclick="WdatePicker({ minDate: '%y-%M-{%d}' })" /></td>
+        </tr>
+        <tr style="height: 25px">
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td colspan="4">&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr style="height: 25px">
+            <td>保存期限</td>
+            <td>
+                <span style="font-size: 16px; font-family: DFKai-SB"><asp:DropDownList ID="Ddp_YOS" runat="server" Height="30px" Width="70px">
                             <asp:ListItem>1</asp:ListItem>
                             <asp:ListItem>2</asp:ListItem>
                             <asp:ListItem>3</asp:ListItem>
@@ -103,43 +169,66 @@
                             <asp:ListItem>20</asp:ListItem>
                             <asp:ListItem>永久</asp:ListItem>
                         </asp:DropDownList>
-                            年</span></td>
-                        <td style="width: 225px; height: 56px">發布者　：<asp:Label ID="Lbl_Sender" runat="server"></asp:Label>
-                        </td>
-                        <td style="width: 225px; height: 56px">附　　件：
+                            </span>年</td>
+            <td colspan="4">&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr style="height: 25px">
+            <td>&nbsp;</td>
+            <td style="font-size: large;" colspan="2">&nbsp;</td>
+            <td style="font-size: large;" colspan="2">&nbsp;</td>
+            <td style="font-size: large;" colspan="2">&nbsp;</td>
+        </tr>
+        <tr style="height: 25px">
+            <td>附　　件</td>
+            <td colspan="3">
                                 <asp:FileUpload runat="server" ID="fu_upload" />
+                <br />
                             <asp:Button Text="上傳檔案"
                                 ID="btn_upload" runat="server" OnClick="btn_upload_Click" />
-                            <br />
+                <asp:Label ID="Lbl_FileCount" runat="server"></asp:Label>
+                <br />
+            </td>
+            <td colspan="3">
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#FileModal">顯示上傳檔案</button>
+            </td>
+        </tr>
+        <tr style="height: 25px">
+            <td>&nbsp;</td>
+            <td style="font-size: large;" colspan="6">&nbsp;</td>
+        </tr>
+        <tr style="height: 25px">
+            <td>主　　旨</td>
+            <td style="font-size: large;" colspan="6">
+                <asp:TextBox class="form-control" ID="Txt_Title" runat="server" Width="300px"></asp:TextBox>
                         </td>
-                        <td style="width: 225px; height: 56px" class="text-center">附件上傳佇列：<br />
-                            <asp:GridView runat="server" ID="gv_showTempFile" AutoGenerateColumns="false" OnRowDeleting="gv_RowDeleting"
-                                DataKeyNames="FNO">
-                                <Columns>
-                                    <asp:TemplateField HeaderText="已上傳的檔案">
-                                        <ItemTemplate>
-                                            <asp:LinkButton ID="btn_filename" OnClick="OpenDoc" runat="server" Text='<%# Eval("Name") %>'></asp:LinkButton>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="刪除">
-                                        <ItemTemplate>
-                                            <asp:LinkButton ID="lbDelete" runat="server" CommandName="Delete"
-                                                OnClientClick="javascript:return confirm('確定刪除?')">刪除</asp:LinkButton>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                </Columns>
-                            </asp:GridView>
-                        </td>
-                    </tr>
+        </tr>
+        <tr style="height: 25px">
+            <td>&nbsp;</td>
+            <td colspan="6">&nbsp;</td>
+        </tr>
+        <tr style="height: 25px">
+            <td>說　　明</td>
+            <td colspan="6">
+                <asp:TextBox ID="Txt_Text" class="form-control" runat="server" Height="99px" TextMode="MultiLine" ></asp:TextBox>
+
+            </td>
+        </tr>
+        <tr style="height: 25px">
+            <td>&nbsp;</td>
+            <td colspan="6">&nbsp;</td>
+        </tr>
+        </table>
+    <table class="nav-justified" style="height: 336px">
+        <tr>
+            <td runat="server" valign="top" id="Main">
+                <table class="nav-justified" style="width: 900px; height: 110px">
+
                     <tr>
-                        <td colspan="4" style="height: 22px">主　　旨：<asp:TextBox class="form-control" ID="Txt_Title" runat="server" TextMode="MultiLine" Width="785px"></asp:TextBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="4" style="height: 22px">說　　明：<asp:TextBox ID="Txt_Text" class="form-control" runat="server" Height="99px" TextMode="MultiLine" Width="784px"></asp:TextBox>
+                        <td style="height: 22px">
                             <asp:UpdatePanel ID="UpdatePanel2" runat="server">
                                 <ContentTemplate>
-                                    <asp:GridView ID="GridView5" runat="server" AutoGenerateColumns="False"  DataKeyNames="number" OnRowDeleting="GridView5_RowDeleting">
+                                    <asp:GridView ID="GridView5" Width="100%" runat="server" AutoGenerateColumns="False" class="table" DataKeyNames="number" OnRowDeleting="GridView5_RowDeleting" GridLines="Horizontal">
                                         <Columns>
                                             <asp:TemplateField HeaderText="選項">
                                                 <HeaderTemplate>
@@ -192,7 +281,7 @@
                                         <asp:Label ID="Lbl_GpName" runat="server" Text="Label" Visible="False"></asp:Label>
                                         <br />
                                         <br />
-                                        <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False">
+                                        <asp:GridView ID="GridView2" Width="100%" class="table" runat="server" AutoGenerateColumns="False" GridLines="Horizontal">
                                             <Columns>
                                                 <asp:TemplateField HeaderText="排列" ShowHeader="False" Visible="False">
                                                     <ItemTemplate>

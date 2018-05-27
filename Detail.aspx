@@ -9,7 +9,7 @@
         &nbsp;
             <label for="male" style="color: #999999">文號：</label><asp:Label ID="Lbl_SID" runat="server" ForeColor="#999999"></asp:Label>
         <asp:Label ID="Lbl_EID" runat="server" Visible="False"></asp:Label>
-        
+
         &nbsp;
         <asp:Label ID="Lbl_SenderName" runat="server"></asp:Label>(<asp:Label ID="Lbl_SenderEID" runat="server"></asp:Label>)
         &nbsp;
@@ -49,7 +49,11 @@
                         <asp:Label ID="Lbl_Vname" runat="server" Text='<%# Bind("Vname") %>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
-                <asp:BoundField DataField="Total" HeaderText="投票數" />
+                <asp:TemplateField HeaderText="投票數">
+                    <ItemTemplate>
+                        <asp:Label ID="Lbl_Total" runat="server"></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
             </Columns>
             <EmptyDataRowStyle BorderStyle="None" Font-Size="Large" />
             <HeaderStyle BackColor="#F2F2F2" Font-Size="Large" />
@@ -138,10 +142,10 @@
         <br />
         <asp:DataList ID="DataList1" runat="server" DataSourceID="SqlDataSource1">
             <ItemTemplate>
-               <asp:Label ID="NameLabel" runat="server" Font-Bold="True" Font-Size="Large" Text='<%# Eval("Name") %>' />
+                <asp:Label ID="NameLabel" runat="server" Font-Bold="True" Font-Size="Large" Text='<%# Eval("Name") %>' />
                 <asp:Label ID="DateLabel" runat="server" ForeColor="#999999" Text='<%# Eval("Date") %>' />
                 <br />
-                　　<asp:Label ID="UserCommentLabel"  Font-Size="Large" runat="server" Text='<%# Eval("UserComment") %>' />
+                <asp:Label ID="UserCommentLabel" Font-Size="Large" runat="server" Text='<%# Eval("UserComment") %>' />
                 <br />
                 <br />
             </ItemTemplate>
@@ -153,6 +157,6 @@
             </SelectParameters>
         </asp:SqlDataSource>
         <br />
-        
+
     </div>
 </asp:Content>

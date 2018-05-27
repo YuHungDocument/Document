@@ -1319,7 +1319,16 @@ namespace WebApplication1
                             else
                             {
                                 Lbl_Eorr.Visible = true;
-                                return;
+                                using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+                                {
+                                    cn.Open();
+                                    SqlCommand cmddelete = new SqlCommand("Delete From Detail Where SID=@SID");
+                                    cmddelete.Connection = cn;
+                                    cmddelete.Parameters.AddWithValue("@SID",Lbl_SID.Text);
+                                    cmddelete.ExecuteNonQuery();
+                                    cn.Close();
+                                }
+                                    return;
                             }
                         }
 

@@ -8,7 +8,7 @@
     <title></title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-     
+
     <link href="style.css" rel="stylesheet" media="all" />
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -22,40 +22,44 @@
             padding: 0;
         }
 
+        .dropdown-menu > li > a {
+            color: #428bca;
+        }
+
+        .dropdown ul.dropdown-menu {
+            border-radius: 4px;
+            box-shadow: none;
+            margin-top: 20px;
+            width: 300px;
+        }
+
+            .dropdown ul.dropdown-menu:before {
+                content: "";
+                border-bottom: 10px solid #fff;
+                border-right: 10px solid transparent;
+                border-left: 10px solid transparent;
+                position: absolute;
+                top: -10px;
+                right: 16px;
+                z-index: 10;
+            }
+
+            .dropdown ul.dropdown-menu:after {
+                content: "";
+                border-bottom: 12px solid #ccc;
+                border-right: 12px solid transparent;
+                border-left: 12px solid transparent;
+                position: absolute;
+                top: -12px;
+                right: 14px;
+                z-index: 9;
+            }
+
         body {
             font: 300 14px 'HelveticaNeue-Light','Helvetica Neue Light','Helvetica Neue',Helvetica,Arial,'Lucida Grande',sans-serif;
             background: #f5f5f5;
             overflow-x: hidden;
         }
-        /* Style the top navigation bar */
-        .topnav {
-            overflow: hidden;
-            background-color: #282727;
-            position: fixed;
-            width: 100%;
-            margin-top: 0px;
-        }
-            /* Style the navigation bar links */
-            .topnav a {
-                float: left;
-                display: block;
-                color: white;
-                text-align: center;
-                text-decoration: none;
-                padding: 16px;
-                font-size: medium;
-            }
-
-            /* Right-aligned link */
-            .topnav li {
-                float: right;
-                list-style-type: none;
-            }
-            /* Change color on hover */
-            .topnav a:hover {
-                color: #ff6a00;
-                background-color: white;
-            }
 
 
         /*側邊導覽頁*/
@@ -70,8 +74,8 @@
             position: fixed;
             width: 300px;
             height: 100%;
-            margin-top:52px;
-            padding-bottom:50px;
+            margin-top: 52px;
+            padding-bottom: 50px;
             background-color: #808080;
             border-right: 1px solid #e7e7e7;
         }
@@ -96,7 +100,6 @@
                 width: 100%;
                 background-color: #808080;
                 border-bottom: 1px solid #e7e7e7;
-
             }
 
                 .side-menu .navbar-nav li a {
@@ -467,20 +470,36 @@
 </head>
 <body>
     <form id="form1" method="post" runat="server">
-        <div class="topnav">            
-                <div>
-                    <a class="navbar-brand" href="Home.aspx" style="font-size: medium"><asp:Label ID="Lbl_CompanyName" runat="server" Text=""></asp:Label></a>
-                </div>
-                <ul>
-                    <li>
-                        <asp:LinkButton ID="Lb_Logout" runat="server" OnClick="Lb_Logout_Click">登出</asp:LinkButton>
-                    </li>
-                    <li>
-                        <asp:LinkButton ToolTip="個人資料" ID="Lb_UserInfo" runat="server"></asp:LinkButton>
-                    </li>
-                </ul>
-        </div>
 
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" >
+            <div class="container-fluid" >
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="Home.aspx">
+                        <asp:Label ID="Lbl_CompanyName" runat="server" ForeColor="White"></asp:Label></a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown" id="lissy" runat="server">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <asp:Label ID="Lb_UserInfo" class="" runat="server" ForeColor="White"></asp:Label><span style="color:white" class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">使用者設定 <span class="glyphicon glyphicon-cog pull-right"></span></a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">訊息 <span class="badge pull-right">
+                                    <asp:Label ID="Label2" runat="server" Text="0"></asp:Label></span></a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <asp:LinkButton ID="Lb_Logout" runat="server" OnClick="Lb_Logout_Click" ForeColor="White">登出</asp:LinkButton></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
 
 
         <div class="row">
@@ -516,7 +535,7 @@
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
                                             <li><a href="WriteDocument.aspx" style="background-color: #793f35">公文</a></li>
-                                            <li><a href="WriteVote.aspx" style="background-color:  #793f35">投票</a></li>
+                                            <li><a href="WriteVote.aspx" style="background-color: #793f35">投票</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -563,8 +582,6 @@
                                     </div>
                                 </div>
                             </li>
-                            <li>
-                                <asp:LinkButton ID="Lb_Import" runat="server"><span class="glyphicon glyphicon-star"></span>標記重要項目</asp:LinkButton></li>
                             <li class="panel panel-default" id="dropdown">
                                 <asp:LinkButton href="#dropdown-lv04" data-toggle="collapse" ID="Lb_Set" runat="server"><span class="glyphicon glyphicon-hdd"></span>個人設定<span class="caret"></span></asp:LinkButton>
                                 <!-- Dropdown level 1 -->
@@ -580,7 +597,7 @@
                                 </div>
                             </li>
                             <li>
-                                <asp:LinkButton  href="back_mainpage.aspx" ID="LinkButton1" runat="server"><span class="glyphicon glyphicon-cog"></span>後臺管理</asp:LinkButton>
+                                <asp:LinkButton href="back_mainpage.aspx" ID="LinkButton1" runat="server"><span class="glyphicon glyphicon-cog"></span>後臺管理</asp:LinkButton>
                             </li>
                         </ul>
                     </div>

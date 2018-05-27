@@ -271,6 +271,7 @@
 
                                 <br />
                                 <br />
+
                                 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                                     <ContentTemplate>
                                         <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="增加1列" />
@@ -278,6 +279,7 @@
                                         &nbsp;
                                             <button type="button" id="Btn" runat="server" data-toggle="modal" data-target="#myModal">選擇群組</button>
 
+                                        <asp:CheckBox ID="ChB_Check" runat="server" Text="簽核時是否重新檢查金鑰" />
 
                                         <asp:Label ID="Lbl_GpName" runat="server" Text="Label" Visible="False"></asp:Label>
                                         <br />
@@ -316,7 +318,7 @@
                                                         <asp:CheckBox ID="Cb_sign" runat="server" OnCheckedChanged="Cb_sign_CheckedChanged" AutoPostBack="True" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="可察看進度">
+                                                <asp:TemplateField HeaderText="可察看投票結果">
                                                     <ItemTemplate>
                                                         <asp:CheckBox ID="Cb_path" runat="server" OnCheckedChanged="Cb_path_CheckedChanged" AutoPostBack="True" />
                                                     </ItemTemplate>

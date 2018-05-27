@@ -77,7 +77,7 @@
             border-radius: 50px;
         }
 
-        .dropdown {
+        /*.dropdown {
             background: #fff;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -115,7 +115,7 @@
                 top: -12px;
                 right: 14px;
                 z-index: 9;
-            }
+            }*/
 
         .footer {
             height: 170px;

@@ -40,13 +40,13 @@ namespace WebApplication1 {
         protected global::System.Web.UI.WebControls.Label Lbl_CompanyName;
         
         /// <summary>
-        /// Lb_Logout 控制項。
+        /// lissy 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Lb_Logout;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lissy;
         
         /// <summary>
         /// Lb_UserInfo 控制項。
@@ -55,7 +55,25 @@ namespace WebApplication1 {
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Lb_UserInfo;
+        protected global::System.Web.UI.WebControls.Label Lb_UserInfo;
+        
+        /// <summary>
+        /// Label2 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label2;
+        
+        /// <summary>
+        /// Lb_Logout 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton Lb_Logout;
         
         /// <summary>
         /// Lb_Write 控制項。
@@ -110,15 +128,6 @@ namespace WebApplication1 {
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton Lb_End;
-        
-        /// <summary>
-        /// Lb_Import 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Lb_Import;
         
         /// <summary>
         /// Lb_Set 控制項。

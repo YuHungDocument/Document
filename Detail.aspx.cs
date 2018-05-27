@@ -738,54 +738,45 @@ namespace WebApplication1
                         cmd.Connection = cn;
                         cmd.Parameters.AddWithValue("@EID", Lbl_EID.Text);
                         cmd.Parameters.AddWithValue("@Pwd", Txt_Enterpassword.Text);
-
-                        SqlCommand sqlcmd = new SqlCommand("Select * from Fil Where SID=@SID");
-                        sqlcmd.Connection = cn;
-                        sqlcmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
-
-                        using (SqlDataReader dr2 = sqlcmd.ExecuteReader())
+                        if(Lbl_Type.Text== "投票")
                         {
-                            if (dr2.Read())
+                            using (SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr))
                             {
-                                if (dr2["Type"].ToString() == "投票")
-                                {
-                                    using (SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr))
-                                    {
-                                        sqlcon.Open();
-                                        SqlCommand choosecmd = new SqlCommand("Update Detail set choose=@choose where EID=@EID and SID=@SID");
-                                        choosecmd.Parameters.AddWithValue("@choose", DropDownList1.SelectedValue);
-                                        choosecmd.Parameters.AddWithValue("@EID", Lbl_EID.Text);
-                                        choosecmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
-                                        choosecmd.Connection = sqlcon;
-                                        choosecmd.ExecuteNonQuery();
+                                sqlcon.Open();
+                                SqlCommand choosecmd = new SqlCommand("Update Detail set choose=@choose where EID=@EID and SID=@SID");
+                                choosecmd.Parameters.AddWithValue("@choose", DropDownList1.SelectedValue);
+                                choosecmd.Parameters.AddWithValue("@EID", Lbl_EID.Text);
+                                choosecmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+                                choosecmd.Connection = sqlcon;
+                                choosecmd.ExecuteNonQuery();
 
+                                #region Total計算舊的應該不需要了
+                                //SqlCommand selecttotalcmd = new SqlCommand("Select * from Vote where SID=@SID and number=@number");
+                                //selecttotalcmd.Parameters.AddWithValue("SID", Lbl_SID.Text);
+                                //selecttotalcmd.Parameters.AddWithValue("number", DropDownList1.SelectedValue);
+                                //selecttotalcmd.Connection = sqlcon;
+                                //using (SqlDataReader totaldr = selecttotalcmd.ExecuteReader())
+                                //{
 
-                                        SqlCommand selecttotalcmd = new SqlCommand("Select * from Vote where SID=@SID and number=@number");
-                                        selecttotalcmd.Parameters.AddWithValue("SID", Lbl_SID.Text);
-                                        selecttotalcmd.Parameters.AddWithValue("number", DropDownList1.SelectedValue);
-                                        selecttotalcmd.Connection = sqlcon;
-                                        using (SqlDataReader totaldr = selecttotalcmd.ExecuteReader())
-                                        {
-
-                                            if (totaldr.Read())
-                                            {
-                                                Session["total"] = int.Parse(totaldr["Total"].ToString());
-                                                Session["total"] = int.Parse(Session["total"].ToString()) + 1;
-                                                using (SqlConnection upcn = new SqlConnection(tmpdbhelper.DB_CnStr))
-                                                {
-                                                    upcn.Open();
-                                                    SqlCommand upcmd = new SqlCommand("Update Vote set Total=@Total Where number=@number");
-                                                    upcmd.Parameters.AddWithValue("@Total", Session["total"].ToString());
-                                                    upcmd.Parameters.AddWithValue("number", DropDownList1.SelectedValue);
-                                                    upcmd.Connection = upcn;
-                                                    upcmd.ExecuteNonQuery();
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
+                                //    if (totaldr.Read())
+                                //    {
+                                //        Session["total"] = int.Parse(totaldr["Total"].ToString());
+                                //        Session["total"] = int.Parse(Session["total"].ToString()) + 1;
+                                //        using (SqlConnection upcn = new SqlConnection(tmpdbhelper.DB_CnStr))
+                                //        {
+                                //            upcn.Open();
+                                //            SqlCommand upcmd = new SqlCommand("Update Vote set Total=@Total Where number=@number");
+                                //            upcmd.Parameters.AddWithValue("@Total", Session["total"].ToString());
+                                //            upcmd.Parameters.AddWithValue("number", DropDownList1.SelectedValue);
+                                //            upcmd.Connection = upcn;
+                                //            upcmd.ExecuteNonQuery();
+                                //        }
+                                //    }
+                                //}
+                                #endregion
                             }
                         }
+
 
 
 
@@ -1015,6 +1006,7 @@ namespace WebApplication1
                         //對稱解密
                         Label Lbl_number = (Label)e.Row.FindControl("Lbl_number");
                         Label Lbl_Vname = (Label)e.Row.FindControl("Lbl_Vname");
+                        Label Lbl_Total = (Label)e.Row.FindControl("Lbl_Total");
                         using (SqlConnection cnVote = new SqlConnection(tmpdbhelper.DB_CnStr))
                         {
                             cnVote.Open();
@@ -1027,6 +1019,17 @@ namespace WebApplication1
                                 if (dr.Read())
                                 {
                                     Lbl_Vname.Text = AESDecryption(key, AESiv, dr["Vname"].ToString());
+                                }
+                            }
+                            SqlCommand cmd2 = new SqlCommand("Select count(choose) as votechoose from Detail Where SID=@SID and choose=@choose");
+                            cmd2.Connection = cnVote;
+                            cmd2.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+                            cmd2.Parameters.AddWithValue("@choose", Lbl_number.Text);
+                            using (SqlDataReader dr = cmd2.ExecuteReader())
+                            {
+                                if (dr.Read())
+                                {
+                                    Lbl_Total.Text =  dr["votechoose"].ToString();
                                 }
                             }
                             cnVote.Close();

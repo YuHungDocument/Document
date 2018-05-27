@@ -13,7 +13,7 @@
         &nbsp;
         <asp:Label ID="Lbl_SenderName" runat="server"></asp:Label>(<asp:Label ID="Lbl_SenderEID" runat="server"></asp:Label>)
         &nbsp;
-        <asp:Label ID="Lbl_Type" runat="server" BackColor="#FFD5AA" Font-Names="標楷體" Font-Size="Medium"></asp:Label>
+        公文類型：<asp:Label ID="Lbl_Type" runat="server" BackColor="#FFD5AA" Font-Names="標楷體" Font-Size="Medium"></asp:Label>
 
     </div>
     <div class="col-sm-4" style="text-align: right">
@@ -27,16 +27,18 @@
     <br />
     <hr />
     <div class="col-sm-12">
-        擬辦：
-        <br />
-        <asp:Label ID="Lbl_Proposition" runat="server"></asp:Label>
+        <asp:Panel ID="Pel_Propostiton" runat="server">
+            擬辦： 
+            <br />
+            <asp:Label ID="Lbl_Proposition" runat="server"></asp:Label>
+        </asp:Panel>
         <br />
         <br />
         <asp:Panel ID="Pel_Choose" runat="server" Visible="False">
             您的投票選項為：<asp:Label ID="Lbl_Choose" runat="server"></asp:Label>
         </asp:Panel>
         <br />
-        <asp:GridView ID="Gv_Total" Style="border: 2px #ccc solid; border-radius: 10px;" runat="server" AutoGenerateColumns="False" Width="148px" OnRowDataBound="Gv_Total_RowDataBound">
+        <asp:GridView ID="Gv_Total" Style="border: 2px #ccc solid; border-radius: 10px;" runat="server" AutoGenerateColumns="False" Width="193px" OnRowDataBound="Gv_Total_RowDataBound">
             <Columns>
                 <asp:BoundField DataField="SID" Visible="False" />
                 <asp:TemplateField Visible="False">
@@ -91,8 +93,6 @@
             <RowStyle Font-Size="Large" BackColor="White" HorizontalAlign="Center" />
         </asp:GridView>
         <br />
-        <asp:Panel ID="Pnl_sign" runat="server" Visible="False">
-            <asp:Panel ID="Pel_selectwatch" runat="server" Visible="False">
                 <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" Width="148px" OnRowDataBound="GridView2_RowDataBound">
                     <Columns>
                         <asp:TemplateField HeaderText="投票項次">
@@ -110,7 +110,9 @@
                     <HeaderStyle HorizontalAlign="Center" />
                     <RowStyle HorizontalAlign="Center" />
                 </asp:GridView>
-                <br />
+        <br />
+        <asp:Panel ID="Pnl_sign" runat="server" Visible="False">
+            <asp:Panel ID="Pel_selectwatch" runat="server" Visible="False">
                 選擇選項：<asp:DropDownList ID="DropDownList1" runat="server">
                 </asp:DropDownList>
             </asp:Panel>

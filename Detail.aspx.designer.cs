@@ -85,6 +85,15 @@ namespace WebApplication1 {
         protected global::System.Web.UI.WebControls.Label Lbl_Text;
         
         /// <summary>
+        /// Pel_Propostiton 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel Pel_Propostiton;
+        
+        /// <summary>
         /// Lbl_Proposition 控制項。
         /// </summary>
         /// <remarks>
@@ -139,6 +148,15 @@ namespace WebApplication1 {
         protected global::System.Web.UI.WebControls.GridView gv_showTempFile;
         
         /// <summary>
+        /// GridView2 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridView2;
+        
+        /// <summary>
         /// Pnl_sign 控制項。
         /// </summary>
         /// <remarks>
@@ -155,15 +173,6 @@ namespace WebApplication1 {
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel Pel_selectwatch;
-        
-        /// <summary>
-        /// GridView2 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView2;
         
         /// <summary>
         /// DropDownList1 控制項。

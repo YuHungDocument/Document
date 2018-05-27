@@ -92,6 +92,8 @@ namespace WebApplication1
                                                 {
                                                     Txt_Enterpassword.Visible = false;
                                                     Btn_check.Visible = false;
+                                                    Pel_selectwatch.Visible = false;
+                                                    Pel_Choose.Visible = true;
                                                 }
                                                 if (dr3["path"].ToString() == "1")
                                                 {
@@ -112,7 +114,7 @@ namespace WebApplication1
                             }
 
                             FillData();
-                            if (Lbl_Type.Text == "公文類型：代理人設定")
+                            if (Lbl_Type.Text == "代理人設定")
                             {
                                 if (Lbl_SenderEID.Text == Lbl_EID.Text)
                                 {
@@ -120,6 +122,14 @@ namespace WebApplication1
                                     Btn_check.Visible = false;
 
                                 }
+                            }
+                            if(Lbl_Type.Text!="投票")
+                            {
+                                Pel_Propostiton.Visible = true;
+                            }
+                            else
+                            {
+                                Pel_Propostiton.Visible = false;
                             }
                         }
                         using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
@@ -427,8 +437,6 @@ namespace WebApplication1
         #region bind
         public void bind()
         {
-
-
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
                 cn.Open();
@@ -448,7 +456,7 @@ namespace WebApplication1
                         Lbl_Date.Text = String.Format("{0:yyyy/MM/dd}", strDate);
                         stringdate = strDate.ToString("yyyyMMdd");
                         Lbl_Text.Text = dr["Text"].ToString();
-                        Lbl_Type.Text = "公文類型：" + dr["Type"].ToString();
+                        Lbl_Type.Text = dr["Type"].ToString();
                         Lbl_Proposition.Text = dr["Proposition"].ToString();
                         if (dr["Type"].ToString() == "投票")
                         {
@@ -743,7 +751,7 @@ namespace WebApplication1
                             using (SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr))
                             {
                                 sqlcon.Open();
-                                SqlCommand choosecmd = new SqlCommand("Update Detail set choose=@choose where EID=@EID and SID=@SID");
+                                SqlCommand choosecmd = new SqlCommand("Update Detail set choose=@choose where SID=@SID and EID=@EID");
                                 choosecmd.Parameters.AddWithValue("@choose", DropDownList1.SelectedValue);
                                 choosecmd.Parameters.AddWithValue("@EID", Lbl_EID.Text);
                                 choosecmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
@@ -1025,6 +1033,7 @@ namespace WebApplication1
                             cmd2.Connection = cnVote;
                             cmd2.Parameters.AddWithValue("@SID", Lbl_SID.Text);
                             cmd2.Parameters.AddWithValue("@choose", Lbl_number.Text);
+                            cmd2.ExecuteNonQuery();
                             using (SqlDataReader dr = cmd2.ExecuteReader())
                             {
                                 if (dr.Read())

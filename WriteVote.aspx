@@ -16,6 +16,20 @@
             }
         }
     </script>
+        <script>
+            $(document).on('click', '.panel-heading.clickable', function (e) {
+                var $this = $(this);
+                if (!$this.hasClass('panel-collapsed')) {
+                    $this.parents('.panel').find('.panel-body').slideUp();
+                    $this.addClass('panel-collapsed');
+                    $this.find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+                } else {
+                    $this.parents('.panel').find('.panel-body').slideDown();
+                    $this.removeClass('panel-collapsed');
+                    $this.find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+                }
+            })
+    </script>
     <style>
         table {
             width: 100%;
@@ -389,10 +403,11 @@
                                             </Columns>
                                         </asp:GridView>
                                         <br />
+                                                                        <asp:Button ID="Btn_Save" runat="server" Text="送出" OnClick="Btn_Save_Click" />
+                                <asp:Label ID="Lbl_Eorr" runat="server" ForeColor="Red" Text="資料輸入不完整" Visible="False"></asp:Label>
                                     </ContentTemplate>
                                 </asp:UpdatePanel>
-                                <asp:Button ID="Btn_Save" runat="server" Text="送出" OnClick="Btn_Save_Click" />
-                                <asp:Label ID="Lbl_Eorr" runat="server" ForeColor="Red" Text="資料輸入不完整" Visible="False"></asp:Label>
+
                             </div>
                         </td>
                     </tr>

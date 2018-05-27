@@ -45,16 +45,36 @@
                 <asp:CommandField  ShowEditButton="True" />
                  <asp:TemplateField  SortExpression="TN">
                       <HeaderTemplate>
-                                <div style="text-align: center;">聯絡標題</div>
+                          
+                            <div style="text-align: center;">
+                                <asp:Label ID="Label2" runat="server" Text="聯絡標題"></asp:Label>
+                                 <asp:LinkButton ID="lbInsert" runat="server" Width="70px"  onclick="lbInsert_Click" Text="新增"></asp:LinkButton>
+                            </div>
                             </HeaderTemplate>
+
                      <EditItemTemplate>
-                         <asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("TN") %>'></asp:TextBox>
+                         <asp:TextBox ID="Txt_TN" runat="server" Text='<%# Bind("TN") %>'></asp:TextBox>
                      </EditItemTemplate>
+                     <FooterTemplate>
+                           <div style="text-align: center;">
+                <asp:TextBox ID="tbTNFooter" runat="server" 
+                Text=""></asp:TextBox>
+                <asp:LinkButton ID="lbSave" runat="server" 
+                onclick="lbSave_Click">儲存</asp:LinkButton>
+                |
+                <asp:LinkButton ID="lbCancelSave" runat="server" 
+                onclick="lbCancelSave_Click">取消</asp:LinkButton>
+                                </div>
+            </FooterTemplate>
                      <ItemTemplate>
                          <asp:Label ID="Label1" runat="server" Text='<%# Bind("TN") %>'></asp:Label>
                      </ItemTemplate>
                  </asp:TemplateField>
-                   <asp:CommandField ShowDeleteButton="True" />
+                   <asp:TemplateField ShowHeader="False">
+                       <ItemTemplate>
+                           <asp:LinkButton ID="LinkButton1" runat="server" CausesValidation="False" CommandName="Delete" Text="刪除" OnClientClick="javascript:return confirm('確定刪除?')" ></asp:LinkButton>
+                       </ItemTemplate>
+                 </asp:TemplateField>
                 
              </Columns>
              <FooterStyle BackColor="#CCCC99" ForeColor="Black" />

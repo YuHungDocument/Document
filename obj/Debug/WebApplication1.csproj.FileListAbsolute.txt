@@ -26,7 +26,6 @@ C:\Users\admin\Desktop\Document\project\WebApplication1\obj\Debug\WebApplication
 C:\Users\as586\Desktop\pr\WebApplication1\bin\WebApplication1.dll.config
 C:\Users\as586\Desktop\pr\WebApplication1\bin\WebApplication1.dll
 C:\Users\as586\Desktop\pr\WebApplication1\bin\WebApplication1.pdb
-C:\Users\as586\Desktop\pr\WebApplication1\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\as586\Desktop\pr\WebApplication1\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Users\as586\Desktop\pr\WebApplication1\obj\Debug\WebApplication1.csprojResolveAssemblyReference.cache
 C:\Users\as586\Desktop\pr\WebApplication1\obj\Debug\WebApplication1.csproj.CoreCompileInputs.cache
@@ -61,3 +60,4 @@ C:\Users\Amd\Desktop\Document\Document\project\WebApplication1\bin\CKEditor.NET.
 C:\Users\admin\Desktop\Document\project\WebApplication1\bin\CKEditor.NET.pdb
 C:\Users\SS\Desktop\Document\Document\project\WebApplication1\bin\CKEditor.NET.pdb
 C:\Users\b0972\Desktop\project\WebApplication1\bin\CKEditor.NET.pdb
+C:\Users\as586\Desktop\pr\WebApplication1\bin\CKEditor.NET.pdb

@@ -156,7 +156,7 @@
                     <td><a href="AboutUs.aspx"><span class="circle_in_black glyphicon glyphicon glyphicon-pencil"></span>
                         <br />
                         關於我們</a></td>
-                    <td><a href="Login.aspx"><span class="circle_in_black glyphicon glyphicon-user"></span>
+                    <td><a href="MainPage.aspx"><span class="circle_in_black glyphicon glyphicon-user"></span>
                         <br />
                         員工專區</a></td>
                 </tr>

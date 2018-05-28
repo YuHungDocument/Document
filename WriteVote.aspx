@@ -288,10 +288,9 @@
 
                                 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                                     <ContentTemplate>
-                                        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="增加1列" />
-                                        &nbsp;<asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="增加10列" />
-                                        &nbsp;
                                             <button type="button" id="Btn" runat="server" data-toggle="modal" data-target="#myModal">選擇群組</button>
+
+                                            <br />
 
                                         <asp:CheckBox ID="ChB_Check" runat="server" Text="簽核時是否重新檢查金鑰" />
 

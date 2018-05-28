@@ -312,8 +312,6 @@
                             <br />
                             <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
                                 <ContentTemplate>
-                                    <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="增加1列" />
-                                    <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="增加10列" />
                                     <button type="button" id="Btn" runat="server" data-toggle="modal" data-target="#myModal">選擇群組</button>
                                     <asp:Label ID="Lbl_GpName" runat="server" Text="Label" Visible="False"></asp:Label>
                                 </ContentTemplate>

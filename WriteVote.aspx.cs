@@ -757,10 +757,11 @@ namespace WebApplication1
         {
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
-                string ttSQL = "Select * From UseGroup Where GpName='" + TextBox1.Text + "'";
+                string ttSQL = "Select * From Record Where GpName='" + TextBox1.Text + "' and EID=@EID";
                 cn.Open();
                 SqlCommand cmd3 = new SqlCommand(ttSQL);
                 cmd3.Connection = cn;
+                cmd3.Parameters.AddWithValue("@EID",Lbl_EID.Text);
                 using (SqlDataReader dr = cmd3.ExecuteReader())
                 {
                     if (dr.Read())
@@ -777,10 +778,11 @@ namespace WebApplication1
                         if (!string.IsNullOrWhiteSpace(TextBox1.Text))
                         {
                             string GID = DateTime.Now.ToString("yyyyMMddhhmmss");
-                            SqlCommand cmd4 = new SqlCommand(@"Insert Into Record(GpName,GID)Values(@GpName,@GID)");
+                            SqlCommand cmd4 = new SqlCommand(@"Insert Into Record(GpName,GID,EID)Values(@GpName,@GID,@EID)");
                             cmd4.Connection = cn;
                             cmd4.Parameters.AddWithValue("@GpName", TextBox1.Text);
                             cmd4.Parameters.AddWithValue("@GID", GID);
+                            cmd4.Parameters.AddWithValue("@EID", Lbl_EID.Text);
                             cmd4.ExecuteNonQuery();
 
                             for (int i = 0; i < GridView2.Rows.Count - 1; i++)
@@ -790,14 +792,13 @@ namespace WebApplication1
                                 string EID = ((TextBox)GridView2.Rows[i].FindControl("Txt_EID")).Text.Trim();
                                 string Department = ((Label)GridView2.Rows[i].FindControl("Lbl_Dep")).Text.Trim();
                                 string Name = ((Label)GridView2.Rows[i].FindControl("Lbl_Name")).Text.Trim();
-                                CheckBox Cb_sign = ((CheckBox)GridView1.Rows[0].FindControl("Cb_sign"));
-                                CheckBox Cb_path = ((CheckBox)GridView1.Rows[0].FindControl("Cb_path"));
-                                CheckBox Cb_comment = ((CheckBox)GridView1.Rows[0].FindControl("Cb_comment"));
+                                CheckBox Cb_sign = ((CheckBox)GridView2.Rows[i].FindControl("Cb_sign"));
+                                CheckBox Cb_path = ((CheckBox)GridView2.Rows[i].FindControl("Cb_path"));
+                                CheckBox Cb_comment = ((CheckBox)GridView2.Rows[i].FindControl("Cb_comment"));
 
                                 if (!string.IsNullOrWhiteSpace(TextBox1.Text)
                                     && Lvl != ""
                                     && Department != ""
-                                    && Department != "Dp1"
                                     && Name != "")
                                 {
                                     //寫回資料庫
@@ -813,13 +814,11 @@ namespace WebApplication1
                                     cmd.Parameters.AddWithValue("@Name", Name);
                                     if (Cb_sign.Checked == true)
                                     {
-                                        cmd.Parameters.AddWithValue("@status", "1");
-                                        cmd.Parameters.AddWithValue("@sign", 0);
+                                        cmd.Parameters.AddWithValue("@status", "1");                                        
                                     }
                                     else
                                     {
-                                        cmd.Parameters.AddWithValue("@status", "0");
-                                        cmd.Parameters.AddWithValue("@sign", 1);
+                                        cmd.Parameters.AddWithValue("@status", "0");                                        
                                     }
                                     if (Cb_path.Checked == true)
                                     {
@@ -914,12 +913,15 @@ namespace WebApplication1
                         for (int i = 0; i < GridView2.Rows.Count - 1; i++)
                         {
                             SqlCommand cmd4 = new SqlCommand("Select * From UseGroup where GID=@GID");
-                            string tmpsql = "Update UseGroup set GpName=@GpName,Lvl=@Lvl,EID=@EID,Name=@Name,Department=@Department,status=@status where ID=@ID And GID=@GID ";
-                            string Lvl = ((TextBox)GridView2.Rows[i].FindControl("TextBox2")).Text.Trim();
-                            string EID = ((TextBox)GridView2.Rows[i].FindControl("TextBox3")).Text.Trim();
-                            string Department = ((TextBox)GridView2.Rows[i].FindControl("TextBox4")).Text.Trim();
-                            string Name = ((TextBox)GridView2.Rows[i].FindControl("TextBox5")).Text.Trim();
-                            string status = ((DropDownList)GridView2.Rows[i].FindControl("Ddl_status")).Text.Trim();
+                            string tmpsql = "Update UseGroup set GpName=@GpName,Lvl=@Lvl,EID=@EID,Name=@Name,Department=@Department,status=@status,path=@path,Comment=@Comment where ID=@ID And GID=@GID ";
+                            string Lvl = ((TextBox)GridView2.Rows[i].FindControl("Txt_Lvl")).Text.Trim();
+                            string EID = ((TextBox)GridView2.Rows[i].FindControl("Txt_EID")).Text.Trim();
+                            string Department = ((Label)GridView2.Rows[i].FindControl("Lbl_Dep")).Text.Trim();
+                            string Name = ((Label)GridView2.Rows[i].FindControl("Lbl_Name")).Text.Trim();
+                            CheckBox Cb_sign = ((CheckBox)GridView2.Rows[i].FindControl("Cb_sign"));
+                            CheckBox Cb_path = ((CheckBox)GridView2.Rows[i].FindControl("Cb_path"));
+                            CheckBox Cb_comment = ((CheckBox)GridView2.Rows[i].FindControl("Cb_comment"));
+
 
 
                             SqlCommand cmd2 = new SqlCommand();
@@ -931,7 +933,31 @@ namespace WebApplication1
                             cmd2.Parameters.AddWithValue("@EID", EID);
                             cmd2.Parameters.AddWithValue("@Name", Name);
                             cmd2.Parameters.AddWithValue("@Department", Department);
-                            cmd2.Parameters.AddWithValue("@status", status);
+                            if (Cb_sign.Checked == true)
+                            {
+                                cmd.Parameters.AddWithValue("@status", "1");
+                            }
+                            else
+                            {
+                                cmd.Parameters.AddWithValue("@status", "0");
+                                
+                            }
+                            if (Cb_path.Checked == true)
+                            {
+                                cmd.Parameters.AddWithValue("@path", "1");
+                            }
+                            else
+                            {
+                                cmd.Parameters.AddWithValue("@path", "0");
+                            }
+                            if (Cb_comment.Checked == true)
+                            {
+                                cmd.Parameters.AddWithValue("@Comment", "1");
+                            }
+                            else
+                            {
+                                cmd.Parameters.AddWithValue("@Comment", "0");
+                            }
                             cmd2.Connection = cn;
                             cmd2.ExecuteNonQuery();
 

@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 
 namespace WebApplication1
 {
-    public partial class SetConnect : System.Web.UI.Page
+    public partial class SetBT : System.Web.UI.Page
     {
         DbHelper tmpdbhelper = new DbHelper();
         protected void Page_Load(object sender, EventArgs e)
@@ -20,7 +20,8 @@ namespace WebApplication1
                     Response.Redirect("Home.aspx");
                 }
             }
-            }
+
+        }
         protected void lbSave_Click(object sender, EventArgs e)
         {
             string TN;
@@ -48,13 +49,13 @@ namespace WebApplication1
 
                     }
                 }
-              
+
                 cmd.Connection = cn;
                 cmd.CommandText = @"Insert Into TypeGroup(Tp,TID,TN)VALUES(@Tp,@TID,@TN) ";
                 cmd.Parameters.AddWithValue("@TN", TN);
-                cmd.Parameters.AddWithValue("@Tp", "CT");
+                cmd.Parameters.AddWithValue("@Tp", "BT");
 
-                
+
 
                 cmd.ExecuteNonQuery();
                 cn.Close();

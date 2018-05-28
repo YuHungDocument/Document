@@ -918,8 +918,10 @@
     <Content Include="Scripts\ckeditor\styles.js" />
     <Content Include="set.aspx" />
     <Content Include="SetAgent.aspx" />
+    <Content Include="SetBT.aspx" />
     <Content Include="SetConnect.aspx" />
     <Content Include="setInfo.aspx" />
+    <Content Include="SetNT.aspx" />
     <Content Include="ucGridViewChoiceAll.ascx" />
     <Content Include="WebNavigation.aspx" />
     <Content Include="WriteDocument.aspx" />
@@ -1359,6 +1361,13 @@
     <Compile Include="SetAgent.aspx.designer.cs">
       <DependentUpon>SetAgent.aspx</DependentUpon>
     </Compile>
+    <Compile Include="SetBT.aspx.cs">
+      <DependentUpon>SetBT.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SetBT.aspx.designer.cs">
+      <DependentUpon>SetBT.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SetConnect.aspx.cs">
       <DependentUpon>SetConnect.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1372,6 +1381,13 @@
     </Compile>
     <Compile Include="setInfo.aspx.designer.cs">
       <DependentUpon>setInfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SetNT.aspx.cs">
+      <DependentUpon>SetNT.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SetNT.aspx.designer.cs">
+      <DependentUpon>SetNT.aspx</DependentUpon>
     </Compile>
     <Compile Include="ucGridViewChoiceAll.ascx.cs">
       <DependentUpon>ucGridViewChoiceAll.ascx</DependentUpon>

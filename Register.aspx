@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Home.Master" AutoEventWireup="true" CodeBehind="Register.aspx.cs" Inherits="WebApplication1.Register" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/GuildPage.Master" AutoEventWireup="true" CodeBehind="Register.aspx.cs" Inherits="WebApplication1.Register" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
@@ -16,10 +16,6 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="row">
         <div class="column">
-            <br />
-            <a href="Home.aspx">首頁</a>/<a href="Login.aspx">員工專區</a>/註冊
-            <hr />
-            <br />
             <div class="form-horizontal">
 
                 <div class="form-group" style="width: 650px; margin-left: 20%;">
@@ -142,7 +138,7 @@
                         <asp:Button runat="server" OnClick="Button1_Click" Text="註冊" class="button" Height="45px" Width="93px" />
 
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                             <asp:Button ID="Button2" runat="server" class="button" Text="返回" Height="45px" Width="93px" CausesValidation="False" PostBackUrl="~/Home.aspx" />
+                             <asp:Button ID="Button2" runat="server" class="button" Text="返回" Height="45px" Width="93px" CausesValidation="False" PostBackUrl="~/MainPage.aspx" />
 
                     </div>
                 </div>

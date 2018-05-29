@@ -16,6 +16,17 @@ namespace WebApplication1
         DbHelper tmpdbhelper = new DbHelper();
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!Page.IsPostBack)
+            {
+                if (Session["userinfo"] == null)
+                {
+                    Response.Redirect("Home.aspx");
+                }
+                else
+                {
+                    ((Label)this.Master.FindControl("Lb_Title")).Text = "註冊員工帳號";
+                }
+            }
             UnobtrusiveValidationMode = UnobtrusiveValidationMode.None;
         }
         static void SaveKey2File(string PrivateKeyrsaProviderReceiver, string fileName)
@@ -110,7 +121,7 @@ namespace WebApplication1
 
                             cmd.ExecuteNonQuery();//執行命令
                             SaveKey2File(txt_PrivateKeyrsaProviderReceiver, @"D:\"+DateTime.Now.ToString("yyyyMMddhhmmss")+".txt");
-                            Response.Write("<script>alert('帳戶建立成功!');location.href='Home.aspx';</script>");
+                            Response.Write("<script>alert('帳戶建立成功!');location.href='Register.aspx';</script>");
                         }
                         else
                         {

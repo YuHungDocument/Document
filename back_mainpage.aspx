@@ -30,9 +30,9 @@
                 </a>
             </div>
              <div class="col-sm-2">
-                <a href="Environmentalparameters.aspx" title="系統參數">
+                <a href="Register.aspx" title="新帳戶註冊">
                     <div class="glyphicon glyphicon-wrench"></div>
-                    <div class="item">系統參數</div>
+                    <div class="item">新帳戶註冊</div>
                 </a>
             </div>
         </div>

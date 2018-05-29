@@ -541,6 +541,7 @@
     <Content Include="font-awesome-4.7.0\css\font-awesome.min.css" />
     <Content Include="font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
     <Content Include="font-awesome-4.7.0\HELP-US-OUT.txt" />
+    <Content Include="Forget.aspx" />
     <Content Include="GuildPage.Master" />
     <Content Include="HomeLogin.aspx" />
     <Content Include="HostDocument.aspx" />
@@ -1195,6 +1196,13 @@
     </Compile>
     <Compile Include="Environmentalparameters.aspx.designer.cs">
       <DependentUpon>Environmentalparameters.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Forget.aspx.cs">
+      <DependentUpon>Forget.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Forget.aspx.designer.cs">
+      <DependentUpon>Forget.aspx</DependentUpon>
     </Compile>
     <Compile Include="GuildPage.Master.cs">
       <DependentUpon>GuildPage.Master</DependentUpon>

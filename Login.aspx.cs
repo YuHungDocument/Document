@@ -54,7 +54,7 @@ namespace WebApplication1
             if(Txt_ID.Text=="123456"&& Txt_Password.Text == "123456")
             {
                 Session["managerID"] = "123456";
-                Response.Redirect("AddNewsMessage.aspx");
+                Response.Redirect("NewsEdit.aspx");
             }
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
             {

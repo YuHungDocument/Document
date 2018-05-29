@@ -10,25 +10,7 @@
 namespace WebApplication1 {
     
     
-    public partial class AddNewsMessage {
-        
-        /// <summary>
-        /// ScriptManager1 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.ScriptManager ScriptManager1;
-        
-        /// <summary>
-        /// UpdatePanel1 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+    public partial class NewsEditDetail {
         
         /// <summary>
         /// Txt_Title 控制項。
@@ -40,13 +22,13 @@ namespace WebApplication1 {
         protected global::System.Web.UI.WebControls.TextBox Txt_Title;
         
         /// <summary>
-        /// Dp_Type 控制項。
+        /// Ddl_Type 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList Dp_Type;
+        protected global::System.Web.UI.WebControls.DropDownList Ddl_Type;
         
         /// <summary>
         /// SqlDataSource1 控制項。
@@ -58,22 +40,22 @@ namespace WebApplication1 {
         protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource1;
         
         /// <summary>
-        /// txt_Connect 控制項。
+        /// Txt_Context 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::CKEditor.NET.CKEditorControl txt_Connect;
+        protected global::CKEditor.NET.CKEditorControl Txt_Context;
         
         /// <summary>
-        /// Btn_Save 控制項。
+        /// Btn_Edit 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Btn_Save;
+        protected global::System.Web.UI.WebControls.Button Btn_Edit;
         
         /// <summary>
         /// Btn_Return 控制項。

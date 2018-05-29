@@ -559,6 +559,8 @@
     <Content Include="MainPage.aspx" />
     <Content Include="NEWHOME.aspx" />
     <Content Include="News.aspx" />
+    <Content Include="NewsEdit.aspx" />
+    <Content Include="NewsEditDetail.aspx" />
     <Content Include="obj\Debug\WebApplication1.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\WebApplication1.dll" />
     <Content Include="obj\Debug\WebApplication1.pdb" />
@@ -731,7 +733,6 @@
     <Content Include="Scripts\ckeditor\plugins\div\dialogs\div.js" />
     <Content Include="Scripts\ckeditor\plugins\find\dialogs\find.js" />
     <Content Include="Scripts\ckeditor\plugins\flash\dialogs\flash.js" />
-    <Content Include="Scripts\ckeditor\plugins\flash\images\placeholder.png" />
     <Content Include="Scripts\ckeditor\plugins\forms\dialogs\button.js" />
     <Content Include="Scripts\ckeditor\plugins\forms\dialogs\checkbox.js" />
     <Content Include="Scripts\ckeditor\plugins\forms\dialogs\form.js" />
@@ -1287,6 +1288,20 @@
     </Compile>
     <Compile Include="News.aspx.designer.cs">
       <DependentUpon>News.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NewsEdit.aspx.cs">
+      <DependentUpon>NewsEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NewsEdit.aspx.designer.cs">
+      <DependentUpon>NewsEdit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NewsEditDetail.aspx.cs">
+      <DependentUpon>NewsEditDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NewsEditDetail.aspx.designer.cs">
+      <DependentUpon>NewsEditDetail.aspx</DependentUpon>
     </Compile>
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />

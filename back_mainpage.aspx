@@ -35,6 +35,12 @@
                     <div class="item">新帳戶註冊</div>
                 </a>
             </div>
+            <div class="col-sm-2">
+                <a href="Remove_employee.aspx" title="移除離職員工">
+                    <div class="glyphicon glyphicon-wrench"></div>
+                    <div class="item">移除離職員工</div>
+                </a>
+            </div>
         </div>
     </div>
 

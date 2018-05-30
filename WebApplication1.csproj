@@ -919,8 +919,10 @@
     <Content Include="Scripts\ckeditor\skins\moono-lisa\images\spinner.gif" />
     <Content Include="Scripts\ckeditor\styles.js" />
     <Content Include="set.aspx" />
+    <Content Include="SetAboutUs.aspx" />
     <Content Include="SetAgent.aspx" />
     <Content Include="SetBT.aspx" />
+    <Content Include="SetCompanyIntroduction.aspx" />
     <Content Include="SetConnect.aspx" />
     <Content Include="setInfo.aspx" />
     <Content Include="SetNT.aspx" />
@@ -1377,6 +1379,13 @@
     <Compile Include="set.aspx.designer.cs">
       <DependentUpon>set.aspx</DependentUpon>
     </Compile>
+    <Compile Include="SetAboutUs.aspx.cs">
+      <DependentUpon>SetAboutUs.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SetAboutUs.aspx.designer.cs">
+      <DependentUpon>SetAboutUs.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SetAgent.aspx.cs">
       <DependentUpon>SetAgent.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1390,6 +1399,13 @@
     </Compile>
     <Compile Include="SetBT.aspx.designer.cs">
       <DependentUpon>SetBT.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SetCompanyIntroduction.aspx.cs">
+      <DependentUpon>SetCompanyIntroduction.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SetCompanyIntroduction.aspx.designer.cs">
+      <DependentUpon>SetCompanyIntroduction.aspx</DependentUpon>
     </Compile>
     <Compile Include="SetConnect.aspx.cs">
       <DependentUpon>SetConnect.aspx</DependentUpon>

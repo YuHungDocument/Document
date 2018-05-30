@@ -137,15 +137,17 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="Home.aspx">
+                        <a class="navbar-brand" href="NewsEdit.aspx">
                             後臺管理系統</a>
+                          <a class="navbar-brand" href="Home.aspx">
+                            回首頁</a>
                     </div>
                     <div class="collapse navbar-collapse" id="myNavbar">
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="NewsEdit.aspx">最新消息管理</a></li>
-                            <li><a href="CompanyIntroduction.aspx">公司介紹管理</a></li>
+                            <li><a href="SetCompanyIntroduction.aspx">公司介紹管理</a></li>
                             <li><a href="ProductEdit.aspx">產品管理</a></li>
-                            <li><a href="#">關於我們管理</a></li>
+                            <li><a href="SetAboutUs.aspx">關於我們管理</a></li>
                             <li><a href="Environmentalparameters.aspx">參數設定</a></li>
                             <li>
                                 <asp:LinkButton ID="Lb_LogOut" runat="server" OnClick="Lb_LogOut_Click">登出</asp:LinkButton></li>

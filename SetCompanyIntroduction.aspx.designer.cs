@@ -10,15 +10,24 @@
 namespace WebApplication1 {
     
     
-    public partial class CompanyIntroduction {
+    public partial class SetCompanyIntroduction {
         
         /// <summary>
-        /// Lbl_CI 控制項。
+        /// txt_CI 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Lbl_CI;
+        protected global::System.Web.UI.WebControls.TextBox txt_CI;
+        
+        /// <summary>
+        /// Btn_Edit 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Btn_Edit;
     }
 }

@@ -6,5 +6,5 @@
     <br />
     <a href="Home.aspx">首頁</a>/公司簡介
     <hr />
-
+    <asp:Label ID="Lbl_CI" runat="server" Text="Label" ForeColor="#0094FF"></asp:Label>
 </asp:Content>

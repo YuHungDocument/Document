@@ -10,7 +10,7 @@
 namespace WebApplication1 {
     
     
-    public partial class AboutUs {
+    public partial class SetAboutUs_aspx {
         
         /// <summary>
         /// Image2 控制項。
@@ -22,40 +22,40 @@ namespace WebApplication1 {
         protected global::System.Web.UI.WebControls.Image Image2;
         
         /// <summary>
-        /// Lbl_title1 控制項。
+        /// txt_title1 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Lbl_title1;
+        protected global::System.Web.UI.WebControls.TextBox txt_title1;
         
         /// <summary>
-        /// Lbl_context1 控制項。
+        /// txt_context1 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Lbl_context1;
+        protected global::System.Web.UI.WebControls.TextBox txt_context1;
         
         /// <summary>
-        /// Lbl_title2 控制項。
+        /// txt_title2 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Lbl_title2;
+        protected global::System.Web.UI.WebControls.TextBox txt_title2;
         
         /// <summary>
-        /// Lbl_context2 控制項。
+        /// txt_context2 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Lbl_context2;
+        protected global::System.Web.UI.WebControls.TextBox txt_context2;
         
         /// <summary>
         /// Image1 控制項。
@@ -67,21 +67,12 @@ namespace WebApplication1 {
         protected global::System.Web.UI.WebControls.Image Image1;
         
         /// <summary>
-        /// Label5 控制項。
+        /// Btn_Edit 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label5;
-        
-        /// <summary>
-        /// Label6 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label6;
+        protected global::System.Web.UI.WebControls.Button Btn_Edit;
     }
 }

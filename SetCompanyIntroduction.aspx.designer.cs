@@ -19,7 +19,7 @@ namespace WebApplication1 {
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_CI;
+        protected global::CKEditor.NET.CKEditorControl txt_CI;
         
         /// <summary>
         /// Btn_Edit 控制項。

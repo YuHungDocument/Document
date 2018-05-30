@@ -67,7 +67,7 @@ namespace WebApplication1
                                     {
                                         cn2.Open();
                                         SqlCommand cmd2 = new SqlCommand(@"Select Name From UserInfo  Where EID=@EID");
-                                        SqlCommand cmd3 = new SqlCommand(@"Select path,sign,recheckKey,comment From Detail  Where SID=@SID And EID=@EID");
+                                        SqlCommand cmd3 = new SqlCommand(@"Select path,sign,recheckKey,comment,look From Detail  Where SID=@SID And EID=@EID");
                                         cmd2.Connection = cn2;
                                         cmd2.Parameters.AddWithValue("@EID", dr["EID"].ToString());
                                         using (SqlDataReader dr2 = cmd2.ExecuteReader())
@@ -94,6 +94,14 @@ namespace WebApplication1
                                                     Btn_check.Visible = false;
                                                     Pel_selectwatch.Visible = false;
                                                     Pel_Choose.Visible = true;
+                                                }
+                                                if(dr3["look"].ToString() == "1")
+                                                {
+                                                    Pnl_sign.Visible = true;
+                                                }
+                                                else
+                                                {
+                                                    Pnl_sign.Visible = false;
                                                 }
                                                 if (dr3["path"].ToString() == "1")
                                                 {

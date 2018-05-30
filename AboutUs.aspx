@@ -29,7 +29,7 @@
 
                     <asp:Label ID="Lbl_title1" runat="server"  Font-Bold="True" Font-Size="X-Large" ForeColor="#0094FF"></asp:Label>
                     <br />
-                    <asp:Label ID="Lbl_context1" runat="server" ForeColor="#0094FF" Text="來自各地的我們，因為程式讓我們有了共同的目標，目前專題這個目標是我們最大的成就，從無到有我們費盡了各種心思，去參考去認識我們使用的軟體，透過這個網站能呈現出我們對程式的認真與付出，相信這種代價是值得的，這一年的努力一定會有好的結果。"></asp:Label>
+                    <asp:Label ID="Lbl_context1" runat="server" ForeColor="#0094FF" ></asp:Label>
                 </td>
             </tr>
         </table>
@@ -47,11 +47,11 @@
             </tr>
             <tr>
                 <td>
-                    <asp:Label ID="Lbl_title2" runat="server" Text="Asp.net" Font-Bold="True" Font-Size="X-Large" ForeColor="#0094FF"></asp:Label>
+                    <asp:Label ID="Lbl_title2" runat="server"  Font-Bold="True" Font-Size="X-Large" ForeColor="#0094FF"></asp:Label>
 
                     <br />
                     <br />
-                    <asp:Label ID="Lbl_context2" ForeColor="#0094FF" runat="server" Text="ASP.NET是由微軟在.NET Framework框架中所提供，開發Web應用程式的類別庫，封裝在System.Web.dll檔案中，顯露出System.Web命名空間，並提供ASP.NET網頁處理、擴充以及HTTP通道的應用程式與通訊處理等工作，以及Web Service的基礎架構。ASP.NET是ASP技術的後繼者"></asp:Label>
+                    <asp:Label ID="Lbl_context2" ForeColor="#0094FF" runat="server"></asp:Label>
 
                 </td>
                 <td style="text-align: right; width: 400px">

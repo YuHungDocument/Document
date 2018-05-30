@@ -58,7 +58,7 @@ namespace WebApplication1
 
                 cmd.ExecuteNonQuery();
                 cn.Close();
-                Response.Write("<script>alert('新增項目成功!');location.href='SetConnect.aspx';</script>");
+                Response.Write("<script>alert('新增項目成功!');location.href='SetNT.aspx';</script>");
             }
 
         }

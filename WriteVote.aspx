@@ -16,25 +16,33 @@
             }
         }
     </script>
-        <script>
-            $(document).on('click', '.panel-heading.clickable', function (e) {
-                var $this = $(this);
-                if (!$this.hasClass('panel-collapsed')) {
-                    $this.parents('.panel').find('.panel-body').slideUp();
-                    $this.addClass('panel-collapsed');
-                    $this.find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
-                } else {
-                    $this.parents('.panel').find('.panel-body').slideDown();
-                    $this.removeClass('panel-collapsed');
-                    $this.find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
-                }
-            })
+    <script>
+        $(document).on('click', '.panel-heading.clickable', function (e) {
+            var $this = $(this);
+            if (!$this.hasClass('panel-collapsed')) {
+                $this.parents('.panel').find('.panel-body').slideUp();
+                $this.addClass('panel-collapsed');
+                $this.find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+            } else {
+                $this.parents('.panel').find('.panel-body').slideDown();
+                $this.removeClass('panel-collapsed');
+                $this.find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+            }
+        })
     </script>
     <style>
         table {
             width: 100%;
             border: #ffffff 1px solid;
             border-bottom: 1px #dddddd solid;
+        }
+                .clickable {
+            cursor: pointer;
+        }
+
+        .panel-heading span {
+            margin-top: -20px;
+            font-size: 15px;
         }
     </style>
 </asp:Content>
@@ -85,20 +93,15 @@
                         <h4 class="modal-title">選擇群組</h4>
                     </div>
                     <div class="modal-body">
-                        <asp:DropDownList ID="DropDownList1" runat="server" class="btn btn-primary dropdown-toggle">
-                            <asp:ListItem>--選擇插入部門--</asp:ListItem>
-                            <asp:ListItem>銷售部</asp:ListItem>
-                            <asp:ListItem>生產部</asp:ListItem>
-                            <asp:ListItem>品管部</asp:ListItem>
-                            <asp:ListItem>業務部</asp:ListItem>
-                            <asp:ListItem>財務部</asp:ListItem>
-                            <asp:ListItem>人資部</asp:ListItem>
-                            <asp:ListItem>研發部</asp:ListItem>
-                            <asp:ListItem>採購部</asp:ListItem>
-                            <asp:ListItem>資訊部</asp:ListItem>
+                        <asp:DropDownList ID="DropDownList1" runat="server" class="btn btn-primary dropdown-toggle" AutoPostBack="True" DataSourceID="SqlDataSource3" DataTextField="TN" DataValueField="TN" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
                         </asp:DropDownList>
+                        <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString %>" SelectCommand="SELECT [TN] FROM [TypeGroup] WHERE ([Tp] = @Tp)">
+                            <SelectParameters>
+                                <asp:Parameter DefaultValue="Dp" Name="Tp" Type="String" />
+                            </SelectParameters>
+                        </asp:SqlDataSource>
                         <br />
-
+                        <p></p>
                         <asp:GridView ID="GridView4" runat="server" AutoGenerateColumns="False" BorderStyle="None" BorderWidth="1px" CellPadding="5" CellSpacing="1" GridLines="None" HorizontalAlign="Center" OnSelectedIndexChanged="GridView4_SelectedIndexChanged" Style="line-height: 22px; width: 50%;">
                             <Columns>
                                 <asp:TemplateField>
@@ -130,10 +133,12 @@
             <!-- Modal content-->
         </div>
     </div>
-    <table>
-        <tr style="height: 25px">
-            <td colspan="7">撰寫內文</td>
-        </tr>
+    <div class="panel panel-warning">
+        <div class="panel-heading pull clickable panel">
+            <h3 class="panel-title "><span>撰寫內文<i class="glyphicon glyphicon-chevron-up"></i></span></h3>
+        </div>
+        <div class="panel-body">
+<table>        
         <tr style="height: 25px">
             <td>文　　號</td>
             <td>
@@ -234,6 +239,9 @@
             <td colspan="6">&nbsp;</td>
         </tr>
     </table>
+        </div>
+    </div>
+    
     <table class="nav-justified" style="height: 336px">
         <tr>
             <td runat="server" valign="top" id="Main">
@@ -288,9 +296,9 @@
 
                                 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                                     <ContentTemplate>
-                                            <button type="button" id="Btn" runat="server" data-toggle="modal" data-target="#myModal">選擇群組</button>
+                                        <button type="button" id="Btn" runat="server" data-toggle="modal" data-target="#myModal">選擇群組</button>
 
-                                            <br />
+                                        <br />
 
                                         <asp:CheckBox ID="ChB_Check" runat="server" Text="簽核時是否重新檢查金鑰" />
 
@@ -402,8 +410,8 @@
                                             </Columns>
                                         </asp:GridView>
                                         <br />
-                                                                        <asp:Button ID="Btn_Save" runat="server" Text="送出" OnClick="Btn_Save_Click" />
-                                <asp:Label ID="Lbl_Eorr" runat="server" ForeColor="Red" Text="資料輸入不完整" Visible="False"></asp:Label>
+                                        <asp:Button ID="Btn_Save" runat="server" Text="送出" OnClick="Btn_Save_Click" />
+                                        <asp:Label ID="Lbl_Eorr" runat="server" ForeColor="Red" Text="資料輸入不完整" Visible="False"></asp:Label>
                                     </ContentTemplate>
                                 </asp:UpdatePanel>
 

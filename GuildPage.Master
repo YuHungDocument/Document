@@ -58,7 +58,6 @@
         body {
             font: 300 14px 'HelveticaNeue-Light','Helvetica Neue Light','Helvetica Neue',Helvetica,Arial,'Lucida Grande',sans-serif;
             background: #f5f5f5;
-            overflow-x: hidden;
         }
 
 

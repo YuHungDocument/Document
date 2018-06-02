@@ -38,16 +38,16 @@
         }
 
 
-                .btn:after {
+                /*.btn:after {
             font-family: "Glyphicons Halflings";
             content: "\e114";
             float: right;
             margin-left: 15px;
-        }
+        }*/
         /* Icon when the collapsible content is hidden */
-        .btn.collapsed:after {
+        /*.btn.collapsed:after {
             content: "\e080";
-        }
+        }*/
 
 
         .clickable {
@@ -245,6 +245,7 @@
     <div class="panel panel-warning" style="width: 100%">
         <div class="panel-heading">填寫收件人與收發順序</div>
         <div class="panel-body">
+            
             <!-- Modal -->
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="top: 18%;">
                 <div class="container" style="width: 500px; height: 500px">
@@ -253,22 +254,18 @@
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 <h4 class="modal-title">選擇群組</h4>
+                                                                
                             </div>
                             <div class="modal-body">
-                                <asp:DropDownList ID="DropDownList1" runat="server" class="btn btn-primary dropdown-toggle">
-                                    <asp:ListItem>--選擇插入部門--</asp:ListItem>
-                                    <asp:ListItem>銷售部</asp:ListItem>
-                                    <asp:ListItem>生產部</asp:ListItem>
-                                    <asp:ListItem>品管部</asp:ListItem>
-                                    <asp:ListItem>業務部</asp:ListItem>
-                                    <asp:ListItem>財務部</asp:ListItem>
-                                    <asp:ListItem>人資部</asp:ListItem>
-                                    <asp:ListItem>研發部</asp:ListItem>
-                                    <asp:ListItem>採購部</asp:ListItem>
-                                    <asp:ListItem>資訊部</asp:ListItem>
+                                <asp:DropDownList ID="DropDownList1" runat="server" class="btn btn-primary dropdown-toggle" AutoPostBack="True" DataSourceID="SqlDataSource3" DataTextField="TN" DataValueField="TN" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
                                 </asp:DropDownList>
+                                <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString %>" SelectCommand="SELECT [TN] FROM [TypeGroup] WHERE ([Tp] = @Tp)">
+                                    <SelectParameters>
+                                        <asp:Parameter DefaultValue="Dp" Name="Tp" Type="String" />
+                                    </SelectParameters>
+                                </asp:SqlDataSource>
                                 <br />
-
+                                <p></p>
                                 <asp:GridView ID="GridView4" runat="server" AutoGenerateColumns="False" BorderStyle="None" BorderWidth="1px" CellPadding="5" CellSpacing="1" GridLines="None" HorizontalAlign="Center" OnSelectedIndexChanged="GridView4_SelectedIndexChanged" Style="line-height: 22px; width: 50%;">
                                     <Columns>
                                         <asp:TemplateField>

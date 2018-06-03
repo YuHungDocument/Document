@@ -21,7 +21,18 @@ namespace WebApplication1
 
         protected void Btn_Edit_Click(object sender, EventArgs e)
         {
-
+            using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+                cn.Open();
+                SqlCommand cmd = new SqlCommand("Update News Set NTitle=@NTitle,NType=@NType,Context=@Context Where NID=@NID");
+                cmd.Connection = cn;
+                cmd.Parameters.AddWithValue("@NTitle",Txt_Title.Text);
+                cmd.Parameters.AddWithValue("@NType", Ddl_Type.SelectedValue);
+                cmd.Parameters.AddWithValue("@Context",Txt_Context.Text);
+                cmd.Parameters.AddWithValue("@NID", Session["EditNID"].ToString());
+                cmd.ExecuteNonQuery();
+                Response.Write("<script>alert('修改成功');location.href='NewsEdit.aspx';</script>");
+            }
         }
         public void bind()
         {

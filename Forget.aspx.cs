@@ -32,7 +32,7 @@ namespace WebApplication1
                         MailMessage msg = new MailMessage();
                         //收件者，以逗號分隔不同收件者 ex "test@gmail.com,test2@gmail.com"
                         msg.To.Add(string.Join(",", dr["Email"].ToString()));
-                        msg.From = new MailAddress("yuhungsystem@gmail.com", "宇宏科技", System.Text.Encoding.UTF8);
+                        msg.From = new MailAddress("yuhungsystem@gmail.com", "宇鴻科技", System.Text.Encoding.UTF8);
                         //郵件標題 
                         msg.Subject = "忘記密碼";
                         //郵件標題編碼  

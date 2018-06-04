@@ -370,7 +370,9 @@ namespace WebApplication1
                             }
                             else
                             {
-                                return;
+                                ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text = "";
+                                ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Dep")).Text = "";
+                                ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Name")).Text = "";
                             }
                         }
                     }
@@ -384,8 +386,19 @@ namespace WebApplication1
                 using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
                 {
                     cn.Open();
-                    SqlCommand cmd = new SqlCommand("Insert Into Preview(SID,EID) Values(@SID,@EID)");
+                    SqlCommand cmd = new SqlCommand("Insert Into Preview(ID,SID,EID) Values(@ID,@SID,@EID)");
                     cmd.Connection = cn;
+                    SqlCommand cmdcount = new SqlCommand("Select count(*) as IDcount From Preview");
+                    cmdcount.Connection = cn;
+                    using (SqlDataReader dr = cmdcount.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            IDcount = int.Parse(dr["IDcount"].ToString());
+                        }
+                        IDcount = int.Parse(IDcount.ToString()) + 1;
+                    }
+                    cmd.Parameters.AddWithValue("@ID", IDcount);
                     cmd.Parameters.AddWithValue("@EID", "");
                     cmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
                     cmd.ExecuteNonQuery();
@@ -662,6 +675,8 @@ namespace WebApplication1
                     FNO_INDEX += 1;
                     Session["FNOSession"] = FNO_INDEX;
                     FillData();
+                    int filecount = int.Parse(FNO_INDEX.ToString()) - 1;
+                    Lbl_FileCount.Text = "已上傳" + filecount + "個檔案";
                 }
             }
         }

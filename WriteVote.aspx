@@ -1,5 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/GuildPage.Master" AutoEventWireup="true" CodeBehind="WriteVote.aspx.cs" Inherits="WebApplication1.WriteVote" %>
 
+<%@ Register Assembly="CKEditor.NET" Namespace="CKEditor.NET" TagPrefix="CKEditor" %>
+
 <%@ Register Src="~/ucGridViewChoiceAll.ascx" TagPrefix="uc1" TagName="ucGridViewChoiceAll" %>
 
 
@@ -39,6 +41,9 @@
                 .clickable {
             cursor: pointer;
         }
+                        body{
+            font-size:large
+        }
 
         .panel-heading span {
             margin-top: -20px;
@@ -49,6 +54,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
     <asp:Label ID="Lbl_EID" runat="server" Text="Label" Visible="False"></asp:Label>
+
     <div class="modal fade" id="FileModal" role="dialog" style="top: 18%;">
         <div class="modal-dialog">
             <!-- Modal content-->
@@ -140,7 +146,7 @@
         <div class="panel-body">
 <table>        
         <tr style="height: 25px">
-            <td>文　　號</td>
+            <td style="width:80px">文　　號</td>
             <td>
                 <asp:Label ID="Lbl_SID" runat="server"></asp:Label>
             </td>
@@ -230,8 +236,8 @@
         <tr style="height: 25px">
             <td>說　　明</td>
             <td colspan="6">
-                <asp:TextBox ID="Txt_Text" class="form-control" runat="server" Height="99px" TextMode="MultiLine"></asp:TextBox>
-
+                <%--<asp:TextBox ID="" class="form-control" runat="server" Height="99px" TextMode="MultiLine"></asp:TextBox>--%>
+                <CKEditor:CKEditorControl ID="Txt_Text" runat="server"></CKEditor:CKEditorControl>
             </td>
         </tr>
         <tr style="height: 25px">

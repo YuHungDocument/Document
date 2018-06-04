@@ -487,7 +487,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <asp:Label ID="Lb_UserInfo" class="" runat="server" ForeColor="White"></asp:Label><span style="color:white" class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">使用者設定 <span class="glyphicon glyphicon-cog pull-right"></span></a></li>
+                                <li><a href="setInfo.aspx">使用者設定 <span class="glyphicon glyphicon-cog pull-right"></span></a></li>
                                 <li class="divider"></li>
                                 <li><a href="#">訊息 <span class="badge pull-right">
                                     <asp:Label ID="Label2" runat="server" Text="0"></asp:Label></span></a></li>

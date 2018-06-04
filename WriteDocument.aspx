@@ -1,5 +1,7 @@
 ﻿<%@ Page Title="" MaintainScrollPositionOnPostback="true" Language="C#" MasterPageFile="~/GuildPage.Master" AutoEventWireup="true" CodeBehind="WriteDocument.aspx.cs" Inherits="WebApplication1.WriteDocument" %>
 
+<%@ Register Assembly="CKEditor.NET" Namespace="CKEditor.NET" TagPrefix="CKEditor" %>
+
 <%@ Register Src="~/ucGridViewChoiceAll.ascx" TagPrefix="uc1" TagName="ucGridViewChoiceAll" %>
 
 
@@ -35,6 +37,9 @@
             width: 100%;
             border: #ffffff 1px solid;
             border-bottom: 1px #dddddd solid;
+        }
+        body{
+            font-size:large
         }
 
 
@@ -104,7 +109,7 @@
         <div class="panel-body">
             <table style="border: none">
                 <tr style="height: 25px">
-                    <td>文　　號</td>
+                    <td style="width:80px">文　　號</td>
                     <td>
                         <asp:Label ID="Lbl_SID" runat="server"></asp:Label>
                     </td>
@@ -222,8 +227,8 @@
                 <tr style="height: 25px">
                     <td>說　　明</td>
                     <td colspan="6">
-                        <asp:TextBox ID="Txt_Text" class="form-control" runat="server" Height="99px" TextMode="MultiLine"></asp:TextBox>
-
+                        <%--<asp:TextBox ID="" class="form-control" runat="server" Height="99px" TextMode="MultiLine"></asp:TextBox>--%>
+                        <CKEditor:CKEditorControl ID="Txt_Text" runat="server"></CKEditor:CKEditorControl>
                     </td>
                 </tr>
                 <tr style="height: 25px">

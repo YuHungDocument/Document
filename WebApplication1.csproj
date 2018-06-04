@@ -557,6 +557,7 @@
     <Content Include="KeyAddress.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="MainPage.aspx" />
+    <Content Include="Message.aspx" />
     <Content Include="NEWHOME.aspx" />
     <Content Include="News.aspx" />
     <Content Include="NewsEdit.aspx" />
@@ -1276,6 +1277,13 @@
     </Compile>
     <Compile Include="Management.Master.designer.cs">
       <DependentUpon>Management.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Message.aspx.cs">
+      <DependentUpon>Message.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Message.aspx.designer.cs">
+      <DependentUpon>Message.aspx</DependentUpon>
     </Compile>
     <Compile Include="NEWHOME.aspx.cs">
       <DependentUpon>NEWHOME.aspx</DependentUpon>

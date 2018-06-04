@@ -11,7 +11,7 @@ namespace WebApplication1
     public partial class MainPage : System.Web.UI.Page
     {
         DbHelper tmpdbhelper = new DbHelper();
-        int Wdc,Votec,HWdc,HVotec = 0;
+        int Wdc,Votec,HWdc,HVotec,EDocc,EVotec = 0;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -71,7 +71,17 @@ namespace WebApplication1
                     }
                 }
 
-                SqlCommand HDoccmd = new SqlCommand("Select * from Fil Where EID='" + Lbl_EID.Text + "' and Type!='投票'");
+                SqlCommand NewVocmd = new SqlCommand("Select * from Detail left join Fil On Fil.SID = Detail.SID Where Detail.EID='" + Lbl_EID.Text + "' and Detail.isread='0' and Fil.Type='投票' and Detail.look!='0'");
+                NewVocmd.Connection = cn;
+                using (SqlDataReader dr = NewVocmd.ExecuteReader())
+                {
+                    if (dr.Read())
+                    {
+                        Lbl_VoteNew.Visible = true;
+                    }
+                }
+
+                SqlCommand HDoccmd = new SqlCommand("Select * from Fil Where EID='" + Lbl_EID.Text + "' and Type!='投票' and IsEnd='0'");
                 HDoccmd.Connection = cn;
                 using (SqlDataReader dr = HDoccmd.ExecuteReader())
                 {
@@ -91,7 +101,17 @@ namespace WebApplication1
                     }
                 }
 
-                SqlCommand HVotecmd = new SqlCommand("Select * from Fil Where EID='" + Lbl_EID.Text + "' and Type='投票'");
+                SqlCommand NewHVoteNew = new SqlCommand("Select * from Detail left join Fil On Fil.SID = Detail.SID Where Fil.EID='" + Lbl_EID.Text + "' and Detail.EID='" + Lbl_EID.Text + "' and Detail.isread='0' and Fil.Type='投票'");
+                NewHVoteNew.Connection = cn;
+                using (SqlDataReader dr = NewHVoteNew.ExecuteReader())
+                {
+                    if (dr.Read())
+                    {
+                        Lbl_HVoteNew.Visible = true;
+                    }
+                }
+
+                SqlCommand HVotecmd = new SqlCommand("Select * from Fil Where EID='" + Lbl_EID.Text + "' and Type='投票' and IsEnd='0'");
                 HVotecmd.Connection = cn;
                 using (SqlDataReader dr = HVotecmd.ExecuteReader())
                 {
@@ -101,6 +121,27 @@ namespace WebApplication1
                     }
                 }
 
+                SqlCommand EDoccmd = new SqlCommand("Select * from Detail left join Fil On Fil.SID = Detail.SID Where Detail.EID='" + Lbl_EID.Text + "' and Fil.IsEnd=1 and Fil.Type!='投票'");
+                EDoccmd.Connection = cn;
+                using (SqlDataReader dr = EDoccmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        EDocc = int.Parse(EDocc.ToString()) + 1;
+                    }
+                }
+
+                SqlCommand EVotecmd = new SqlCommand("Select * from Detail left join Fil On Fil.SID = Detail.SID Where Detail.EID='" + Lbl_EID.Text + "' and Fil.IsEnd=1 and Fil.Type='投票'");
+                EVotecmd.Connection = cn;
+                using (SqlDataReader dr = EVotecmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        EVotec = int.Parse(EVotec.ToString()) + 1;
+                    }
+                }
+                Lbl_EndVote.Text = EVotec.ToString();
+                Lbl_EndDoc.Text = EDocc.ToString();
                 Lbl_Hvote.Text =HVotec.ToString();
                 Lbl_Doc.Text = Wdc.ToString();
                 Lbl_Vote.Text = Votec.ToString();

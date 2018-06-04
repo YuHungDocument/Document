@@ -38,11 +38,13 @@
             border: #ffffff 1px solid;
             border-bottom: 1px #dddddd solid;
         }
-                .clickable {
+
+        .clickable {
             cursor: pointer;
         }
-                        body{
-            font-size:large
+
+        body {
+            font-size: large
         }
 
         .panel-heading span {
@@ -144,110 +146,110 @@
             <h3 class="panel-title "><span>撰寫內文<i class="glyphicon glyphicon-chevron-up"></i></span></h3>
         </div>
         <div class="panel-body">
-<table>        
-        <tr style="height: 25px">
-            <td style="width:80px">文　　號</td>
-            <td>
-                <asp:Label ID="Lbl_SID" runat="server"></asp:Label>
-            </td>
-            <td colspan="4">發布日期</td>
-            <td>
-                <asp:Label ID="Lbl_Date" runat="server"></asp:Label>
-            </td>
-        </tr>
-        <tr style="height: 25px">
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td colspan="4">&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr style="height: 25px">
-            <td>發布人</td>
-            <td>
-                <asp:Label ID="Lbl_Sender" runat="server"></asp:Label>
-            </td>
-            <td colspan="4">截止日期</td>
-            <td>
-                <input type="text" runat="server" class="Wdate" id="d1" onclick="WdatePicker({ minDate: '%y-%M-{%d}' })" /></td>
-        </tr>
-        <tr style="height: 25px">
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td colspan="4">&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr style="height: 25px">
-            <td>保存期限</td>
-            <td>
-                <span style="font-size: 16px; font-family: DFKai-SB">
-                    <asp:DropDownList ID="Ddp_YOS" runat="server" Height="30px" Width="70px">
-                        <asp:ListItem>1</asp:ListItem>
-                        <asp:ListItem>2</asp:ListItem>
-                        <asp:ListItem>3</asp:ListItem>
-                        <asp:ListItem>4</asp:ListItem>
-                        <asp:ListItem>5</asp:ListItem>
-                        <asp:ListItem>6</asp:ListItem>
-                        <asp:ListItem>7</asp:ListItem>
-                        <asp:ListItem>8</asp:ListItem>
-                        <asp:ListItem>9</asp:ListItem>
-                        <asp:ListItem>10</asp:ListItem>
-                        <asp:ListItem>15</asp:ListItem>
-                        <asp:ListItem>20</asp:ListItem>
-                        <asp:ListItem>永久</asp:ListItem>
-                    </asp:DropDownList>
-                </span>年</td>
-            <td colspan="4">&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr style="height: 25px">
-            <td>&nbsp;</td>
-            <td style="font-size: large;" colspan="2">&nbsp;</td>
-            <td style="font-size: large;" colspan="2">&nbsp;</td>
-            <td style="font-size: large;" colspan="2">&nbsp;</td>
-        </tr>
-        <tr style="height: 25px">
-            <td>附　　件</td>
-            <td colspan="3">
-                <asp:FileUpload runat="server" ID="fu_upload" />
-                <br />
-                <asp:Button Text="上傳檔案"
-                    ID="btn_upload" runat="server" OnClick="btn_upload_Click" />
-                <asp:Label ID="Lbl_FileCount" runat="server"></asp:Label>
-                <br />
-            </td>
-            <td colspan="3">
-                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#FileModal">顯示上傳檔案</button>
-            </td>
-        </tr>
-        <tr style="height: 25px">
-            <td>&nbsp;</td>
-            <td style="font-size: large;" colspan="6">&nbsp;</td>
-        </tr>
-        <tr style="height: 25px">
-            <td>主　　旨</td>
-            <td style="font-size: large;" colspan="6">
-                <asp:TextBox class="form-control" ID="Txt_Title" runat="server" Width="300px"></asp:TextBox>
-            </td>
-        </tr>
-        <tr style="height: 25px">
-            <td>&nbsp;</td>
-            <td colspan="6">&nbsp;</td>
-        </tr>
-        <tr style="height: 25px">
-            <td>說　　明</td>
-            <td colspan="6">
-                <%--<asp:TextBox ID="" class="form-control" runat="server" Height="99px" TextMode="MultiLine"></asp:TextBox>--%>
-                <CKEditor:CKEditorControl ID="Txt_Text" runat="server"></CKEditor:CKEditorControl>
-            </td>
-        </tr>
-        <tr style="height: 25px">
-            <td>&nbsp;</td>
-            <td colspan="6">&nbsp;</td>
-        </tr>
-    </table>
+            <table style="border:none">
+                <tr style="height: 25px">
+                    <td style="width: 80px">文　　號</td>
+                    <td>
+                        <asp:Label ID="Lbl_SID" runat="server"></asp:Label>
+                    </td>
+                    <td colspan="4">發布日期</td>
+                    <td>
+                        <asp:Label ID="Lbl_Date" runat="server"></asp:Label>
+                    </td>
+                </tr>
+                <tr style="height: 25px">
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td colspan="4">&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr style="height: 25px">
+                    <td>發布人</td>
+                    <td>
+                        <asp:Label ID="Lbl_Sender" runat="server"></asp:Label>
+                    </td>
+                    <td colspan="4">截止日期</td>
+                    <td>
+                        <input type="text" runat="server" class="Wdate" id="d1" onclick="WdatePicker({ minDate: '%y-%M-{%d}' })" /></td>
+                </tr>
+                <tr style="height: 25px">
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td colspan="4">&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr style="height: 25px">
+                    <td>保存期限</td>
+                    <td>
+                        <span style="font-size: 16px; font-family: DFKai-SB">
+                            <asp:DropDownList ID="Ddp_YOS" runat="server" Height="30px" Width="70px">
+                                <asp:ListItem>1</asp:ListItem>
+                                <asp:ListItem>2</asp:ListItem>
+                                <asp:ListItem>3</asp:ListItem>
+                                <asp:ListItem>4</asp:ListItem>
+                                <asp:ListItem>5</asp:ListItem>
+                                <asp:ListItem>6</asp:ListItem>
+                                <asp:ListItem>7</asp:ListItem>
+                                <asp:ListItem>8</asp:ListItem>
+                                <asp:ListItem>9</asp:ListItem>
+                                <asp:ListItem>10</asp:ListItem>
+                                <asp:ListItem>15</asp:ListItem>
+                                <asp:ListItem>20</asp:ListItem>
+                                <asp:ListItem>永久</asp:ListItem>
+                            </asp:DropDownList>
+                        </span>年</td>
+                    <td colspan="4">&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr style="height: 25px">
+                    <td>&nbsp;</td>
+                    <td style="font-size: large;" colspan="2">&nbsp;</td>
+                    <td style="font-size: large;" colspan="2">&nbsp;</td>
+                    <td style="font-size: large;" colspan="2">&nbsp;</td>
+                </tr>
+                <tr style="height: 25px">
+                    <td>附　　件</td>
+                    <td colspan="3">
+                        <asp:FileUpload runat="server" ID="fu_upload" />
+                        <br />
+                        <asp:Button Text="上傳檔案"
+                            ID="btn_upload" runat="server" OnClick="btn_upload_Click" />
+                        <asp:Label ID="Lbl_FileCount" runat="server"></asp:Label>
+                        <br />
+                    </td>
+                    <td colspan="3">
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#FileModal">顯示上傳檔案</button>
+                    </td>
+                </tr>
+                <tr style="height: 25px">
+                    <td>&nbsp;</td>
+                    <td style="font-size: large;" colspan="6">&nbsp;</td>
+                </tr>
+                <tr style="height: 25px">
+                    <td>主　　旨</td>
+                    <td style="font-size: large;" colspan="6">
+                        <asp:TextBox class="form-control" ID="Txt_Title" runat="server" Width="300px"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr style="height: 25px">
+                    <td>&nbsp;</td>
+                    <td colspan="6">&nbsp;</td>
+                </tr>
+                <tr style="height: 25px">
+                    <td>說　　明</td>
+                    <td colspan="6">
+                        <%--<asp:TextBox ID="" class="form-control" runat="server" Height="99px" TextMode="MultiLine"></asp:TextBox>--%>
+                        <CKEditor:CKEditorControl ID="Txt_Text" runat="server"></CKEditor:CKEditorControl>
+                    </td>
+                </tr>
+                <tr style="height: 25px">
+                    <td>&nbsp;</td>
+                    <td colspan="6">&nbsp;</td>
+                </tr>
+            </table>
         </div>
     </div>
-    
+
     <table class="nav-justified" style="height: 336px">
         <tr>
             <td runat="server" valign="top" id="Main">
@@ -284,13 +286,13 @@
                         </td>
                     </tr>
                 </table>
-                <table class="nav-justified">
+                <div class="panel panel-warning" style="width: 100%">
+                    <div class="panel-heading">填寫收件人與收發順序</div>
+                    <div class="panel-body">
+                        <table class="nav-justified" style="border:none">
                     <tr>
                         <td style="height: 243px">
                             <div style="text-align: left">
-
-
-
                                 <asp:Label ID="Label2" runat="server" Text="輸入群組名稱："></asp:Label>
                                 <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
 
@@ -342,7 +344,7 @@
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="需簽章">
                                                     <ItemTemplate>
-                                                        <asp:CheckBox ID="Cb_sign" runat="server" OnCheckedChanged="Cb_sign_CheckedChanged" AutoPostBack="True"  />
+                                                        <asp:CheckBox ID="Cb_sign" runat="server" OnCheckedChanged="Cb_sign_CheckedChanged" AutoPostBack="True" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="可察看投票結果">
@@ -425,6 +427,9 @@
                         </td>
                     </tr>
                 </table>
+                    </div>
+                </div>
+                
             </td>
         </tr>
     </table>

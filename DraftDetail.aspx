@@ -18,7 +18,11 @@
     <style type="text/css">
         table {
             width: 100%;
-            border: #f6bb9e 2px solid;
+            border: #ffffff 1px solid;
+            border-bottom: 1px #dddddd solid;
+        }
+        body{
+            font-size:large
         }
 
         .entryForm td, entryForm th {
@@ -203,7 +207,7 @@
     </table>
     <br />
 
-    <div class="panel panel-warning" style="width: 800px">
+    <div class="panel panel-warning" >
         <div class="panel-heading">填寫收件人與收發順序</div>
         <div class="panel-body">
             <!-- Modal -->
@@ -273,16 +277,16 @@
                             <br />
                             <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                                 <ContentTemplate>
-                                    <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="增加1列" />
-                                    &nbsp;<asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="增加10列" />
-                                    &nbsp;
+                                    <%--<asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="增加1列" />--%>
+<%--                                &nbsp;<asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="增加10列" />
+                                    &nbsp;--%>
                                             <button type="button" id="Btn" runat="server" data-toggle="modal" data-target="#myModal">選擇群組</button>
 
 
                                     <asp:Label ID="Lbl_GpName" runat="server" Text="Label" Visible="False"></asp:Label>
                                     <br />
                                     <br />
-                                    <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" OnRowDataBound="GridView2_RowDataBound">
+                                    <asp:GridView ID="GridView2" class="table" runat="server" AutoGenerateColumns="False" GridLines="Horizontal">
                                         <Columns>
                                             <asp:TemplateField HeaderText="排列" ShowHeader="False" Visible="False">
                                                 <ItemTemplate>
@@ -322,15 +326,22 @@
                                             </asp:TemplateField>
                                             <asp:TemplateField>
                                                 <HeaderTemplate>
-                                                    <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll"  CheckBoxName="Cb_path" HeaderText="需簽章" OnCheckedChanged="Cb_path_CheckedChanged" AutoPostBack="True"/>
+                                                    <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll" CheckBoxName="Cb_path" HeaderText="可察看進度" OnCheckedChanged="Cb_path_CheckedChanged" AutoPostBack="True" />
                                                 </HeaderTemplate>
                                                 <ItemTemplate>
                                                     <asp:CheckBox ID="Cb_path" runat="server" OnCheckedChanged="Cb_path_CheckedChanged" AutoPostBack="True" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-
+                                            <asp:TemplateField>
+                                                <HeaderTemplate>
+                                                    <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll3" CheckBoxName="Cb_comment" HeaderText="是否評論" OnCheckedChanged="Cb_comment_CheckedChanged" AutoPostBack="True" />
+                                                </HeaderTemplate>
+                                                <ItemTemplate>
+                                                    <asp:CheckBox ID="Cb_comment" runat="server" AutoPostBack="true" OnCheckedChanged="Cb_comment_CheckedChanged" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                         </Columns>
-                                        <RowStyle HorizontalAlign="Center" />
+                                        <HeaderStyle HorizontalAlign="Center" />
                                     </asp:GridView>
                                     <br />
                                     <br />

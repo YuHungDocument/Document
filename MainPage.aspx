@@ -97,10 +97,10 @@
         <div class="col-sm-3">
             <ul class="list-group" style="list-style: none;">
                 <li class="list-group-item list-group-item-success">已結案項目</li>
-                <li><a href="WaitDocument.aspx"><i class="glyphicon glyphicon-play" style="color: #C0C0C0"></i>已結案公文 <span class="badge" style="background-color: #C0C0C0;">
-                    <asp:Label ID="Label1" runat="server" Text="0"></asp:Label></span><span class="label label-danger"><asp:Label ID="Label2" runat="server" Text="New" Visible="False"></asp:Label></span></a></li>
-                <li><a href="WaitVote.aspx"><i class="glyphicon glyphicon-play" style="color: #C0C0C0"></i>已結束投票 <span class="badge" style="background-color: #C0C0C0;">
-                    <asp:Label ID="Label3" runat="server" Text="0"></asp:Label></span><span class="label label-danger"><asp:Label ID="Label4" runat="server" Text="New" Visible="False"></asp:Label></span></a></li>
+                <li><a href="EndDocument.aspx"><i class="glyphicon glyphicon-play" style="color: #C0C0C0"></i>已結案公文 <span class="badge" style="background-color: #C0C0C0;">
+                    <asp:Label ID="Lbl_EndDoc" runat="server" Text="0"></asp:Label></span><span class="label label-danger"><asp:Label ID="Label2" runat="server" Text="New" Visible="False"></asp:Label></span></a></li>
+                <li><a href="EndVote.aspx"><i class="glyphicon glyphicon-play" style="color: #C0C0C0"></i>已結束投票 <span class="badge" style="background-color: #C0C0C0;">
+                    <asp:Label ID="Lbl_EndVote" runat="server" Text="0"></asp:Label></span><span class="label label-danger"><asp:Label ID="Label4" runat="server" Text="New" Visible="False"></asp:Label></span></a></li>
             </ul>
         </div>
     </div>

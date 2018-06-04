@@ -40,7 +40,7 @@ namespace WebApplication1
         {
             dt = new DataTable();
 
-            string sqlstr = "Select * From Fil Where EID='" + Lbl_EID.Text + "' and Type='投票' order by SID desc";
+            string sqlstr = "Select * From Fil Where EID='" + Lbl_EID.Text + "' and Type='投票' and IsEnd='0' order by SID desc";
 
             SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
             SqlCommand cmd = new SqlCommand(sqlstr, sqlcon);
@@ -239,7 +239,7 @@ namespace WebApplication1
         public void bind()
         {
             dt = new DataTable();
-            string sqlstr = "Select * From Fil Where EID='" + Lbl_EID.Text + "' and Type='投票' order by SID desc";
+            string sqlstr = "Select * From Fil Where EID='" + Lbl_EID.Text + "' and Type='投票' and IsEnd='0' order by SID desc";
             SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
             SqlCommand cmd = new SqlCommand(sqlstr, sqlcon);
             DataSet myds = new DataSet();
@@ -262,7 +262,7 @@ namespace WebApplication1
             string date2 = Request.Form["d2"];
             string date3 = Request.Form["d3"];
             string date4 = Request.Form["d4"];
-            string searchingstr = "Select * From Fil Where EID='" + Lbl_EID.Text + "' and Type='投票'";
+            string searchingstr = "Select * From Fil Where EID='" + Lbl_EID.Text + "' and IsEnd='0' and Type='投票'";
             string wherestr = null;
             string SID = Txt_SID.Text;
             

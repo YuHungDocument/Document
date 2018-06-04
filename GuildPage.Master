@@ -596,7 +596,7 @@
                                 </div>
                             </li>
                             <li>
-                                <asp:LinkButton href="back_mainpage.aspx" ID="LinkButton1" runat="server"><span class="glyphicon glyphicon-cog"></span>後臺管理</asp:LinkButton>
+                                <asp:LinkButton href="back_mainpage.aspx" ID="LinkButton1" runat="server" Visible="False"><span class="glyphicon glyphicon-cog"></span>後臺管理</asp:LinkButton>
                             </li>
                         </ul>
                     </div>

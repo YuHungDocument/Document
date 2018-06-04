@@ -14,6 +14,9 @@ namespace WebApplication1
         DbHelper tmpdbhelper = new DbHelper();
         protected void Page_Load(object sender, EventArgs e)
         {
+           
+            UserInfo tmpUserInfo = null;
+
             if (!Page.IsPostBack)
             {
                 if (Session["userinfo"] == null)
@@ -26,6 +29,13 @@ namespace WebApplication1
                     if (Session["userinfo"] is UserInfo)
                     {
                         ((Label)this.Master.FindControl("Lb_Title")).Text = "刪除已離職員工";
+
+                        tmpUserInfo = (UserInfo)Session["userinfo"];
+
+                        if (tmpUserInfo.Permission != 3)
+                        {
+                            Response.Redirect("back_mainpage.aspx");
+                        }
                     }
                     
                 }

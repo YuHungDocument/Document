@@ -342,7 +342,7 @@
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="需簽章">
                                                     <ItemTemplate>
-                                                        <asp:CheckBox ID="Cb_sign" runat="server" OnCheckedChanged="Cb_sign_CheckedChanged" AutoPostBack="True" />
+                                                        <asp:CheckBox ID="Cb_sign" runat="server" OnCheckedChanged="Cb_sign_CheckedChanged" AutoPostBack="True"  />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="可察看投票結果">

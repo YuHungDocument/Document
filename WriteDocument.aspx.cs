@@ -1379,7 +1379,7 @@ namespace WebApplication1
                                         else
                                         {
                                             //找尋接收者PK並加密KEY
-                                            SqlCommand cmduserInfo1 = new SqlCommand(@"select UserInfo.PK from UserInfo LEFT JOIN Detail ON UserInfo.EID=Detail.EID where (UserInfo.EID=@EID)");
+                                            SqlCommand cmduserInfo1 = new SqlCommand(@"select UserInfo.Name,UserInfo.PK from UserInfo LEFT JOIN Detail ON UserInfo.EID=Detail.EID where (UserInfo.EID=@EID)");
                                             cn3.Open();
                                             cmduserInfo1.Connection = cn3;
                                             cmduserInfo1.Parameters.AddWithValue("@EID", EID);
@@ -1408,6 +1408,11 @@ namespace WebApplication1
                                                     string PK = dr["PK"].ToString();
                                                     //以接收者PK加密KEY
                                                     // 建立 RSA 演算法物件的執行個體，並匯入先前建立的公鑰
+                                                    if(PK=="")
+                                                    {
+                                                        ScriptManager.RegisterClientScriptBlock(UpdatePanel3, this.GetType(), "click", "alert('" + dr["Name"].ToString() + "為非法帳號!')", true);                                                        
+                                                        return;
+                                                    }
                                                     RSACryptoServiceProvider rsaProviderReceiver = new RSACryptoServiceProvider();
                                                     rsaProviderReceiver.FromXmlString(PK);
 

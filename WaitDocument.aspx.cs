@@ -246,11 +246,18 @@ namespace WebApplication1
         #region 換分頁數
         protected void Change_Click(object sender, EventArgs e)
         {
-            if (Convert.ToInt32(TxtPageSize.Text) > 0)
+            if (!string.IsNullOrWhiteSpace(TxtPageSize.Text))
             {
+                if (Convert.ToInt32(TxtPageSize.Text) > 0)
+                {
 
-                Menu.PageSize = Convert.ToInt32(TxtPageSize.Text);
-                bind();
+                    Menu.PageSize = Convert.ToInt32(TxtPageSize.Text);
+                    bind();
+                }
+            }
+            else
+            {
+                Response.Write("<script>alert('請填入行數!');</script>");
             }
         }
         #endregion

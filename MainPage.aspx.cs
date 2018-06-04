@@ -60,7 +60,8 @@ namespace WebApplication1
                         Votec = int.Parse(Votec.ToString()) + 1;
                     }
                 }
-                SqlCommand NewDccmd = new SqlCommand("Select * from Detail left join Fil On Fil.SID = Detail.SID Where Detail.EID='" + Lbl_EID.Text + "' and Detail.isread='0' and Fil.Type!='投票'");
+
+                SqlCommand NewDccmd = new SqlCommand("Select * from Detail left join Fil On Fil.SID = Detail.SID Where Detail.EID='" + Lbl_EID.Text + "' and Detail.isread='0' and Fil.Type!='投票' and Detail.look!='0'");
                 NewDccmd.Connection = cn;
                 using (SqlDataReader dr = NewDccmd.ExecuteReader())
                 {
@@ -69,6 +70,7 @@ namespace WebApplication1
                         Lbl_DocNew.Visible = true;
                     }
                 }
+
                 SqlCommand HDoccmd = new SqlCommand("Select * from Fil Where EID='" + Lbl_EID.Text + "' and Type!='投票'");
                 HDoccmd.Connection = cn;
                 using (SqlDataReader dr = HDoccmd.ExecuteReader())
@@ -78,6 +80,28 @@ namespace WebApplication1
                         HWdc = int.Parse(HWdc.ToString()) + 1;
                     }
                 }
+
+                SqlCommand NewHDocNew = new SqlCommand("Select * from Detail left join Fil On Fil.SID = Detail.SID Where Fil.EID='" + Lbl_EID.Text + "' and Detail.EID='"+Lbl_EID.Text+"' and Detail.isread='0' and Fil.Type!='投票'");
+                NewHDocNew.Connection = cn;
+                using (SqlDataReader dr = NewHDocNew.ExecuteReader())
+                {
+                    if (dr.Read())
+                    {
+                        Lbl_HDocNew.Visible = true;
+                    }
+                }
+
+                SqlCommand HVotecmd = new SqlCommand("Select * from Fil Where EID='" + Lbl_EID.Text + "' and Type='投票'");
+                HVotecmd.Connection = cn;
+                using (SqlDataReader dr = HVotecmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        HVotec = int.Parse(HVotec.ToString()) + 1;
+                    }
+                }
+
+                Lbl_Hvote.Text =HVotec.ToString();
                 Lbl_Doc.Text = Wdc.ToString();
                 Lbl_Vote.Text = Votec.ToString();
                 Lbl_HDoc.Text = HWdc.ToString();

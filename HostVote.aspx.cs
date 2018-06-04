@@ -222,11 +222,18 @@ namespace WebApplication1
         //換分頁數
         protected void Change_Click(object sender, EventArgs e)
         {
-            if (Convert.ToInt32(TxtPageSize.Text) > 0)
+            if(!string.IsNullOrWhiteSpace(TxtPageSize.Text))
             {
+                if (Convert.ToInt32(TxtPageSize.Text) > 0)
+                {
 
-                Menu.PageSize = Convert.ToInt32(TxtPageSize.Text);
-                bind();
+                    Menu.PageSize = Convert.ToInt32(TxtPageSize.Text);
+                    bind();
+                }
+            }
+            else
+            {
+                Response.Write("<script>alert('請填入行數!');</script>");
             }
         }
         public void bind()
@@ -327,9 +334,15 @@ namespace WebApplication1
                 ((LinkButton)e.CommandSource).NamingContainer).RowIndex;
                 //這樣就可以取得Keys值了
                 string keyId = Menu.DataKeys[index].Value.ToString();
-
+                using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+                {
+                    cn.Open();
+                    SqlCommand cmd = new SqlCommand("Update Detail set isread=1 where SID='" + keyId + "' and EID='" + Lbl_EID.Text + "'");
+                    cmd.Connection = cn;
+                    cmd.ExecuteNonQuery();
+                }
                 Session["keyId"] = keyId;
-                Response.Redirect("DocumentDetail.aspx");
+                Response.Redirect("Detail.aspx");
             }
         }
 
@@ -371,6 +384,18 @@ namespace WebApplication1
                             }
                         }
                     }
+                    SqlCommand lookcmd = new SqlCommand("Select * From Detail Where SID=@SID and EID=@EID and isread='0'");
+                    lookcmd.Connection = cn;
+                    lookcmd.Parameters.AddWithValue("@SID", LB.Text);
+                    lookcmd.Parameters.AddWithValue("@EID", Lbl_EID.Text);
+                    using (SqlDataReader dr = lookcmd.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            e.Row.Attributes.Add("style", "font-weight:bold");
+                        }
+                    }
+
                 }
             }
         }

@@ -1467,6 +1467,11 @@ namespace WebApplication1
                                                 string PK = dr["PK"].ToString();
                                                 //以接收者PK加密KEY
                                                 // 建立 RSA 演算法物件的執行個體，並匯入先前建立的公鑰
+                                                if (PK == "")
+                                                {
+                                                    ScriptManager.RegisterClientScriptBlock(UpdatePanel1, this.GetType(), "click", "alert('" + dr["Name"].ToString() + "為非法帳號!')", true);
+                                                    return;
+                                                }
                                                 RSACryptoServiceProvider rsaProviderReceiver = new RSACryptoServiceProvider();
                                                 rsaProviderReceiver.FromXmlString(PK);
 
@@ -1504,7 +1509,7 @@ namespace WebApplication1
                                             cn2.Close();
                                         }
                                         //寫回資料庫                        
-                                        SqlCommand cmdd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,path,sign,Comment,look,RSAkey)VALUES(@SID,@Lvl,@EID,@Department,@status,@path,@sign,@Comment,@look,@RSAkey)");
+                                        SqlCommand cmdd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,recheckKey,status,path,sign,Comment,look,RSAkey,isread)VALUES(@SID,@Lvl,@EID,@Department,@recheckKey,@status,@path,@sign,@Comment,@look,@RSAkey,@isread)");
                                         cn2.Open();
                                         cmdd.Connection = cn2;
                                         cmdd.Parameters.AddWithValue("@SID", SID);
@@ -1555,7 +1560,7 @@ namespace WebApplication1
                                         {
                                             cmdd.Parameters.AddWithValue("@look", 0);
                                         }
-
+                                        cmdd.Parameters.AddWithValue("@isread", 0);
                                         cmdd.ExecuteNonQuery();
                                     }
                                 }

@@ -55,7 +55,7 @@ namespace WebApplication1
                         using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
                         {
                             cn.Open();
-                            SqlCommand cmd = new SqlCommand(@"Select EID From Fil  Where SID=@SID");
+                            SqlCommand cmd = new SqlCommand(@"Select * From Fil  Where SID=@SID");
                             cmd.Connection = cn;
                             cmd.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
                             using (SqlDataReader dr = cmd.ExecuteReader())
@@ -93,7 +93,14 @@ namespace WebApplication1
                                                     Txt_Enterpassword.Visible = false;
                                                     Btn_check.Visible = false;
                                                     Pel_selectwatch.Visible = false;
-                                                    Pel_Choose.Visible = true;
+                                                    if (dr["Type"].ToString() == "投票")
+                                                    {
+                                                        Pel_Choose.Visible = true;
+                                                    }
+                                                    else
+                                                    {
+                                                        Pel_Choose.Visible = false;
+                                                    }
                                                 }
                                                 if(dr3["look"].ToString() == "1")
                                                 {

@@ -9,7 +9,7 @@
         /* Icon when the collapsible content is shown */
         .btn:after {
             font-family: "Glyphicons Halflings";
-            c
+            
             margin-left: 15px;
         }
         /* Icon when the collapsible content is hidden */

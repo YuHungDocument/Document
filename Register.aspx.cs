@@ -59,8 +59,8 @@ namespace WebApplication1
                 }
                 else
                 {
-                    string tmpSQL = @"Insert Into UserInfo (EID,Name,UserID,Pwd,Gender,Email,Tel,Cel,Birthday,PK,Department,position,Permission) 
-                                       Values (@EID,@Name,@UserID2,@Pwd,@Gender,@Email,@Tel,@Cel,@Birthday,@PK,@Department,@position,@Permission)";//建立SQL語法新增輸入的資料
+                    string tmpSQL = @"Insert Into UserInfo (EID,Name,UserID,Pwd,Gender,Email,Tel,Cel,Birthday,PK,Department,position,Permission,job) 
+                                       Values (@EID,@Name,@UserID2,@Pwd,@Gender,@Email,@Tel,@Cel,@Birthday,@PK,@Department,@position,@Permission,@job)";//建立SQL語法新增輸入的資料
                     using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))//使用using可以確保close
                     {
                         SqlCommand cmd = new SqlCommand();//設定一個叫cmd的命令實體
@@ -118,6 +118,7 @@ namespace WebApplication1
                             cmd.Parameters.AddWithValue("@Department", Department.SelectedValue);
                             cmd.Parameters.AddWithValue("@position", position.SelectedValue);
                             cmd.Parameters.AddWithValue("@Permission", "1");
+                            cmd.Parameters.AddWithValue("@job", "1");
 
                             cmd.ExecuteNonQuery();//執行命令
                             SaveKey2File(txt_PrivateKeyrsaProviderReceiver, @"D:\"+DateTime.Now.ToString("yyyyMMddhhmmss")+".txt");

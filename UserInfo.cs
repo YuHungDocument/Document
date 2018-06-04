@@ -134,5 +134,12 @@ namespace WebApplication1
             get { return _temp_Permission; }
             set { _temp_Permission = value; }
         }
+
+        private int _job;
+        public int job
+        {
+            get { return _job; }
+            set { _job = value; }
+        }
     }
 }

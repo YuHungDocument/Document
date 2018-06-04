@@ -36,9 +36,9 @@
                 </a>
             </div>
             <div class="col-sm-2">
-                <a href="Remove_employee.aspx" title="移除離職員工">
+                <a href="Remove_employee.aspx" title="管理離職員工">
                     <div class="glyphicon glyphicon-wrench"></div>
-                    <div class="item">移除離職員工</div>
+                    <div class="item">管理離職員工</div>
                 </a>
             </div>
         </div>

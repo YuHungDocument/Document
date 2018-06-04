@@ -608,6 +608,7 @@
             <!-- Main Content -->
             <div style="border-bottom-style: solid; border-bottom-width: 3px; border-color: #C0C0C0; padding-top: 60px; padding-left: 303px">
                 <asp:Label ID="Lb_Title" runat="server" Text="Label" Font-Size="XX-Large"></asp:Label>
+                <asp:Label ID="job" runat="server" Text="" Visible="False"></asp:Label>
             </div>
 
             <div class="container-fluid">

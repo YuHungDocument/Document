@@ -38,9 +38,10 @@ namespace WebApplication1
             {
                 cn.Open();
 
-                SqlCommand cmd = new SqlCommand("Delete  from UserInfo where EID=@EID");
+                SqlCommand cmd = new SqlCommand("Update UserInfo  set job =@job where EID=@EID");
                 cmd.Connection = cn;
                 cmd.Parameters.AddWithValue("@EID", DropDownList2.SelectedValue);
+                cmd.Parameters.AddWithValue("@job", '0');
                 cmd.ExecuteNonQuery();
                 cn.Close();
             }

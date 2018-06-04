@@ -133,6 +133,31 @@ namespace WebApplication1
                            
                         }
                     }
+                    //判斷該員工是否離職
+                    using(SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+                    {
+                        cn.Open();
+                        SqlCommand cmd = new SqlCommand(@"Select job From UserInfo Where EID=@EID");
+                        cmd.Connection = cn;
+                        cmd.Parameters.AddWithValue("@EID", tmpUserInfo.EID);
+                        using (SqlDataReader dr = cmd.ExecuteReader())
+                        {
+                            if (dr.Read())
+                            {
+                                if (dr["job"].ToString() == "1" )
+                                {
+
+                                }
+                                else
+                                {
+                                    Session["userinfo"] = null;
+                                    Response.Write("<script>alert('該員工已離職!');location.href='Home.aspx';</script>");
+                                   
+                                }
+                            }
+                        }
+                        cn.Close();
+                    }
                 }
             }
         }

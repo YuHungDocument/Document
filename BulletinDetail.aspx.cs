@@ -17,6 +17,7 @@ namespace WebApplication1
             {
                 bind();
             }
+             ((Label)this.Master.FindControl("Lb_Title")).Text = "公告內文";
 
         }
         public void bind()

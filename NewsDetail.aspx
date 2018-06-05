@@ -22,6 +22,6 @@
     <br />
     <br />
     <hr />
-    <asp:Button ID="Button1" runat="server" Text="返回列表" OnClick="Button1_Click" />
+     <input type="button" onclick="javascript:window.history.go(-1);"value="返回上一頁">
     <br />
 </asp:Content>

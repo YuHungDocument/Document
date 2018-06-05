@@ -374,7 +374,7 @@
                                         <HeaderStyle HorizontalAlign="Center" />
                                     </asp:GridView>
 
-                                    <asp:GridView ID="GridView2" class="table" runat="server" AutoGenerateColumns="False" GridLines="Horizontal">
+                                    <asp:GridView ID="GridView2" class="table" runat="server" AutoGenerateColumns="False" GridLines="Horizontal" DataKeyNames="ID" OnRowCommand="GridView2_RowCommand" >
                                         <Columns>
                                             <asp:TemplateField HeaderText="排列" ShowHeader="False" Visible="False">
                                                 <ItemTemplate>
@@ -426,6 +426,11 @@
                                                 </HeaderTemplate>
                                                 <ItemTemplate>
                                                     <asp:CheckBox ID="Cb_comment" runat="server" AutoPostBack="true" OnCheckedChanged="Cb_comment_CheckedChanged" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField>
+                                                <ItemTemplate>
+                                                    <asp:LinkButton ID="Lbl_Delete" CommandName="DelData" OnClientClick="javascript:return confirm('確定刪除?')"  runat="server">刪除</asp:LinkButton>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                         </Columns>

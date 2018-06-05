@@ -102,15 +102,23 @@ namespace WebApplication1
                         {
                             cn.Open();
                             
-                            SqlCommand cmdcount = new SqlCommand("Select count(*) as IDcount From Preview");
+                            SqlCommand cmdcount = new SqlCommand("Select Max(ID) as IDcount From Preview");
                             cmdcount.Connection = cn;
                             using (SqlDataReader dr = cmdcount.ExecuteReader())
                             {
                                 if(dr.Read())
                                 {
-                                    IDcount = int.Parse(dr["IDcount"].ToString());
+                                    if(dr["IDcount"].ToString()=="")
+                                    {
+                                        IDcount = 0;
+                                    }
+                                    else
+                                    {
+                                        IDcount = int.Parse(dr["IDcount"].ToString());
+                                    }
+                                    
                                 }
-                                IDcount = int.Parse(IDcount.ToString()) + 1;
+                                    IDcount = int.Parse(IDcount.ToString()) + 1;                             
                             }
 
                                 SqlCommand cmd2 = new SqlCommand("Insert Into Preview(ID,SID,Department,EID,Name) Values(@ID,@SID,@Department,@EID,@Name)");
@@ -123,7 +131,7 @@ namespace WebApplication1
                             cmd2.ExecuteNonQuery();
                             bind4();
 
-                            SqlCommand cmdcount2 = new SqlCommand("Select count(*) as IDcount From Preview");
+                            SqlCommand cmdcount2 = new SqlCommand("Select Max(ID) as IDcount From Preview");
                             cmdcount2.Connection = cn;
                             using (SqlDataReader dr = cmdcount2.ExecuteReader())
                             {
@@ -452,7 +460,7 @@ namespace WebApplication1
                     cn.Open();
                     SqlCommand cmd = new SqlCommand("Insert Into Preview(ID,SID,EID) Values(@ID,@SID,@EID)");
                     cmd.Connection = cn;
-                    SqlCommand cmdcount = new SqlCommand("Select count(*) as IDcount From Preview");
+                    SqlCommand cmdcount = new SqlCommand("Select Max(ID) as IDcount From Preview");
                     cmdcount.Connection = cn;
                     using (SqlDataReader dr = cmdcount.ExecuteReader())
                     {
@@ -552,7 +560,7 @@ namespace WebApplication1
                             
                             cn2.Open();
                             SqlCommand cmd2 = new SqlCommand("Insert Into Preview(ID,SID,Lvl,Department,Name,EID,status,path,Comment) Values(@ID,@SID,@Lvl,@Department,@Name,@EID,@status,@path,@Comment)");
-                            SqlCommand cmdID = new SqlCommand("Select count(*) as IDcount From Preview");
+                            SqlCommand cmdID = new SqlCommand("Select Max(ID) as IDcount From Preview");
                             cmdID.Connection = cn2;
                             using (SqlDataReader drID = cmdID.ExecuteReader())
                             {
@@ -1913,12 +1921,6 @@ namespace WebApplication1
                 ScriptManager.RegisterClientScriptBlock(UpdatePanel3, this.GetType(), "click", "alert('成功儲存至草稿')", true);
             }
         }
-
-
-
-
-
-
         #endregion
 
         #region 點選下拉式加入群組
@@ -2000,6 +2002,85 @@ namespace WebApplication1
                         }
                         CountPre = int.Parse(CountPre.ToString()) + 1;
                     }
+                }
+            }
+        }
+
+        #endregion
+
+        #region 刪除Gridview列
+        protected void GridView2_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "DelData")
+            {
+                int index = ((GridViewRow)((LinkButton)e.CommandSource).NamingContainer).RowIndex;
+                string keyId = GridView2.DataKeys[index].Value.ToString();
+                using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+                {
+                    cn.Open();
+                    SqlCommand Maxcmd = new SqlCommand("Select Max(ID) as MaxID From Preview Where SID=@SID");
+                    Maxcmd.Connection = cn;
+                    Maxcmd.Parameters.AddWithValue("@SID",Lbl_SID.Text);
+                    using (SqlDataReader dr = Maxcmd.ExecuteReader())
+                    {
+                        if(dr.Read())
+                        {
+                            if(dr["MaxID"].ToString()==keyId)
+                            {
+                                ScriptManager.RegisterClientScriptBlock(UpdatePanel1, this.GetType(), "click", "alert('最後一列無法刪除')", true);
+                            }
+                            else
+                            {
+                                using (SqlConnection Incn = new SqlConnection(tmpdbhelper.DB_CnStr))
+                                {
+                                    Incn.Open();
+                                    SqlCommand cmd = new SqlCommand("Delete From Preview Where ID=@ID");
+                                    cmd.Connection = Incn;
+                                    cmd.Parameters.AddWithValue("@ID", keyId);
+                                    cmd.ExecuteNonQuery();
+                                    bind3();
+                                }
+
+                            }
+                        }
+                    }
+
+                }
+
+                using (SqlConnection cn3 = new SqlConnection(tmpdbhelper.DB_CnStr))
+                {
+                    cn3.Open();
+                    SqlCommand cmd3 = new SqlCommand("Select * from Preview Where SID='" + Lbl_SID.Text + "' and EID!='" + Lbl_EID.Text + "'");
+                    cmd3.Connection = cn3;
+                    using (SqlDataReader dr2 = cmd3.ExecuteReader())
+                    {
+                        int CountPre = 0;
+                        while (dr2.Read())
+                        {
+
+                            ((TextBox)GridView2.Rows[CountPre].FindControl("Txt_Lvl")).Text = dr2["Lvl"].ToString();
+                            ((TextBox)GridView2.Rows[CountPre].FindControl("Txt_EID")).Text = dr2["EID"].ToString();
+                            ((Label)GridView2.Rows[CountPre].FindControl("Lbl_Dep")).Text = dr2["Department"].ToString();
+                            ((Label)GridView2.Rows[CountPre].FindControl("Lbl_Name")).Text = dr2["Name"].ToString();
+                            CheckBox Cb_sign = ((CheckBox)GridView2.Rows[CountPre].FindControl("Cb_sign"));
+                            CheckBox Cb_path = ((CheckBox)GridView2.Rows[CountPre].FindControl("Cb_path"));
+                            CheckBox Cb_comment = ((CheckBox)GridView2.Rows[CountPre].FindControl("Cb_comment"));
+                            if (dr2["status"].ToString() == "1")
+                            {
+                                Cb_sign.Checked = true;
+                            }
+                            if (dr2["path"].ToString() == "1")
+                            {
+                                Cb_path.Checked = true;
+                            }
+                            if (dr2["Comment"].ToString() == "1")
+                            {
+                                Cb_comment.Checked = true;
+                            }
+                            CountPre = int.Parse(CountPre.ToString()) + 1;
+                        }
+                    }
+
                 }
             }
         }

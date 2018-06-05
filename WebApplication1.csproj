@@ -581,6 +581,7 @@
     <Content Include="P\金鑰位置.png" />
     <Content Include="P\鑰匙.png" />
     <Content Include="Register.aspx" />
+    <Content Include="Remove_employee.aspx" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\ckeditor.js" />
     <Content Include="Scripts\ckeditor\config.js" />
@@ -1372,6 +1373,13 @@
     </Compile>
     <Compile Include="Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Remove_employee.aspx.cs">
+      <DependentUpon>Remove_employee.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Remove_employee.aspx.designer.cs">
+      <DependentUpon>Remove_employee.aspx</DependentUpon>
     </Compile>
     <Compile Include="SelectMemberData.aspx.cs">
       <DependentUpon>SelectMemberData.aspx</DependentUpon>

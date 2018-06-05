@@ -35,6 +35,7 @@ namespace WebApplication1
                         if (tmpUserInfo.Permission != 3)
                         {
                             Response.Redirect("back_mainpage.aspx");
+                            Response.Write("<script>alert('非人資部門無法使用!');location.href='Home.aspx';</script>");
                         }
                     }
                     

@@ -163,7 +163,7 @@
             <tr>
                 <td style="text-align:left; font-size:xx-large;font-weight:bold">最新車款</td>
                 <td style="text-align:right; font-size:large">
-                    <asp:LinkButton ID="Lbl_More" Style="display:initial;color:#62a8ff" runat="server">更多最新車款資訊...</asp:LinkButton></td>
+                    <asp:LinkButton ID="Lbl_More" Style="display:initial;color:#62a8ff" runat="server" OnClick="Lbl_More_Click">更多最新車款資訊...</asp:LinkButton></td>
             </tr>
         </table>
         <p></p>

@@ -2,6 +2,8 @@
 
 <%@ Register Src="~/ucGridViewChoiceAll.ascx" TagPrefix="uc1" TagName="ucGridViewChoiceAll" %>
 
+<%@ Register assembly="CKEditor.NET" namespace="CKEditor.NET" tagprefix="CKEditor" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
         <script src="My97DatePicker/WdatePicker.js"></script>
     <script type="text/javascript">
@@ -190,7 +192,8 @@
         <tr style="height: 25px">
             <td>說　　明</td>
             <td colspan="6">
-                <asp:TextBox ID="Txt_Text" class="form-control" runat="server" Height="99px" TextMode="MultiLine"></asp:TextBox>
+                <CKEditor:CKEditorControl ID="Txt_Text" runat="server">
+                </CKEditor:CKEditorControl>
 
             </td>
         </tr>
@@ -286,6 +289,55 @@
                                     <asp:Label ID="Lbl_GpName" runat="server" Text="Label" Visible="False"></asp:Label>
                                     <br />
                                     <br />
+                                    <asp:GridView ID="GridView5" class="table" runat="server" AutoGenerateColumns="False" GridLines="Horizontal">
+                                        <Columns>
+                                            <asp:TemplateField HeaderText="排列" ShowHeader="False" Visible="False">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="Label1" runat="server" Text='<%# Bind("ID") %>'></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:BoundField DataField="SID" HeaderText="序列" Visible="false" />
+
+                                            <asp:TemplateField HeaderText="層級">
+                                                <ItemTemplate>
+                                                    <asp:TextBox DataField="Lvl" ID="Txt_Lvl" runat="server" OnTextChanged="Txt_Lvl_TextChanged" TextMode="Number" Width="50px" AutoPostBack="True"></asp:TextBox>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="發布人編號">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="Lbl_EID" Text='<%# Bind("EID") %>' runat="server"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="發布人部門">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="Lbl_Dep" Text='<%# Bind("Department") %>' runat="server"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="發布人姓名">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="Lbl_Name" Text='<%# Bind("Name") %>' runat="server"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="需簽章">
+                                                <ItemTemplate>
+                                                    <asp:CheckBox ID="Cb_sign" runat="server" OnCheckedChanged="Cb_sign_CheckedChanged1" AutoPostBack="True" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="可察看進度">
+                                                <ItemTemplate>
+                                                    <asp:CheckBox ID="Cb_path" runat="server" OnCheckedChanged="Cb_path_CheckedChanged1" AutoPostBack="True" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="是否評論">
+                                                <ItemTemplate>
+                                                    <asp:CheckBox ID="Cb_comment" runat="server" AutoPostBack="true" OnCheckedChanged="Cb_comment_CheckedChanged1" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
+                                        <HeaderStyle HorizontalAlign="Center" />
+                                    </asp:GridView>
+                                    <br />
+
                                     <asp:GridView ID="GridView2" class="table" runat="server" AutoGenerateColumns="False" GridLines="Horizontal">
                                         <Columns>
                                             <asp:TemplateField HeaderText="排列" ShowHeader="False" Visible="False">

@@ -1900,15 +1900,11 @@ namespace WebApplication1
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
                 cn.Open();
-                SqlCommand cmd = new SqlCommand("Update Preview set draft=1 Where SID=@SID");
-                cmd.Connection = cn;
-                cmd.Parameters.AddWithValue("@SID",Lbl_SID.Text);
-                cmd.ExecuteNonQuery();
 
-                SqlCommand insertcmd = new SqlCommand("Insert into Draft(SID,Sender,Date,Speed,Text,Title,Proposition,Type,YOS) Values(@SID,@Sender,@Date,@Speed,@Text,@Title,@Proposition,@Type,@YOS)");
+                SqlCommand insertcmd = new SqlCommand("Insert into Draft(DID,Sender,Date,Speed,Text,Title,Proposition,Type,YOS) Values(@DID,@Sender,@Date,@Speed,@Text,@Title,@Proposition,@Type,@YOS)");
 
                 insertcmd.Connection = cn;
-                insertcmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+                insertcmd.Parameters.AddWithValue("@DID", Lbl_SID.Text);
                 insertcmd.Parameters.AddWithValue("@Sender", Lbl_EID.Text);
                 insertcmd.Parameters.AddWithValue("@Date", Lbl_Date.Text);
                 insertcmd.Parameters.AddWithValue("@Speed", Ddl_Speed.SelectedValue);

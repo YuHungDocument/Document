@@ -560,6 +560,7 @@
     <Content Include="Message.aspx" />
     <Content Include="NEWHOME.aspx" />
     <Content Include="News.aspx" />
+    <Content Include="NewsDetail.aspx" />
     <Content Include="NewsEdit.aspx" />
     <Content Include="NewsEditDetail.aspx" />
     <Content Include="obj\Debug\WebApplication1.csproj.FileListAbsolute.txt" />
@@ -1300,6 +1301,13 @@
     </Compile>
     <Compile Include="News.aspx.designer.cs">
       <DependentUpon>News.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NewsDetail.aspx.cs">
+      <DependentUpon>NewsDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NewsDetail.aspx.designer.cs">
+      <DependentUpon>NewsDetail.aspx</DependentUpon>
     </Compile>
     <Compile Include="NewsEdit.aspx.cs">
       <DependentUpon>NewsEdit.aspx</DependentUpon>

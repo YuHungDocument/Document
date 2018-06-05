@@ -58,7 +58,7 @@ namespace WebApplication1
                 //這樣就可以取得Keys值了
                 string keyId = GridView1.DataKeys[index].Value.ToString();
                 Session["NID"] = keyId;
-                Response.Redirect("BulletinDetail.aspx");
+                Response.Redirect("NewsDetail.aspx");
             }
         }
 
@@ -208,6 +208,11 @@ namespace WebApplication1
                 }
             }
             Response.Redirect("ProductDetail.aspx");
+        }
+
+        protected void Lbl_More_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

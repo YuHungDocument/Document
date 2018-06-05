@@ -9,7 +9,7 @@
         筆資料
             <asp:Button ID="Change" runat="server" CausesValidation="False" class="btn btn-default" OnClick="Change_Click" Text="更改" />
     </div>
-    <asp:GridView ID="Menu" Style="border: 2px #ccc solid; border-radius: 10px;" runat="server" AutoGenerateColumns="False" DataKeyNames="SID" OnRowCommand="GridView1_RowCommand" AllowSorting="True"  GridLines="None" Width="100%" EmptyDataText="暫無草稿"
+    <asp:GridView ID="Menu" Style="border: 2px #ccc solid; border-radius: 10px;" runat="server" AutoGenerateColumns="False" DataKeyNames="DID" OnRowCommand="GridView1_RowCommand" AllowSorting="True"  GridLines="None" Width="100%" EmptyDataText="暫無草稿"
         AllowPaging="True" OnRowCreated="Gridview_OnRowCreated"
         OnSorting="Gv_Sorting" PageSize="3" OnPageIndexChanging="gv_PageIndexChanging">
         <FooterStyle ForeColor="Black" />
@@ -27,9 +27,9 @@
                     <asp:LinkButton data-toggle="tooltip" Text='<%#Eval("Title")%>' ID="Lb_SID" runat="server" CommandName="SelData" CausesValidation="False"></asp:LinkButton>
                 </ItemTemplate>
             </asp:TemplateField>
-            <asp:TemplateField HeaderText="SID" Visible="False">
+            <asp:TemplateField HeaderText="DID" Visible="False">
                 <ItemTemplate>
-                    <asp:Label Text='<%#Eval("SID")%>' ID="Lbl_SID" runat="server"></asp:Label>
+                    <asp:Label Text='<%#Eval("DID")%>' ID="Lbl_DID" runat="server"></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
         </Columns>

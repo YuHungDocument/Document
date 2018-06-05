@@ -588,7 +588,7 @@
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">
                                             <li><a href="set.aspx" style="background-color: #793f35">帳戶設定</a></li>
-                                            <li><a href="setInfo.aspx" style="background-color: #793f35">個資設定</a></li>
+                                            <li><a href="setInfo.aspx" style="background-color: #793f35">個人資料設定</a></li>
                                             <li><a href="SetAgent.aspx" style="background-color: #793f35">代理人設定</a></li>
                                             <li><a href="KeyAddress.aspx" style="background-color: #793f35">金鑰設定</a></li>
                                         </ul>

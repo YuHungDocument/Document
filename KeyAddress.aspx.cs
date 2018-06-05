@@ -23,7 +23,7 @@ namespace WebApplication1
                 else
                 {
                     ViewState["URL"] = Request.UrlReferrer.ToString();
-                    ((Label)this.Master.FindControl("Lb_Title")).Text = "設定金鑰位置";
+                    ((Label)this.Master.FindControl("Lb_Title")).Text = "金鑰設定";
                 }
             }
         }

@@ -22,13 +22,7 @@ namespace WebApplication1
                 else
                 {
                     ((Label)this.Master.FindControl("Lb_Title")).Text = "新增公告";
-                    UserInfo tmpUserInfo = null;
-                    if (Session["userinfo"] is UserInfo)
-                    {
-                        tmpUserInfo = (UserInfo)Session["userinfo"];
-                        Lbl_Dp.Text = tmpUserInfo.Department;
-                        Lbl_EID.Text = tmpUserInfo.EID;
-                    }
+                   
                 }
             }
         }
@@ -36,17 +30,28 @@ namespace WebApplication1
         {
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
-                cn.Open();
-                SqlCommand cmd = new SqlCommand(@"Insert Into  Bulletin(BTitle,Context,Department,Date,EID)VALUES(@BTitle,@Context,@Department,@Date,@EID)");
-                cmd.Connection = cn;
-                cmd.Parameters.AddWithValue("@BTitle", Txt_Title.Text);
-                cmd.Parameters.AddWithValue("@Context", txt_Connect.Text);
-                cmd.Parameters.AddWithValue("@Department", Lbl_Dp.Text);
-                cmd.Parameters.AddWithValue("@Date", DateTime.Today);
-                cmd.Parameters.AddWithValue("@EID", Lbl_EID.Text);
-                cmd.ExecuteNonQuery();
-                Response.Write("<script>alert('已成功新增公告!');location.href='Bulletin.aspx';</script>");
+                UserInfo tmpUserInfo = null;
+                if (Session["userinfo"] is UserInfo)
+                {
+                    tmpUserInfo = (UserInfo)Session["userinfo"];
+
+                    cn.Open();
+                    SqlCommand cmd = new SqlCommand(@"Insert Into  Bulletin(BTitle,Context,Department,Date,EID)VALUES(@BTitle,@Context,@Department,@Date,@EID)");
+                    cmd.Connection = cn;
+                    cmd.Parameters.AddWithValue("@BTitle", Txt_Title.Text);
+                    cmd.Parameters.AddWithValue("@Context", txt_Connect.Text);
+                    cmd.Parameters.AddWithValue("@Department", tmpUserInfo.Department);
+                    cmd.Parameters.AddWithValue("@Date", DateTime.Today);
+                    cmd.Parameters.AddWithValue("@EID", tmpUserInfo.EID);
+                    cmd.ExecuteNonQuery();
+                    Response.Write("<script>alert('已成功新增公告!');location.href='Bulletin.aspx';</script>");
+                }
             }
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("editbullitin.aspx");
         }
     }
 }

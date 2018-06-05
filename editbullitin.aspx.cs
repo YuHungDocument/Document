@@ -16,6 +16,15 @@ namespace WebApplication1
         {
             if (!Page.IsPostBack)
             {
+                if (Session["userinfo"] == null)
+                {
+                    Response.Redirect("Home.aspx");
+                }
+                else
+                {
+                    ((Label)this.Master.FindControl("Lb_Title")).Text = "公告列表";
+
+                }
                 bind();
 
             }
@@ -24,13 +33,13 @@ namespace WebApplication1
 
         public void bind()
         {
-            string sqlstr = "Select * from News Order by NID desc";
+            string sqlstr = "Select * from Bulletin Order by BID desc";
             SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
             SqlCommand cmd = new SqlCommand(sqlstr, sqlcon);
             DataSet myds = new DataSet();
             sqlcon.Open();
             SqlDataAdapter myda = new SqlDataAdapter(sqlstr, sqlcon);
-            myda.Fill(myds, "News");
+            myda.Fill(myds, "Bulletin");
             GridView1.DataSource = myds;
             GridView1.DataBind();
         }
@@ -104,16 +113,16 @@ namespace WebApplication1
         protected void Ddl_Type_SelectedIndexChanged(object sender, EventArgs e)
         {
 
-            if (Ddl_Type.SelectedValue != "全部類別")
+            if (Ddl_Type.SelectedValue != "全部部門")
             {
-                string sqlstr = "Select * from News Where NType='" + Ddl_Type.SelectedValue + "' Order by NID desc";
+                string sqlstr = "Select * from Bulletin Where Dp='" + Ddl_Type.SelectedValue + "' Order by BID desc";
 
                 SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
                 SqlCommand cmd = new SqlCommand(sqlstr, sqlcon);
                 DataSet myds = new DataSet();
                 sqlcon.Open();
                 SqlDataAdapter myda = new SqlDataAdapter(sqlstr, sqlcon);
-                myda.Fill(myds, "News");
+                myda.Fill(myds, "Bulletin");
                 GridView1.DataSource = myds;
                 GridView1.DataBind();
             }
@@ -150,13 +159,13 @@ namespace WebApplication1
                 ((LinkButton)e.CommandSource).NamingContainer).RowIndex;
                 //這樣就可以取得Keys值了
                 string keyId = GridView1.DataKeys[index].Value.ToString();
-                Session["NID"] = keyId;
+                Session["BID"] = keyId;
                 Response.Redirect("BulletinDetail.aspx");
             }
         }
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Bullitin.aspx");
+            Response.Redirect("Bulletin.aspx");
         }
     }
 }

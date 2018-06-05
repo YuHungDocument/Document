@@ -7,6 +7,11 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+      <br />
+    <a href="Home.aspx">首頁</a>/<a href="News.aspx">最新消息</a>/內文
+    <hr />
+    <h2>最新消息</h2>
+
     <br />
     <asp:Label ID="Lbl_Title" runat="server" Font-Size="XX-Large"></asp:Label>
     &nbsp;
@@ -17,6 +22,6 @@
     <br />
     <br />
     <hr />
-    <asp:Button ID="Button1" runat="server" Text="回前頁" OnClick="Button1_Click" />
+    <asp:Button ID="Button1" runat="server" Text="返回列表" OnClick="Button1_Click" />
     <br />
 </asp:Content>

@@ -1,12 +1,10 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/GuildPage.Master" AutoEventWireup="true" CodeBehind="BulletinDetail.aspx.cs" Inherits="WebApplication1.BulletinDetail" %>
-
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Home.Master" AutoEventWireup="true" CodeBehind="NewsDetail.aspx.cs" Inherits="WebApplication1.NewsDetail" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <style>
+     <style>
         hr {
             border-width: 2px;
         }
     </style>
-
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <br />
@@ -21,5 +19,4 @@
     <hr />
     <asp:Button ID="Button1" runat="server" Text="回前頁" OnClick="Button1_Click" />
     <br />
-
 </asp:Content>

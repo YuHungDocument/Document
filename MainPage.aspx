@@ -39,13 +39,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container-fluid">
         <div class="list">
-            <div class="col-sm-3" style="padding-top: 5px; text-align: center;">
-                <div style="border: 3px solid #6699FF;">
-                    <a href="Home.aspx" title="回首頁" style="height: 152px; padding-top: 50px; font-size: large;"><span class="glyphicon glyphicon-home" style="font-size: xx-large;"></span>
-                        <br />
-                        回首頁</a>
-                </div>
-            </div>
+           
             <div class="col-sm-3" style="padding-top: 5px; text-align: center;">
                 <div style="border: 3px solid #6699FF;">
                     <div style="color: white; background-color: #66a6ff;">
@@ -106,14 +100,6 @@
     </div>
     <div class="container-fluid">
         <div class="list">
-            <div class="col-sm-3" style="padding-top: 5px; text-align: center;">
-                <div style="border: 3px solid #6699FF;">
-                    <a href="Home.aspx" title="標記重要項目" style="height: 152px; padding-top: 50px; font-size: large;"><span class="glyphicon glyphicon-star" style="font-size: xx-large;"></span>
-                        <br />
-                        標記重要項目</a>
-                </div>
-
-            </div>
             <div class="col-sm-3" style="padding-top: 5px; text-align: center;">
                 <div style="border: 3px solid #6699FF;">
                     <div style="color: white; background-color: #66a6ff;">

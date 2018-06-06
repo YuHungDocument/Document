@@ -10,42 +10,33 @@
 namespace WebApplication1 {
     
     
-    public partial class editbullitin {
+    public partial class editbullitinDetail {
         
         /// <summary>
-        /// Lbl_EID 控制項。
+        /// Txt_Title 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Lbl_EID;
+        protected global::System.Web.UI.WebControls.TextBox Txt_Title;
         
         /// <summary>
-        /// GridView1 控制項。
+        /// Txt_Context 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView1;
+        protected global::CKEditor.NET.CKEditorControl Txt_Context;
         
         /// <summary>
-        /// Button1 控制項。
+        /// Btn_Edit 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
-        
-        /// <summary>
-        /// Button2 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button2;
+        protected global::System.Web.UI.WebControls.Button Btn_Edit;
     }
 }

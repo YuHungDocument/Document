@@ -10,42 +10,42 @@
 namespace WebApplication1 {
     
     
-    public partial class editbullitin {
+    public partial class NewsDetail {
         
         /// <summary>
-        /// Lbl_EID 控制項。
+        /// Lbl_Title 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Lbl_EID;
+        protected global::System.Web.UI.WebControls.Label Lbl_Title;
         
         /// <summary>
-        /// GridView1 控制項。
+        /// Lbl_Dep 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView1;
+        protected global::System.Web.UI.WebControls.Label Lbl_Dep;
         
         /// <summary>
-        /// Button1 控制項。
+        /// Lbl_Date 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Label Lbl_Date;
         
         /// <summary>
-        /// Button2 控制項。
+        /// Lbl_Context 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button2;
+        protected global::System.Web.UI.WebControls.Label Lbl_Context;
     }
 }

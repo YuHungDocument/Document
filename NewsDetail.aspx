@@ -1,14 +1,17 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/GuildPage.Master" AutoEventWireup="true" CodeBehind="BulletinDetail.aspx.cs" Inherits="WebApplication1.BulletinDetail" %>
-
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Home.Master" AutoEventWireup="true" CodeBehind="NewsDetail.aspx.cs" Inherits="WebApplication1.NewsDetail" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <style>
+     <style>
         hr {
             border-width: 2px;
         }
     </style>
-
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+      <br />
+    <a href="Home.aspx">首頁</a>/<a href="News.aspx">最新消息</a>/內文
+    <hr />
+    <h2>最新消息</h2>
+
     <br />
     <asp:Label ID="Lbl_Title" runat="server" Font-Size="XX-Large"></asp:Label>
     &nbsp;
@@ -19,7 +22,6 @@
     <br />
     <br />
     <hr />
-   <input type="button" onclick="javascript:window.history.go(-1);"value="返回上一頁">
+     <input type="button" onclick="javascript:window.history.go(-1);"value="返回上一頁">
     <br />
-
 </asp:Content>

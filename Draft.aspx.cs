@@ -153,7 +153,7 @@ namespace WebApplication1
         public void bind()
         {
             dt = new DataTable();
-            string sqlstr = "Select * From Draft order by SID desc";
+            string sqlstr = "Select * From Draft order by DID desc";
             SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
             SqlCommand cmd = new SqlCommand(sqlstr, sqlcon);
             DataSet myds = new DataSet();
@@ -237,7 +237,7 @@ namespace WebApplication1
         {
             dt = new DataTable();
 
-            string sqlstr = "Select * From Draft order by SID desc";
+            string sqlstr = "Select * From Draft order by DID desc";
 
             SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
             SqlCommand cmd = new SqlCommand(sqlstr, sqlcon);

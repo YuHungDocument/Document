@@ -532,6 +532,7 @@
     <Content Include="Draft.aspx" />
     <Content Include="DraftDetail.aspx" />
     <Content Include="editbullitin.aspx" />
+    <Content Include="editbullitinDetail.aspx" />
     <Content Include="Edit_U.aspx" />
     <Content Include="EmailTest.aspx" />
     <Content Include="EndDocument.aspx" />
@@ -560,6 +561,7 @@
     <Content Include="Message.aspx" />
     <Content Include="NEWHOME.aspx" />
     <Content Include="News.aspx" />
+    <Content Include="NewsDetail.aspx" />
     <Content Include="NewsEdit.aspx" />
     <Content Include="NewsEditDetail.aspx" />
     <Content Include="obj\Debug\WebApplication1.csproj.FileListAbsolute.txt" />
@@ -575,12 +577,16 @@
     <Content Include="P\8.jpg" />
     <Content Include="P\document.png" />
     <Content Include="P\header-01.jpg" />
+    <Content Include="P\HomeIMG1.jpg" />
     <Content Include="P\Iconsmind-Outline-Add-User.png" />
     <Content Include="P\rsa-red-logo.png" />
     <Content Include="P\個人資料.png" />
+    <Content Include="P\綠.jpg" />
+    <Content Include="P\藍.jpg" />
     <Content Include="P\金鑰位置.png" />
     <Content Include="P\鑰匙.png" />
     <Content Include="Register.aspx" />
+    <Content Include="Remove_employee.aspx" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\ckeditor.js" />
     <Content Include="Scripts\ckeditor\config.js" />
@@ -925,6 +931,7 @@
     <Content Include="SetBT.aspx" />
     <Content Include="SetCompanyIntroduction.aspx" />
     <Content Include="SetConnect.aspx" />
+    <Content Include="Setgroup.aspx" />
     <Content Include="setInfo.aspx" />
     <Content Include="SetNT.aspx" />
     <Content Include="ucGridViewChoiceAll.ascx" />
@@ -1166,6 +1173,13 @@
     <Compile Include="editbullitin.aspx.designer.cs">
       <DependentUpon>editbullitin.aspx</DependentUpon>
     </Compile>
+    <Compile Include="editbullitinDetail.aspx.cs">
+      <DependentUpon>editbullitinDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="editbullitinDetail.aspx.designer.cs">
+      <DependentUpon>editbullitinDetail.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Edit_U.aspx.cs">
       <DependentUpon>Edit_U.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1299,6 +1313,13 @@
     <Compile Include="News.aspx.designer.cs">
       <DependentUpon>News.aspx</DependentUpon>
     </Compile>
+    <Compile Include="NewsDetail.aspx.cs">
+      <DependentUpon>NewsDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NewsDetail.aspx.designer.cs">
+      <DependentUpon>NewsDetail.aspx</DependentUpon>
+    </Compile>
     <Compile Include="NewsEdit.aspx.cs">
       <DependentUpon>NewsEdit.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1373,6 +1394,13 @@
     <Compile Include="Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Remove_employee.aspx.cs">
+      <DependentUpon>Remove_employee.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Remove_employee.aspx.designer.cs">
+      <DependentUpon>Remove_employee.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SelectMemberData.aspx.cs">
       <DependentUpon>SelectMemberData.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1421,6 +1449,13 @@
     </Compile>
     <Compile Include="SetConnect.aspx.designer.cs">
       <DependentUpon>SetConnect.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Setgroup.aspx.cs">
+      <DependentUpon>Setgroup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Setgroup.aspx.designer.cs">
+      <DependentUpon>Setgroup.aspx</DependentUpon>
     </Compile>
     <Compile Include="setInfo.aspx.cs">
       <DependentUpon>setInfo.aspx</DependentUpon>

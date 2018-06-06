@@ -52,7 +52,7 @@
 
             table tr td a {
                 display: block;
-                color:#555
+                color: #555
             }
 
             table tr td span {
@@ -90,7 +90,7 @@
         <!-- Wrapper for slides -->
         <div class="carousel-inner">
             <div class="item active">
-                <img src="P/header-01.jpg" alt="Los Angeles" style="height: 300px; width: 100%;">
+                <img src="P/HomeIMG1.jpg" alt="Los Angeles" style="height: 300px; width: 100%;">
             </div>
 
             <div class="item">
@@ -137,25 +137,18 @@
         </div>
         <div class="col-md-6 col-sm-12">
 
-            <table style="margin-top:50px" class="nav-justified">
+            <table style="margin-top: 100px" class="nav-justified">
                 <tr>
-                    <td><a href="Register.aspx"><span class="circle_in_black glyphicon glyphicon-hand-right"></span>
-                        <br />
-                        加入我們</a></td>
-                    <td><a href="Navigation.aspx"><span class="circle_in_black glyphicon glyphicon-th-list"></span>
-                        <br />
-                        網頁導覽</a></td>
-                    <td><a href="Connect.aspx"><span class="circle_in_black glyphicon glyphicon-leaf"></span>
-                        <br />
-                        服務專區</a></td>
-                </tr>
-                <tr>
-                    <td><a href="MainPage.aspx"><span class="circle_in_black glyphicon glyphicon-briefcase"></span>
-                        <br />
-                        公文系統</a></td>
                     <td><a href="AboutUs.aspx"><span class="circle_in_black glyphicon glyphicon glyphicon-pencil"></span>
                         <br />
-                        關於我們</a></td>
+                        關於我們</a><%--<a href="Register.aspx"><span class="circle_in_black glyphicon glyphicon-hand-right"></span>
+                        <br />
+                        加入我們</a>--%></td>
+                    <td><a href="Connect.aspx"><span class="circle_in_black glyphicon glyphicon-leaf"></span>
+                        <br />
+                        服務專區</a><%--<a href="Navigation.aspx"><span class="circle_in_black glyphicon glyphicon-th-list"></span>
+                        <br />
+                        網頁導覽</a>--%></td>
                     <td><a href="MainPage.aspx"><span class="circle_in_black glyphicon glyphicon-user"></span>
                         <br />
                         員工專區</a></td>
@@ -165,28 +158,47 @@
         </div>
     </div>
     <div class="row">
+
+        <table class="nav-justified">
+            <tr>
+                <td style="text-align:left; font-size:xx-large;font-weight:bold">最新車款</td>
+                <td style="text-align:right; font-size:large">
+                    <asp:LinkButton ID="Lbl_More" Style="display:initial;color:#62a8ff" runat="server" OnClick="Lbl_More_Click">更多最新車款資訊...</asp:LinkButton></td>
+            </tr>
+        </table>
+        <p></p>
+        <p></p>
         <div class="col-sm-4">
-            <div class="thumbnail" style="border-top: 5px solid #ff0000">
-                <asp:Image ID="Image1" runat="server" Width="400" Height="300" ImageUrl="~/P/document.png" />
-                <p><strong>公文系統</strong></p>
-                <p>簡易的公文系統，前往立即使用</p>
-                <div style="text-align:center;"><asp:Button class="button" ID="Button1"  runat="server" Text="前往了解" PostBackUrl="~/MainPage.aspx" OnClick="Button1_Click" /></div>
+            <div class="thumbnail" style="border-top: 5px solid #ff0000;padding-left:5px;padding-right:5px">
+                <br />
+                <br />
+                <asp:Image ID="Image1" runat="server" Style="height: 250px; max-width: 100%" ImageUrl='<%# "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("ProductImg")) %>' />
+                <p style="text-align:center;"><strong><asp:Label ID="Lbl_Img1" runat="server" ForeColor="#6699FF" Font-Bold="True"></asp:Label></strong></p>
+                <p style="text-align:center;color:#808080">售價：<asp:Label ID="Lbl_Price1" runat="server" ></asp:Label></p>
+                <div style="text-align: center;">
+                    <asp:Button class="button" ID="Button1" runat="server" Text="前往了解" OnClick="Button1_Click" /></div>
             </div>
         </div>
         <div class="col-sm-4">
-            <div class="thumbnail" style="border-top: 5px solid #ff6a00">
-                <asp:Image ID="Image2" runat="server" Width="400" Height="300" ImageUrl="~/P/aboutus.png" />
-                <p><strong>關於我們</strong></p>
-                <p>有關我們的資訊，都可以從這裡去了解</p>
-                <div style="text-align:center;"><asp:Button ID="Button2" class="button" runat="server" Text="前往了解" OnClick="Button2_Click" /></div>
+            <div class="thumbnail" style="border-top: 5px solid #ff6a00;padding-left:5px;padding-right:5px">
+                                <br />
+                <br />
+                <asp:Image ID="Image2" runat="server" Style="height: 250px; max-width: 100%" ImageUrl='<%# "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("ProductImg")) %>' />
+                <p style="text-align:center;"><strong><asp:Label ID="Lbl_Img2" runat="server" ForeColor="#6699FF" Font-Bold="True"></asp:Label></strong></p>
+                <p style="text-align:center;color:#808080">售價：<asp:Label ID="Lbl_Price2" runat="server" ></asp:Label></p>
+                <div style="text-align: center;">
+                    <asp:Button ID="Button2" class="button" runat="server" Text="前往了解" OnClick="Button2_Click" /></div>
             </div>
         </div>
         <div class="col-sm-4">
-            <div class="thumbnail" style="border-top: 5px solid #ffd800">
-                <asp:Image ID="Image3" runat="server" Width="400" Height="300" ImageUrl="~/P/usedocument.png" />
-                <p><strong>操作方式</strong></p>
-                <p>有什麼不懂得來這裡看就對了</p>
-                <div style="text-align:center;"><asp:Button ID="Button4" class="button" runat="server" Text="前往了解" /></div>
+            <div class="thumbnail" style="border-top: 5px solid #ffd800;padding-left:5px;padding-right:5px">
+                                <br />
+                <br />
+                <asp:Image ID="Image3" runat="server" Style="height: 250px; max-width: 100%" ImageUrl='<%# "data:Image/png;base64," + Convert.ToBase64String((byte[])Eval("ProductImg")) %>' />
+                <p style="text-align:center;"><strong><asp:Label ID="Lbl_Img3" runat="server" ForeColor="#6699FF" Font-Bold="True"></asp:Label></strong></p>
+                <p style="text-align:center;color:#808080">售價：<asp:Label ID="Lbl_Price3" runat="server" ></asp:Label></p>
+                <div style="text-align: center;">
+                    <asp:Button ID="Button4" class="button" runat="server" Text="前往了解" OnClick="Button4_Click" /></div>
             </div>
         </div>
     </div>

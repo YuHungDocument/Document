@@ -54,6 +54,9 @@
                 width: 100%;
             }
         }
+        .auto-style1 {
+            width: 357px;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -61,11 +64,25 @@
         <div class="column1" style="">
         </div>
         <div class="column" style="">
+
             <asp:Image ID="Image1" runat="server" ImageUrl="~/P/金鑰位置.png" Height="143px" Width="219px" />
-            <div>
-                選擇金鑰位址:<br />
-                輸入根目錄<asp:TextBox ID="root" Placeholder="Ex:C" runat="server"></asp:TextBox>
-                <asp:FileUpload ID="FileUpload1" runat="server" /><asp:Button ID="Button1" runat="server" Text="確認" OnClick="Button1_Click" />
+            <br />
+            <table style="font-size:large" class="nav-justified">
+                <tr>
+                    <td class="auto-style1">選擇金鑰位址:</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="auto-style1">&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="auto-style1">輸入根目錄<asp:TextBox ID="root" Placeholder="Ex:C" runat="server"></asp:TextBox></td>
+                    <td><asp:FileUpload ID="FileUpload1" runat="server" /></td>
+                </tr>
+            </table>
+            <div style="font-size:large">
+                <br /><asp:Button ID="Button1" runat="server" Text="確認" OnClick="Button1_Click" />
             </div>
         </div>
         <div class="column2" style="">

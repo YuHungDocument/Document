@@ -44,7 +44,7 @@
         <h3>現有產品類別:</h3>
                  <asp:GridView ID="GridView1" runat="server" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="Tp,TID" DataSourceID="SqlDataSource1" CellPadding="4" ForeColor="Black" GridLines="Horizontal" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px" Width="800px">
              <Columns>
-                <asp:CommandField  ShowEditButton="True" />
+                <asp:CommandField  ShowEditButton="True" ButtonType="Button" />
                  <asp:TemplateField  SortExpression="TN">
                       <HeaderTemplate>
                           

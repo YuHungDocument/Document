@@ -271,7 +271,7 @@
                                 </asp:SqlDataSource>
                                 <br />
                                 <p></p>
-                                <asp:GridView ID="GridView4" runat="server" AutoGenerateColumns="False" BorderStyle="None" BorderWidth="1px" CellPadding="5" CellSpacing="1" GridLines="None" HorizontalAlign="Center" OnSelectedIndexChanged="GridView4_SelectedIndexChanged" Style="line-height: 22px; width: 50%;">
+                                <asp:GridView ID="GridView4" runat="server" AutoGenerateColumns="False" BorderStyle="None" BorderWidth="1px" CellPadding="5" CellSpacing="1" GridLines="None" HorizontalAlign="Center" OnSelectedIndexChanged="GridView4_SelectedIndexChanged" Style="line-height: 22px; width: 100%;">
                                     <Columns>
                                         <asp:TemplateField>
                                             <HeaderTemplate>
@@ -312,18 +312,13 @@
                             &nbsp;<asp:Button ID="Btn_editgroup" runat="server" OnClick="Btn_editgroup_Click" Text="修改此群組" />
                             <br />
                             <br />
-                            <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
-                                <ContentTemplate>
-                                    <button type="button" id="Btn" runat="server" data-toggle="modal" data-target="#myModal">選擇群組</button>
-                                    <asp:Label ID="Lbl_GpName" runat="server" Text="Label" Visible="False"></asp:Label>
-                                </ContentTemplate>
-                            </asp:UpdatePanel>
-
-                            <br />
-                            
-                            <br />
                             <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                                 <ContentTemplate>
+                                    <br />
+                                    <button type="button" id="Btn" runat="server" data-toggle="modal" data-target="#myModal">選擇群組</button>
+                                    <asp:Label ID="Lbl_GpName" runat="server" Text="Label" Visible="False"></asp:Label>
+                                    <br />
+                                    <br />
                                     <asp:CheckBox ID="ChB_Check" runat="server" Text="簽核時是否重新檢查金鑰" />
                                     <br />
                                     <asp:GridView ID="GridView5" class="table" runat="server" AutoGenerateColumns="False" GridLines="Horizontal">
@@ -374,7 +369,7 @@
                                         <HeaderStyle HorizontalAlign="Center" />
                                     </asp:GridView>
 
-                                    <asp:GridView ID="GridView2" class="table" runat="server" AutoGenerateColumns="False" GridLines="Horizontal">
+                                    <asp:GridView ID="GridView2" class="table" runat="server" AutoGenerateColumns="False" GridLines="Horizontal" DataKeyNames="ID" OnRowCommand="GridView2_RowCommand" >
                                         <Columns>
                                             <asp:TemplateField HeaderText="排列" ShowHeader="False" Visible="False">
                                                 <ItemTemplate>
@@ -428,18 +423,23 @@
                                                     <asp:CheckBox ID="Cb_comment" runat="server" AutoPostBack="true" OnCheckedChanged="Cb_comment_CheckedChanged" />
                                                 </ItemTemplate>
                                             </asp:TemplateField>
+                                            <asp:TemplateField>
+                                                <ItemTemplate>
+                                                    <asp:LinkButton ID="Lbl_Delete" CommandName="DelData" OnClientClick="javascript:return confirm('確定刪除?')"  runat="server">刪除</asp:LinkButton>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
                                         </Columns>
                                         <HeaderStyle HorizontalAlign="Center" />
                                     </asp:GridView>
+                                    <asp:Button ID="Btn_Save" runat="server" OnClick="Btn_Save_Click" Text="送出" />
                                     &nbsp;&nbsp;&nbsp;
+                                    <asp:Button ID="Btn_Draft" runat="server" OnClick="Btn_Draft_Click" Text="儲存至草稿" />
+                                    <asp:Label ID="Lbl_Eorr" runat="server" ForeColor="Red" Text="資料輸入不完整" Visible="False"></asp:Label>
                                 </ContentTemplate>
                             </asp:UpdatePanel>
                             <asp:UpdatePanel ID="UpdatePanel3" runat="server" UpdateMode="Conditional">
                                 <ContentTemplate>
-                                    <asp:Button ID="Btn_Save" runat="server" OnClick="Btn_Save_Click" Text="送出" />
                                     &nbsp;&nbsp;
-                                    <asp:Button ID="Btn_Draft" runat="server" OnClick="Btn_Draft_Click" Text="儲存至草稿" />
-                                    <asp:Label ID="Lbl_Eorr" runat="server" ForeColor="Red" Text="資料輸入不完整" Visible="False"></asp:Label>
                                 </ContentTemplate>
 
                             </asp:UpdatePanel>

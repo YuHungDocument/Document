@@ -61,7 +61,9 @@
                                 <div style="text-align: center; background-color: #e9e9e9">標題</div>
                             </HeaderTemplate>
                             <ItemTemplate>
+                                 <div style="text-align: center">
                                 <asp:LinkButton ForeColor="Black" runat="server" CommandName="SelData" Text='<%#Eval("NTitle")%>'></asp:LinkButton>
+                                     </div>
                             </ItemTemplate>
                         </asp:TemplateField>
 

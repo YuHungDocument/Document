@@ -145,7 +145,7 @@ namespace WebApplication1 {
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Txt_Text;
+        protected global::CKEditor.NET.CKEditorControl Txt_Text;
         
         /// <summary>
         /// txt_Proposition 控制項。
@@ -254,6 +254,15 @@ namespace WebApplication1 {
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Lbl_GpName;
+        
+        /// <summary>
+        /// GridView5 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridView5;
         
         /// <summary>
         /// GridView2 控制項。

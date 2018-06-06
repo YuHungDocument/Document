@@ -23,7 +23,7 @@ namespace WebApplication1
                 else
                 {
                    
-                    ((Label)this.Master.FindControl("Lb_Title")).Text = "修改個資";
+                    ((Label)this.Master.FindControl("Lb_Title")).Text = "個人資料設定";
                 }
                
             }

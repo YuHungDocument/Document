@@ -1,5 +1,26 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/GuildPage.Master" AutoEventWireup="true" CodeBehind="editbullitin.aspx.cs" Inherits="WebApplication1.editbullitin" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+      <style>
+        table tr {
+            border-color: #d7d7d7
+        }
+
+
+
+            table tr td {
+                height: 50px;
+                line-height: 50px;
+            }
+
+            table tr td a {
+
+                display: block;
+            }
+
+            table tr:hover {
+                background-color: #E1FFE1;
+            }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
       <div class="auto-style4">
@@ -8,35 +29,34 @@
 
                     <h3>公告設定<asp:Label ID="Lbl_EID" runat="server" Visible="False"></asp:Label>
                         </h3>
-                        <asp:GridView ID="GridView1" Style="border: 2px #ccc solid; border-radius: 10px;" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1"
-                            GridLines="None" Width="100%" DataKeyNames="BID">
-                            <Columns>
-                                <asp:BoundField DataField="BID" HeaderText="BID" ReadOnly="True" SortExpression="BID" InsertVisible="False" />
-                                <asp:TemplateField HeaderText="BTitle" SortExpression="BTitle">
-                                    <EditItemTemplate>
-                                        <asp:TextBox ID="TextBox1" runat="server" Text='<%# Bind("BTitle") %>'></asp:TextBox>
-                                    </EditItemTemplate>
-                                    <ItemTemplate>
-                                         <asp:LinkButton  Text='<%# Bind("BTitle") %>' ID="LinkButton1" runat="server" CommandName="SelData" CausesValidation="False"></asp:LinkButton>
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:BoundField DataField="Department" HeaderText="Department" SortExpression="Department" />
-                                <asp:BoundField DataField="Date" HeaderText="Date" SortExpression="Date" />
-                                <asp:BoundField DataField="EID" HeaderText="EID" SortExpression="EID" />
-                            </Columns>
-                            <EmptyDataRowStyle BorderStyle="None" Font-Size="Large" />
-                <HeaderStyle BackColor="#F2F2F2" Font-Size="Large" />
-                <RowStyle Font-Size="Large" />
-                        </asp:GridView>
-                        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString %>" SelectCommand="SELECT [BID], [BTitle], [Department], [Date], [EID] FROM [Bulletin] WHERE (([EID] = @EID) AND ([EID] = @EID2))">
-                            <SelectParameters>
-                                <asp:ControlParameter ControlID="Lbl_EID" Name="EID" PropertyName="Text" Type="String" />
-                                <asp:ControlParameter ControlID="Lbl_EID" Name="EID2" PropertyName="Text" Type="String" />
-                            </SelectParameters>
-                        </asp:SqlDataSource>
+    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" GridLines="Horizontal" ShowHeader="false" Width="100%" OnRowDataBound="GridView1_RowDataBound" OnRowCommand="GridView1_RowCommand" DataKeyNames="BID" BackColor="White" BorderStyle="None" BorderColor="#CCCCCC">
+        <Columns>
+            <asp:BoundField DataField="Date" DataFormatString="{0:yyyy-MM-dd}" ItemStyle-Width="120px">
+                <ItemStyle ForeColor="Orange" />
+            </asp:BoundField>
+            <asp:BoundField DataField="BTitle" HeaderText="標題">
+                <ItemStyle ForeColor="Black" />
+            </asp:BoundField>
+            <asp:TemplateField HeaderText="編輯">
+                <ItemTemplate>
+                    <asp:LinkButton ID="Lb_Edit" runat="server" CommandName="SelData">編輯</asp:LinkButton>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="刪除">
+                <ItemTemplate>
+                    <asp:LinkButton ID="Lb_Del" runat="server" onclientclick="return confirm('確定要刪除嗎？')" CommandName="DelData">刪除</asp:LinkButton>
+                </ItemTemplate>
+            </asp:TemplateField>
+        </Columns>
+        <FooterStyle BorderStyle="None" />
+        <HeaderStyle BorderStyle="None" />
+        <RowStyle BorderStyle="None" Font-Size="Large" />
+    </asp:GridView>
                         <br />
                         <asp:Button ID="Button1" class="btn btn-warning" runat="server" Text="新增公告" OnClick="Button1_Click" />
-                </div>
+                         &nbsp;&nbsp;&nbsp;<asp:Button ID="Button2" runat="server" Text="返回後臺" class="btn btn-warning" OnClick="Button2_Click" />
+                         
+
                                             </div>
                 </div>
 </asp:Content>

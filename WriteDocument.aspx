@@ -329,12 +329,11 @@
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:BoundField DataField="SID" HeaderText="序列" Visible="false" />
-
-                                            <asp:TemplateField HeaderText="層級">
+<%--                                            <asp:TemplateField HeaderText="層級">
                                                 <ItemTemplate>
                                                     <asp:TextBox DataField="Lvl" ID="Txt_Lvl" runat="server" OnTextChanged="Txt_Lvl_TextChanged" TextMode="Number" Width="50px" AutoPostBack="True"></asp:TextBox>
                                                 </ItemTemplate>
-                                            </asp:TemplateField>
+                                            </asp:TemplateField>--%>
                                             <asp:TemplateField HeaderText="發布人編號">
                                                 <ItemTemplate>
                                                     <asp:Label ID="Lbl_EID" Text='<%# Bind("EID") %>' runat="server"></asp:Label>
@@ -350,21 +349,11 @@
                                                     <asp:Label ID="Lbl_Name" Text='<%# Bind("Name") %>' runat="server"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="需簽章">
+<%--                                            <asp:TemplateField HeaderText="需簽章">
                                                 <ItemTemplate>
                                                     <asp:CheckBox ID="Cb_sign" runat="server" OnCheckedChanged="Cb_sign_CheckedChanged1" AutoPostBack="True" />
                                                 </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="可察看進度">
-                                                <ItemTemplate>
-                                                    <asp:CheckBox ID="Cb_path" runat="server" OnCheckedChanged="Cb_path_CheckedChanged1" AutoPostBack="True" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="是否評論">
-                                                <ItemTemplate>
-                                                    <asp:CheckBox ID="Cb_comment" runat="server" AutoPostBack="true" OnCheckedChanged="Cb_comment_CheckedChanged1" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
+                                            </asp:TemplateField>--%>
                                         </Columns>
                                         <HeaderStyle HorizontalAlign="Center" />
                                     </asp:GridView>

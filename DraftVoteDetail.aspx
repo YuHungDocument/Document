@@ -1,12 +1,11 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/GuildPage.Master" AutoEventWireup="true" CodeBehind="WriteVote.aspx.cs" Inherits="WebApplication1.WriteVote" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/GuildPage.Master" AutoEventWireup="true" CodeBehind="DraftVoteDetail.aspx.cs" Inherits="WebApplication1.DraftVoteDetail" %>
 
 <%@ Register Assembly="CKEditor.NET" Namespace="CKEditor.NET" TagPrefix="CKEditor" %>
 
 <%@ Register Src="~/ucGridViewChoiceAll.ascx" TagPrefix="uc1" TagName="ucGridViewChoiceAll" %>
 
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <script src="My97DatePicker/WdatePicker.js"></script>
+        <script src="My97DatePicker/WdatePicker.js"></script>
     <script type="text/javascript">
         function SelectAllCheckboxes(spanChk) {
             elm = document.forms[0];
@@ -54,7 +53,7 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
     <asp:Label ID="Lbl_EID" runat="server" Text="Label" Visible="False"></asp:Label>
 
     <div class="modal fade" id="FileModal" role="dialog" style="top: 18%;">
@@ -321,11 +320,12 @@
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:BoundField DataField="SID" HeaderText="序列" Visible="false" />
-<%--                                                <asp:TemplateField HeaderText="層級">
+
+                                                <asp:TemplateField HeaderText="層級">
                                                     <ItemTemplate>
                                                         <asp:TextBox DataField="Lvl" ID="Txt_Lvl" runat="server" OnTextChanged="Txt_Lvl_TextChanged" TextMode="Number" Width="50px" AutoPostBack="True"></asp:TextBox>
                                                     </ItemTemplate>
-                                                </asp:TemplateField>--%>
+                                                </asp:TemplateField>
                                                 <asp:TemplateField HeaderText="發布人編號">
                                                     <ItemTemplate>
                                                         <asp:Label ID="Lbl_EID" Text='<%# Bind("EID") %>' runat="server"></asp:Label>
@@ -341,12 +341,12 @@
                                                         <asp:Label ID="Lbl_Name" Text='<%# Bind("Name") %>' runat="server"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-<%--                                                <asp:TemplateField HeaderText="需簽章">
+                                                <asp:TemplateField HeaderText="需簽章">
                                                     <ItemTemplate>
                                                         <asp:CheckBox ID="Cb_sign" runat="server" OnCheckedChanged="Cb_sign_CheckedChanged" AutoPostBack="True" />
                                                     </ItemTemplate>
-                                                </asp:TemplateField>--%>
-<%--                                                <asp:TemplateField HeaderText="可察看投票結果">
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="可察看投票結果">
                                                     <ItemTemplate>
                                                         <asp:CheckBox ID="Cb_path" runat="server" OnCheckedChanged="Cb_path_CheckedChanged" AutoPostBack="True" />
                                                     </ItemTemplate>
@@ -355,7 +355,7 @@
                                                     <ItemTemplate>
                                                         <asp:CheckBox ID="Cb_comment" runat="server" AutoPostBack="true" OnCheckedChanged="Cb_comment_CheckedChanged" />
                                                     </ItemTemplate>
-                                                </asp:TemplateField>--%>
+                                                </asp:TemplateField>
                                             </Columns>
                                             <HeaderStyle HorizontalAlign="Center" />
                                         </asp:GridView>
@@ -437,5 +437,4 @@
             </td>
         </tr>
     </table>
-
 </asp:Content>

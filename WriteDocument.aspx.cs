@@ -1273,20 +1273,16 @@ namespace WebApplication1
         #region 送出
         protected void Btn_Save_Click(object sender, EventArgs e)
         {
-            string Lvl5 = ((TextBox)GridView5.Rows[0].FindControl("Txt_Lvl")).Text.Trim();
+
             string EID5 = ((Label)GridView5.Rows[0].FindControl("Lbl_EID")).Text.Trim();
             string Department5 = ((Label)GridView5.Rows[0].FindControl("Lbl_Dep")).Text.Trim();
             string Name5 = ((Label)GridView5.Rows[0].FindControl("Lbl_Name")).Text.Trim();
-            CheckBox Cb_sign5 = ((CheckBox)GridView5.Rows[0].FindControl("Cb_sign"));
-            CheckBox Cb_path5 = ((CheckBox)GridView5.Rows[0].FindControl("Cb_path"));
-            CheckBox Cb_comment5 = ((CheckBox)GridView5.Rows[0].FindControl("Cb_comment"));
             string SID = Lbl_SID.Text;
             if (Ddp_Type.SelectedValue != "--請選擇公文種類--"
                 && Ddl_Speed.SelectedValue != "--請選擇速別--"
                 && !string.IsNullOrWhiteSpace(Txt_Title.Text)
                 && !string.IsNullOrWhiteSpace(Txt_Text.Text)
-                && Lvl5 != ""
-                )
+               )
             {
                 using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
                 {
@@ -1629,20 +1625,14 @@ namespace WebApplication1
 
                         cmd.Connection = cn3;
                         cmd.Parameters.AddWithValue("@SID", SID);
-                        cmd.Parameters.AddWithValue("@Lvl", Lvl5);
+                        cmd.Parameters.AddWithValue("@Lvl", 1);
                         cmd.Parameters.AddWithValue("@EID", EID5);
                         cmd.Parameters.AddWithValue("@Department", Department5);
                         cmd.Parameters.AddWithValue("@RSAkey", txt_PKmessage);
-                        if (Cb_sign5.Checked == true)
-                        {
-                            cmd.Parameters.AddWithValue("@status", "1");
-                            cmd.Parameters.AddWithValue("@sign", 0);
-                        }
-                        else
-                        {
-                            cmd.Parameters.AddWithValue("@status", "0");
-                            cmd.Parameters.AddWithValue("@sign", 1);
-                        }
+                        cmd.Parameters.AddWithValue("@comment", "1");
+                        cmd.Parameters.AddWithValue("@path", "1");
+                        cmd.Parameters.AddWithValue("@status", "0");
+                        cmd.Parameters.AddWithValue("@sign", 1);                        
                         if (ChB_Check.Checked == true)
                         {
                             cmd.Parameters.AddWithValue("@recheckKey", "1");
@@ -1650,31 +1640,10 @@ namespace WebApplication1
                         else
                         {
                             cmd.Parameters.AddWithValue("@recheckKey", "0");
-                        }
-                        if (Cb_comment5.Checked == true)
-                        {
-                            cmd.Parameters.AddWithValue("@comment", "1");
-                        }
-                        else
-                        {
-                            cmd.Parameters.AddWithValue("@comment", "0");
-                        }
-                        if (Cb_path5.Checked == true)
-                        {
-                            cmd.Parameters.AddWithValue("@path", "1");
-                        }
-                        else
-                        {
-                            cmd.Parameters.AddWithValue("@path", "0");
-                        }
-                        if (Lvl5 == "1")
-                        {
-                            cmd.Parameters.AddWithValue("@look", 1);
-                        }
-                        else
-                        {
-                            cmd.Parameters.AddWithValue("@look", 0);
-                        }
+                        }                        
+
+                        cmd.Parameters.AddWithValue("@look", 1);
+                        
 
                         cmd.Parameters.AddWithValue("@isread", 0);
                         using (SqlConnection cnEID = new SqlConnection(tmpdbhelper.DB_CnStr))
@@ -1818,30 +1787,30 @@ namespace WebApplication1
             }
         }
 
-        protected void Cb_path_CheckedChanged1(object sender, EventArgs e)
-        {
-            CheckBox CheckBox = (CheckBox)sender;
-            int gvRowIndex = (CheckBox.NamingContainer as GridViewRow).RowIndex;
-            string ID = ((Label)GridView5.Rows[gvRowIndex].FindControl("Label1")).Text.Trim();
-            CheckBox ckp = ((CheckBox)GridView5.Rows[gvRowIndex].FindControl("Cb_path"));
-            using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
-            {
-                cn2.Open();
-                SqlCommand cmd2 = new SqlCommand("Update Preview set path=@path Where ID=@ID");
+        //protected void Cb_path_CheckedChanged1(object sender, EventArgs e)
+        //{
+        //    CheckBox CheckBox = (CheckBox)sender;
+        //    int gvRowIndex = (CheckBox.NamingContainer as GridViewRow).RowIndex;
+        //    string ID = ((Label)GridView5.Rows[gvRowIndex].FindControl("Label1")).Text.Trim();
+        //    CheckBox ckp = ((CheckBox)GridView5.Rows[gvRowIndex].FindControl("Cb_path"));
+        //    using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
+        //    {
+        //        cn2.Open();
+        //        SqlCommand cmd2 = new SqlCommand("Update Preview set path=@path Where ID=@ID");
 
-                if (ckp.Checked == true)
-                {
-                    cmd2.Parameters.AddWithValue("@path", "1");
-                }
-                else
-                {
-                    cmd2.Parameters.AddWithValue("@path", "0");
-                }
-                cmd2.Parameters.AddWithValue("@ID", ID);
-                cmd2.Connection = cn2;
-                cmd2.ExecuteNonQuery();
-            }
-        }
+        //        if (ckp.Checked == true)
+        //        {
+        //            cmd2.Parameters.AddWithValue("@path", "1");
+        //        }
+        //        else
+        //        {
+        //            cmd2.Parameters.AddWithValue("@path", "0");
+        //        }
+        //        cmd2.Parameters.AddWithValue("@ID", ID);
+        //        cmd2.Connection = cn2;
+        //        cmd2.ExecuteNonQuery();
+        //    }
+        //}
         #endregion
 
         #region 勾選comment時發生變化
@@ -1869,29 +1838,29 @@ namespace WebApplication1
             }
         }
 
-        protected void Cb_comment_CheckedChanged1(object sender, EventArgs e)
-        {
-            CheckBox CheckBox = (CheckBox)sender;
-            int gvRowIndex = (CheckBox.NamingContainer as GridViewRow).RowIndex;
-            string ID = ((Label)GridView5.Rows[gvRowIndex].FindControl("Label1")).Text.Trim();
-            CheckBox ck = ((CheckBox)GridView5.Rows[gvRowIndex].FindControl("Cb_comment"));
-            using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
-            {
-                cn.Open();
-                SqlCommand cmd2 = new SqlCommand("Update Preview set Comment=@Comment Where ID=@ID");
-                if (ck.Checked == true)
-                {
-                    cmd2.Parameters.AddWithValue("@Comment", "1");
-                }
-                else
-                {
-                    cmd2.Parameters.AddWithValue("@Comment", "0");
-                }
-                cmd2.Parameters.AddWithValue("@ID", ID);
-                cmd2.Connection = cn;
-                cmd2.ExecuteNonQuery();
-            }
-        }
+        //protected void Cb_comment_CheckedChanged1(object sender, EventArgs e)
+        //{
+        //    CheckBox CheckBox = (CheckBox)sender;
+        //    int gvRowIndex = (CheckBox.NamingContainer as GridViewRow).RowIndex;
+        //    string ID = ((Label)GridView5.Rows[gvRowIndex].FindControl("Label1")).Text.Trim();
+        //    CheckBox ck = ((CheckBox)GridView5.Rows[gvRowIndex].FindControl("Cb_comment"));
+        //    using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+        //    {
+        //        cn.Open();
+        //        SqlCommand cmd2 = new SqlCommand("Update Preview set Comment=@Comment Where ID=@ID");
+        //        if (ck.Checked == true)
+        //        {
+        //            cmd2.Parameters.AddWithValue("@Comment", "1");
+        //        }
+        //        else
+        //        {
+        //            cmd2.Parameters.AddWithValue("@Comment", "0");
+        //        }
+        //        cmd2.Parameters.AddWithValue("@ID", ID);
+        //        cmd2.Connection = cn;
+        //        cmd2.ExecuteNonQuery();
+        //    }
+        //}
         #endregion
 
         #region 儲存至草稿

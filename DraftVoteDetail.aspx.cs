@@ -12,9 +12,10 @@ using System.IO;
 using System.Drawing;
 using System.Net.Mail;
 
+
 namespace WebApplication1
 {
-    public partial class WriteVote : System.Web.UI.Page
+    public partial class DraftVoteDetail : System.Web.UI.Page
     {
         #region 一連串宣告
         DbHelper tmpdbhelper = new DbHelper();
@@ -93,7 +94,7 @@ namespace WebApplication1
                         }
                         #endregion
 
-                        
+
 
                         using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
                         {
@@ -566,7 +567,7 @@ namespace WebApplication1
         public void bind2()
         {
 
-            string sqlstr = "select * from Record Where EID='"+Lbl_EID.Text+"'";
+            string sqlstr = "select * from Record Where EID='" + Lbl_EID.Text + "'";
             SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
             SqlDataAdapter myda = new SqlDataAdapter(sqlstr, sqlcon);
             DataSet myds = new DataSet();
@@ -625,7 +626,7 @@ namespace WebApplication1
         #region bind5
         public void bind5()
         {
-            string sqlstr = "select * from Preview Where SID='" + Lbl_SID.Text + "' and EID='"+ Lbl_EID.Text +"'";
+            string sqlstr = "select * from Preview Where SID='" + Lbl_SID.Text + "' and EID='" + Lbl_EID.Text + "'";
 
             SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
             SqlCommand cmd = new SqlCommand(sqlstr, sqlcon);
@@ -836,7 +837,7 @@ namespace WebApplication1
                 cn.Open();
                 SqlCommand cmd3 = new SqlCommand(ttSQL);
                 cmd3.Connection = cn;
-                cmd3.Parameters.AddWithValue("@EID",Lbl_EID.Text);
+                cmd3.Parameters.AddWithValue("@EID", Lbl_EID.Text);
                 using (SqlDataReader dr = cmd3.ExecuteReader())
                 {
                     if (dr.Read())
@@ -888,11 +889,11 @@ namespace WebApplication1
                                     cmd.Parameters.AddWithValue("@Name", Name);
                                     if (Cb_sign.Checked == true)
                                     {
-                                        cmd.Parameters.AddWithValue("@status", "1");                                        
+                                        cmd.Parameters.AddWithValue("@status", "1");
                                     }
                                     else
                                     {
-                                        cmd.Parameters.AddWithValue("@status", "0");                                        
+                                        cmd.Parameters.AddWithValue("@status", "0");
                                     }
                                     if (Cb_path.Checked == true)
                                     {
@@ -1014,7 +1015,7 @@ namespace WebApplication1
                             else
                             {
                                 cmd.Parameters.AddWithValue("@status", "0");
-                                
+
                             }
                             if (Cb_path.Checked == true)
                             {
@@ -1182,7 +1183,7 @@ namespace WebApplication1
         #region 增加投票選項
         protected void LinkButton1_Click(object sender, EventArgs e)
         {
-            Session["max"]= int.Parse(Session["max"].ToString()) + 1;
+            Session["max"] = int.Parse(Session["max"].ToString()) + 1;
             Session["number"] = int.Parse(Session["max"].ToString());
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
@@ -1195,7 +1196,7 @@ namespace WebApplication1
                 SqlCommand votecmd = new SqlCommand("Select * From Vote Where SID='" + Lbl_SID.Text + "'");
                 votecmd.Connection = cn;
 
-                    bind4();
+                bind4();
                 using (SqlDataReader dr = votecmd.ExecuteReader())
                 {
                     int i = 0;
@@ -1307,16 +1308,20 @@ namespace WebApplication1
         #region 送出
         protected void Btn_Save_Click(object sender, EventArgs e)
         {
-            
+
             string SID = Lbl_SID.Text;
+            string Lvl5 = ((TextBox)GridView1.Rows[0].FindControl("Txt_Lvl")).Text.Trim();
             string EID5 = ((Label)GridView1.Rows[0].FindControl("Lbl_EID")).Text.Trim();
             string Department5 = ((Label)GridView1.Rows[0].FindControl("Lbl_Dep")).Text.Trim();
             string Name5 = ((Label)GridView1.Rows[0].FindControl("Lbl_Name")).Text.Trim();
-
+            CheckBox Cb_sign5 = ((CheckBox)GridView1.Rows[0].FindControl("Cb_sign"));
+            CheckBox Cb_path5 = ((CheckBox)GridView1.Rows[0].FindControl("Cb_path"));
+            CheckBox Cb_comment5 = ((CheckBox)GridView1.Rows[0].FindControl("Cb_comment"));
 
             if (!string.IsNullOrWhiteSpace(d1.Value)
-                &&!string.IsNullOrWhiteSpace(Txt_Title.Text)
+                && !string.IsNullOrWhiteSpace(Txt_Title.Text)
                 && !string.IsNullOrWhiteSpace(Txt_Text.Text)
+                && Lvl5 != ""
                 )
             {
                 using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
@@ -1352,9 +1357,9 @@ namespace WebApplication1
 
                     // 建立 RSA 演算法物件的執行個體，並匯入先前建立的私鑰
                     RSACryptoServiceProvider rsaProvider = new RSACryptoServiceProvider();
-                        try
-                        {
-                            StreamReader str = new StreamReader(@"" + KeyAddress + "");
+                    try
+                    {
+                        StreamReader str = new StreamReader(@"" + KeyAddress + "");
                         string ReadAll = str.ReadToEnd();
                         // 建立 RSA 演算法物件的執行個體，並匯入先前建立的私鑰
                         rsaProvider.FromXmlString(ReadAll);
@@ -1369,7 +1374,7 @@ namespace WebApplication1
                         txt_RSAhash_Text = Convert.ToBase64String(signature_Text);
                         txt_RSAhash_Proposition = Convert.ToBase64String(signature_Proposition);
                     }
-                
+
                     catch
                     {
                         Response.Write("<script>alert('此位置找無金鑰，請從新設定!');location.href='KeyAddress.aspx';</script>");
@@ -1416,7 +1421,7 @@ namespace WebApplication1
                         }
                     }
 
-                    for (int i = 0; i < GridView2.Rows.Count-1; i++)
+                    for (int i = 0; i < GridView2.Rows.Count - 1; i++)
                     {
                         string Lvl = ((TextBox)GridView2.Rows[i].FindControl("Txt_Lvl")).Text.Trim();
                         string EID = ((TextBox)GridView2.Rows[i].FindControl("Txt_EID")).Text.Trim();
@@ -1569,7 +1574,7 @@ namespace WebApplication1
                                     }
                                 }
                             }
-                                        //找尋接收者PK並加密KEY
+                            //找尋接收者PK並加密KEY
 
 
                             using (SqlConnection mailcn = new SqlConnection(tmpdbhelper.DB_CnStr))
@@ -1660,14 +1665,20 @@ namespace WebApplication1
 
                     cmd.Connection = cn2;
                     cmd.Parameters.AddWithValue("@SID", SID);
-                    cmd.Parameters.AddWithValue("@Lvl", 1);
+                    cmd.Parameters.AddWithValue("@Lvl", Lvl5);
                     cmd.Parameters.AddWithValue("@EID", EID5);
                     cmd.Parameters.AddWithValue("@Department", Department5);
                     cmd.Parameters.AddWithValue("@RSAkey", txt_PKmessage);
-                    cmd.Parameters.AddWithValue("@comment", "1");
-                    cmd.Parameters.AddWithValue("@path", "1");
-                    cmd.Parameters.AddWithValue("@status", "1");
-                    cmd.Parameters.AddWithValue("@sign", 0);                    
+                    if (Cb_sign5.Checked == true)
+                    {
+                        cmd.Parameters.AddWithValue("@status", "1");
+                        cmd.Parameters.AddWithValue("@sign", 0);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@status", "0");
+                        cmd.Parameters.AddWithValue("@sign", 1);
+                    }
                     if (ChB_Check.Checked == true)
                     {
                         cmd.Parameters.AddWithValue("@recheckKey", "1");
@@ -1676,7 +1687,31 @@ namespace WebApplication1
                     {
                         cmd.Parameters.AddWithValue("@recheckKey", "0");
                     }
-                    cmd.Parameters.AddWithValue("@look", 1);
+                    if (Cb_comment5.Checked == true)
+                    {
+                        cmd.Parameters.AddWithValue("@comment", "1");
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@comment", "0");
+                    }
+                    if (Cb_path5.Checked == true)
+                    {
+                        cmd.Parameters.AddWithValue("@path", "1");
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@path", "0");
+                    }
+                    if (Lvl5 == "1")
+                    {
+                        cmd.Parameters.AddWithValue("@look", 1);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@look", 0);
+                    }
+
                     cmd.Parameters.AddWithValue("@isread", 0);
                     using (SqlConnection cnEID = new SqlConnection(tmpdbhelper.DB_CnStr))
                     {
@@ -1746,19 +1781,19 @@ namespace WebApplication1
             int votecount = 0;
             using (SqlConnection ifcn = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
-                
+
                 ifcn.Open();
                 SqlCommand cmd = new SqlCommand("Select * from Vote Where SID='" + Lbl_SID.Text + "'");
                 cmd.Connection = ifcn;
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
-                    while(dr.Read())
+                    while (dr.Read())
                     {
                         votecount = int.Parse(votecount.ToString()) + 1;
                     }
                 }
             }
-            if(votecount==1)
+            if (votecount == 1)
             {
                 ScriptManager.RegisterClientScriptBlock(UpdatePanel2, this.GetType(), "click", "alert('剩餘最後一個選項，不能刪除')", true);
             }
@@ -1812,7 +1847,7 @@ namespace WebApplication1
                 }
             }
 
-            
+
         }
         #endregion
 
@@ -1825,7 +1860,7 @@ namespace WebApplication1
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
                 cn.Open();
-                SqlCommand cmd = new SqlCommand("Update Vote set Vname=@Vname where SID='"+Lbl_SID.Text+"' and number=@number");
+                SqlCommand cmd = new SqlCommand("Update Vote set Vname=@Vname where SID='" + Lbl_SID.Text + "' and number=@number");
                 cmd.Connection = cn;
                 cmd.Parameters.AddWithValue("@number", number);
                 cmd.Parameters.AddWithValue("@Vname", ((TextBox)GridView5.Rows[gvRowIndex].FindControl("Txt_content")).Text);

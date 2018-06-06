@@ -78,6 +78,8 @@ namespace WebApplication1
                             //cmd2.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
                             //cmd2.ExecuteNonQuery();
                             
+
+
                             cmd.Connection = cn;
                             cmd.Parameters.AddWithValue("@DID", Session["keyId"].ToString());
                             using (SqlDataReader dr = cmd.ExecuteReader())
@@ -114,39 +116,53 @@ namespace WebApplication1
                         using (SqlConnection cn3 = new SqlConnection(tmpdbhelper.DB_CnStr))
                         {
                             cn3.Open();
-                            SqlCommand cmd3 = new SqlCommand("Select * from Preview Where SID='" + Lbl_SID.Text + "'");
-                            cmd3.Connection = cn3;
-                            using (SqlDataReader dr2 = cmd3.ExecuteReader())
+                            SqlCommand cmdcount = new SqlCommand("Select Max(ID) as IDcount From Preview");
+                            cmdcount.Connection = cn3;
+                            using (SqlDataReader dr = cmdcount.ExecuteReader())
                             {
-                                Session["i"] = 0;
-                                while (dr2.Read())
+                                if (dr.Read())
                                 {
-
-                                    ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Txt_Lvl")).Text = dr2["Lvl"].ToString();
-                                    ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Txt_EID")).Text = dr2["EID"].ToString();
-                                    ((Label)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Lbl_Dep")).Text = dr2["Department"].ToString();
-                                    ((Label)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Lbl_Name")).Text = dr2["Name"].ToString();
-                                    if (dr2["status"].ToString() == "1")
+                                    if (dr["IDcount"].ToString() == "")
                                     {
-                                        ((CheckBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Cb_sign")).Checked = true;
+                                        IDcount = 0;
                                     }
                                     else
                                     {
-                                        ((CheckBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Cb_sign")).Checked = false;
+                                        IDcount = int.Parse(dr["IDcount"].ToString());
                                     }
 
-                                    if (dr2["path"].ToString() == "1")
-                                    {
-                                        ((CheckBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Cb_path")).Checked = true;
-                                    }
-                                    else
-                                    {
-                                        ((CheckBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Cb_path")).Checked = false;
-                                    }
-
-                                    Session["i"] = int.Parse(Session["i"].ToString()) + 1;
                                 }
+                                IDcount = int.Parse(IDcount.ToString()) + 1;
                             }
+
+                            SqlCommand cmd2 = new SqlCommand("Insert Into Preview(ID,SID,Department,EID,Name) Values(@ID,@SID,@Department,@EID,@Name)");
+                            cmd2.Connection = cn3;
+                            cmd2.Parameters.AddWithValue("@ID", IDcount);
+                            cmd2.Parameters.AddWithValue("@Department", tmpUserInfo.Department);
+                            cmd2.Parameters.AddWithValue("@EID", tmpUserInfo.EID);
+                            cmd2.Parameters.AddWithValue("@Name", tmpUserInfo.Name);
+                            cmd2.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+                            cmd2.ExecuteNonQuery();
+                            bind4();
+
+                            SqlCommand cmdcount2 = new SqlCommand("Select Max(ID) as IDcount From Preview");
+                            cmdcount2.Connection = cn3;
+                            using (SqlDataReader dr = cmdcount2.ExecuteReader())
+                            {
+                                if (dr.Read())
+                                {
+                                    IDcount = int.Parse(dr["IDcount"].ToString());
+                                }
+                                IDcount = int.Parse(IDcount.ToString()) + 1;
+                            }
+
+                            SqlCommand cmdspace = new SqlCommand("Insert Into Preview(ID,SID,EID) Values(@ID,@SID,@EID)");
+                            cmdspace.Connection = cn3;
+                            cmdspace.Parameters.AddWithValue("@ID", IDcount);
+                            cmdspace.Parameters.AddWithValue("@EID", "");
+                            cmdspace.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+                            cmdspace.ExecuteNonQuery();
+                            bind3();
                         }
                     }
                     #endregion
@@ -540,49 +556,74 @@ namespace WebApplication1
 
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
-                    Session["i"] = 0;
 
                     while (dr.Read())
                     {
                         using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
                         {
-                            cn2.Open();
-                            SqlCommand cmd2 = new SqlCommand("Insert Into Preview(SID,Lvl,Department,Name,EID,status) Values(@SID,@Lvl,@Department,@Name,@EID,@status)");
-                            cmd2.Connection = cn2;
 
+                            cn2.Open();
+                            SqlCommand cmd2 = new SqlCommand("Insert Into Preview(ID,SID,Lvl,Department,Name,EID,status,path,Comment) Values(@ID,@SID,@Lvl,@Department,@Name,@EID,@status,@path,@Comment)");
+                            SqlCommand cmdID = new SqlCommand("Select Max(ID) as IDcount From Preview");
+                            cmdID.Connection = cn2;
+                            using (SqlDataReader drID = cmdID.ExecuteReader())
+                            {
+                                if (drID.Read())
+                                {
+                                    IDGO = int.Parse(drID["IDcount"].ToString());
+                                }
+                                IDGO = int.Parse(IDGO.ToString()) + 1;
+                            }
+                            cmd2.Connection = cn2;
+                            cmd2.Parameters.AddWithValue("@ID", IDGO);
                             cmd2.Parameters.AddWithValue("@SID", Lbl_SID.Text);
                             cmd2.Parameters.AddWithValue("@Lvl", dr["Lvl"].ToString());
                             cmd2.Parameters.AddWithValue("@Department", dr["Department"].ToString());
                             cmd2.Parameters.AddWithValue("@Name", dr["Name"].ToString());
                             cmd2.Parameters.AddWithValue("@EID", dr["EID"].ToString());
                             cmd2.Parameters.AddWithValue("@status", dr["status"].ToString());
+                            cmd2.Parameters.AddWithValue("@path", dr["path"].ToString());
+                            cmd2.Parameters.AddWithValue("@Comment", dr["Comment"].ToString());
                             cmd2.ExecuteNonQuery();
-
                             bind3();
                         }
-                        using (SqlConnection cn3 = new SqlConnection(tmpdbhelper.DB_CnStr))
-                        {
-                            cn3.Open();
-                            SqlCommand cmd3 = new SqlCommand("Select * from Preview Where SID='" + Lbl_SID.Text + "'");
-                            cmd3.Connection = cn3;
-                            using (SqlDataReader dr2 = cmd3.ExecuteReader())
-                            {
-                                Session["i"] = 0;
-                                while (dr2.Read())
-                                {
-
-                                    ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Txt_Lvl")).Text = dr2["Lvl"].ToString();
-                                    ((TextBox)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("EID")).Text = dr2["EID"].ToString();
-                                    ((Label)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Lbl_Dep")).Text = dr2["Department"].ToString();
-                                    ((Label)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Lbl_Name")).Text = dr2["Name"].ToString();
-
-                                    ((DropDownList)GridView2.Rows[int.Parse(Session["i"].ToString())].FindControl("Ddl_status")).Text = dr2["status"].ToString();
-                                    Session["i"] = int.Parse(Session["i"].ToString()) + 1;
-                                }
-                            }
-
-                        }
                     }
+                    using (SqlConnection cn3 = new SqlConnection(tmpdbhelper.DB_CnStr))
+                    {
+                        cn3.Open();
+                        SqlCommand cmd3 = new SqlCommand("Select * from Preview Where SID='" + Lbl_SID.Text + "' and EID!='" + Lbl_EID.Text + "'");
+                        cmd3.Connection = cn3;
+                        using (SqlDataReader dr2 = cmd3.ExecuteReader())
+                        {
+                            int CountPre = 0;
+                            while (dr2.Read())
+                            {
+
+                                ((TextBox)GridView2.Rows[CountPre].FindControl("Txt_Lvl")).Text = dr2["Lvl"].ToString();
+                                ((TextBox)GridView2.Rows[CountPre].FindControl("Txt_EID")).Text = dr2["EID"].ToString();
+                                ((Label)GridView2.Rows[CountPre].FindControl("Lbl_Dep")).Text = dr2["Department"].ToString();
+                                ((Label)GridView2.Rows[CountPre].FindControl("Lbl_Name")).Text = dr2["Name"].ToString();
+                                CheckBox Cb_sign = ((CheckBox)GridView2.Rows[CountPre].FindControl("Cb_sign"));
+                                CheckBox Cb_path = ((CheckBox)GridView2.Rows[CountPre].FindControl("Cb_path"));
+                                CheckBox Cb_comment = ((CheckBox)GridView2.Rows[CountPre].FindControl("Cb_comment"));
+                                if (dr2["status"].ToString() == "1")
+                                {
+                                    Cb_sign.Checked = true;
+                                }
+                                if (dr2["path"].ToString() == "1")
+                                {
+                                    Cb_path.Checked = true;
+                                }
+                                if (dr2["Comment"].ToString() == "1")
+                                {
+                                    Cb_comment.Checked = true;
+                                }
+                                CountPre = int.Parse(CountPre.ToString()) + 1;
+                            }
+                        }
+
+                    }
+
                 }
             }
         }

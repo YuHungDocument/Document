@@ -431,15 +431,15 @@
                                         </Columns>
                                         <HeaderStyle HorizontalAlign="Center" />
                                     </asp:GridView>
+                                    <asp:Button ID="Btn_Save" runat="server" OnClick="Btn_Save_Click" Text="送出" />
                                     &nbsp;&nbsp;&nbsp;
+                                    <asp:Button ID="Btn_Draft" runat="server" OnClick="Btn_Draft_Click" Text="儲存至草稿" />
+                                    <asp:Label ID="Lbl_Eorr" runat="server" ForeColor="Red" Text="資料輸入不完整" Visible="False"></asp:Label>
                                 </ContentTemplate>
                             </asp:UpdatePanel>
                             <asp:UpdatePanel ID="UpdatePanel3" runat="server" UpdateMode="Conditional">
                                 <ContentTemplate>
-                                    <asp:Button ID="Btn_Save" runat="server" OnClick="Btn_Save_Click" Text="送出" />
                                     &nbsp;&nbsp;
-                                    <asp:Button ID="Btn_Draft" runat="server" OnClick="Btn_Draft_Click" Text="儲存至草稿" />
-                                    <asp:Label ID="Lbl_Eorr" runat="server" ForeColor="Red" Text="資料輸入不完整" Visible="False"></asp:Label>
                                 </ContentTemplate>
 
                             </asp:UpdatePanel>

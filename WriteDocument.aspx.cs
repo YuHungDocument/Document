@@ -634,11 +634,11 @@ namespace WebApplication1
             SqlDataAdapter myda = new SqlDataAdapter(sqlstr, sqlcon);
             DataSet myds = new DataSet();
             sqlcon.Open();
+            SqlCommand cmd = new SqlCommand(sqlstr, sqlcon);
             myda.Fill(myds, "Record");
 
 
-            GridView4.DataSource = myds;
-            GridView4.DataKeyNames = new string[] { "GID" };//主键
+            GridView4.DataSource = myds;            
             GridView4.DataBind();
             sqlcon.Close();
             
@@ -1418,7 +1418,7 @@ namespace WebApplication1
                                                     // 建立 RSA 演算法物件的執行個體，並匯入先前建立的公鑰
                                                     if(PK=="")
                                                     {
-                                                        ScriptManager.RegisterClientScriptBlock(UpdatePanel3, this.GetType(), "click", "alert('" + dr["Name"].ToString() + "為非法帳號!')", true);                                                        
+                                                        ScriptManager.RegisterClientScriptBlock(UpdatePanel1, this.GetType(), "click", "alert('" + dr["Name"].ToString() + "為非法帳號!')", true);                                                        
                                                         return;
                                                     }
                                                     RSACryptoServiceProvider rsaProviderReceiver = new RSACryptoServiceProvider();
@@ -1959,10 +1959,10 @@ namespace WebApplication1
                         cmd.Parameters.AddWithValue("@GID", GID);
                         cmd.ExecuteNonQuery();
 
-                    bind2();
+                    
 
                 }
-                
+                bind2();
 
                 cn2.Close();
             }
@@ -1984,7 +1984,8 @@ namespace WebApplication1
                 insertcmd.Parameters.AddWithValue("@Type", Ddp_Type.SelectedValue);
                 insertcmd.Parameters.AddWithValue("@YOS", Ddp_YOS.SelectedValue);
                 insertcmd.ExecuteNonQuery();
-                ScriptManager.RegisterClientScriptBlock(UpdatePanel3, this.GetType(), "click", "alert('成功儲存至草稿')", true);
+                
+                ScriptManager.RegisterClientScriptBlock(UpdatePanel1, this.GetType(), "click", "alert('成功儲存至草稿')", true);
             }
         }
         #endregion

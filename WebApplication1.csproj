@@ -532,6 +532,7 @@
     <Content Include="Draft.aspx" />
     <Content Include="DraftDetail.aspx" />
     <Content Include="editbullitin.aspx" />
+    <Content Include="editbullitinDetail.aspx" />
     <Content Include="Edit_U.aspx" />
     <Content Include="EmailTest.aspx" />
     <Content Include="EndDocument.aspx" />
@@ -580,6 +581,8 @@
     <Content Include="P\Iconsmind-Outline-Add-User.png" />
     <Content Include="P\rsa-red-logo.png" />
     <Content Include="P\個人資料.png" />
+    <Content Include="P\綠.jpg" />
+    <Content Include="P\藍.jpg" />
     <Content Include="P\金鑰位置.png" />
     <Content Include="P\鑰匙.png" />
     <Content Include="Register.aspx" />
@@ -928,6 +931,7 @@
     <Content Include="SetBT.aspx" />
     <Content Include="SetCompanyIntroduction.aspx" />
     <Content Include="SetConnect.aspx" />
+    <Content Include="Setgroup.aspx" />
     <Content Include="setInfo.aspx" />
     <Content Include="SetNT.aspx" />
     <Content Include="ucGridViewChoiceAll.ascx" />
@@ -1168,6 +1172,13 @@
     </Compile>
     <Compile Include="editbullitin.aspx.designer.cs">
       <DependentUpon>editbullitin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="editbullitinDetail.aspx.cs">
+      <DependentUpon>editbullitinDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="editbullitinDetail.aspx.designer.cs">
+      <DependentUpon>editbullitinDetail.aspx</DependentUpon>
     </Compile>
     <Compile Include="Edit_U.aspx.cs">
       <DependentUpon>Edit_U.aspx</DependentUpon>
@@ -1438,6 +1449,13 @@
     </Compile>
     <Compile Include="SetConnect.aspx.designer.cs">
       <DependentUpon>SetConnect.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Setgroup.aspx.cs">
+      <DependentUpon>Setgroup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Setgroup.aspx.designer.cs">
+      <DependentUpon>Setgroup.aspx</DependentUpon>
     </Compile>
     <Compile Include="setInfo.aspx.cs">
       <DependentUpon>setInfo.aspx</DependentUpon>

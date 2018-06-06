@@ -36,11 +36,7 @@
             <div class="container">
                 <div style="text-align: right">
                     <asp:DropDownList ID="Ddl_Type" class="form-control" Height="50px" runat="server" AutoPostBack="True" OnSelectedIndexChanged="Ddl_Type_SelectedIndexChanged" Font-Size="X-Large">
-                        <asp:ListItem>全部類別</asp:ListItem>
-                        <asp:ListItem>新聞發布</asp:ListItem>
-                        <asp:ListItem>系統公告</asp:ListItem>
-                        <asp:ListItem>更新消息</asp:ListItem>
-                        <asp:ListItem>其他訊息</asp:ListItem>
+
                     </asp:DropDownList>
                 </div>
                 <p></p>

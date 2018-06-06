@@ -41,7 +41,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     
-     <div class="col-sm-8">
+     <div class="col-sm-6">
             <div style="text-align: right">
                     <asp:DropDownList ID="Ddl_Type" class="form-control" Height="50px" runat="server" AutoPostBack="True" OnSelectedIndexChanged="Ddl_Type_SelectedIndexChanged" Font-Size="X-Large" DataSourceID="SqlDataSource1" DataTextField="TN" DataValueField="TN">
                     </asp:DropDownList>
@@ -104,7 +104,35 @@
                 </asp:GridView>
             <br />
         </div>
-    <div class="col-sm-4"></div>
+    <div class="col-sm-6">
+        <div class="container-fluid">
+        
+            <ul class="list-group" style="list-style: none;">
+                <li class="list-group-item list-group-item-info" style="font-size:20px">待處理項目</li>
+                <li><a href="WaitDocument.aspx"><i class="glyphicon glyphicon-play" style="color: #C0C0C0"></i>待處理公文 <span class="badge" style="background-color: #C0C0C0;">
+                    <asp:Label ID="Lbl_Doc" runat="server" Text="0"></asp:Label></span><span class="label label-danger"><asp:Label ID="Lbl_DocNew" runat="server" Text="New" Visible="False"></asp:Label></span></a></li>
+                <li><a href="WaitVote.aspx"><i class="glyphicon glyphicon-play" style="color: #C0C0C0"></i>待處理投票 <span class="badge" style="background-color: #C0C0C0">
+                    <asp:Label ID="Lbl_Vote" runat="server" Text="0"></asp:Label></span><span class="label label-danger"><asp:Label ID="Lbl_VoteNew" runat="server" Text="New" Visible="False"></asp:Label></span></a></li>
+            </ul>        
+        
+            <ul class="list-group" style="list-style: none;">
+                <li class="list-group-item list-group-item-success"style="font-size:20px">主辦項目</li>
+                <li><a href="HostDocument.aspx"><i class="glyphicon glyphicon-play" style="color: #C0C0C0"></i>主辦公文 <span class="badge" style="background-color: #C0C0C0;">
+                    <asp:Label ID="Lbl_HDoc" runat="server" Text="0"></asp:Label></span><span class="label label-danger"><asp:Label ID="Lbl_HDocNew" runat="server" Text="New" Visible="False"></asp:Label></span></a></li>
+                <li><a href="HostVote.aspx"><i class="glyphicon glyphicon-play" style="color: #C0C0C0"></i>主辦投票 <span class="badge" style="background-color: #C0C0C0;">
+                    <asp:Label ID="Lbl_Hvote" runat="server" Text="0"></asp:Label></span><span class="label label-danger"><asp:Label ID="Lbl_HVoteNew" runat="server" Text="New" Visible="False"></asp:Label></span></a></li>
+            </ul>       
+        
+            <ul class="list-group" style="list-style: none;">
+                <li class="list-group-item list-group-item-success"style="font-size:20px">已結案項目</li>
+                <li><a href="EndDocument.aspx"><i class="glyphicon glyphicon-play" style="color: #C0C0C0"></i>已結案公文 <span class="badge" style="background-color: #C0C0C0;">
+                    <asp:Label ID="Lbl_EndDoc" runat="server" Text="0"></asp:Label></span><span class="label label-danger"><asp:Label ID="Label2" runat="server" Text="New" Visible="False"></asp:Label></span></a></li>
+                <li><a href="EndVote.aspx"><i class="glyphicon glyphicon-play" style="color: #C0C0C0"></i>已結束投票 <span class="badge" style="background-color: #C0C0C0;">
+                    <asp:Label ID="Lbl_EndVote" runat="server" Text="0"></asp:Label></span><span class="label label-danger"><asp:Label ID="Label4" runat="server" Text="New" Visible="False"></asp:Label></span></a></li>
+            </ul>
+        
+    </div>
+    </div>
 <%--    <div class="container-fluid">
         <div class="list">
            
@@ -136,36 +164,7 @@
         </div>
     </div>--%>
     <br />
-    <div class="container-fluid">
-        <div class="col-sm-3">
-            <ul class="list-group" style="list-style: none;">
-                <li class="list-group-item list-group-item-info" style="font-size:20px">待處理項目</li>
-                <li><a href="WaitDocument.aspx"><i class="glyphicon glyphicon-play" style="color: #C0C0C0"></i>待處理公文 <span class="badge" style="background-color: #C0C0C0;">
-                    <asp:Label ID="Lbl_Doc" runat="server" Text="0"></asp:Label></span><span class="label label-danger"><asp:Label ID="Lbl_DocNew" runat="server" Text="New" Visible="False"></asp:Label></span></a></li>
-                <li><a href="WaitVote.aspx"><i class="glyphicon glyphicon-play" style="color: #C0C0C0"></i>待處理投票 <span class="badge" style="background-color: #C0C0C0">
-                    <asp:Label ID="Lbl_Vote" runat="server" Text="0"></asp:Label></span><span class="label label-danger"><asp:Label ID="Lbl_VoteNew" runat="server" Text="New" Visible="False"></asp:Label></span></a></li>
-            </ul>
-
-        </div>
-        <div class="col-sm-3">
-            <ul class="list-group" style="list-style: none;">
-                <li class="list-group-item list-group-item-success"style="font-size:20px">主辦項目</li>
-                <li><a href="HostDocument.aspx"><i class="glyphicon glyphicon-play" style="color: #C0C0C0"></i>主辦公文 <span class="badge" style="background-color: #C0C0C0;">
-                    <asp:Label ID="Lbl_HDoc" runat="server" Text="0"></asp:Label></span><span class="label label-danger"><asp:Label ID="Lbl_HDocNew" runat="server" Text="New" Visible="False"></asp:Label></span></a></li>
-                <li><a href="HostVote.aspx"><i class="glyphicon glyphicon-play" style="color: #C0C0C0"></i>主辦投票 <span class="badge" style="background-color: #C0C0C0;">
-                    <asp:Label ID="Lbl_Hvote" runat="server" Text="0"></asp:Label></span><span class="label label-danger"><asp:Label ID="Lbl_HVoteNew" runat="server" Text="New" Visible="False"></asp:Label></span></a></li>
-            </ul>
-        </div>
-        <div class="col-sm-3">
-            <ul class="list-group" style="list-style: none;">
-                <li class="list-group-item list-group-item-success"style="font-size:20px">已結案項目</li>
-                <li><a href="EndDocument.aspx"><i class="glyphicon glyphicon-play" style="color: #C0C0C0"></i>已結案公文 <span class="badge" style="background-color: #C0C0C0;">
-                    <asp:Label ID="Lbl_EndDoc" runat="server" Text="0"></asp:Label></span><span class="label label-danger"><asp:Label ID="Label2" runat="server" Text="New" Visible="False"></asp:Label></span></a></li>
-                <li><a href="EndVote.aspx"><i class="glyphicon glyphicon-play" style="color: #C0C0C0"></i>已結束投票 <span class="badge" style="background-color: #C0C0C0;">
-                    <asp:Label ID="Lbl_EndVote" runat="server" Text="0"></asp:Label></span><span class="label label-danger"><asp:Label ID="Label4" runat="server" Text="New" Visible="False"></asp:Label></span></a></li>
-            </ul>
-        </div>
-    </div>
+    
 <%--    <div class="container-fluid">
         <div class="list">
             <div class="col-sm-3" style="padding-top: 5px; text-align: center;">

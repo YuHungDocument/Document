@@ -16,7 +16,21 @@ namespace WebApplication1
         {
             if (!Page.IsPostBack)
             {
-                bind();
+                Ddl_Type.Items.Add("全部類別");
+                using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+                {
+                    cn.Open();
+                    SqlCommand cmd = new SqlCommand("Select * from TypeGroup Where Tp='NT' and TID!='0'");
+                    cmd.Connection = cn;
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while(dr.Read())
+                        {
+                            Ddl_Type.Items.Add(dr["TN"].ToString());
+                        }
+                    }
+                }
+                    bind();
                 
             }
             

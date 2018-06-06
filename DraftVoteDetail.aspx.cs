@@ -94,11 +94,25 @@ namespace WebApplication1
                         }
                         #endregion
 
-
+                        SqlCommand cmdfrist = new SqlCommand(@"Select * From Draft Where DID=@DID");
 
                         using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
                         {
                             cn.Open();
+
+                            cmdfrist.Connection = cn;
+                            cmdfrist.Parameters.AddWithValue("@DID", Session["keyId"].ToString());
+                            using (SqlDataReader dr = cmdfrist.ExecuteReader())
+                            {
+                                if (dr.Read())
+                                {
+                                    Lbl_SID.Text = DateTime.Now.ToString("yyyyMMddhhmmss"); ;
+                                    Txt_Title.Text = dr["Title"].ToString();
+                                    Txt_Text.Text = dr["Text"].ToString();
+
+                                }
+
+                            }
                             SqlCommand cmdcount = new SqlCommand("Select Max(ID) as IDcount From Preview");
                             cmdcount.Connection = cn;
                             using (SqlDataReader dr = cmdcount.ExecuteReader())

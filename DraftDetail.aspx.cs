@@ -70,6 +70,7 @@ namespace WebApplication1
                         else
                             Date += DateTime.Today.Day.ToString();
                         Lbl_Date.Text = Date;
+                        Lbl_Sender.Text = tmpUserInfo.Name;
                         SqlCommand cmd = new SqlCommand(@"Select * From Draft Where DID=@DID");
 
                         using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
@@ -94,21 +95,7 @@ namespace WebApplication1
                                     Txt_Title.Text = dr["Title"].ToString();
                                     Txt_Text.Text = dr["Text"].ToString();
                                     txt_Proposition.Text = dr["Proposition"].ToString();
-                                    using (SqlConnection secn = new SqlConnection(tmpdbhelper.DB_CnStr))
-                                    {
-                                        secn.Open();
-                                        SqlCommand secmd = new SqlCommand("Select Name From UserInfo Where EID=@EID");
-                                        secmd.Connection = secn;
-                                        secmd.Parameters.AddWithValue("@EID", dr["Sender"].ToString());
-                                        using (SqlDataReader sedr = secmd.ExecuteReader())
-                                        {
-                                            if(sedr.Read())
-                                            {
-                                                Lbl_Sender.Text = sedr["Name"].ToString();
-                                            }
-                                            
-                                        }
-                                    }
+                                    
                                 }
 
                             }

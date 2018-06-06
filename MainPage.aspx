@@ -17,7 +17,7 @@
             display: block;
             text-decoration: none;
             padding: 16px;
-            font-size: 14px;
+            font-size: 20px;
             
         }
 
@@ -34,11 +34,14 @@
             color: white;
             background-color: #eea26b;
         }
+        table{
+            border-bottom:solid 1px #b7b2b2
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-     <div class="col-md-6 col-sm-12">
-            <h3>Bullitin|布告欄</h3>
+    
+     <div class="col-sm-8">
             <div style="text-align: right">
                     <asp:DropDownList ID="Ddl_Type" class="form-control" Height="50px" runat="server" AutoPostBack="True" OnSelectedIndexChanged="Ddl_Type_SelectedIndexChanged" Font-Size="X-Large" DataSourceID="SqlDataSource1" DataTextField="TN" DataValueField="TN">
                     </asp:DropDownList>
@@ -49,11 +52,11 @@
                             </asp:SqlDataSource>
                 </div>
                 <p></p>
-                <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" BorderStyle="None" DataKeyNames="BID" Width="100%" Font-Size="X-Large" GridLines="Horizontal" BackColor="White" AllowPaging="True" PageSize="5" OnDataBound="GridView1_DataBound" OnPreRender="GridView1_PreRender" OnRowCommand="GridView1_RowCommand">
+                <asp:GridView ID="GridView1" CssClass="table" runat="server" AutoGenerateColumns="False" BorderStyle="None" DataKeyNames="BID" Width="100%" Font-Size="X-Large" GridLines="Horizontal" BackColor="WhiteSmoke" AllowPaging="True" PageSize="5" OnDataBound="GridView1_DataBound" OnPreRender="GridView1_PreRender" OnRowCommand="GridView1_RowCommand">
                     <Columns>
                         <asp:TemplateField>
                             <HeaderTemplate>
-                                <div style="text-align: center; background-color: #e9e9e9">公告部門</div>
+                                <div style="text-align: center; background-color: #eea26b;display:block">公告部門</div>
                             </HeaderTemplate>
                             <ItemTemplate>
                                 <div style="text-align: center">
@@ -63,10 +66,10 @@
                         </asp:TemplateField>
                         <asp:TemplateField>
                             <HeaderTemplate>
-                                <div style="text-align: center; background-color: #e9e9e9">標題</div>
+                                <div style="text-align: left; background-color: #eea26b;display:block">標題</div>
                             </HeaderTemplate>
                             <ItemTemplate>
-                                <div style="text-align: center">
+                                <div style="text-align: left">
                                 <asp:LinkButton ForeColor="Black" runat="server" CommandName="SelData" Text='<%#Eval("BTitle")%>'></asp:LinkButton>
                                      </div>
                             </ItemTemplate>
@@ -74,11 +77,11 @@
 
                         <asp:TemplateField ItemStyle-Width="150px">
                             <HeaderTemplate>
-                                <div style="text-align: center; background-color: #e9e9e9">發布日期</div>
+                                <div style="text-align: center; background-color: #eea26b;display:block">發布日期</div>
                             </HeaderTemplate>
                             <ItemTemplate>
                                 <div style="text-align: center">
-                                    <asp:LinkButton ForeColor="Blue" runat="server" CommandName="SelData" Text='<%#Eval("Date","{0:yyyy/MM/dd}")%>'></asp:LinkButton>
+                                    <asp:LinkButton ForeColor="#FF9966" runat="server" CommandName="SelData" Text='<%#Eval("Date","{0:yyyy/MM/dd}")%>'></asp:LinkButton>
                                 </div>
                             </ItemTemplate>
 
@@ -86,12 +89,14 @@
                         </asp:TemplateField>
                     </Columns>
 
+                    <HeaderStyle BackColor="#EEA26B" />
+
                     <PagerSettings Position="Top" />
 
                     <PagerStyle BorderStyle="None" BorderColor="White" />
 
                     <PagerTemplate>
-                        <div style="text-align: right; background-color: white">
+                        <div style="text-align: right; background-color: #f5f5f5">
                             第<asp:DropDownList ID="Ddl_Page" runat="server" AutoPostBack="True" OnSelectedIndexChanged="Ddl_Page_SelectedIndexChanged"></asp:DropDownList>頁<asp:Label ID="Lbl_View" runat="server" Text="Label"></asp:Label>
                         </div>
                     </PagerTemplate>
@@ -99,7 +104,8 @@
                 </asp:GridView>
             <br />
         </div>
-    <div class="container-fluid">
+    <div class="col-sm-4"></div>
+<%--    <div class="container-fluid">
         <div class="list">
            
             <div class="col-sm-3" style="padding-top: 5px; text-align: center;">
@@ -128,12 +134,12 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>--%>
     <br />
     <div class="container-fluid">
         <div class="col-sm-3">
             <ul class="list-group" style="list-style: none;">
-                <li class="list-group-item list-group-item-info">待處理項目</li>
+                <li class="list-group-item list-group-item-info" style="font-size:20px">待處理項目</li>
                 <li><a href="WaitDocument.aspx"><i class="glyphicon glyphicon-play" style="color: #C0C0C0"></i>待處理公文 <span class="badge" style="background-color: #C0C0C0;">
                     <asp:Label ID="Lbl_Doc" runat="server" Text="0"></asp:Label></span><span class="label label-danger"><asp:Label ID="Lbl_DocNew" runat="server" Text="New" Visible="False"></asp:Label></span></a></li>
                 <li><a href="WaitVote.aspx"><i class="glyphicon glyphicon-play" style="color: #C0C0C0"></i>待處理投票 <span class="badge" style="background-color: #C0C0C0">
@@ -143,7 +149,7 @@
         </div>
         <div class="col-sm-3">
             <ul class="list-group" style="list-style: none;">
-                <li class="list-group-item list-group-item-success">主辦項目</li>
+                <li class="list-group-item list-group-item-success"style="font-size:20px">主辦項目</li>
                 <li><a href="HostDocument.aspx"><i class="glyphicon glyphicon-play" style="color: #C0C0C0"></i>主辦公文 <span class="badge" style="background-color: #C0C0C0;">
                     <asp:Label ID="Lbl_HDoc" runat="server" Text="0"></asp:Label></span><span class="label label-danger"><asp:Label ID="Lbl_HDocNew" runat="server" Text="New" Visible="False"></asp:Label></span></a></li>
                 <li><a href="HostVote.aspx"><i class="glyphicon glyphicon-play" style="color: #C0C0C0"></i>主辦投票 <span class="badge" style="background-color: #C0C0C0;">
@@ -152,7 +158,7 @@
         </div>
         <div class="col-sm-3">
             <ul class="list-group" style="list-style: none;">
-                <li class="list-group-item list-group-item-success">已結案項目</li>
+                <li class="list-group-item list-group-item-success"style="font-size:20px">已結案項目</li>
                 <li><a href="EndDocument.aspx"><i class="glyphicon glyphicon-play" style="color: #C0C0C0"></i>已結案公文 <span class="badge" style="background-color: #C0C0C0;">
                     <asp:Label ID="Lbl_EndDoc" runat="server" Text="0"></asp:Label></span><span class="label label-danger"><asp:Label ID="Label2" runat="server" Text="New" Visible="False"></asp:Label></span></a></li>
                 <li><a href="EndVote.aspx"><i class="glyphicon glyphicon-play" style="color: #C0C0C0"></i>已結束投票 <span class="badge" style="background-color: #C0C0C0;">
@@ -160,7 +166,7 @@
             </ul>
         </div>
     </div>
-    <div class="container-fluid">
+<%--    <div class="container-fluid">
         <div class="list">
             <div class="col-sm-3" style="padding-top: 5px; text-align: center;">
                 <div style="border: 3px solid #6699FF;">
@@ -183,6 +189,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>--%>
     <asp:Label ID="Lbl_EID" runat="server" Text="Label" Visible="False"></asp:Label>
 </asp:Content>

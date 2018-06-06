@@ -901,7 +901,7 @@ namespace WebApplication1
         {
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
-                string ttSQL = "Select * From UseGroup Where GpName='" + TextBox1.Text + "'";
+                string ttSQL = "Select * From UseGroup Where GpName='" + TextBox1.Text + "' and EID='"+Lbl_EID.Text+"'";
                 cn.Open();
                 SqlCommand cmd3 = new SqlCommand(ttSQL);
                 cmd3.Connection = cn;
@@ -1897,6 +1897,76 @@ namespace WebApplication1
         #region 儲存至草稿
         protected void Btn_Draft_Click(object sender, EventArgs e)
         {
+            using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+                
+                cn2.Open();                        
+                        
+                string GID = DateTime.Now.ToString("yyyyMMddhhmmss");
+                SqlCommand cmd4 = new SqlCommand(@"Insert Into Record(GpName,GID,EID)Values(@GpName,@GID,@EID)");
+                cmd4.Connection = cn2;
+                cmd4.Parameters.AddWithValue("@GpName","草稿"+ Lbl_SID.Text+"的群組");
+                cmd4.Parameters.AddWithValue("@GID", GID);
+                cmd4.Parameters.AddWithValue("@EID", Lbl_EID.Text);
+                cmd4.ExecuteNonQuery();
+
+                for (int i = 0; i < GridView2.Rows.Count - 1; i++)
+                {
+
+                    string Lvl = ((TextBox)GridView2.Rows[i].FindControl("Txt_Lvl")).Text.Trim();
+                    string EID = ((TextBox)GridView2.Rows[i].FindControl("Txt_EID")).Text.Trim();
+                    string Department = ((Label)GridView2.Rows[i].FindControl("Lbl_Dep")).Text.Trim();
+                    string Name = ((Label)GridView2.Rows[i].FindControl("Lbl_Name")).Text.Trim();
+                    CheckBox Cb_sign = ((CheckBox)GridView2.Rows[i].FindControl("Cb_sign"));
+                    CheckBox Cb_path = ((CheckBox)GridView2.Rows[i].FindControl("Cb_path"));
+                    CheckBox Cb_comment = ((CheckBox)GridView2.Rows[i].FindControl("Cb_comment"));
+
+                        //寫回資料庫
+
+                        SqlCommand cmd = new SqlCommand(@"Insert INTO UseGroup(ID,GpName,GID,Lvl,EID,Department,Name,status,path,Comment)VALUES(@ID,@GpName,@GID,@Lvl,@EID,@Department,@Name,@status,@path,@Comment)");
+
+                        cmd.Connection = cn2;
+                        cmd.Parameters.AddWithValue("@GpName", "草稿" + Lbl_SID.Text + "的群組");
+                        cmd.Parameters.AddWithValue("@Lvl", Lvl);
+                        cmd.Parameters.AddWithValue("@EID", EID);
+                        cmd.Parameters.AddWithValue("@ID", i + 1);
+                        cmd.Parameters.AddWithValue("@Department", Department);
+                        cmd.Parameters.AddWithValue("@Name", Name);
+                        if (Cb_sign.Checked == true)
+                        {
+                            cmd.Parameters.AddWithValue("@status", "1");
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@status", "0");
+                        }
+                        if (Cb_path.Checked == true)
+                        {
+                            cmd.Parameters.AddWithValue("@path", "1");
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@path", "0");
+                        }
+                        if (Cb_comment.Checked == true)
+                        {
+                            cmd.Parameters.AddWithValue("@Comment", "1");
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@Comment", "0");
+                        }
+                        cmd.Parameters.AddWithValue("@GID", GID);
+                        cmd.ExecuteNonQuery();
+
+                    bind2();
+
+                }
+                
+
+                cn2.Close();
+            }
+
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
                 cn.Open();

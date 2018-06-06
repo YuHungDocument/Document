@@ -271,7 +271,7 @@
                                 </asp:SqlDataSource>
                                 <br />
                                 <p></p>
-                                <asp:GridView ID="GridView4" runat="server" AutoGenerateColumns="False" BorderStyle="None" BorderWidth="1px" CellPadding="5" CellSpacing="1" GridLines="None" HorizontalAlign="Center" OnSelectedIndexChanged="GridView4_SelectedIndexChanged" Style="line-height: 22px; width: 50%;">
+                                <asp:GridView ID="GridView4" runat="server" AutoGenerateColumns="False" BorderStyle="None" BorderWidth="1px" CellPadding="5" CellSpacing="1" GridLines="None" HorizontalAlign="Center" OnSelectedIndexChanged="GridView4_SelectedIndexChanged" Style="line-height: 22px; width: 100%;">
                                     <Columns>
                                         <asp:TemplateField>
                                             <HeaderTemplate>
@@ -312,18 +312,13 @@
                             &nbsp;<asp:Button ID="Btn_editgroup" runat="server" OnClick="Btn_editgroup_Click" Text="修改此群組" />
                             <br />
                             <br />
-                            <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
-                                <ContentTemplate>
-                                    <button type="button" id="Btn" runat="server" data-toggle="modal" data-target="#myModal">選擇群組</button>
-                                    <asp:Label ID="Lbl_GpName" runat="server" Text="Label" Visible="False"></asp:Label>
-                                </ContentTemplate>
-                            </asp:UpdatePanel>
-
-                            <br />
-                            
-                            <br />
                             <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                                 <ContentTemplate>
+                                    <br />
+                                    <button type="button" id="Btn" runat="server" data-toggle="modal" data-target="#myModal">選擇群組</button>
+                                    <asp:Label ID="Lbl_GpName" runat="server" Text="Label" Visible="False"></asp:Label>
+                                    <br />
+                                    <br />
                                     <asp:CheckBox ID="ChB_Check" runat="server" Text="簽核時是否重新檢查金鑰" />
                                     <br />
                                     <asp:GridView ID="GridView5" class="table" runat="server" AutoGenerateColumns="False" GridLines="Horizontal">

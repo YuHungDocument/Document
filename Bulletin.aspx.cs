@@ -36,15 +36,15 @@ namespace WebApplication1
                     tmpUserInfo = (UserInfo)Session["userinfo"];
 
                     cn.Open();
-                    SqlCommand cmd = new SqlCommand(@"Insert Into  Bulletin(BTitle,Context,Department,Date,EID)VALUES(@BTitle,@Context,@Department,@Date,@EID)");
+                    SqlCommand cmd = new SqlCommand(@"Insert Into  Bulletin(BTitle,Context,Dp,Date,EID)VALUES(@BTitle,@Context,@Dp,@Date,@EID)");
                     cmd.Connection = cn;
                     cmd.Parameters.AddWithValue("@BTitle", Txt_Title.Text);
                     cmd.Parameters.AddWithValue("@Context", txt_Connect.Text);
-                    cmd.Parameters.AddWithValue("@Department", tmpUserInfo.Department);
+                    cmd.Parameters.AddWithValue("@Dp", tmpUserInfo.Department);
                     cmd.Parameters.AddWithValue("@Date", DateTime.Today);
                     cmd.Parameters.AddWithValue("@EID", tmpUserInfo.EID);
                     cmd.ExecuteNonQuery();
-                    Response.Write("<script>alert('已成功新增公告!');location.href='Bulletin.aspx';</script>");
+                    Response.Write("<script>alert('已成功新增公告!');location.href='editbullitin.aspx';</script>");
                 }
             }
         }

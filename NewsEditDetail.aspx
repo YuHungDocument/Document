@@ -48,6 +48,6 @@
     <br />
     <asp:Button ID="Btn_Edit" runat="server" Text="修改" OnClick="Btn_Edit_Click" />
     &nbsp;&nbsp;&nbsp;&nbsp;
-    <asp:Button ID="Btn_Return" runat="server" Text="返回" OnClick="Btn_Return_Click" />
+    <input type="button" onclick="javascript:window.history.go(-1);"value="返回上一頁">
     <p></p>
 </asp:Content>

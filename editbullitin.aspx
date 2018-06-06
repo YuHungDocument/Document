@@ -29,67 +29,34 @@
 
                     <h3>公告設定<asp:Label ID="Lbl_EID" runat="server" Visible="False"></asp:Label>
                         </h3>
-                        <div style="text-align: right">
-                    <asp:DropDownList ID="Ddl_Type" class="form-control" Height="50px" runat="server" AutoPostBack="True" OnSelectedIndexChanged="Ddl_Type_SelectedIndexChanged" Font-Size="X-Large" DataSourceID="SqlDataSource1" DataTextField="TN" DataValueField="TN">
-                    </asp:DropDownList>
-                            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString %>" SelectCommand="SELECT [TN] FROM [TypeGroup] WHERE ([Tp] = @Tp)">
-                                <SelectParameters>
-                                    <asp:Parameter DefaultValue="Dp" Name="Tp" Type="String" />
-                                </SelectParameters>
-                            </asp:SqlDataSource>
-                </div>
-                <p></p>
-                <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" BorderStyle="None" DataKeyNames="BID" Width="100%" Font-Size="X-Large" GridLines="Horizontal" BackColor="White" AllowPaging="True" PageSize="5" OnDataBound="GridView1_DataBound" OnPreRender="GridView1_PreRender" OnRowCommand="GridView1_RowCommand">
-                    <Columns>
-                        <asp:TemplateField>
-                            <HeaderTemplate>
-                                <div style="text-align: center; background-color: #e9e9e9">公告部門</div>
-                            </HeaderTemplate>
-                            <ItemTemplate>
-                                <div style="text-align: center">
-                                    <asp:LinkButton ForeColor="Black" runat="server" CommandName="SelData" Text='<%#Eval("Dp")%>'></asp:LinkButton>
-                                </div>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:TemplateField>
-                            <HeaderTemplate>
-                                <div style="text-align: center; background-color: #e9e9e9">標題</div>
-                            </HeaderTemplate>
-                            <ItemTemplate>
-                                <div style="text-align: center">
-                                <asp:LinkButton ForeColor="Black" runat="server" CommandName="SelData" Text='<%#Eval("BTitle")%>'></asp:LinkButton>
-                                     </div>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-
-                        <asp:TemplateField ItemStyle-Width="150px">
-                            <HeaderTemplate>
-                                <div style="text-align: center; background-color: #e9e9e9">發布日期</div>
-                            </HeaderTemplate>
-                            <ItemTemplate>
-                                <div style="text-align: center">
-                                    <asp:LinkButton ForeColor="Blue" runat="server" CommandName="SelData" Text='<%#Eval("Date","{0:yyyy/MM/dd}")%>'></asp:LinkButton>
-                                </div>
-                            </ItemTemplate>
-
-                            <ItemStyle Width="150px"></ItemStyle>
-                        </asp:TemplateField>
-                    </Columns>
-
-                    <PagerSettings Position="Top" />
-
-                    <PagerStyle BorderStyle="None" BorderColor="White" />
-
-                    <PagerTemplate>
-                        <div style="text-align: right; background-color: white">
-                            第<asp:DropDownList ID="Ddl_Page" runat="server" AutoPostBack="True" OnSelectedIndexChanged="Ddl_Page_SelectedIndexChanged"></asp:DropDownList>頁<asp:Label ID="Lbl_View" runat="server" Text="Label"></asp:Label>
-                        </div>
-                    </PagerTemplate>
-
-                </asp:GridView>
+    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" GridLines="Horizontal" ShowHeader="false" Width="100%" OnRowDataBound="GridView1_RowDataBound" OnRowCommand="GridView1_RowCommand" DataKeyNames="BID" BackColor="White" BorderStyle="None" BorderColor="#CCCCCC">
+        <Columns>
+            <asp:BoundField DataField="Date" DataFormatString="{0:yyyy-MM-dd}" ItemStyle-Width="120px">
+                <ItemStyle ForeColor="Orange" />
+            </asp:BoundField>
+            <asp:BoundField DataField="BTitle" HeaderText="標題">
+                <ItemStyle ForeColor="Black" />
+            </asp:BoundField>
+            <asp:TemplateField HeaderText="編輯">
+                <ItemTemplate>
+                    <asp:LinkButton ID="Lb_Edit" runat="server" CommandName="SelData">編輯</asp:LinkButton>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="刪除">
+                <ItemTemplate>
+                    <asp:LinkButton ID="Lb_Del" runat="server" onclientclick="return confirm('確定要刪除嗎？')" CommandName="DelData">刪除</asp:LinkButton>
+                </ItemTemplate>
+            </asp:TemplateField>
+        </Columns>
+        <FooterStyle BorderStyle="None" />
+        <HeaderStyle BorderStyle="None" />
+        <RowStyle BorderStyle="None" Font-Size="Large" />
+    </asp:GridView>
                         <br />
                         <asp:Button ID="Button1" class="btn btn-warning" runat="server" Text="新增公告" OnClick="Button1_Click" />
-                </div>
+                         &nbsp;&nbsp;&nbsp;<asp:Button ID="Button2" runat="server" Text="返回後臺" class="btn btn-warning" OnClick="Button2_Click" />
+                         
+
                                             </div>
                 </div>
 </asp:Content>

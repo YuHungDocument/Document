@@ -322,7 +322,7 @@ using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
 
             }
 
-                    Response.Write("<script>alert('change同意函已發送!');location.href='SetAgent.aspx';</script>");
+                    Response.Write("<script>alert('change同意函已發送!');location.href='back_mainpage.aspx';</script>");
 
                 }
             

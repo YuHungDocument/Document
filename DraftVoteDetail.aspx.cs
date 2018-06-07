@@ -41,7 +41,7 @@ namespace WebApplication1
             {
                 Btn_Save.Attributes["onclick"] = "this.disabled = true;this.value = '資料送出中..';" + Page.ClientScript.GetPostBackEventReference(Btn_Save, "");
                 UserInfo tmpUserInfo = null;
-                bind2();
+                
                 if (Session["userinfo"] == null)
                 {
                     Response.Redirect("Home.aspx");
@@ -93,9 +93,9 @@ namespace WebApplication1
                             }
                         }
                         #endregion
-
+                        bind2();
                         SqlCommand cmdfrist = new SqlCommand(@"Select * From Draft Where DID=@DID");
-
+                        SqlCommand cmdvote = new SqlCommand("Select * From VoteDraft Where DID=@DID");
                         using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
                         {
                             cn.Open();
@@ -159,12 +159,45 @@ namespace WebApplication1
                             cmd2.Parameters.AddWithValue("@EID", "");
                             cmd2.ExecuteNonQuery();
                             bind3();
-                            SqlCommand votecmd = new SqlCommand("Insert Into Vote(SID,number) Values(@SID,@number)");
-                            votecmd.Connection = cn;
-                            votecmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
-                            votecmd.Parameters.AddWithValue("@number", int.Parse(Session["number"].ToString()));
-                            votecmd.ExecuteNonQuery();
+
+                            cmdvote.Connection = cn;
+                            cmdvote.Parameters.AddWithValue("@DID", Session["keyId"].ToString());
+                            using (SqlDataReader dr = cmdvote.ExecuteReader())
+                            {
+                                int i = 0;
+                                while (dr.Read())
+                                {
+                                    using (SqlConnection cnvote = new SqlConnection(tmpdbhelper.DB_CnStr))
+                                    {
+                                        cnvote.Open();
+                                        
+                                        SqlCommand votecmd = new SqlCommand("Insert Into Vote(SID,number,Vname) Values(@SID,@number,@Vname)");
+                                        votecmd.Connection = cnvote;
+                                        votecmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+                                        votecmd.Parameters.AddWithValue("@number", int.Parse(dr["number"].ToString()));
+                                        Session["max"] = dr["number"].ToString();
+                                        votecmd.Parameters.AddWithValue("@Vname", dr["Vname"].ToString());
+                                        votecmd.ExecuteNonQuery();
+                                        bind4();
+                                    }
+                                }
+                                
+                            }
+                            SqlCommand votecmd2 = new SqlCommand("Select * From Vote Where SID='" + Lbl_SID.Text + "'");
+                            votecmd2.Connection = cn;
+
                             bind4();
+                            using (SqlDataReader dr = votecmd2.ExecuteReader())
+                            {
+                                int i = 0;
+                                while (dr.Read())
+                                {
+                                    ((TextBox)GridView5.Rows[i].FindControl("Txt_content")).Text = dr["Vname"].ToString();
+                                    i = int.Parse(i.ToString()) + 1;
+                                }
+                            }
+
+
 
                             cn.Close();
                         }
@@ -588,10 +621,7 @@ namespace WebApplication1
             DataSet myds = new DataSet();
             sqlcon.Open();
             myda.Fill(myds, "Record");
-
-
             GridView4.DataSource = myds;
-            GridView4.DataKeyNames = new string[] { "GID" };//主键
             GridView4.DataBind();
             sqlcon.Close();
 

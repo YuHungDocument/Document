@@ -423,6 +423,8 @@
                                         </asp:GridView>
                                         <br />
                                         <asp:Button ID="Btn_Save" runat="server" Text="送出" OnClick="Btn_Save_Click" />
+                                        &nbsp;&nbsp;
+                                        <asp:Button ID="Btn_Draft" runat="server" OnClick="Btn_Draft_Click" Text="儲存至草稿" />
                                         <asp:Label ID="Lbl_Eorr" runat="server" ForeColor="Red" Text="資料輸入不完整" Visible="False"></asp:Label>
                                     </ContentTemplate>
                                 </asp:UpdatePanel>

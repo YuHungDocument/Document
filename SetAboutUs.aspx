@@ -11,7 +11,7 @@
         <table class="nav-justified">
             <tr>
                 <td>
-                    <h2 style="font-weight: bold; color: #0094ff;">我們的團隊</h2>
+                    <h2 style="font-weight: bold;color: #0094ff" >我們的團隊</h2>
                 </td>
                 <td>&nbsp;</td>
             </tr>
@@ -21,9 +21,9 @@
 
                 </td>
                 <td>
-                    <asp:TextBox ID="txt_title1" runat="server" Font-Bold="True" Font-Size="X-Large" ForeColor="#0094FF" TextMode="MultiLine" Width="100%"></asp:TextBox>
+                    <asp:TextBox ID="txt_title1" runat="server" Font-Bold="True" Font-Size="X-Large"  TextMode="MultiLine" Width="100%"></asp:TextBox>
                     <br />
-                    <asp:TextBox ID="txt_context1" runat="server" ForeColor="#0094FF" Height="200px" TextMode="MultiLine" Width="100%"></asp:TextBox>
+                    <asp:TextBox ID="txt_context1" runat="server" Height="200px" TextMode="MultiLine" Width="100%"></asp:TextBox>
                 </td>
             </tr>
         </table>
@@ -41,13 +41,12 @@
             </tr>
             <tr>
                 <td>
-                    <asp:TextBox ID="txt_title2" runat="server" Font-Bold="True" Font-Size="X-Large" ForeColor="#0094FF" TextMode="MultiLine" Width="100%"></asp:TextBox>
+                    <asp:TextBox ID="txt_title2" runat="server" Font-Bold="True" Font-Size="X-Large" TextMode="MultiLine" Width="100%"></asp:TextBox>
                     <br />
                     <br />
-                    <asp:TextBox ID="txt_context2" runat="server" ForeColor="#0094FF" Height="200px" TextMode="MultiLine" Width="100%"></asp:TextBox>
+                    <asp:TextBox ID="txt_context2" runat="server" Height="200px" TextMode="MultiLine" Width="100%"></asp:TextBox>
                 </td>
                 <td style="text-align: right; width: 400px">
-
                     <asp:Image ID="Image1" runat="server" Height="200px" Width="350px" ImageUrl="~/P/asp.net.png" />
 
                 </td>
@@ -56,5 +55,5 @@
 
     </div>
         <asp:Button ID="Btn_Edit" runat="server" Text="修改" OnClick="Btn_Edit_Click" />
-    
+    <br />
 </asp:Content>

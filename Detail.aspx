@@ -62,7 +62,9 @@
             <RowStyle Font-Size="Large" BackColor="White" HorizontalAlign="Center" />
         </asp:GridView>
 
-        <asp:GridView ID="Gv_path" Style="border: 2px #ccc solid; border-radius: 10px;" runat="server" AutoGenerateColumns="False" OnRowDataBound="Gv_path_RowDataBound">
+        <br />
+
+        <asp:GridView ID="Gv_path" CssClass="table" Style="border: 2px #ccc solid; border-radius: 10px;" runat="server" AutoGenerateColumns="False" OnRowDataBound="Gv_path_RowDataBound">
             <Columns>
                 <asp:BoundField DataField="SID" Visible="False" />
                 <asp:BoundField DataField="Lvl" HeaderText="階層" />

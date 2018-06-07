@@ -183,7 +183,7 @@ namespace WebApplication1
             }
         }
 
-        #region 顯示投票統計bind3
+        #region 顯示投票統計和路徑bind3
         public void bind3()
         {
             using (SqlConnection pathcn = new SqlConnection(tmpdbhelper.DB_CnStr))
@@ -210,7 +210,7 @@ namespace WebApplication1
                         }
                         else
                         {
-                            string sqlstr = "Select Detail.SID,Detail.Lvl,UserInfo.Department,UserInfo.Name,Detail.sign,Detail.signtime From Detail Left join UserInfo On Detail.EID = UserInfo.EID Where Detail.SID = '" + Lbl_SID.Text + "'";
+                            string sqlstr = "Select Detail.SID,Detail.Lvl,UserInfo.Department,UserInfo.Name,Detail.sign,Detail.signtime From Detail Left join UserInfo On Detail.EID = UserInfo.EID Where Detail.SID = '" + Lbl_SID.Text + "' and Detail.EID !='"+Lbl_SenderEID.Text+"'";
                             SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
                             SqlCommand cmd = new SqlCommand(sqlstr, sqlcon);
                             DataSet myds = new DataSet();
@@ -528,7 +528,7 @@ namespace WebApplication1
                 using (SqlDataReader dr2 = cmd2.ExecuteReader())
                     if (dr2.Read())
                     {
-                        if (dr2["sign"].ToString() == "0" || dr2["choose"] != null)
+                        if (dr2["sign"].ToString() == "0" || dr2["choose"].ToString() != "0")
 
                         {
                             Pnl_sign.Visible = true;
@@ -622,7 +622,7 @@ namespace WebApplication1
                             using (SqlConnection cncheck = new SqlConnection(tmpdbhelper.DB_CnStr))
                             {
                                 cncheck.Open();
-                                SqlCommand cmd6 = new SqlCommand(@"Select RSAkey,sign,Hashstat From Detail Where SID=@SID ");
+                                SqlCommand cmd6 = new SqlCommand(@"Select RSAkey,sign,choose,Hashstat From Detail Where SID=@SID ");
                                 cmd6.Connection = cncheck;
                                 cmd6.Parameters.AddWithValue("@SID", Lbl_SID.Text);
 
@@ -633,8 +633,9 @@ namespace WebApplication1
 
                                         RSAkey = dr2["RSAkey"].ToString();
                                         string sign= dr2["sign"].ToString();
-                                SHA256 sha256 = new SHA256CryptoServiceProvider();//建立一個SHA256
-                                        byte[] source = Encoding.Default.GetBytes(sign + RSAkey);//將字串轉為Byte[]
+                                        string choose = dr2["choose"].ToString();
+                                        SHA256 sha256 = new SHA256CryptoServiceProvider();//建立一個SHA256
+                                        byte[] source = Encoding.Default.GetBytes(sign + choose + RSAkey);//將字串轉為Byte[]
                                         byte[] crypto = sha256.ComputeHash(source);//進行SHA256加密
                                         result += Convert.ToBase64String(crypto);//把加密後的字串從Byte[]轉為字串
                                         Hashstat += dr2["Hashstat"].ToString();
@@ -865,13 +866,39 @@ namespace WebApplication1
                                     cmd2.Parameters.AddWithValue("@EID", Lbl_EID.Text);
                                     cmd2.Parameters.AddWithValue("@SID", Lbl_SID.Text);
                                     cmd2.Parameters.AddWithValue("@signtime", System.DateTime.Now);
-                                    SHA256 sha256_2 = new SHA256CryptoServiceProvider();//建立一個SHA256
-                                    byte[] source_2 = Encoding.Default.GetBytes("1" + RSAkey);//將字串轉為Byte[]
-                                    byte[] crypto_2 = sha256_2.ComputeHash(source_2);//進行SHA256加密
-                                    string result_2 = Convert.ToBase64String(crypto_2);//把加密後的字串從Byte[]轉為字串
-                                 
-                                    cmd2.Parameters.AddWithValue("@Hashstat", result_2);
-                                    cmd2.ExecuteNonQuery();
+                                    using (SqlConnection cnsign2 = new SqlConnection(tmpdbhelper.DB_CnStr))
+                                    {
+                                        cnsign2.Open();
+                                        SqlCommand cmdss = new SqlCommand("Select * From Fil Where SID=@SID");
+                                        cmdss.Connection = cnsign2;
+                                        cmdss.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+                                        using (SqlDataReader drs = cmdss.ExecuteReader())
+                                        {
+                                            if (drs.Read())
+                                            {
+                                                if (drs["Type"].ToString() != "投票")
+                                                {
+                                                    SHA256 sha256_2 = new SHA256CryptoServiceProvider();//建立一個SHA256
+                                                    byte[] source_2 = Encoding.Default.GetBytes("1" + "0" + RSAkey);//將字串轉為Byte[]
+                                                    byte[] crypto_2 = sha256_2.ComputeHash(source_2);//進行SHA256加密
+                                                    string result_2 = Convert.ToBase64String(crypto_2);//把加密後的字串從Byte[]轉為字串
+
+                                                    cmd2.Parameters.AddWithValue("@Hashstat", result_2);
+                                                    cmd2.ExecuteNonQuery();
+                                                }
+                                                else
+                                                {
+                                                    SHA256 sha256_2 = new SHA256CryptoServiceProvider();//建立一個SHA256
+                                                    byte[] source_2 = Encoding.Default.GetBytes("1" + DropDownList1.SelectedValue + RSAkey);//將字串轉為Byte[]
+                                                    byte[] crypto_2 = sha256_2.ComputeHash(source_2);//進行SHA256加密
+                                                    string result_2 = Convert.ToBase64String(crypto_2);//把加密後的字串從Byte[]轉為字串
+
+                                                    cmd2.Parameters.AddWithValue("@Hashstat", result_2);
+                                                    cmd2.ExecuteNonQuery();
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                                 using (SqlConnection cn3 = new SqlConnection(tmpdbhelper.DB_CnStr))
                                 {
@@ -1099,7 +1126,7 @@ namespace WebApplication1
                                     Lbl_Vname.Text = AESDecryption(key, AESiv, dr["Vname"].ToString());
                                 }
                             }
-                            SqlCommand cmd2 = new SqlCommand("Select count(choose) as votechoose from Detail Where SID=@SID and choose=@choose");
+                            SqlCommand cmd2 = new SqlCommand("Select count(choose) as votechoose from Detail Where SID=@SID and choose=@choose and sign='1'");
                             cmd2.Connection = cnVote;
                             cmd2.Parameters.AddWithValue("@SID", Lbl_SID.Text);
                             cmd2.Parameters.AddWithValue("@choose", Lbl_number.Text);

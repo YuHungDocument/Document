@@ -94,6 +94,7 @@ namespace WebApplication1
                         }
                         #endregion
                         bind2();
+                        ddpbind();
                         SqlCommand cmdfrist = new SqlCommand(@"Select * From Draft Where DID=@DID");
                         SqlCommand cmdvote = new SqlCommand("Select * From VoteDraft Where DID=@DID");
                         using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
@@ -685,6 +686,72 @@ namespace WebApplication1
             GridView1.DataBind();
             sqlcon.Close();
         }
+        #endregion
+
+        #region ddpbind
+
+        public void ddpbind()
+        {
+            using (SqlConnection cn3 = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+                cn3.Open();
+                SqlCommand cmd = new SqlCommand("Select * from TypeGroup Where Tp='Dp' and TID='0'");
+                cmd.Connection = cn3;
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        DropDownList1.Items.Add(dr["TN"].ToString());
+                    }
+                }
+            }
+
+            DropDownList1.Items.Add("所有部門");
+            using (SqlConnection cn4 = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+                cn4.Open();
+                SqlCommand cmd = new SqlCommand("Select * from TypeGroup Where Tp='Dp' and TID!='0'");
+                cmd.Connection = cn4;
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        DropDownList1.Items.Add(dr["TN"].ToString());
+                    }
+                }
+            }
+
+
+            using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+                cn2.Open();
+                SqlCommand cmd = new SqlCommand("Select * from TypeGroup Where Tp='PO' and TID='0'");
+                cmd.Connection = cn2;
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        DropDownList2.Items.Add(dr["TN"].ToString());
+                    }
+                }
+            }
+
+            DropDownList2.Items.Add("所有職位");
+            using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+                cn.Open();
+                SqlCommand cmd = new SqlCommand("Select * from TypeGroup Where Tp='PO' and TID!='0'");
+                cmd.Connection = cn;
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        DropDownList2.Items.Add(dr["TN"].ToString());
+                    }
+                }
+            }
+        }
+
         #endregion
 
         #region 上傳檔案
@@ -1355,24 +1422,20 @@ namespace WebApplication1
         {
 
             string SID = Lbl_SID.Text;
-            string Lvl5 = ((TextBox)GridView1.Rows[0].FindControl("Txt_Lvl")).Text.Trim();
             string EID5 = ((Label)GridView1.Rows[0].FindControl("Lbl_EID")).Text.Trim();
             string Department5 = ((Label)GridView1.Rows[0].FindControl("Lbl_Dep")).Text.Trim();
             string Name5 = ((Label)GridView1.Rows[0].FindControl("Lbl_Name")).Text.Trim();
-            CheckBox Cb_sign5 = ((CheckBox)GridView1.Rows[0].FindControl("Cb_sign"));
-            CheckBox Cb_path5 = ((CheckBox)GridView1.Rows[0].FindControl("Cb_path"));
-            CheckBox Cb_comment5 = ((CheckBox)GridView1.Rows[0].FindControl("Cb_comment"));
+
 
             if (!string.IsNullOrWhiteSpace(d1.Value)
                 && !string.IsNullOrWhiteSpace(Txt_Title.Text)
                 && !string.IsNullOrWhiteSpace(Txt_Text.Text)
-                && Lvl5 != ""
                 )
             {
                 using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
                 {
                     //SqlCommand cmd4 = new SqlCommand(@"update Fil set Fil.Name=Document.Name,Fil.DocumentContent=Document.DocumentContent,Fil.Extn=Document.Extn  from Document join Fil on Fil.SID=Document.SID");
-                    SqlCommand cmd3 = new SqlCommand(@"Insert INTO Fil(SID,EID,Date,DeadLine,Text,Proposition,Title,Type,YOS,AESkey,AESiv,txt_RSAhash_Text,txt_RSAhash_Proposition,IsEnd)VALUES(@SID,@EID,@Date,@DeadLine,@Text,@Proposition,@Title,@Type,@YOS,@AESkey,@AESiv,@txt_RSAhash_Text,@txt_RSAhash_Proposition,@IsEnd)");
+                    SqlCommand cmd3 = new SqlCommand(@"Insert INTO Fil(SID,EID,Date,DeadLine,Text,Proposition,Title,Type,YOS,AESiv,txt_RSAhash_Text,txt_RSAhash_Proposition,IsEnd)VALUES(@SID,@EID,@Date,@DeadLine,@Text,@Proposition,@Title,@Type,@YOS,@AESiv,@txt_RSAhash_Text,@txt_RSAhash_Proposition,@IsEnd)");
                     cn2.Open();
                     cmd3.Connection = cn2;
                     //cmd4.Connection = cn2;
@@ -1434,7 +1497,6 @@ namespace WebApplication1
                     cmd3.Parameters.AddWithValue("@Title", Txt_Title.Text);
                     cmd3.Parameters.AddWithValue("@Type", "投票");
                     cmd3.Parameters.AddWithValue("@YOS", Ddp_YOS.SelectedValue);
-                    cmd3.Parameters.AddWithValue("@AESkey", txtKey);
                     cmd3.Parameters.AddWithValue("@AESiv", txtIV);
                     cmd3.Parameters.AddWithValue("@txt_RSAhash_Proposition", txt_RSAhash_Proposition);
                     cmd3.Parameters.AddWithValue("@txt_RSAhash_Text", txt_RSAhash_Text);
@@ -1563,7 +1625,7 @@ namespace WebApplication1
                                             cn2.Close();
                                         }
                                         //寫回資料庫                        
-                                        SqlCommand cmdd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,recheckKey,status,path,sign,Comment,look,RSAkey,isread)VALUES(@SID,@Lvl,@EID,@Department,@recheckKey,@status,@path,@sign,@Comment,@look,@RSAkey,@isread)");
+                                        SqlCommand cmdd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,recheckKey,status,path,sign,Comment,look,choose,RSAkey,isread,Hashstat)VALUES(@SID,@Lvl,@EID,@Department,@recheckKey,@status,@path,@sign,@Comment,@look,@choose,@RSAkey,@isread,@Hashstat)");
                                         cn2.Open();
                                         cmdd.Connection = cn2;
                                         cmdd.Parameters.AddWithValue("@SID", SID);
@@ -1571,16 +1633,28 @@ namespace WebApplication1
                                         cmdd.Parameters.AddWithValue("@EID", EID);
                                         cmdd.Parameters.AddWithValue("@Department", Department);
                                         cmdd.Parameters.AddWithValue("@RSAkey", txt_PKmessage);
-
+                                        cmdd.Parameters.AddWithValue("@choose", "0");
                                         if (Cb_sign.Checked == true)
                                         {
                                             cmdd.Parameters.AddWithValue("@status", "1");
-                                            cmdd.Parameters.AddWithValue("@sign", 0);
+                                            cmdd.Parameters.AddWithValue("@sign", "0");
+                                            SHA256 sha256_1 = new SHA256CryptoServiceProvider();//建立一個SHA256
+                                            byte[] source_1 = Encoding.Default.GetBytes("0" + "0" + txt_PKmessage);//將字串轉為Byte[]
+                                            byte[] crypto_1 = sha256_1.ComputeHash(source_1);//進行SHA256加密
+                                            string result_1 = Convert.ToBase64String(crypto_1);//把加密後的字串從Byte[]轉為字串
+
+                                            cmdd.Parameters.AddWithValue("@Hashstat", result_1);
                                         }
                                         else
                                         {
                                             cmdd.Parameters.AddWithValue("@status", "0");
-                                            cmdd.Parameters.AddWithValue("@sign", 1);
+                                            cmdd.Parameters.AddWithValue("@sign", "1");
+                                            SHA256 sha256_2 = new SHA256CryptoServiceProvider();//建立一個SHA256
+                                            byte[] source_2 = Encoding.Default.GetBytes("1" + "0" + txt_PKmessage);//將字串轉為Byte[]
+                                            byte[] crypto_2 = sha256_2.ComputeHash(source_2);//進行SHA256加密
+                                            string result_2 = Convert.ToBase64String(crypto_2);//把加密後的字串從Byte[]轉為字串
+
+                                            cmdd.Parameters.AddWithValue("@Hashstat", result_2);
                                         }
                                         if (Cb_path.Checked == true)
                                         {
@@ -1706,24 +1780,25 @@ namespace WebApplication1
                     }
 
                     //寫回資料庫 
-                    SqlCommand cmd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,path,sign,look,RSAkey,isAgent,isread,recheckKey,comment)VALUES(@SID,@Lvl,@EID,@Department,@status,@path,@sign,@look,@RSAkey,@isAgent,@isread,@recheckKey,@comment)");
+                    SqlCommand cmd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,recheckKey,status,path,sign,Comment,look,choose,RSAkey,isread,Hashstat)VALUES(@SID,@Lvl,@EID,@Department,@recheckKey,@status,@path,@sign,@Comment,@look,@choose,@RSAkey,@isread,@Hashstat)");
 
                     cmd.Connection = cn2;
                     cmd.Parameters.AddWithValue("@SID", SID);
-                    cmd.Parameters.AddWithValue("@Lvl", Lvl5);
+                    cmd.Parameters.AddWithValue("@Lvl", 1);
                     cmd.Parameters.AddWithValue("@EID", EID5);
                     cmd.Parameters.AddWithValue("@Department", Department5);
                     cmd.Parameters.AddWithValue("@RSAkey", txt_PKmessage);
-                    if (Cb_sign5.Checked == true)
-                    {
-                        cmd.Parameters.AddWithValue("@status", "1");
-                        cmd.Parameters.AddWithValue("@sign", 0);
-                    }
-                    else
-                    {
-                        cmd.Parameters.AddWithValue("@status", "0");
-                        cmd.Parameters.AddWithValue("@sign", 1);
-                    }
+                    cmd.Parameters.AddWithValue("@comment", "1");
+                    cmd.Parameters.AddWithValue("@path", "1");
+                    cmd.Parameters.AddWithValue("@status", "1");
+                    cmd.Parameters.AddWithValue("@sign", 0);
+                    cmd.Parameters.AddWithValue("@choose", 0);
+                    SHA256 sha256 = new SHA256CryptoServiceProvider();//建立一個SHA256
+                    byte[] source = Encoding.Default.GetBytes("0" + "0" + txt_PKmessage);//將字串轉為Byte[]
+                    byte[] crypto = sha256.ComputeHash(source);//進行SHA256加密
+                    string result = Convert.ToBase64String(crypto);//把加密後的字串從Byte[]轉為字串
+
+                    cmd.Parameters.AddWithValue("@Hashstat", result);
                     if (ChB_Check.Checked == true)
                     {
                         cmd.Parameters.AddWithValue("@recheckKey", "1");
@@ -1732,31 +1807,7 @@ namespace WebApplication1
                     {
                         cmd.Parameters.AddWithValue("@recheckKey", "0");
                     }
-                    if (Cb_comment5.Checked == true)
-                    {
-                        cmd.Parameters.AddWithValue("@comment", "1");
-                    }
-                    else
-                    {
-                        cmd.Parameters.AddWithValue("@comment", "0");
-                    }
-                    if (Cb_path5.Checked == true)
-                    {
-                        cmd.Parameters.AddWithValue("@path", "1");
-                    }
-                    else
-                    {
-                        cmd.Parameters.AddWithValue("@path", "0");
-                    }
-                    if (Lvl5 == "1")
-                    {
-                        cmd.Parameters.AddWithValue("@look", 1);
-                    }
-                    else
-                    {
-                        cmd.Parameters.AddWithValue("@look", 0);
-                    }
-
+                    cmd.Parameters.AddWithValue("@look", 1);
                     cmd.Parameters.AddWithValue("@isread", 0);
                     using (SqlConnection cnEID = new SqlConnection(tmpdbhelper.DB_CnStr))
                     {
@@ -1916,17 +1967,44 @@ namespace WebApplication1
         #endregion
 
         #region 點選下拉式加入群組
-        protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+
+        public void DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
         {
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
                 cn.Open();
-                SqlCommand Decmd = new SqlCommand("Select * From UserInfo Where Department=@Department");
+
+                string Decmds = null;
+                if (DropDownList1.SelectedValue == "所有部門")
+                {
+                    if (DropDownList2.SelectedValue == "所有職位")
+                    {
+                        Decmds = "Select * From UserInfo";
+                    }
+                    else
+                    {
+
+                        Decmds = "Select * From UserInfo Where position=@position";
+                    }
+                }
+                else
+                {
+                    if (DropDownList2.SelectedValue == "所有職位")
+                    {
+                        Decmds = "Select * From UserInfo Where Department=@Department";
+                    }
+                    else
+                    {
+
+                        Decmds = "Select * From UserInfo Where Department=@Department and position=@position";
+                    }
+                }
+
+
+                SqlCommand Decmd = new SqlCommand(Decmds);
                 Decmd.Connection = cn;
                 Decmd.Parameters.AddWithValue("@Department", DropDownList1.SelectedValue);
-
-
-
+                Decmd.Parameters.AddWithValue("@position", DropDownList2.SelectedValue);
                 using (SqlDataReader dr = Decmd.ExecuteReader())
                 {
 
@@ -1936,7 +2014,7 @@ namespace WebApplication1
                         {
                             cn2.Open();
 
-                            SqlCommand cmdID = new SqlCommand("Select count(*) as IDcount From Preview");
+                            SqlCommand cmdID = new SqlCommand("Select Max(ID) as IDcount From Preview");
                             cmdID.Connection = cn2;
                             using (SqlDataReader drID = cmdID.ExecuteReader())
                             {
@@ -1958,10 +2036,12 @@ namespace WebApplication1
                             bind3();
                         }
 
-
                     }
+                    DropDownList2.SelectedIndex = 0;
+                    DropDownList1.SelectedIndex = 0;
                 }
             }
+
             using (SqlConnection cn3 = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
                 cn3.Open();
@@ -1997,6 +2077,7 @@ namespace WebApplication1
                 }
             }
         }
+
         #endregion
 
         #region 刪除Gridview列

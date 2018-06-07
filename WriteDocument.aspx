@@ -264,13 +264,9 @@
                             <div class="modal-body">
                                 透過部門或職位加入群組
                                 <hr />
-                                <asp:DropDownList ID="DropDownList1" runat="server" class="btn btn-primary dropdown-toggle" AutoPostBack="True" DataSourceID="SqlDataSource3" DataTextField="TN" DataValueField="TN" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
-                                </asp:DropDownList>
-                                <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString %>" SelectCommand="SELECT [TN] FROM [TypeGroup] WHERE ([Tp] = @Tp)">
-                                    <SelectParameters>
-                                        <asp:Parameter DefaultValue="Dp" Name="Tp" Type="String" />
-                                    </SelectParameters>
-                                </asp:SqlDataSource>
+                        <asp:DropDownList ID="DropDownList1" runat="server" class="btn btn-primary dropdown-toggle"></asp:DropDownList>
+                        &nbsp; &nbsp;&nbsp; &nbsp;
+                        <asp:DropDownList ID="DropDownList2" runat="server" class="btn btn-primary dropdown-toggle" OnSelectedIndexChanged="DropDownList2_SelectedIndexChanged" AutoPostBack="True" ></asp:DropDownList>
                                 <br />
                                 <p></p>
                                 <hr />

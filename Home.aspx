@@ -98,7 +98,7 @@
             </div>
 
             <div class="item">
-                <img src="P/header-01.jpg" alt="New york" style="height: 300px; width: 100%;">
+                <img src="P/藍.jpg" alt="New york" style="height: 300px; width: 100%;">
             </div>
         </div>
 

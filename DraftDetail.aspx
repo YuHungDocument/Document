@@ -223,21 +223,17 @@
                                 <h4 class="modal-title">選擇群組</h4>
                             </div>
                             <div class="modal-body">
-                                <asp:DropDownList ID="DropDownList1" runat="server" class="btn btn-primary dropdown-toggle">
-                                    <asp:ListItem>--選擇插入部門--</asp:ListItem>
-                                    <asp:ListItem>銷售部</asp:ListItem>
-                                    <asp:ListItem>生產部</asp:ListItem>
-                                    <asp:ListItem>品管部</asp:ListItem>
-                                    <asp:ListItem>業務部</asp:ListItem>
-                                    <asp:ListItem>財務部</asp:ListItem>
-                                    <asp:ListItem>人資部</asp:ListItem>
-                                    <asp:ListItem>研發部</asp:ListItem>
-                                    <asp:ListItem>採購部</asp:ListItem>
-                                    <asp:ListItem>資訊部</asp:ListItem>
-                                </asp:DropDownList>
+                                透過部門或職位加入群組
+                                <hr />
+                        <asp:DropDownList ID="DropDownList1" runat="server" class="btn btn-primary dropdown-toggle"></asp:DropDownList>
+                        &nbsp; &nbsp;&nbsp; &nbsp;
+                        <asp:DropDownList ID="DropDownList2" runat="server" class="btn btn-primary dropdown-toggle" OnSelectedIndexChanged="DropDownList2_SelectedIndexChanged" AutoPostBack="True" ></asp:DropDownList>
                                 <br />
-
-                                <asp:GridView ID="GridView4" runat="server" AutoGenerateColumns="False" BorderStyle="None" BorderWidth="1px" CellPadding="5" CellSpacing="1" GridLines="None" HorizontalAlign="Center" OnSelectedIndexChanged="GridView4_SelectedIndexChanged" Style="line-height: 22px; width: 50%;">
+                                <p></p>
+                                <hr />
+                                自訂的群組
+                                <hr />
+                                <asp:GridView ID="GridView4" runat="server" CssClass="table" AutoGenerateColumns="False" BorderStyle="None" BorderWidth="1px" CellPadding="5" CellSpacing="1" GridLines="None" HorizontalAlign="Center" OnSelectedIndexChanged="GridView4_SelectedIndexChanged" Style="line-height: 22px; width: 100%;">
                                     <Columns>
                                         <asp:TemplateField>
                                             <HeaderTemplate>
@@ -299,12 +295,11 @@
                                                 </ItemTemplate>
                                             </asp:TemplateField>
                                             <asp:BoundField DataField="SID" HeaderText="序列" Visible="false" />
-
-                                            <asp:TemplateField HeaderText="層級">
+<%--                                            <asp:TemplateField HeaderText="層級">
                                                 <ItemTemplate>
                                                     <asp:TextBox DataField="Lvl" ID="Txt_Lvl" runat="server" OnTextChanged="Txt_Lvl_TextChanged" TextMode="Number" Width="50px" AutoPostBack="True"></asp:TextBox>
                                                 </ItemTemplate>
-                                            </asp:TemplateField>
+                                            </asp:TemplateField>--%>
                                             <asp:TemplateField HeaderText="發布人編號">
                                                 <ItemTemplate>
                                                     <asp:Label ID="Lbl_EID" Text='<%# Bind("EID") %>' runat="server"></asp:Label>
@@ -320,21 +315,11 @@
                                                     <asp:Label ID="Lbl_Name" Text='<%# Bind("Name") %>' runat="server"></asp:Label>
                                                 </ItemTemplate>
                                             </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="需簽章">
+<%--                                            <asp:TemplateField HeaderText="需簽章">
                                                 <ItemTemplate>
                                                     <asp:CheckBox ID="Cb_sign" runat="server" OnCheckedChanged="Cb_sign_CheckedChanged1" AutoPostBack="True" />
                                                 </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="可察看進度">
-                                                <ItemTemplate>
-                                                    <asp:CheckBox ID="Cb_path" runat="server" OnCheckedChanged="Cb_path_CheckedChanged1" AutoPostBack="True" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField HeaderText="是否評論">
-                                                <ItemTemplate>
-                                                    <asp:CheckBox ID="Cb_comment" runat="server" AutoPostBack="true" OnCheckedChanged="Cb_comment_CheckedChanged1" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
+                                            </asp:TemplateField>--%>
                                         </Columns>
                                         <HeaderStyle HorizontalAlign="Center" />
                                     </asp:GridView>

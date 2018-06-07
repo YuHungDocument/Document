@@ -97,7 +97,7 @@ namespace WebApplication1
                         #endregion
 
                         bind2();
-
+                        ddpbind();
                         using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
                         {
                             cn.Open();
@@ -683,6 +683,72 @@ namespace WebApplication1
         }
         #endregion
 
+        #region ddpbind
+
+        public void ddpbind()
+        {
+            using (SqlConnection cn3 = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+                cn3.Open();
+                SqlCommand cmd = new SqlCommand("Select * from TypeGroup Where Tp='Dp' and TID='0'");
+                cmd.Connection = cn3;
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        DropDownList1.Items.Add(dr["TN"].ToString());
+                    }
+                }
+            }
+
+            DropDownList1.Items.Add("所有部門");
+            using (SqlConnection cn4 = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+                cn4.Open();
+                SqlCommand cmd = new SqlCommand("Select * from TypeGroup Where Tp='Dp' and TID!='0'");
+                cmd.Connection = cn4;
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        DropDownList1.Items.Add(dr["TN"].ToString());
+                    }
+                }
+            }
+
+
+            using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+                cn2.Open();
+                SqlCommand cmd = new SqlCommand("Select * from TypeGroup Where Tp='PO' and TID='0'");
+                cmd.Connection = cn2;
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        DropDownList2.Items.Add(dr["TN"].ToString());
+                    }
+                }
+            }
+
+            DropDownList2.Items.Add("所有職位");
+            using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+                cn.Open();
+                SqlCommand cmd = new SqlCommand("Select * from TypeGroup Where Tp='PO' and TID!='0'");
+                cmd.Connection = cn;
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        DropDownList2.Items.Add(dr["TN"].ToString());
+                    }
+                }
+            }
+        }
+
+        #endregion
+
         #region 上傳檔案
         protected void btn_upload_Click(object sender, EventArgs e)
         {
@@ -1010,133 +1076,133 @@ namespace WebApplication1
         #endregion
 
         #region 編輯群組
-        protected void Btn_editgroup_Click(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrWhiteSpace(TextBox1.Text))
-            {
+        //protected void Btn_editgroup_Click(object sender, EventArgs e)
+        //{
+        //    if (!string.IsNullOrWhiteSpace(TextBox1.Text))
+        //    {
 
-                string tmpsql2 = "Update Record set GpName=@GpName where GID=@GID";
-                using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
-                {
-                    cn.Open();
-                    SqlCommand cmd = new SqlCommand("Select * From UseGroup where GpName=@GpName");
-                    cmd.Parameters.AddWithValue("@GpName", Lbl_GpName.Text);
-                    cmd.Connection = cn;
-                    cn.Close();
-                    cn.Open();
-                    Boolean bn = false;
-                    string GID = null;
-                    using (SqlDataReader dr = cmd.ExecuteReader())
-                    {
+        //        string tmpsql2 = "Update Record set GpName=@GpName where GID=@GID";
+        //        using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+        //        {
+        //            cn.Open();
+        //            SqlCommand cmd = new SqlCommand("Select * From UseGroup where GpName=@GpName");
+        //            cmd.Parameters.AddWithValue("@GpName", Lbl_GpName.Text);
+        //            cmd.Connection = cn;
+        //            cn.Close();
+        //            cn.Open();
+        //            Boolean bn = false;
+        //            string GID = null;
+        //            using (SqlDataReader dr = cmd.ExecuteReader())
+        //            {
 
-                        if (dr.Read())
-                        {
-                            bn = true;
-                            GID = dr["GID"].ToString();
+        //                if (dr.Read())
+        //                {
+        //                    bn = true;
+        //                    GID = dr["GID"].ToString();
 
-                        }
+        //                }
 
-                    }
-                    if (bn == true)
-                    {
+        //            }
+        //            if (bn == true)
+        //            {
 
-                        for (int i = 0; i < GridView2.Rows.Count - 1; i++)
-                        {
-                            SqlCommand cmd4 = new SqlCommand("Select * From UseGroup where GID=@GID");
-                            string tmpsql = "Update UseGroup set GpName=@GpName,Lvl=@Lvl,EID=@EID,Name=@Name,Department=@Department,status=@status where ID=@ID And GID=@GID ";
-                            string Lvl = ((TextBox)GridView2.Rows[i].FindControl("TextBox2")).Text.Trim();
-                            string EID = ((TextBox)GridView2.Rows[i].FindControl("TextBox3")).Text.Trim();
-                            string Department = ((TextBox)GridView2.Rows[i].FindControl("TextBox4")).Text.Trim();
-                            string Name = ((TextBox)GridView2.Rows[i].FindControl("TextBox5")).Text.Trim();
-                            string status = ((DropDownList)GridView2.Rows[i].FindControl("Ddl_status")).Text.Trim();
-
-
-                            SqlCommand cmd2 = new SqlCommand();
-                            cmd2.CommandText = tmpsql;
-                            cmd2.Parameters.AddWithValue("@ID", i + 1);
-                            cmd2.Parameters.AddWithValue("@GID", GID);
-                            cmd2.Parameters.AddWithValue("@GpName", TextBox1.Text);
-                            cmd2.Parameters.AddWithValue("@Lvl", Lvl);
-                            cmd2.Parameters.AddWithValue("@EID", EID);
-                            cmd2.Parameters.AddWithValue("@Name", Name);
-                            cmd2.Parameters.AddWithValue("@Department", Department);
-                            cmd2.Parameters.AddWithValue("@status", status);
-                            cmd2.Connection = cn;
-                            cmd2.ExecuteNonQuery();
-
-                            //ScriptManager.RegisterClientScriptBlock(UpdatePanel1, this.GetType(), "click", "alert('修改成功')", true);
-                        }
-
-                        SqlCommand cmd3 = new SqlCommand();
-                        cmd3.CommandText = tmpsql2;
-                        cmd3.Parameters.AddWithValue("@GID", GID);
-                        cmd3.Parameters.AddWithValue("@GpName", TextBox1.Text);
-                        cmd3.Connection = cn;
-                        cmd3.ExecuteNonQuery();
-                        bind2();
-                    }
+        //                for (int i = 0; i < GridView2.Rows.Count - 1; i++)
+        //                {
+        //                    SqlCommand cmd4 = new SqlCommand("Select * From UseGroup where GID=@GID");
+        //                    string tmpsql = "Update UseGroup set GpName=@GpName,Lvl=@Lvl,EID=@EID,Name=@Name,Department=@Department,status=@status where ID=@ID And GID=@GID ";
+        //                    string Lvl = ((TextBox)GridView2.Rows[i].FindControl("TextBox2")).Text.Trim();
+        //                    string EID = ((TextBox)GridView2.Rows[i].FindControl("TextBox3")).Text.Trim();
+        //                    string Department = ((TextBox)GridView2.Rows[i].FindControl("TextBox4")).Text.Trim();
+        //                    string Name = ((TextBox)GridView2.Rows[i].FindControl("TextBox5")).Text.Trim();
+        //                    string status = ((DropDownList)GridView2.Rows[i].FindControl("Ddl_status")).Text.Trim();
 
 
-                }
-            }
-            else
-            {
-                using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
-                {
-                    cn.Open();
-                    SqlCommand cmd = new SqlCommand("Select * From UseGroup where GpName=@GpName");
-                    cmd.Parameters.AddWithValue("@GpName", Lbl_GpName.Text);
-                    cmd.Connection = cn;
-                    cn.Close();
-                    cn.Open();
-                    Boolean bn = false;
-                    string GID = null;
-                    using (SqlDataReader dr = cmd.ExecuteReader())
-                    {
+        //                    SqlCommand cmd2 = new SqlCommand();
+        //                    cmd2.CommandText = tmpsql;
+        //                    cmd2.Parameters.AddWithValue("@ID", i + 1);
+        //                    cmd2.Parameters.AddWithValue("@GID", GID);
+        //                    cmd2.Parameters.AddWithValue("@GpName", TextBox1.Text);
+        //                    cmd2.Parameters.AddWithValue("@Lvl", Lvl);
+        //                    cmd2.Parameters.AddWithValue("@EID", EID);
+        //                    cmd2.Parameters.AddWithValue("@Name", Name);
+        //                    cmd2.Parameters.AddWithValue("@Department", Department);
+        //                    cmd2.Parameters.AddWithValue("@status", status);
+        //                    cmd2.Connection = cn;
+        //                    cmd2.ExecuteNonQuery();
 
-                        if (dr.Read())
-                        {
-                            bn = true;
-                            GID = dr["GID"].ToString();
+        //                    //ScriptManager.RegisterClientScriptBlock(UpdatePanel1, this.GetType(), "click", "alert('修改成功')", true);
+        //                }
 
-                        }
-
-                    }
-                    if (bn == true)
-                    {
-
-                        for (int i = 0; i < GridView2.Rows.Count - 1; i++)
-                        {
-                            SqlCommand cmd4 = new SqlCommand("Select * From UseGroup where GID=@GID");
-                            string tmpsql = "Update UseGroup set Lvl=@Lvl,EID=@EID,Name=@Name,Department=@Department,status=@status where ID=@ID And GID=@GID ";
-                            string Lvl = ((TextBox)GridView2.Rows[i].FindControl("TextBox2")).Text.Trim();
-                            string EID = ((TextBox)GridView2.Rows[i].FindControl("TextBox3")).Text.Trim();
-                            string Department = ((TextBox)GridView2.Rows[i].FindControl("TextBox4")).Text.Trim();
-                            string Name = ((TextBox)GridView2.Rows[i].FindControl("TextBox5")).Text.Trim();
-                            string status = ((DropDownList)GridView2.Rows[i].FindControl("Ddl_status")).Text.Trim();
+        //                SqlCommand cmd3 = new SqlCommand();
+        //                cmd3.CommandText = tmpsql2;
+        //                cmd3.Parameters.AddWithValue("@GID", GID);
+        //                cmd3.Parameters.AddWithValue("@GpName", TextBox1.Text);
+        //                cmd3.Connection = cn;
+        //                cmd3.ExecuteNonQuery();
+        //                bind2();
+        //            }
 
 
-                            SqlCommand cmd2 = new SqlCommand();
-                            cmd2.CommandText = tmpsql;
-                            cmd2.Parameters.AddWithValue("@ID", i + 1);
-                            cmd2.Parameters.AddWithValue("@GID", GID);
-                            cmd2.Parameters.AddWithValue("@Lvl", Lvl);
-                            cmd2.Parameters.AddWithValue("@EID", EID);
-                            cmd2.Parameters.AddWithValue("@Name", Name);
-                            cmd2.Parameters.AddWithValue("@Department", Department);
-                            cmd2.Parameters.AddWithValue("@status", status);
-                            cmd2.Connection = cn;
-                            cmd2.ExecuteNonQuery();
+        //        }
+        //    }
+        //    else
+        //    {
+        //        using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+        //        {
+        //            cn.Open();
+        //            SqlCommand cmd = new SqlCommand("Select * From UseGroup where GpName=@GpName");
+        //            cmd.Parameters.AddWithValue("@GpName", Lbl_GpName.Text);
+        //            cmd.Connection = cn;
+        //            cn.Close();
+        //            cn.Open();
+        //            Boolean bn = false;
+        //            string GID = null;
+        //            using (SqlDataReader dr = cmd.ExecuteReader())
+        //            {
 
-                            //ScriptManager.RegisterClientScriptBlock(UpdatePanel1, this.GetType(), "click", "alert('修改成功')", true);
-                        }
+        //                if (dr.Read())
+        //                {
+        //                    bn = true;
+        //                    GID = dr["GID"].ToString();
 
-                    }
+        //                }
+
+        //            }
+        //            if (bn == true)
+        //            {
+
+        //                for (int i = 0; i < GridView2.Rows.Count - 1; i++)
+        //                {
+        //                    SqlCommand cmd4 = new SqlCommand("Select * From UseGroup where GID=@GID");
+        //                    string tmpsql = "Update UseGroup set Lvl=@Lvl,EID=@EID,Name=@Name,Department=@Department,status=@status where ID=@ID And GID=@GID ";
+        //                    string Lvl = ((TextBox)GridView2.Rows[i].FindControl("TextBox2")).Text.Trim();
+        //                    string EID = ((TextBox)GridView2.Rows[i].FindControl("TextBox3")).Text.Trim();
+        //                    string Department = ((TextBox)GridView2.Rows[i].FindControl("TextBox4")).Text.Trim();
+        //                    string Name = ((TextBox)GridView2.Rows[i].FindControl("TextBox5")).Text.Trim();
+        //                    string status = ((DropDownList)GridView2.Rows[i].FindControl("Ddl_status")).Text.Trim();
 
 
-                }
-            }
-        }
+        //                    SqlCommand cmd2 = new SqlCommand();
+        //                    cmd2.CommandText = tmpsql;
+        //                    cmd2.Parameters.AddWithValue("@ID", i + 1);
+        //                    cmd2.Parameters.AddWithValue("@GID", GID);
+        //                    cmd2.Parameters.AddWithValue("@Lvl", Lvl);
+        //                    cmd2.Parameters.AddWithValue("@EID", EID);
+        //                    cmd2.Parameters.AddWithValue("@Name", Name);
+        //                    cmd2.Parameters.AddWithValue("@Department", Department);
+        //                    cmd2.Parameters.AddWithValue("@status", status);
+        //                    cmd2.Connection = cn;
+        //                    cmd2.ExecuteNonQuery();
+
+        //                    //ScriptManager.RegisterClientScriptBlock(UpdatePanel1, this.GetType(), "click", "alert('修改成功')", true);
+        //                }
+
+        //            }
+
+
+        //        }
+        //    }
+        //}
         #endregion
 
         #region 點選LinkButton插入群組
@@ -1431,7 +1497,7 @@ namespace WebApplication1
 
 
                                             //寫回資料庫 
-                                            SqlCommand cmdd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,path,sign,look,RSAkey,isAgent,isread,recheckKey,comment,Hashstat)VALUES(@SID,@Lvl,@EID,@Department,@status,@path,@sign,@look,@RSAkey,@isAgent,@isread,@recheckKey,@comment,@Hashstat)");
+                                            SqlCommand cmdd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,path,sign,look,choose,RSAkey,isAgent,isread,recheckKey,comment,Hashstat)VALUES(@SID,@Lvl,@EID,@Department,@status,@path,@sign,@look,@choose,@RSAkey,@isAgent,@isread,@recheckKey,@comment,@Hashstat)");
                                             cn3.Open();
                                             cmdd.Connection = cn3;
                                             cmdd.Parameters.AddWithValue("@SID", SID);
@@ -1439,12 +1505,13 @@ namespace WebApplication1
                                             cmdd.Parameters.AddWithValue("@EID", EID);
                                             cmdd.Parameters.AddWithValue("@Department", Department);
                                             cmdd.Parameters.AddWithValue("@RSAkey", txt_PKmessage);
+                                            cmdd.Parameters.AddWithValue("@choose", 0);
                                             if (Cb_sign.Checked == true)
                                             {
                                                 cmdd.Parameters.AddWithValue("@status", "1");
                                                 cmdd.Parameters.AddWithValue("@sign", "0");
                                                 SHA256 sha256_1 = new SHA256CryptoServiceProvider();//建立一個SHA256
-                                                byte[] source_1 = Encoding.Default.GetBytes("0" + txt_PKmessage);//將字串轉為Byte[]
+                                                byte[] source_1 = Encoding.Default.GetBytes("0" + "0" + txt_PKmessage);//將字串轉為Byte[]
                                                 byte[] crypto_1 = sha256_1.ComputeHash(source_1);//進行SHA256加密
                                                 string result_1 = Convert.ToBase64String(crypto_1);//把加密後的字串從Byte[]轉為字串
 
@@ -1456,7 +1523,7 @@ namespace WebApplication1
                                                 cmdd.Parameters.AddWithValue("@status", "0");
                                                 cmdd.Parameters.AddWithValue("@sign", "1");
                                                 SHA256 sha256_2 = new SHA256CryptoServiceProvider();//建立一個SHA256
-                                                byte[] source_2 = Encoding.Default.GetBytes("1" + txt_PKmessage);//將字串轉為Byte[]
+                                                byte[] source_2 = Encoding.Default.GetBytes("1" + "0" + txt_PKmessage);//將字串轉為Byte[]
                                                 byte[] crypto_2 = sha256_2.ComputeHash(source_2);//進行SHA256加密
                                                 string result_2 = Convert.ToBase64String(crypto_2);//把加密後的字串從Byte[]轉為字串
 
@@ -1494,7 +1561,7 @@ namespace WebApplication1
                                             {
                                                 cmdd.Parameters.AddWithValue("@look", 0);
                                             }
-
+                                            
                                             cmdd.Parameters.AddWithValue("@isread", 0);
                                             using (SqlConnection cnEID = new SqlConnection(tmpdbhelper.DB_CnStr))
                                             {
@@ -1633,7 +1700,7 @@ namespace WebApplication1
                         }
 
                         //寫回資料庫 
-                        SqlCommand cmd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,path,sign,look,RSAkey,isAgent,isread,recheckKey,comment,Hashstat)VALUES(@SID,@Lvl,@EID,@Department,@status,@path,@sign,@look,@RSAkey,@isAgent,@isread,@recheckKey,@comment,@Hashstat)");
+                        SqlCommand cmd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,path,sign,look,choose,RSAkey,isAgent,isread,recheckKey,comment,Hashstat)VALUES(@SID,@Lvl,@EID,@Department,@status,@path,@sign,@look,@choose,@RSAkey,@isAgent,@isread,@recheckKey,@comment,@Hashstat)");
 
                         cmd.Connection = cn3;
                         cmd.Parameters.AddWithValue("@SID", SID);
@@ -1645,8 +1712,9 @@ namespace WebApplication1
                         cmd.Parameters.AddWithValue("@path", "1");
                         cmd.Parameters.AddWithValue("@status", "0");
                         cmd.Parameters.AddWithValue("@sign", "1");
+                        cmd.Parameters.AddWithValue("@choose", "0");
                         SHA256 sha256 = new SHA256CryptoServiceProvider();//建立一個SHA256
-                        byte[] source = Encoding.Default.GetBytes("1" + txt_PKmessage);//將字串轉為Byte[]
+                        byte[] source = Encoding.Default.GetBytes("1" + "0" +txt_PKmessage);//將字串轉為Byte[]
                         byte[] crypto = sha256.ComputeHash(source);//進行SHA256加密
                         string result = Convert.ToBase64String(crypto);//把加密後的字串從Byte[]轉為字串
 
@@ -1978,27 +2046,54 @@ namespace WebApplication1
         #endregion
 
         #region 點選下拉式加入群組
-        protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+
+        public void DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
         {
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
                 cn.Open();
-                SqlCommand Decmd = new SqlCommand("Select * From UserInfo Where Department=@Department");
+
+                string Decmds = null;
+                if (DropDownList1.SelectedValue == "所有部門")
+                {
+                    if (DropDownList2.SelectedValue == "所有職位")
+                    {
+                        Decmds = "Select * From UserInfo";
+                    }
+                    else
+                    {
+
+                        Decmds = "Select * From UserInfo Where position=@position";
+                    }
+                }
+                else
+                {
+                    if (DropDownList2.SelectedValue == "所有職位")
+                    {
+                        Decmds = "Select * From UserInfo Where Department=@Department";
+                    }
+                    else
+                    {
+
+                        Decmds = "Select * From UserInfo Where Department=@Department and position=@position";
+                    }
+                }
+
+
+                SqlCommand Decmd = new SqlCommand(Decmds);
                 Decmd.Connection = cn;
-                Decmd.Parameters.AddWithValue("@Department",DropDownList1.SelectedValue);
-
-
-
+                Decmd.Parameters.AddWithValue("@Department", DropDownList1.SelectedValue);
+                Decmd.Parameters.AddWithValue("@position", DropDownList2.SelectedValue);
                 using (SqlDataReader dr = Decmd.ExecuteReader())
                 {
-                    
-                    while(dr.Read())
+
+                    while (dr.Read())
                     {
                         using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
                         {
                             cn2.Open();
 
-                            SqlCommand cmdID = new SqlCommand("Select count(*) as IDcount From Preview");
+                            SqlCommand cmdID = new SqlCommand("Select Max(ID) as IDcount From Preview");
                             cmdID.Connection = cn2;
                             using (SqlDataReader drID = cmdID.ExecuteReader())
                             {
@@ -2020,10 +2115,12 @@ namespace WebApplication1
                             bind3();
                         }
 
-                        
                     }
+                    DropDownList2.SelectedIndex = 0;
+                    DropDownList1.SelectedIndex = 0;
                 }
             }
+
             using (SqlConnection cn3 = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
                 cn3.Open();

@@ -16,7 +16,7 @@
         <table class="nav-justified">
             <tr>
                 <td>
-                    <h2 style="font-weight: bold; color: #0094ff;">我們的團隊</h2>
+                    <h2 style="font-weight: bold; color: #0094ff">我們的團隊</h2>
                 </td>
                 <td>&nbsp;</td>
             </tr>
@@ -27,9 +27,9 @@
                 </td>
                 <td>
 
-                    <asp:Label ID="Lbl_title1" runat="server"  Font-Bold="True" Font-Size="X-Large" ForeColor="#0094FF"></asp:Label>
+                    <asp:Label ID="Lbl_title1" runat="server"  Font-Bold="True" Font-Size="X-Large"></asp:Label>
                     <br />
-                    <asp:Label ID="Lbl_context1" runat="server" ForeColor="#0094FF" ></asp:Label>
+                    <asp:Label ID="Lbl_context1" runat="server"  ></asp:Label>
                 </td>
             </tr>
         </table>
@@ -47,11 +47,11 @@
             </tr>
             <tr>
                 <td>
-                    <asp:Label ID="Lbl_title2" runat="server"  Font-Bold="True" Font-Size="X-Large" ForeColor="#0094FF"></asp:Label>
+                    <asp:Label ID="Lbl_title2" runat="server"  Font-Bold="True" Font-Size="X-Large" ></asp:Label>
 
                     <br />
                     <br />
-                    <asp:Label ID="Lbl_context2" ForeColor="#0094FF" runat="server"></asp:Label>
+                    <asp:Label ID="Lbl_context2"  runat="server"></asp:Label>
 
                 </td>
                 <td style="text-align: right; width: 400px">

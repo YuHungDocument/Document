@@ -102,13 +102,10 @@
                     <div class="modal-body">
                         透過部門或職位加入群組
                                 <hr />
-                        <asp:DropDownList ID="DropDownList1" runat="server" class="btn btn-primary dropdown-toggle" AutoPostBack="True" DataSourceID="SqlDataSource3" DataTextField="TN" DataValueField="TN" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
-                        </asp:DropDownList>
-                        <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString %>" SelectCommand="SELECT [TN] FROM [TypeGroup] WHERE ([Tp] = @Tp)">
-                            <SelectParameters>
-                                <asp:Parameter DefaultValue="Dp" Name="Tp" Type="String" />
-                            </SelectParameters>
-                        </asp:SqlDataSource>
+                        <asp:DropDownList ID="DropDownList1" runat="server" class="btn btn-primary dropdown-toggle"></asp:DropDownList>
+                        &nbsp; &nbsp;&nbsp; &nbsp;
+                        <asp:DropDownList ID="DropDownList2" runat="server" class="btn btn-primary dropdown-toggle" OnSelectedIndexChanged="DropDownList2_SelectedIndexChanged" AutoPostBack="True" ></asp:DropDownList>
+
                         <br />
                         <p></p>
                         <hr />
@@ -318,40 +315,39 @@
                                         <br />
                                         <br />
                                         <asp:GridView ID="GridView1" class="table" runat="server" AutoGenerateColumns="False" GridLines="Horizontal">
-                                            <Columns>
-                                                <asp:TemplateField HeaderText="排列" ShowHeader="False" Visible="False">
-                                                    <ItemTemplate>
-                                                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("ID") %>'></asp:Label>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                                <asp:BoundField DataField="SID" HeaderText="序列" Visible="false" />
-
-                                                <asp:TemplateField HeaderText="層級">
+                                                    <Columns>
+                                                        <asp:TemplateField HeaderText="排列" ShowHeader="False" Visible="False">
+                                                            <ItemTemplate>
+                                                                <asp:Label ID="Label1" runat="server" Text='<%# Bind("ID") %>'></asp:Label>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                        <asp:BoundField DataField="SID" HeaderText="序列" Visible="false" />
+                                                        <%--                                                <asp:TemplateField HeaderText="層級">
                                                     <ItemTemplate>
                                                         <asp:TextBox DataField="Lvl" ID="Txt_Lvl" runat="server" OnTextChanged="Txt_Lvl_TextChanged" TextMode="Number" Width="50px" AutoPostBack="True"></asp:TextBox>
                                                     </ItemTemplate>
-                                                </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="發布人編號">
-                                                    <ItemTemplate>
-                                                        <asp:Label ID="Lbl_EID" Text='<%# Bind("EID") %>' runat="server"></asp:Label>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="發布人部門">
-                                                    <ItemTemplate>
-                                                        <asp:Label ID="Lbl_Dep" Text='<%# Bind("Department") %>' runat="server"></asp:Label>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="發布人姓名">
-                                                    <ItemTemplate>
-                                                        <asp:Label ID="Lbl_Name" Text='<%# Bind("Name") %>' runat="server"></asp:Label>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="需簽章">
+                                                </asp:TemplateField>--%>
+                                                        <asp:TemplateField HeaderText="發布人編號">
+                                                            <ItemTemplate>
+                                                                <asp:Label ID="Lbl_EID" Text='<%# Bind("EID") %>' runat="server"></asp:Label>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                        <asp:TemplateField HeaderText="發布人部門">
+                                                            <ItemTemplate>
+                                                                <asp:Label ID="Lbl_Dep" Text='<%# Bind("Department") %>' runat="server"></asp:Label>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                        <asp:TemplateField HeaderText="發布人姓名">
+                                                            <ItemTemplate>
+                                                                <asp:Label ID="Lbl_Name" Text='<%# Bind("Name") %>' runat="server"></asp:Label>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                        <%--                                                <asp:TemplateField HeaderText="需簽章">
                                                     <ItemTemplate>
                                                         <asp:CheckBox ID="Cb_sign" runat="server" OnCheckedChanged="Cb_sign_CheckedChanged" AutoPostBack="True" />
                                                     </ItemTemplate>
-                                                </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="可察看投票結果">
+                                                </asp:TemplateField>--%>
+                                                        <%--                                                <asp:TemplateField HeaderText="可察看投票結果">
                                                     <ItemTemplate>
                                                         <asp:CheckBox ID="Cb_path" runat="server" OnCheckedChanged="Cb_path_CheckedChanged" AutoPostBack="True" />
                                                     </ItemTemplate>
@@ -360,10 +356,10 @@
                                                     <ItemTemplate>
                                                         <asp:CheckBox ID="Cb_comment" runat="server" AutoPostBack="true" OnCheckedChanged="Cb_comment_CheckedChanged" />
                                                     </ItemTemplate>
-                                                </asp:TemplateField>
-                                            </Columns>
-                                            <HeaderStyle HorizontalAlign="Center" />
-                                        </asp:GridView>
+                                                </asp:TemplateField>--%>
+                                                    </Columns>
+                                                    <HeaderStyle HorizontalAlign="Center" />
+                                                </asp:GridView>
 
                                         <asp:GridView ID="GridView2" Width="100%" class="table" runat="server" AutoGenerateColumns="False" GridLines="Horizontal" DataKeyNames="ID" OnRowCommand="GridView2_RowCommand">
                                             <Columns>

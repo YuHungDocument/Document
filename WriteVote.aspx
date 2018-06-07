@@ -103,7 +103,7 @@
                     <div class="modal-body">
                         透過部門或職位加入群組
                                 <hr />
-                        <asp:DropDownList ID="DropDownList1" runat="server" class="btn btn-primary dropdown-toggle" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged"></asp:DropDownList>
+                        <asp:DropDownList ID="DropDownList1" runat="server" class="btn btn-primary dropdown-toggle"></asp:DropDownList>
                         &nbsp; &nbsp;&nbsp; &nbsp;
                         <asp:DropDownList ID="DropDownList2" runat="server" class="btn btn-primary dropdown-toggle" OnSelectedIndexChanged="DropDownList2_SelectedIndexChanged" AutoPostBack="True" ></asp:DropDownList>
 
@@ -299,9 +299,7 @@
                                         <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
 
                                         &nbsp;<asp:Button ID="Btn_Newgroup" runat="server" OnClick="Btn_Newgroup_Click" Text="新增至群組" />
-                                        &nbsp;<asp:Button ID="Btn_editgroup" runat="server" OnClick="Btn_editgroup_Click" Text="修改此群組" />
-
-                                        <br />
+                                        &nbsp;<br />
                                         <br />
 
                                         <asp:UpdatePanel ID="UpdatePanel1" runat="server">

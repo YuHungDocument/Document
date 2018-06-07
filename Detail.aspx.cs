@@ -17,6 +17,8 @@ namespace WebApplication1
     public partial class Detail : System.Web.UI.Page
     {
         #region 一連串宣告
+        string result;
+        string Hashstat;
         string KeyAddress;
         string RSAkey;
         string key;
@@ -615,6 +617,37 @@ namespace WebApplication1
                             AESiv = dr3["AESiv"].ToString();
                         }
                     }
+                    //找RSAkey
+                   
+                            using (SqlConnection cncheck = new SqlConnection(tmpdbhelper.DB_CnStr))
+                            {
+                                cncheck.Open();
+                                SqlCommand cmd6 = new SqlCommand(@"Select RSAkey,sign,Hashstat From Detail Where SID=@SID ");
+                                cmd6.Connection = cncheck;
+                                cmd6.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+
+                                using (SqlDataReader dr2 = cmd6.ExecuteReader())
+                                {
+                                    while (dr2.Read())
+                                    {
+
+                                        RSAkey = dr2["RSAkey"].ToString();
+                                        string sign= dr2["sign"].ToString();
+                                SHA256 sha256 = new SHA256CryptoServiceProvider();//建立一個SHA256
+                                        byte[] source = Encoding.Default.GetBytes(sign + RSAkey);//將字串轉為Byte[]
+                                        byte[] crypto = sha256.ComputeHash(source);//進行SHA256加密
+                                        result += Convert.ToBase64String(crypto);//把加密後的字串從Byte[]轉為字串
+                                        Hashstat += dr2["Hashstat"].ToString();
+                                        }
+
+                                    }
+                                    if (Hashstat != result)
+                                    {
+                                        Response.Write("<script>alert('簽章已遭竄改!');location.href='WaitDocument.aspx';</script>");
+                                    }
+                                }
+
+                    
 
                     //對稱解密
 
@@ -624,6 +657,7 @@ namespace WebApplication1
 
                 }
                 #endregion
+
             }
         }
         #endregion
@@ -808,14 +842,35 @@ namespace WebApplication1
 
                             if (dr.Read())
                             {
+                                using (SqlConnection cnRSA = new SqlConnection(tmpdbhelper.DB_CnStr))
+                                {
+                                    cnRSA.Open();
+                                    SqlCommand cmdRSA = new SqlCommand(@"Select RSAkey From Detail Where EID=@EID and SID=@SID");
+                                    cmdRSA.Connection = cnRSA;
+                                    cmdRSA.Parameters.AddWithValue("@EID", Lbl_EID.Text);
+                                    cmdRSA.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
+                                    using (SqlDataReader drRSA = cmdRSA.ExecuteReader())
+                                    {
+                                        if (drRSA.Read())
+                                        {
+                                            RSAkey = drRSA["RSAkey"].ToString();
+                                        }
+                                    }
+                                }
                                 using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
                                 {
                                     cn2.Open();
-                                    SqlCommand cmd2 = new SqlCommand(@"UPDATE Detail Set sign=1,signtime=@signtime Where SID=@SID AND EID=@EID");
+                                    SqlCommand cmd2 = new SqlCommand(@"UPDATE Detail Set sign=1,signtime=@signtime,Hashstat=@Hashstat Where SID=@SID AND EID=@EID");
                                     cmd2.Connection = cn2;
                                     cmd2.Parameters.AddWithValue("@EID", Lbl_EID.Text);
                                     cmd2.Parameters.AddWithValue("@SID", Lbl_SID.Text);
                                     cmd2.Parameters.AddWithValue("@signtime", System.DateTime.Now);
+                                    SHA256 sha256_2 = new SHA256CryptoServiceProvider();//建立一個SHA256
+                                    byte[] source_2 = Encoding.Default.GetBytes("1" + RSAkey);//將字串轉為Byte[]
+                                    byte[] crypto_2 = sha256_2.ComputeHash(source_2);//進行SHA256加密
+                                    string result_2 = Convert.ToBase64String(crypto_2);//把加密後的字串從Byte[]轉為字串
+                                 
+                                    cmd2.Parameters.AddWithValue("@Hashstat", result_2);
                                     cmd2.ExecuteNonQuery();
                                 }
                                 using (SqlConnection cn3 = new SqlConnection(tmpdbhelper.DB_CnStr))

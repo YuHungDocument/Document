@@ -1431,7 +1431,7 @@ namespace WebApplication1
 
 
                                             //寫回資料庫 
-                                            SqlCommand cmdd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,path,sign,look,RSAkey,isAgent,isread,recheckKey,comment)VALUES(@SID,@Lvl,@EID,@Department,@status,@path,@sign,@look,@RSAkey,@isAgent,@isread,@recheckKey,@comment)");
+                                            SqlCommand cmdd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,path,sign,look,RSAkey,isAgent,isread,recheckKey,comment,Hashstat)VALUES(@SID,@Lvl,@EID,@Department,@status,@path,@sign,@look,@RSAkey,@isAgent,@isread,@recheckKey,@comment,@Hashstat)");
                                             cn3.Open();
                                             cmdd.Connection = cn3;
                                             cmdd.Parameters.AddWithValue("@SID", SID);
@@ -1442,12 +1442,25 @@ namespace WebApplication1
                                             if (Cb_sign.Checked == true)
                                             {
                                                 cmdd.Parameters.AddWithValue("@status", "1");
-                                                cmdd.Parameters.AddWithValue("@sign", AESEncryption(txtKey, txtIV, "0") );
+                                                cmdd.Parameters.AddWithValue("@sign", "0");
+                                                SHA256 sha256_1 = new SHA256CryptoServiceProvider();//建立一個SHA256
+                                                byte[] source_1 = Encoding.Default.GetBytes("0" + txt_PKmessage);//將字串轉為Byte[]
+                                                byte[] crypto_1 = sha256_1.ComputeHash(source_1);//進行SHA256加密
+                                                string result_1 = Convert.ToBase64String(crypto_1);//把加密後的字串從Byte[]轉為字串
+
+                                                cmdd.Parameters.AddWithValue("@Hashstat", result_1);
+                                                
                                             }
                                             else
                                             {
                                                 cmdd.Parameters.AddWithValue("@status", "0");
-                                                cmdd.Parameters.AddWithValue("@sign", AESEncryption(txtKey, txtIV, "1"));
+                                                cmdd.Parameters.AddWithValue("@sign", "1");
+                                                SHA256 sha256_2 = new SHA256CryptoServiceProvider();//建立一個SHA256
+                                                byte[] source_2 = Encoding.Default.GetBytes("1" + txt_PKmessage);//將字串轉為Byte[]
+                                                byte[] crypto_2 = sha256_2.ComputeHash(source_2);//進行SHA256加密
+                                                string result_2 = Convert.ToBase64String(crypto_2);//把加密後的字串從Byte[]轉為字串
+
+                                                cmdd.Parameters.AddWithValue("@Hashstat", result_2);
                                             }
                                             if (ChB_Check.Checked == true)
                                             {
@@ -1620,7 +1633,7 @@ namespace WebApplication1
                         }
 
                         //寫回資料庫 
-                        SqlCommand cmd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,path,sign,look,RSAkey,isAgent,isread,recheckKey,comment)VALUES(@SID,@Lvl,@EID,@Department,@status,@path,@sign,@look,@RSAkey,@isAgent,@isread,@recheckKey,@comment)");
+                        SqlCommand cmd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,path,sign,look,RSAkey,isAgent,isread,recheckKey,comment,Hashstat)VALUES(@SID,@Lvl,@EID,@Department,@status,@path,@sign,@look,@RSAkey,@isAgent,@isread,@recheckKey,@comment,@Hashstat)");
 
                         cmd.Connection = cn3;
                         cmd.Parameters.AddWithValue("@SID", SID);
@@ -1631,7 +1644,13 @@ namespace WebApplication1
                         cmd.Parameters.AddWithValue("@comment", "1");
                         cmd.Parameters.AddWithValue("@path", "1");
                         cmd.Parameters.AddWithValue("@status", "0");
-                        cmd.Parameters.AddWithValue("@sign", AESEncryption(txtKey, txtIV, "1"));                        
+                        cmd.Parameters.AddWithValue("@sign", "1");
+                        SHA256 sha256 = new SHA256CryptoServiceProvider();//建立一個SHA256
+                        byte[] source = Encoding.Default.GetBytes("1" + txt_PKmessage);//將字串轉為Byte[]
+                        byte[] crypto = sha256.ComputeHash(source);//進行SHA256加密
+                        string result = Convert.ToBase64String(crypto);//把加密後的字串從Byte[]轉為字串
+
+                        cmd.Parameters.AddWithValue("@Hashstat", result);
                         if (ChB_Check.Checked == true)
                         {
                             cmd.Parameters.AddWithValue("@recheckKey", "1");

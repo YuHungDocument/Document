@@ -24,7 +24,13 @@ namespace WebApplication1
 
         public void bind()
         {
-            string sqlstr = "Select * from Record Order by ID desc";
+            UserInfo tmpUserInfo = null;
+            if (Session["userinfo"] is UserInfo)
+            {
+                tmpUserInfo = (UserInfo)Session["userinfo"];
+                
+            }
+            string sqlstr = "Select * from Record Where EID='" + tmpUserInfo.EID + "' Order by ID desc";
             SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
             SqlCommand cmd = new SqlCommand(sqlstr, sqlcon);
             DataSet myds = new DataSet();
@@ -33,6 +39,34 @@ namespace WebApplication1
             myda.Fill(myds, "Record");
             GridView1.DataSource = myds;
             GridView1.DataBind();
+        }
+
+        protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "SelData")
+            {
+                //這樣就可以讀到RowIndex
+                int index = ((GridViewRow)
+                ((LinkButton)e.CommandSource).NamingContainer).RowIndex;
+                //這樣就可以取得Keys值了
+                string keyId = GridView1.DataKeys[index].Value.ToString();
+                Session["EditNID"] = keyId;
+                Response.Redirect("NewsEditDetail.aspx");
+            }
+            if (e.CommandName == "DelData")
+            {
+                int index = ((GridViewRow)((LinkButton)e.CommandSource).NamingContainer).RowIndex;
+                string keyId = GridView1.DataKeys[index].Value.ToString();
+                using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+                {
+                    cn.Open();
+                    SqlCommand cmd = new SqlCommand("Delete From News Where NID=@NID");
+                    cmd.Connection = cn;
+                    cmd.Parameters.AddWithValue("@NID", keyId);
+                    cmd.ExecuteNonQuery();
+                    bind();
+                }
+            }
         }
     }
 }

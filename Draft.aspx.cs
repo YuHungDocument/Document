@@ -45,9 +45,30 @@ namespace WebApplication1
                 ((LinkButton)e.CommandSource).NamingContainer).RowIndex;
                 //這樣就可以取得Keys值了
                 string keyId = Menu.DataKeys[index].Value.ToString();
+                using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+                {
+                    cn.Open();
+                    SqlCommand cmd = new SqlCommand("Select * From Draft Where DID=@DID");
+                    cmd.Connection = cn;
+                    cmd.Parameters.AddWithValue("@DID",keyId);
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        if(dr.Read())
+                        {
+                            if(dr["Type"].ToString()!="投票")
+                            {
+                                Session["keyId"] = keyId;
+                                Response.Redirect("DraftDetail.aspx");
+                            }
+                            else
+                            {
+                                Session["keyId"] = keyId;
+                                Response.Redirect("DraftVoteDetail.aspx");
+                            }
+                        }
+                    }
+                }
 
-                Session["keyId"] = keyId;
-                Response.Redirect("DraftDetail.aspx");
             }
         }
 

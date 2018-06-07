@@ -298,9 +298,7 @@
                                 <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
 
                                 &nbsp;<asp:Button ID="Btn_Newgroup" runat="server" OnClick="Btn_Newgroup_Click" Text="新增至群組" />
-                                &nbsp;<asp:Button ID="Btn_editgroup" runat="server" OnClick="Btn_editgroup_Click" Text="修改此群組" />
-
-                                <br />
+                                &nbsp;<br />
                                 <br />
 
                                 <asp:UpdatePanel ID="UpdatePanel1" runat="server">
@@ -424,6 +422,8 @@
                                         </asp:GridView>
                                         <br />
                                         <asp:Button ID="Btn_Save" runat="server" Text="送出" OnClick="Btn_Save_Click" />
+                                        &nbsp;&nbsp;
+                                        <asp:Button ID="Btn_Edit" runat="server" Text="修改" />
                                         <asp:Label ID="Lbl_Eorr" runat="server" ForeColor="Red" Text="資料輸入不完整" Visible="False"></asp:Label>
                                     </ContentTemplate>
                                 </asp:UpdatePanel>

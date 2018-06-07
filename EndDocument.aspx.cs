@@ -465,7 +465,7 @@ namespace WebApplication1
         #region 顯示全部
         protected void Btn_cancel_Click(object sender, EventArgs e)
         {
-            Response.Redirect("WaitProcess.aspx");
+            Response.Redirect("EndDocument.aspx");
         }
         #endregion
     }

@@ -78,10 +78,10 @@ return modes;
   <div class="auto-style4">
                     <div class="container">
                     <div style="border: thin solid #C0C0C0; padding: 10px; margin: auto; background-color: #E9E9E9; width: auto; height: auto;" class="auto-style1">
-輸入新密碼:<asp:TextBox class="form-control" Width="265px" ID="Txt_Pwd" runat="server" onKeyUp=pwStrength(this.value) onBlur=pwStrength(this.value) ></asp:TextBox>
+輸入新密碼:<asp:TextBox class="form-control" Width="265px" ID="Txt_Pwd" runat="server" onKeyUp=pwStrength(this.value) onBlur=pwStrength(this.value) TextMode="Password" ></asp:TextBox>
                         <br />
                         <br />
-確認新密碼:<asp:TextBox ID="Txt_ConfirmPwd" runat="server" class="form-control" Width="265px"></asp:TextBox>
+確認新密碼:<asp:TextBox ID="Txt_ConfirmPwd" runat="server" class="form-control" Width="265px" TextMode="Password"></asp:TextBox>
                         <br />
 密碼強度:
 <table border="1" cellpadding="1" borderColorDark="#fdfeff" borderColorLight="#99ccff" cellspacing="1" style="width: 200px; display: inline; background-colore0f0ff">

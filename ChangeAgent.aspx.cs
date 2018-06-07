@@ -71,7 +71,7 @@ namespace WebApplication1
             string Date = DateTime.Now.ToString("yyyyMMddhhmmss");
             using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
-                SqlCommand cmd3 = new SqlCommand(@"Insert INTO Fil(SID,EID,Date,Text,Title,Proposition,Type,YOS,AESkey,AESiv,txt_RSAhash_Text,txt_RSAhash_Proposition,IsEnd)VALUES(@SID,@EID,@Date,@Text,@Title,@Proposition,@Type,@YOS,@AESkey,@AESiv,@txt_RSAhash_Text,@txt_RSAhash_Proposition,@IsEnd)");
+                SqlCommand cmd3 = new SqlCommand(@"Insert INTO Fil(SID,EID,Date,Text,Title,Proposition,Type,YOS,AESiv,txt_RSAhash_Text,txt_RSAhash_Proposition,IsEnd)VALUES(@SID,@EID,@Date,@Text,@Title,@Proposition,@Type,@YOS,@AESiv,@txt_RSAhash_Text,@txt_RSAhash_Proposition,@IsEnd)");
                 cn2.Open();
                 cmd3.Connection = cn2;
                 //建立一個 AES 演算法
@@ -145,7 +145,6 @@ namespace WebApplication1
                 cmd3.Parameters.AddWithValue("@Proposition", txt_Ciphertext_Proposition);
                 cmd3.Parameters.AddWithValue("@Type", "代理人設定");
                 cmd3.Parameters.AddWithValue("@YOS", "10");
-                cmd3.Parameters.AddWithValue("@AESkey", txtKey);
                 cmd3.Parameters.AddWithValue("@AESiv", txtIV);
                 cmd3.Parameters.AddWithValue("@txt_RSAhash_Text", txt_RSAhash_Text);
                 cmd3.Parameters.AddWithValue("@txt_RSAhash_Proposition", txt_RSAhash_Proposition);
@@ -204,8 +203,8 @@ namespace WebApplication1
                 }
                 cn3.Close();
                 //寫回資料庫                        
-                SqlCommand cmd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,sign,look,RSAkey)VALUES(@SID,@Lvl,@EID,@Department,@status,@sign,@look,@RSAkey)");
-                SqlCommand cmd2 = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,sign,look,RSAkey)VALUES(@SID,@Lvl,@EID,@Department,@status,@sign,@look,@RSAkey)");
+                SqlCommand cmd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,sign,look,choose,RSAkey,Hashstat)VALUES(@SID,@Lvl,@EID,@Department,@status,@sign,@look,@choose,@RSAkey,@Hashstat)");
+                SqlCommand cmd2 = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,sign,look,choose,RSAkey,Hashstat)VALUES(@SID,@Lvl,@EID,@Department,@status,@sign,@look,@choose,@RSAkey,@Hashstat)");
                 cn3.Open();
                 cmd.Connection = cn3;
                 cmd.Parameters.AddWithValue("@SID", Date);
@@ -216,6 +215,13 @@ namespace WebApplication1
                 cmd.Parameters.AddWithValue("@RSAkey", txt_PKmessage);
                 cmd.Parameters.AddWithValue("@look", 1);
                 cmd.Parameters.AddWithValue("@sign", 1);
+                cmd.Parameters.AddWithValue("@choose", 0);
+                SHA256 sha256_1 = new SHA256CryptoServiceProvider();//建立一個SHA256
+                byte[] source_1 = Encoding.Default.GetBytes("1" + "0" + txt_PKmessage);//將字串轉為Byte[]
+                byte[] crypto_1 = sha256_1.ComputeHash(source_1);//進行SHA256加密
+                string result_1 = Convert.ToBase64String(crypto_1);//把加密後的字串從Byte[]轉為字串
+
+                cmd.Parameters.AddWithValue("@Hashstat", result_1);
                 cmd.ExecuteNonQuery();
                 cn3.Close();
                 cn3.Open();
@@ -228,6 +234,13 @@ namespace WebApplication1
                 cmd2.Parameters.AddWithValue("@RSAkey", txt_PKmessage2);
                 cmd2.Parameters.AddWithValue("@look", 1);
                 cmd2.Parameters.AddWithValue("@sign", 0);
+                cmd2.Parameters.AddWithValue("@choose", 0);
+                SHA256 sha256_2 = new SHA256CryptoServiceProvider();//建立一個SHA256
+                byte[] source_2 = Encoding.Default.GetBytes("0" + "0" + txt_PKmessage2);//將字串轉為Byte[]
+                byte[] crypto_2 = sha256_1.ComputeHash(source_2);//進行SHA256加密
+                string result_2 = Convert.ToBase64String(crypto_2);//把加密後的字串從Byte[]轉為字串
+
+                cmd2.Parameters.AddWithValue("@Hashstat", result_2);
                 cmd2.ExecuteNonQuery();
                 cn3.Close();
                 Response.Write("<script>alert('代理人同意函已發送!');location.href='SetAgent.aspx';</script>");

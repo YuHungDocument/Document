@@ -43,13 +43,8 @@
     
      <div class="col-sm-6">
             <div style="text-align: right">
-                    <asp:DropDownList ID="Ddl_Type" class="form-control" Height="50px" runat="server" AutoPostBack="True" OnSelectedIndexChanged="Ddl_Type_SelectedIndexChanged" Font-Size="X-Large" DataSourceID="SqlDataSource1" DataTextField="TN" DataValueField="TN">
+                    <asp:DropDownList ID="Ddl_Type" class="form-control" Height="50px" runat="server" AutoPostBack="True" OnSelectedIndexChanged="Ddl_Type_SelectedIndexChanged" Font-Size="X-Large" >
                     </asp:DropDownList>
-                            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString %>" SelectCommand="SELECT [TN] FROM [TypeGroup] WHERE ([Tp] = @Tp)">
-                                <SelectParameters>
-                                    <asp:Parameter DefaultValue="Dp" Name="Tp" Type="String" />
-                                </SelectParameters>
-                            </asp:SqlDataSource>
                 </div>
                 <p></p>
                 <asp:GridView ID="GridView1" CssClass="table" runat="server" AutoGenerateColumns="False" BorderStyle="None" DataKeyNames="BID" Width="100%" Font-Size="X-Large" GridLines="Horizontal" BackColor="WhiteSmoke" AllowPaging="True" PageSize="5" OnDataBound="GridView1_DataBound" OnPreRender="GridView1_PreRender" OnRowCommand="GridView1_RowCommand">

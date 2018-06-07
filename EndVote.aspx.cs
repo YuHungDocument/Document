@@ -410,7 +410,7 @@ namespace WebApplication1
 
         protected void Btn_cancel_Click(object sender, EventArgs e)
         {
-            Response.Redirect("WaitProcess.aspx");
+            Response.Redirect("EndVote.aspx");
         }
     }
 }

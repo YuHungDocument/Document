@@ -930,7 +930,7 @@ namespace WebApplication1
                                                 cmd4.ExecuteNonQuery();
                                             }
                                         }
-                                        if (Lbl_Type.Text == "公文類型：代理人設定")
+                                        if (Lbl_Type.Text == "代理人設定")
                                         {
                                             using (SqlConnection cnAgent = new SqlConnection(tmpdbhelper.DB_CnStr))
                                             {
@@ -971,7 +971,7 @@ namespace WebApplication1
                                                 cnAgent.Close();
                                             }
                                         }
-                                        if (Lbl_Type.Text == "公文類型：組織架構設定")
+                                        if (Lbl_Type.Text == "組織架構設定")
                                         {
                                             using (SqlConnection cnedit = new SqlConnection(tmpdbhelper.DB_CnStr))
                                             {
@@ -994,7 +994,7 @@ namespace WebApplication1
                                             }
                                         }
 
-                                        if (Lbl_Type.Text == "公文類型：Permission設定")
+                                        if (Lbl_Type.Text == "Permission設定")
                                         {
                                             using (SqlConnection cnedit = new SqlConnection(tmpdbhelper.DB_CnStr))
                                             {

@@ -310,8 +310,7 @@
                             <asp:Label ID="Label2" runat="server" Text="輸入群組名稱："></asp:Label>
                             <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
                             &nbsp;<asp:Button ID="Btn_Newgroup" runat="server" OnClick="Btn_Newgroup_Click" Text="新增至群組" />
-                            &nbsp;<asp:Button ID="Btn_editgroup" runat="server" OnClick="Btn_editgroup_Click" Text="修改此群組" />
-                            <br />
+                            &nbsp;<br />
                             <br />
                             <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                                 <ContentTemplate>

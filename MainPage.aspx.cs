@@ -33,6 +33,7 @@ namespace WebApplication1
                         tmpUserInfo = (UserInfo)Session["userinfo"];
                         Lbl_EID.Text = tmpUserInfo.EID;
                         bind();
+                        ddtypebind();
                     }
                     #endregion
                 }
@@ -121,7 +122,7 @@ namespace WebApplication1
         protected void Ddl_Type_SelectedIndexChanged(object sender, EventArgs e)
         {
 
-            if (Ddl_Type.SelectedValue != "全部部門")
+            if (Ddl_Type.SelectedValue != "所有部門")
             {
                 string sqlstr = "Select * from Bulletin Where Dp='" + Ddl_Type.SelectedValue + "' Order by BID desc";
 
@@ -140,9 +141,22 @@ namespace WebApplication1
             }
         }
 
-        public void bind4()
+        public void ddtypebind()
         {
-
+            Ddl_Type.Items.Add("所有部門");
+            using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+                cn.Open();
+                SqlCommand cmd = new SqlCommand("Select * from TypeGroup Where Tp='Dp' and TID!='0'");
+                cmd.Connection = cn;
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        Ddl_Type.Items.Add(dr["TN"].ToString());
+                    }
+                }
+            }
 
         }
 

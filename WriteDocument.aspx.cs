@@ -1287,7 +1287,7 @@ namespace WebApplication1
                 using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
                 {
                     //SqlCommand cmd4 = new SqlCommand(@"update Fil set Fil.Name=Document.Name,Fil.DocumentContent=Document.DocumentContent,Fil.Extn=Document.Extn  from Document join Fil on Fil.SID=Document.SID");
-                    SqlCommand cmd3 = new SqlCommand(@"Insert INTO Fil(SID,EID,Date,Speed,Text,Title,Proposition,Type,YOS,AESkey,AESiv,txt_RSAhash_Text,txt_RSAhash_Proposition,IsEnd)VALUES(@SID,@EID,@Date,@Speed,@Text,@Title,@Proposition,@Type,@YOS,@AESkey,@AESiv,@txt_RSAhash_Text,@txt_RSAhash_Proposition,@IsEnd)");
+                    SqlCommand cmd3 = new SqlCommand(@"Insert INTO Fil(SID,EID,Date,Speed,Text,Title,Proposition,Type,YOS,AESiv,txt_RSAhash_Text,txt_RSAhash_Proposition,IsEnd)VALUES(@SID,@EID,@Date,@Speed,@Text,@Title,@Proposition,@Type,@YOS,@AESiv,@txt_RSAhash_Text,@txt_RSAhash_Proposition,@IsEnd)");
                     cn2.Open();
                     cmd3.Connection = cn2;
                     //cmd4.Connection = cn2;
@@ -1348,7 +1348,6 @@ namespace WebApplication1
                     cmd3.Parameters.AddWithValue("@Proposition", txt_Ciphertext_Proposition);
                     cmd3.Parameters.AddWithValue("@Type", Ddp_Type.SelectedValue);
                     cmd3.Parameters.AddWithValue("@YOS", Ddp_YOS.SelectedValue);
-                    cmd3.Parameters.AddWithValue("@AESkey", txtKey);
                     cmd3.Parameters.AddWithValue("@AESiv", txtIV);
                     cmd3.Parameters.AddWithValue("@txt_RSAhash_Text", txt_RSAhash_Text);
                     cmd3.Parameters.AddWithValue("@txt_RSAhash_Proposition", txt_RSAhash_Proposition);
@@ -1443,12 +1442,12 @@ namespace WebApplication1
                                             if (Cb_sign.Checked == true)
                                             {
                                                 cmdd.Parameters.AddWithValue("@status", "1");
-                                                cmdd.Parameters.AddWithValue("@sign", 0);
+                                                cmdd.Parameters.AddWithValue("@sign", AESEncryption(txtKey, txtIV, "0") );
                                             }
                                             else
                                             {
                                                 cmdd.Parameters.AddWithValue("@status", "0");
-                                                cmdd.Parameters.AddWithValue("@sign", 1);
+                                                cmdd.Parameters.AddWithValue("@sign", AESEncryption(txtKey, txtIV, "1"));
                                             }
                                             if (ChB_Check.Checked == true)
                                             {
@@ -1632,7 +1631,7 @@ namespace WebApplication1
                         cmd.Parameters.AddWithValue("@comment", "1");
                         cmd.Parameters.AddWithValue("@path", "1");
                         cmd.Parameters.AddWithValue("@status", "0");
-                        cmd.Parameters.AddWithValue("@sign", 1);                        
+                        cmd.Parameters.AddWithValue("@sign", AESEncryption(txtKey, txtIV, "1"));                        
                         if (ChB_Check.Checked == true)
                         {
                             cmd.Parameters.AddWithValue("@recheckKey", "1");

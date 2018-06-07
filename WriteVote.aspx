@@ -101,6 +101,8 @@
                         <h4 class="modal-title">選擇群組</h4>
                     </div>
                     <div class="modal-body">
+                        透過部門或職位加入群組
+                                <hr />
                         <asp:DropDownList ID="DropDownList1" runat="server" class="btn btn-primary dropdown-toggle" AutoPostBack="True" DataSourceID="SqlDataSource3" DataTextField="TN" DataValueField="TN" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
                         </asp:DropDownList>
                         <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:電子公文ConnectionString %>" SelectCommand="SELECT [TN] FROM [TypeGroup] WHERE ([Tp] = @Tp)">
@@ -110,7 +112,10 @@
                         </asp:SqlDataSource>
                         <br />
                         <p></p>
-                        <asp:GridView ID="GridView4" runat="server" AutoGenerateColumns="False" BorderStyle="None" BorderWidth="1px" CellPadding="5" CellSpacing="1" GridLines="None" HorizontalAlign="Center" OnSelectedIndexChanged="GridView4_SelectedIndexChanged" Style="line-height: 22px; width: 50%;">
+                        <hr />
+                        自訂的群組
+                                <hr />
+                        <asp:GridView ID="GridView4" runat="server" AutoGenerateColumns="False" BorderStyle="None" BorderWidth="1px" CellPadding="5" CellSpacing="1" GridLines="None" HorizontalAlign="Center" OnSelectedIndexChanged="GridView4_SelectedIndexChanged" CssClass="table" Style="line-height: 22px; width: 100%;">
                             <Columns>
                                 <asp:TemplateField>
                                     <HeaderTemplate>
@@ -146,7 +151,7 @@
             <h3 class="panel-title "><span>撰寫內文<i class="glyphicon glyphicon-chevron-up"></i></span></h3>
         </div>
         <div class="panel-body">
-            <table style="border:none">
+            <table style="border: none">
                 <tr style="height: 25px">
                     <td style="width: 80px">文　　號</td>
                     <td>
@@ -289,64 +294,66 @@
                 <div class="panel panel-warning" style="width: 100%">
                     <div class="panel-heading">填寫收件人與收發順序</div>
                     <div class="panel-body">
-                        <table class="nav-justified" style="border:none">
-                    <tr>
-                        <td style="height: 243px">
-                            <div style="text-align: left">
-                                <asp:Label ID="Label2" runat="server" Text="輸入群組名稱："></asp:Label>
-                                <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                        <table class="nav-justified" style="border: none">
+                            <tr>
+                                <td style="height: 243px">
+                                    <div style="text-align: left">
+                                        <asp:Label ID="Label2" runat="server" Text="輸入群組名稱："></asp:Label>
+                                        <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
 
-                                &nbsp;<asp:Button ID="Btn_Newgroup" runat="server" OnClick="Btn_Newgroup_Click" Text="新增至群組" />
-                                &nbsp;<asp:Button ID="Btn_editgroup" runat="server" OnClick="Btn_editgroup_Click" Text="修改此群組" />
-
-                                <br />
-                                <br />
-
-                                <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-                                    <ContentTemplate>
-                                        <button type="button" id="Btn" runat="server" data-toggle="modal" data-target="#myModal">選擇群組</button>
+                                        &nbsp;<asp:Button ID="Btn_Newgroup" runat="server" OnClick="Btn_Newgroup_Click" Text="新增至群組" />
+                                        &nbsp;<asp:Button ID="Btn_editgroup" runat="server" OnClick="Btn_editgroup_Click" Text="修改此群組" />
 
                                         <br />
-
-                                        <asp:CheckBox ID="ChB_Check" runat="server" Text="簽核時是否重新檢查金鑰" />
-
-                                        <asp:Label ID="Lbl_GpName" runat="server" Text="Label" Visible="False"></asp:Label>
                                         <br />
-                                        <br />
-                                        <asp:GridView ID="GridView1" class="table" runat="server" AutoGenerateColumns="False" GridLines="Horizontal">
-                                            <Columns>
-                                                <asp:TemplateField HeaderText="排列" ShowHeader="False" Visible="False">
-                                                    <ItemTemplate>
-                                                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("ID") %>'></asp:Label>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                                <asp:BoundField DataField="SID" HeaderText="序列" Visible="false" />
-<%--                                                <asp:TemplateField HeaderText="層級">
+
+                                        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                                            <ContentTemplate>
+                                                <button type="button" id="Btn" runat="server" data-toggle="modal" data-target="#myModal">選擇群組</button>
+
+                                                <br />
+
+                                                <br />
+
+                                                <asp:CheckBox ID="ChB_Check" runat="server" Text="簽核時是否重新檢查金鑰" />
+
+                                                <asp:Label ID="Lbl_GpName" runat="server" Text="Label" Visible="False"></asp:Label>
+                                                <br />
+                                                <br />
+                                                <asp:GridView ID="GridView1" class="table" runat="server" AutoGenerateColumns="False" GridLines="Horizontal">
+                                                    <Columns>
+                                                        <asp:TemplateField HeaderText="排列" ShowHeader="False" Visible="False">
+                                                            <ItemTemplate>
+                                                                <asp:Label ID="Label1" runat="server" Text='<%# Bind("ID") %>'></asp:Label>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                        <asp:BoundField DataField="SID" HeaderText="序列" Visible="false" />
+                                                        <%--                                                <asp:TemplateField HeaderText="層級">
                                                     <ItemTemplate>
                                                         <asp:TextBox DataField="Lvl" ID="Txt_Lvl" runat="server" OnTextChanged="Txt_Lvl_TextChanged" TextMode="Number" Width="50px" AutoPostBack="True"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>--%>
-                                                <asp:TemplateField HeaderText="發布人編號">
-                                                    <ItemTemplate>
-                                                        <asp:Label ID="Lbl_EID" Text='<%# Bind("EID") %>' runat="server"></asp:Label>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="發布人部門">
-                                                    <ItemTemplate>
-                                                        <asp:Label ID="Lbl_Dep" Text='<%# Bind("Department") %>' runat="server"></asp:Label>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="發布人姓名">
-                                                    <ItemTemplate>
-                                                        <asp:Label ID="Lbl_Name" Text='<%# Bind("Name") %>' runat="server"></asp:Label>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-<%--                                                <asp:TemplateField HeaderText="需簽章">
+                                                        <asp:TemplateField HeaderText="發布人編號">
+                                                            <ItemTemplate>
+                                                                <asp:Label ID="Lbl_EID" Text='<%# Bind("EID") %>' runat="server"></asp:Label>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                        <asp:TemplateField HeaderText="發布人部門">
+                                                            <ItemTemplate>
+                                                                <asp:Label ID="Lbl_Dep" Text='<%# Bind("Department") %>' runat="server"></asp:Label>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                        <asp:TemplateField HeaderText="發布人姓名">
+                                                            <ItemTemplate>
+                                                                <asp:Label ID="Lbl_Name" Text='<%# Bind("Name") %>' runat="server"></asp:Label>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                        <%--                                                <asp:TemplateField HeaderText="需簽章">
                                                     <ItemTemplate>
                                                         <asp:CheckBox ID="Cb_sign" runat="server" OnCheckedChanged="Cb_sign_CheckedChanged" AutoPostBack="True" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>--%>
-<%--                                                <asp:TemplateField HeaderText="可察看投票結果">
+                                                        <%--                                                <asp:TemplateField HeaderText="可察看投票結果">
                                                     <ItemTemplate>
                                                         <asp:CheckBox ID="Cb_path" runat="server" OnCheckedChanged="Cb_path_CheckedChanged" AutoPostBack="True" />
                                                     </ItemTemplate>
@@ -356,86 +363,86 @@
                                                         <asp:CheckBox ID="Cb_comment" runat="server" AutoPostBack="true" OnCheckedChanged="Cb_comment_CheckedChanged" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>--%>
-                                            </Columns>
-                                            <HeaderStyle HorizontalAlign="Center" />
-                                        </asp:GridView>
+                                                    </Columns>
+                                                    <HeaderStyle HorizontalAlign="Center" />
+                                                </asp:GridView>
 
-                                        <asp:GridView ID="GridView2" Width="100%" class="table" runat="server" AutoGenerateColumns="False" GridLines="Horizontal" DataKeyNames="ID" OnRowCommand="GridView2_RowCommand">
-                                            <Columns>
-                                                <asp:TemplateField HeaderText="排列" ShowHeader="False" Visible="False">
-                                                    <ItemTemplate>
-                                                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("ID") %>'></asp:Label>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                                <asp:BoundField DataField="SID" HeaderText="序列" Visible="false" />
-                                                <asp:TemplateField HeaderText="層級">
-                                                    <ItemTemplate>
-                                                        <asp:TextBox DataField="Lvl" ID="Txt_Lvl" runat="server" OnTextChanged="Txt_Lvl_TextChanged" TextMode="Number" Width="50px" AutoPostBack="True"></asp:TextBox>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="人員編號">
-                                                    <ItemTemplate>
-                                                        <asp:TextBox DataField="EID" placeholder="請輸入員工編號或姓名" ID="Txt_EID" runat="server" AutoPostBack="True" OnTextChanged="Txt_EID_TextChanged"></asp:TextBox>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="部門">
-                                                    <ItemTemplate>
-                                                        <asp:Label ID="Lbl_Dep" runat="server"></asp:Label>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                                <asp:TemplateField HeaderText="員工姓名">
-                                                    <ItemTemplate>
-                                                        <asp:Label ID="Lbl_Name" runat="server"></asp:Label>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
+                                                <asp:GridView ID="GridView2" Width="100%" class="table" runat="server" AutoGenerateColumns="False" GridLines="Horizontal" DataKeyNames="ID" OnRowCommand="GridView2_RowCommand">
+                                                    <Columns>
+                                                        <asp:TemplateField HeaderText="排列" ShowHeader="False" Visible="False">
+                                                            <ItemTemplate>
+                                                                <asp:Label ID="Label1" runat="server" Text='<%# Bind("ID") %>'></asp:Label>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                        <asp:BoundField DataField="SID" HeaderText="序列" Visible="false" />
+                                                        <asp:TemplateField HeaderText="層級">
+                                                            <ItemTemplate>
+                                                                <asp:TextBox DataField="Lvl" ID="Txt_Lvl" runat="server" OnTextChanged="Txt_Lvl_TextChanged" TextMode="Number" Width="50px" AutoPostBack="True"></asp:TextBox>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                        <asp:TemplateField HeaderText="人員編號">
+                                                            <ItemTemplate>
+                                                                <asp:TextBox DataField="EID" placeholder="請輸入員工編號或姓名" ID="Txt_EID" runat="server" AutoPostBack="True" OnTextChanged="Txt_EID_TextChanged"></asp:TextBox>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                        <asp:TemplateField HeaderText="部門">
+                                                            <ItemTemplate>
+                                                                <asp:Label ID="Lbl_Dep" runat="server"></asp:Label>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                        <asp:TemplateField HeaderText="員工姓名">
+                                                            <ItemTemplate>
+                                                                <asp:Label ID="Lbl_Name" runat="server"></asp:Label>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
 
-                                                <asp:TemplateField>
-                                                    <HeaderTemplate>
-                                                        <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll" CheckBoxName="Cb_sign" HeaderText="需簽章" OnCheckedChanged="Cb_sign_CheckedChanged" AutoPostBack="True" />
+                                                        <asp:TemplateField>
+                                                            <HeaderTemplate>
+                                                                <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll" CheckBoxName="Cb_sign" HeaderText="需簽章" OnCheckedChanged="Cb_sign_CheckedChanged" AutoPostBack="True" />
 
-                                                    </HeaderTemplate>
-                                                    <ItemTemplate>
-                                                        <asp:CheckBox ID="Cb_sign" runat="server" OnCheckedChanged="Cb_sign_CheckedChanged" AutoPostBack="True" />
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                                <asp:TemplateField>
-                                                    <HeaderTemplate>
-                                                        <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll1" CheckBoxName="Cb_path" HeaderText="可察看投票結果" OnCheckedChanged="Cb_path_CheckedChanged" AutoPostBack="True" />
-                                                    </HeaderTemplate>
-                                                    <ItemTemplate>
-                                                        <asp:CheckBox ID="Cb_path" runat="server" OnCheckedChanged="Cb_path_CheckedChanged" AutoPostBack="True" />
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                                <asp:TemplateField>
-                                                    <HeaderTemplate>
-                                                        <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll3" CheckBoxName="Cb_comment" HeaderText="是否評論" OnCheckedChanged="Cb_comment_CheckedChanged" AutoPostBack="True" />
-                                                    </HeaderTemplate>
-                                                    <ItemTemplate>
-                                                        <asp:CheckBox ID="Cb_comment" runat="server" AutoPostBack="true" OnCheckedChanged="Cb_comment_CheckedChanged" />
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                                <asp:TemplateField>
-                                                    <ItemTemplate>
-                                                        <asp:LinkButton ID="Lbl_Delete" CommandName="DelData" OnClientClick="javascript:return confirm('確定刪除?')"  runat="server">刪除</asp:LinkButton>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                            </Columns>
-                                        </asp:GridView>
-                                        <br />
-                                        <asp:Button ID="Btn_Save" runat="server" Text="送出" OnClick="Btn_Save_Click" />
-                                        &nbsp;&nbsp;
+                                                            </HeaderTemplate>
+                                                            <ItemTemplate>
+                                                                <asp:CheckBox ID="Cb_sign" runat="server" OnCheckedChanged="Cb_sign_CheckedChanged" AutoPostBack="True" />
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                        <asp:TemplateField>
+                                                            <HeaderTemplate>
+                                                                <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll1" CheckBoxName="Cb_path" HeaderText="可察看投票結果" OnCheckedChanged="Cb_path_CheckedChanged" AutoPostBack="True" />
+                                                            </HeaderTemplate>
+                                                            <ItemTemplate>
+                                                                <asp:CheckBox ID="Cb_path" runat="server" OnCheckedChanged="Cb_path_CheckedChanged" AutoPostBack="True" />
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                        <asp:TemplateField>
+                                                            <HeaderTemplate>
+                                                                <uc1:ucGridViewChoiceAll runat="server" ID="ucGridViewChoiceAll3" CheckBoxName="Cb_comment" HeaderText="是否評論" OnCheckedChanged="Cb_comment_CheckedChanged" AutoPostBack="True" />
+                                                            </HeaderTemplate>
+                                                            <ItemTemplate>
+                                                                <asp:CheckBox ID="Cb_comment" runat="server" AutoPostBack="true" OnCheckedChanged="Cb_comment_CheckedChanged" />
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                        <asp:TemplateField>
+                                                            <ItemTemplate>
+                                                                <asp:LinkButton ID="Lbl_Delete" CommandName="DelData" OnClientClick="javascript:return confirm('確定刪除?')" runat="server">刪除</asp:LinkButton>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                    </Columns>
+                                                </asp:GridView>
+                                                <br />
+                                                <asp:Button ID="Btn_Save" runat="server" Text="送出" OnClick="Btn_Save_Click" />
+                                                &nbsp;&nbsp;
                                         <asp:Button ID="Btn_Draft" runat="server" OnClick="Btn_Draft_Click" Text="儲存至草稿" />
-                                        <asp:Label ID="Lbl_Eorr" runat="server" ForeColor="Red" Text="資料輸入不完整" Visible="False"></asp:Label>
-                                    </ContentTemplate>
-                                </asp:UpdatePanel>
+                                                <asp:Label ID="Lbl_Eorr" runat="server" ForeColor="Red" Text="資料輸入不完整" Visible="False"></asp:Label>
+                                            </ContentTemplate>
+                                        </asp:UpdatePanel>
 
-                            </div>
-                        </td>
-                    </tr>
-                </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
-                
+
             </td>
         </tr>
     </table>

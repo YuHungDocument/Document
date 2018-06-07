@@ -40,7 +40,7 @@ namespace WebApplication1
             {
                 Btn_Save.Attributes["onclick"] = "this.disabled = true;this.value = '資料送出中..';" + Page.ClientScript.GetPostBackEventReference(Btn_Save, "");
                 UserInfo tmpUserInfo = null;
-                bind2();
+                
                 if (Session["userinfo"] == null)
                 {
                     Response.Redirect("Home.aspx");
@@ -93,7 +93,8 @@ namespace WebApplication1
                         }
                         #endregion
 
-                        
+                        bind2();
+
 
                         using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
                         {
@@ -575,7 +576,6 @@ namespace WebApplication1
 
 
             GridView4.DataSource = myds;
-            GridView4.DataKeyNames = new string[] { "GID" };//主键
             GridView4.DataBind();
             sqlcon.Close();
 
@@ -1997,8 +1997,28 @@ namespace WebApplication1
         }
         #endregion
 
+        #region 儲存至草稿
         protected void Btn_Draft_Click(object sender, EventArgs e)
         {
+            using (SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+                sqlcon.Open();
+                for (int i = 0; i < GridView5.Rows.Count; i++)
+                {
+                    string Vname = ((TextBox)GridView5.Rows[i].FindControl("Txt_content")).Text.Trim();
+                    string number = ((Label)GridView5.Rows[i].FindControl("Lbl_number")).Text.Trim();
+
+                        SqlCommand sqlcmd = new SqlCommand("Insert Into VoteDraft (DID,number,Vname) Values (@DID,@number,@Vname)");
+                        sqlcmd.Connection = sqlcon;
+                        sqlcmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+                        sqlcmd.Parameters.AddWithValue("@number", number);
+                        string txt_Vname = AESEncryption(txtKey, txtIV, Vname);
+                        sqlcmd.Parameters.AddWithValue("@Vname", Vname);
+                        sqlcmd.ExecuteNonQuery();                   
+
+                }
+            }
+
             using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
 
@@ -2086,5 +2106,6 @@ namespace WebApplication1
                 ScriptManager.RegisterClientScriptBlock(UpdatePanel1, this.GetType(), "click", "alert('成功儲存至草稿')", true);
             }
         }
+        #endregion
     }
 }

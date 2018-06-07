@@ -262,7 +262,7 @@
                                                                 
                             </div>
                             <div class="modal-body">
-                                透過部門加入群組
+                                透過部門或職位加入群組
                                 <hr />
                                 <asp:DropDownList ID="DropDownList1" runat="server" class="btn btn-primary dropdown-toggle" AutoPostBack="True" DataSourceID="SqlDataSource3" DataTextField="TN" DataValueField="TN" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
                                 </asp:DropDownList>
@@ -276,7 +276,7 @@
                                 <hr />
                                 自訂的群組
                                 <hr />
-                                <asp:GridView ID="GridView4" runat="server" AutoGenerateColumns="False" BorderStyle="None" BorderWidth="1px" CellPadding="5" CellSpacing="1" GridLines="None" HorizontalAlign="Center" OnSelectedIndexChanged="GridView4_SelectedIndexChanged" Style="line-height: 22px; width: 100%;">
+                                <asp:GridView ID="GridView4" runat="server" CssClass="table" AutoGenerateColumns="False" BorderStyle="None" BorderWidth="1px" CellPadding="5" CellSpacing="1" GridLines="None" HorizontalAlign="Center" OnSelectedIndexChanged="GridView4_SelectedIndexChanged" Style="line-height: 22px; width: 100%;">
                                     <Columns>
                                         <asp:TemplateField>
                                             <HeaderTemplate>

@@ -109,6 +109,7 @@ namespace WebApplication1
                                     Lbl_SID.Text = DateTime.Now.ToString("yyyyMMddhhmmss"); ;
                                     Txt_Title.Text = dr["Title"].ToString();
                                     Txt_Text.Text = dr["Text"].ToString();
+                                    d1.Value = dr["DeadLine"].ToString();
 
                                 }
 

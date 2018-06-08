@@ -1311,29 +1311,29 @@ namespace WebApplication1
                 cmd2.ExecuteNonQuery();
             }
         }
-        protected void Cb_sign_CheckedChanged1(object sender, EventArgs e)
-        {
-            CheckBox CheckBox = (CheckBox)sender;
-            int gvRowIndex = (CheckBox.NamingContainer as GridViewRow).RowIndex;
-            string ID = ((Label)GridView5.Rows[gvRowIndex].FindControl("Label1")).Text.Trim();
-            CheckBox ck = ((CheckBox)GridView5.Rows[gvRowIndex].FindControl("Cb_sign"));
-            using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
-            {
-                cn2.Open();
-                SqlCommand cmd2 = new SqlCommand("Update Preview set status=@status Where ID=@ID");
-                if (ck.Checked == true)
-                {
-                    cmd2.Parameters.AddWithValue("@status", "1");
-                }
-                else
-                {
-                    cmd2.Parameters.AddWithValue("@status", "0");
-                }
-                cmd2.Parameters.AddWithValue("@ID", ID);
-                cmd2.Connection = cn2;
-                cmd2.ExecuteNonQuery();
-            }
-        }
+        //protected void Cb_sign_CheckedChanged1(object sender, EventArgs e)
+        //{
+        //    CheckBox CheckBox = (CheckBox)sender;
+        //    int gvRowIndex = (CheckBox.NamingContainer as GridViewRow).RowIndex;
+        //    string ID = ((Label)GridView5.Rows[gvRowIndex].FindControl("Label1")).Text.Trim();
+        //    CheckBox ck = ((CheckBox)GridView5.Rows[gvRowIndex].FindControl("Cb_sign"));
+        //    using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
+        //    {
+        //        cn2.Open();
+        //        SqlCommand cmd2 = new SqlCommand("Update Preview set status=@status Where ID=@ID");
+        //        if (ck.Checked == true)
+        //        {
+        //            cmd2.Parameters.AddWithValue("@status", "1");
+        //        }
+        //        else
+        //        {
+        //            cmd2.Parameters.AddWithValue("@status", "0");
+        //        }
+        //        cmd2.Parameters.AddWithValue("@ID", ID);
+        //        cmd2.Connection = cn2;
+        //        cmd2.ExecuteNonQuery();
+        //    }
+        //}
         #endregion
 
         #region 送出

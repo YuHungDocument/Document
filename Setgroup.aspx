@@ -11,10 +11,14 @@
     <div style="text-align: center;width:40%;height:40%;margin:0px auto;">
         <asp:GridView ID="GridView1" CssClass="table" runat="server" AutoGenerateColumns="False"  GridLines="Horizontal" BorderStyle="None" EmptyDataText="沒有任何群組" Font-Size="Large" OnRowCommand="GridView1_RowCommand">
             <Columns>
-                <asp:BoundField DataField="GID" Visible="false" />
+                      <asp:TemplateField Visible="false">
+                    <ItemTemplate>
+                        <asp:Label ID="Lbl_GID" runat="server" Text='<%#Eval("GID")%>'></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
                 <asp:TemplateField HeaderText="群組名稱">
                     <ItemTemplate>
-                        <asp:Label ID="Label1" runat="server" Text='<%#Eval("GpName")%>'></asp:Label>
+                        <asp:Label ID="Lbl_GpName" runat="server" Text='<%#Eval("GpName")%>'></asp:Label>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField>

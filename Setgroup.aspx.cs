@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
+using System.IO;
+using System.Drawing;
+using System.Net.Mail;
 namespace WebApplication1
 {
     public partial class Setgroup : System.Web.UI.Page
@@ -19,7 +23,8 @@ namespace WebApplication1
                 bind();
             }
              ((Label)this.Master.FindControl("Lb_Title")).Text = "群組設定";
-
+            ((LinkButton)this.Master.FindControl("Lb_Set")).BackColor = Color.White;
+            ((LinkButton)this.Master.FindControl("Lb_Set")).ForeColor = Color.Black;
         }
 
         public void bind()
@@ -49,9 +54,11 @@ namespace WebApplication1
                 int index = ((GridViewRow)
                 ((LinkButton)e.CommandSource).NamingContainer).RowIndex;
                 //這樣就可以取得Keys值了
-                string keyId = GridView1.DataKeys[index].Value.ToString();
-                Session["EditNID"] = keyId;
-                Response.Redirect("NewsEditDetail.aspx");
+                string Lbl_GpName = ((Label)GridView1.Rows[index].FindControl("Lbl_GpName")).Text.Trim();
+                string Lbl_GID = ((Label)GridView1.Rows[index].FindControl("Lbl_GID")).Text.Trim();
+                Session["Lbl_GID"] = Lbl_GID;
+                Session["Lbl_GpName"] = Lbl_GpName;
+                Response.Redirect("SetGroupEdit.aspx");
             }
             if (e.CommandName == "DelData")
             {

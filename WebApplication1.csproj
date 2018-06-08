@@ -933,6 +933,7 @@
     <Content Include="SetCompanyIntroduction.aspx" />
     <Content Include="SetConnect.aspx" />
     <Content Include="Setgroup.aspx" />
+    <Content Include="SetGroupEdit.aspx" />
     <Content Include="setInfo.aspx" />
     <Content Include="SetNT.aspx" />
     <Content Include="ucGridViewChoiceAll.ascx" />
@@ -1464,6 +1465,13 @@
     </Compile>
     <Compile Include="Setgroup.aspx.designer.cs">
       <DependentUpon>Setgroup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SetGroupEdit.aspx.cs">
+      <DependentUpon>SetGroupEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SetGroupEdit.aspx.designer.cs">
+      <DependentUpon>SetGroupEdit.aspx</DependentUpon>
     </Compile>
     <Compile Include="setInfo.aspx.cs">
       <DependentUpon>setInfo.aspx</DependentUpon>

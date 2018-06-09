@@ -66,41 +66,41 @@ namespace WebApplication1
             GridView2.DataBind();
             sqlcon.Close();
 
-            using (SqlConnection cn3 = new SqlConnection(tmpdbhelper.DB_CnStr))
-            {
-                cn3.Open();
-                SqlCommand cmd3 = new SqlCommand("Select * from UseGroup Where GID='" + Lbl_GID.Text + "'");
-                cmd3.Connection = cn3;
-                using (SqlDataReader dr2 = cmd3.ExecuteReader())
-                {
-                    int CountPre = 0;
-                    while (dr2.Read())
-                    {
+            //using (SqlConnection cn3 = new SqlConnection(tmpdbhelper.DB_CnStr))
+            //{
+            //    cn3.Open();
+            //    SqlCommand cmd3 = new SqlCommand("Select * from UseGroup Where GID='" + Lbl_GID.Text + "'");
+            //    cmd3.Connection = cn3;
+            //    using (SqlDataReader dr2 = cmd3.ExecuteReader())
+            //    {
+            //        int CountPre = 0;
+            //        while (dr2.Read())
+            //        {
 
-                        ((TextBox)GridView2.Rows[CountPre].FindControl("Txt_Lvl")).Text = dr2["Lvl"].ToString();
-                        ((TextBox)GridView2.Rows[CountPre].FindControl("Txt_EID")).Text = dr2["EID"].ToString();
-                        ((Label)GridView2.Rows[CountPre].FindControl("Lbl_Dep")).Text = dr2["Department"].ToString();
-                        ((Label)GridView2.Rows[CountPre].FindControl("Lbl_Name")).Text = dr2["Name"].ToString();
-                        CheckBox Cb_sign = ((CheckBox)GridView2.Rows[CountPre].FindControl("Cb_sign"));
-                        CheckBox Cb_path = ((CheckBox)GridView2.Rows[CountPre].FindControl("Cb_path"));
-                        CheckBox Cb_comment = ((CheckBox)GridView2.Rows[CountPre].FindControl("Cb_comment"));
-                        if (dr2["status"].ToString() == "1")
-                        {
-                            Cb_sign.Checked = true;
-                        }
-                        if (dr2["path"].ToString() == "1")
-                        {
-                            Cb_path.Checked = true;
-                        }
-                        if (dr2["Comment"].ToString() == "1")
-                        {
-                            Cb_comment.Checked = true;
-                        }
-                        CountPre = int.Parse(CountPre.ToString()) + 1;
-                    }
-                }
+            //            ((TextBox)GridView2.Rows[CountPre].FindControl("Txt_Lvl")).Text = dr2["Lvl"].ToString();
+            //            ((TextBox)GridView2.Rows[CountPre].FindControl("Txt_EID")).Text = dr2["EID"].ToString();
+            //            ((Label)GridView2.Rows[CountPre].FindControl("Lbl_Dep")).Text = dr2["Department"].ToString();
+            //            ((Label)GridView2.Rows[CountPre].FindControl("Lbl_Name")).Text = dr2["Name"].ToString();
+            //            CheckBox Cb_sign = ((CheckBox)GridView2.Rows[CountPre].FindControl("Cb_sign"));
+            //            CheckBox Cb_path = ((CheckBox)GridView2.Rows[CountPre].FindControl("Cb_path"));
+            //            CheckBox Cb_comment = ((CheckBox)GridView2.Rows[CountPre].FindControl("Cb_comment"));
+            //            if (dr2["status"].ToString() == "1")
+            //            {
+            //                Cb_sign.Checked = true;
+            //            }
+            //            if (dr2["path"].ToString() == "1")
+            //            {
+            //                Cb_path.Checked = true;
+            //            }
+            //            if (dr2["Comment"].ToString() == "1")
+            //            {
+            //                Cb_comment.Checked = true;
+            //            }
+            //            CountPre = int.Parse(CountPre.ToString()) + 1;
+            //        }
+            //    }
 
-            }
+            //}
         }
         #endregion
 
@@ -114,9 +114,9 @@ namespace WebApplication1
             //using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
             //{
             //    cn2.Open();
-            //    SqlCommand cmd2 = new SqlCommand("Update Preview set Lvl=@Lvl Where ID=@ID");
+            //    SqlCommand cmd2 = new SqlCommand("Update UseGroup set Lvl=@Lvl Where ID=@ID  and GID=@GID");
             //    cmd2.Parameters.AddWithValue("@Lvl", Txt_Lvl.Text);
-
+            //    cmd2.Parameters.AddWithValue("@GID",Lbl_GID.Text);
             //    cmd2.Parameters.AddWithValue("@ID", ID);
             //    cmd2.Connection = cn2;
             //    cmd2.ExecuteNonQuery();
@@ -187,242 +187,242 @@ namespace WebApplication1
         #region Gridview的輸入EID或名字找到人
         protected void Txt_EID_TextChanged(object sender, EventArgs e)
         {
-            //TextBox curTextBox = (TextBox)sender;
-            //int gvRowIndex = (curTextBox.NamingContainer as GridViewRow).RowIndex;
-            //TextBox UserEID = ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID"));
-            //string ID = ((Label)GridView2.Rows[gvRowIndex].FindControl("Label1")).Text.Trim();
-            //using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
-            //{
-            //    cn.Open();
-            //    SqlCommand cmd = new SqlCommand("Select * from UserInfo Where EID=@EID");
-            //    SqlCommand cmdAgentEID = new SqlCommand("Select * from UserInfo Where EID=@EID");
-            //    cmdAgentEID.Connection = cn;
-            //    cmdAgentEID.Parameters.AddWithValue("@EID", UserEID.Text);
-            //    using (SqlDataReader dr = cmdAgentEID.ExecuteReader())
-            //    {
-            //        if (dr.Read())
-            //        {
-            //            AgentEID = dr["agent"].ToString();
-            //            if (AgentEID != "")
-            //            {
-            //                cmd.Parameters.AddWithValue("@EID", AgentEID);
-            //                ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Agent")).Visible = true;
-            //            }
-            //            else
-            //            {
-            //                cmd.Parameters.AddWithValue("@EID", UserEID.Text);
-            //            }
+            TextBox curTextBox = (TextBox)sender;
+            int gvRowIndex = (curTextBox.NamingContainer as GridViewRow).RowIndex;
+            TextBox UserEID = ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID"));
+            string GID = ((Label)GridView2.Rows[gvRowIndex].FindControl("Label1")).Text.Trim();
+            string ID = ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_ID")).Text.Trim();
+            using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+                cn.Open();
+                SqlCommand cmd = new SqlCommand("Select * from UserInfo Where EID=@EID");
+                SqlCommand cmdAgentEID = new SqlCommand("Select * from UserInfo Where EID=@EID");
+                cmdAgentEID.Connection = cn;
+                cmdAgentEID.Parameters.AddWithValue("@EID", UserEID.Text);
+                using (SqlDataReader dr = cmdAgentEID.ExecuteReader())
+                {
+                    if (dr.Read())
+                    {
+                        AgentEID = dr["agent"].ToString();
+                        if (AgentEID != "")
+                        {
+                            cmd.Parameters.AddWithValue("@EID", AgentEID);
+                            ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Agent")).Visible = true;
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@EID", UserEID.Text);
+                        }
 
-            //        }
-            //        else
-            //        {
-            //            cmd.Parameters.AddWithValue("@EID", UserEID.Text);
-            //        }
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@EID", UserEID.Text);
+                    }
 
-            //    }
-            //    cn.Close();
-            //    cn.Open();
-            //    cmd.Connection = cn;
-            //    using (SqlDataReader dr = cmd.ExecuteReader())
-            //    {
-            //        if (dr.Read())
-            //        {
-            //            ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Dep")).Text = dr["Department"].ToString();
-            //            ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Name")).Text = dr["Name"].ToString();
-            //            if (AgentEID != "")
-            //            {
-            //                ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text = AgentEID;
-            //            }
-            //            using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
-            //            {
-            //                cn2.Open();
-            //                SqlCommand cmd2 = new SqlCommand("Update Preview set Lvl=@Lvl,Department=@Department,EID=@EID,Name=@Name Where ID=@ID");
-            //                cmd2.Parameters.AddWithValue("@Lvl", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_Lvl")).Text);
-            //                cmd2.Parameters.AddWithValue("@Department", ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Dep")).Text);
-            //                cmd2.Parameters.AddWithValue("@EID", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text);
-            //                cmd2.Parameters.AddWithValue("@Name", ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Name")).Text);
+                }
+                cn.Close();
+                cn.Open();
+                cmd.Connection = cn;
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    if (dr.Read())
+                    {
+                        ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Dep")).Text = dr["Department"].ToString();
+                        ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Name")).Text = dr["Name"].ToString();
+                        if (AgentEID != "")
+                        {
+                            ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text = AgentEID;
+                        }
+                        //using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
+                        //{
+                        //    cn2.Open();
+                        //    SqlCommand cmd2 = new SqlCommand("Update UseGroup set Lvl=@Lvl,Department=@Department,EID=@EID,Name=@Name Where ID=@ID");
+                        //    cmd2.Parameters.AddWithValue("@Lvl", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_Lvl")).Text);
+                        //    cmd2.Parameters.AddWithValue("@Department", ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Dep")).Text);
+                        //    cmd2.Parameters.AddWithValue("@EID", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text);
+                        //    cmd2.Parameters.AddWithValue("@Name", ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Name")).Text);
+                        //    cmd2.Parameters.AddWithValue("@ID", ID);
+                        //    cmd2.Connection = cn2;
+                        //    cmd2.ExecuteNonQuery();
 
-            //                cmd2.Parameters.AddWithValue("@ID", ID);
-            //                cmd2.Connection = cn2;
-            //                cmd2.ExecuteNonQuery();
+                        //}
+                    }
+                    else
+                    {
+                        cn.Close();
+                        cn.Open();
+                        SqlCommand namemd = new SqlCommand("Select * from UserInfo Where Name=@Name");
 
-            //            }
-            //        }
-            //        else
-            //        {
-            //            cn.Close();
-            //            cn.Open();
-            //            SqlCommand namemd = new SqlCommand("Select * from UserInfo Where Name=@Name");
+                        SqlCommand cmdAgentName = new SqlCommand("Select agent from UserInfo Where Name=@Name");
+                        cmdAgentName.Connection = cn;
+                        cmdAgentName.Parameters.AddWithValue("@Name", UserEID.Text);
+                        using (SqlDataReader drname = cmdAgentName.ExecuteReader())
+                        {
+                            if (drname.Read())
+                            {
+                                AgentEID = drname["agent"].ToString();
+                                if (AgentEID != "")
+                                {
+                                    using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
+                                    {
+                                        SqlCommand cmdAgentName2 = new SqlCommand("Select Name from UserInfo Where EID=@EID");
+                                        cmdAgentName2.Parameters.AddWithValue("@EID", AgentEID);
+                                        cmdAgentName2.Connection = cn2;
+                                        cn2.Open();
+                                        using (SqlDataReader dr2 = cmdAgentName2.ExecuteReader())
+                                        {
 
-            //            SqlCommand cmdAgentName = new SqlCommand("Select agent from UserInfo Where Name=@Name");
-            //            cmdAgentName.Connection = cn;
-            //            cmdAgentName.Parameters.AddWithValue("@Name", UserEID.Text);
-            //            using (SqlDataReader drname = cmdAgentName.ExecuteReader())
-            //            {
-            //                if (drname.Read())
-            //                {
-            //                    AgentEID = drname["agent"].ToString();
-            //                    if (AgentEID != "")
-            //                    {
-            //                        using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
-            //                        {
-            //                            SqlCommand cmdAgentName2 = new SqlCommand("Select Name from UserInfo Where EID=@EID");
-            //                            cmdAgentName2.Parameters.AddWithValue("@EID", AgentEID);
-            //                            cmdAgentName2.Connection = cn2;
-            //                            cn2.Open();
-            //                            using (SqlDataReader dr2 = cmdAgentName2.ExecuteReader())
-            //                            {
+                                            if (dr2.Read())
+                                            {
+                                                AgentName = dr2["Name"].ToString();
 
-            //                                if (dr2.Read())
-            //                                {
-            //                                    AgentName = dr2["Name"].ToString();
+                                            }
+                                        }
+                                        cn2.Close();
+                                    }
+                                    namemd.Parameters.AddWithValue("@Name", AgentName);
+                                    ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Agent")).Visible = true;
+                                }
+                                else
+                                {
+                                    namemd.Parameters.AddWithValue("@Name", UserEID.Text);
+                                }
 
-            //                                }
-            //                            }
-            //                            cn2.Close();
-            //                        }
-            //                        namemd.Parameters.AddWithValue("@Name", AgentName);
-            //                        ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Agent")).Visible = true;
-            //                    }
-            //                    else
-            //                    {
-            //                        namemd.Parameters.AddWithValue("@Name", UserEID.Text);
-            //                    }
+                            }
+                            else
+                            {
+                                namemd.Parameters.AddWithValue("@Name", UserEID.Text);
+                            }
+                        }
+                        cn.Close();
+                        cn.Open();
+                        namemd.Connection = cn;
+                        using (SqlDataReader drna = namemd.ExecuteReader())
+                        {
+                            if (drna.Read())
+                            {
+                                ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text = drna["EID"].ToString();
+                                ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Dep")).Text = drna["Department"].ToString();
+                                ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Name")).Text = drna["Name"].ToString();
+                                if (AgentEID != "")
+                                {
+                                    ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text = AgentEID;
+                                }
+                                using (SqlConnection cn3 = new SqlConnection(tmpdbhelper.DB_CnStr))
+                                {
+                                    CheckBox ck = ((CheckBox)GridView2.Rows[gvRowIndex].FindControl("Cb_sign"));
+                                    CheckBox Cb_path = ((CheckBox)GridView2.Rows[gvRowIndex].FindControl("Cb_path"));
+                                    cn3.Open();
+                                    SqlCommand cmd2 = new SqlCommand("Update Preview set Lvl=@Lvl,Department=@Department,EID=@EID,Name=@Name,status=@status,@path=path Where ID=@ID");
+                                    cmd2.Parameters.AddWithValue("@Lvl", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_Lvl")).Text);
+                                    cmd2.Parameters.AddWithValue("@Department", ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Dep")).Text);
+                                    cmd2.Parameters.AddWithValue("@EID", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text);
+                                    cmd2.Parameters.AddWithValue("@Name", ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Name")).Text);
+                                    if (ck.Checked == true)
+                                    {
+                                        cmd2.Parameters.AddWithValue("@status", "1");
+                                    }
+                                    else
+                                    {
+                                        cmd2.Parameters.AddWithValue("@status", "0");
+                                    }
+                                    if (Cb_path.Checked == true)
+                                    {
+                                        cmd2.Parameters.AddWithValue("@path", "1");
+                                    }
+                                    else
+                                    {
+                                        cmd2.Parameters.AddWithValue("@path", "0");
+                                    }
+                                    cmd2.Parameters.AddWithValue("@ID", ID);
+                                    cmd2.Connection = cn3;
+                                    cmd2.ExecuteNonQuery();
 
-            //                }
-            //                else
-            //                {
-            //                    namemd.Parameters.AddWithValue("@Name", UserEID.Text);
-            //                }
-            //            }
-            //            cn.Close();
-            //            cn.Open();
-            //            namemd.Connection = cn;
-            //            using (SqlDataReader drna = namemd.ExecuteReader())
-            //            {
-            //                if (drna.Read())
-            //                {
-            //                    ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text = drna["EID"].ToString();
-            //                    ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Dep")).Text = drna["Department"].ToString();
-            //                    ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Name")).Text = drna["Name"].ToString();
-            //                    if (AgentEID != "")
-            //                    {
-            //                        ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text = AgentEID;
-            //                    }
-            //                    using (SqlConnection cn3 = new SqlConnection(tmpdbhelper.DB_CnStr))
-            //                    {
-            //                        CheckBox ck = ((CheckBox)GridView2.Rows[gvRowIndex].FindControl("Cb_sign"));
-            //                        CheckBox Cb_path = ((CheckBox)GridView2.Rows[gvRowIndex].FindControl("Cb_path"));
-            //                        cn3.Open();
-            //                        SqlCommand cmd2 = new SqlCommand("Update Preview set Lvl=@Lvl,Department=@Department,EID=@EID,Name=@Name,status=@status,@path=path Where ID=@ID");
-            //                        cmd2.Parameters.AddWithValue("@Lvl", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_Lvl")).Text);
-            //                        cmd2.Parameters.AddWithValue("@Department", ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Dep")).Text);
-            //                        cmd2.Parameters.AddWithValue("@EID", ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text);
-            //                        cmd2.Parameters.AddWithValue("@Name", ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Name")).Text);
-            //                        if (ck.Checked == true)
-            //                        {
-            //                            cmd2.Parameters.AddWithValue("@status", "1");
-            //                        }
-            //                        else
-            //                        {
-            //                            cmd2.Parameters.AddWithValue("@status", "0");
-            //                        }
-            //                        if (Cb_path.Checked == true)
-            //                        {
-            //                            cmd2.Parameters.AddWithValue("@path", "1");
-            //                        }
-            //                        else
-            //                        {
-            //                            cmd2.Parameters.AddWithValue("@path", "0");
-            //                        }
-            //                        cmd2.Parameters.AddWithValue("@ID", ID);
-            //                        cmd2.Connection = cn3;
-            //                        cmd2.ExecuteNonQuery();
+                                }
+                            }
+                            else
+                            {
+                                ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text = "";
+                                ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Dep")).Text = "";
+                                ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Name")).Text = "";
+                            }
+                        }
+                    }
+                }
 
-            //                    }
-            //                }
-            //                else
-            //                {
-            //                    ((TextBox)GridView2.Rows[gvRowIndex].FindControl("Txt_EID")).Text = "";
-            //                    ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Dep")).Text = "";
-            //                    ((Label)GridView2.Rows[gvRowIndex].FindControl("Lbl_Name")).Text = "";
-            //                }
-            //            }
-            //        }
-            //    }
+                cn.Close();
+            }
+            string Lvl = ((TextBox)GridView2.Rows[GridView2.Rows.Count - 1].FindControl("Txt_Lvl")).Text.Trim();
+            string EID = ((TextBox)GridView2.Rows[GridView2.Rows.Count - 1].FindControl("Txt_EID")).Text.Trim();
+            if (EID != "")
+            {
+                using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+                {
+                    cn.Open();
+                    SqlCommand cmd = new SqlCommand("Insert Into UseGroup(ID,GID,EID) Values(@ID,@GID,@EID)");
+                    cmd.Connection = cn;
+                    SqlCommand cmdcount = new SqlCommand("Select Max(ID) as IDcount From Preview");
+                    cmdcount.Connection = cn;
+                    using (SqlDataReader dr = cmdcount.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            IDcount = int.Parse(dr["IDcount"].ToString());
+                        }
+                        IDcount = int.Parse(IDcount.ToString()) + 1;
+                    }
+                    cmd.Parameters.AddWithValue("@ID", IDcount);
+                    cmd.Parameters.AddWithValue("@EID", "");
+                    cmd.Parameters.AddWithValue("@GID",Lbl_GID.Text);
+                    cmd.ExecuteNonQuery();
+                    bind3();
+                    using (SqlConnection cn3 = new SqlConnection(tmpdbhelper.DB_CnStr))
+                    {
+                        cn3.Open();
+                        SqlCommand cmd3 = new SqlCommand("Select * from UseGroup Where GID='" + Lbl_GID.Text + "'");
+                        cmd3.Connection = cn3;
+                        using (SqlDataReader dr2 = cmd3.ExecuteReader())
+                        {
+                            int i = 0;
+                            while (dr2.Read())
+                            {
 
-            //    cn.Close();
-            //}
-            //string Lvl = ((TextBox)GridView2.Rows[GridView2.Rows.Count - 1].FindControl("Txt_Lvl")).Text.Trim();
-            //string EID = ((TextBox)GridView2.Rows[GridView2.Rows.Count - 1].FindControl("Txt_EID")).Text.Trim();
-            //if (EID != "")
-            //{
-            //    using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
-            //    {
-            //        cn.Open();
-            //        SqlCommand cmd = new SqlCommand("Insert Into Preview(ID,SID,EID) Values(@ID,@SID,@EID)");
-            //        cmd.Connection = cn;
-            //        SqlCommand cmdcount = new SqlCommand("Select Max(ID) as IDcount From Preview");
-            //        cmdcount.Connection = cn;
-            //        using (SqlDataReader dr = cmdcount.ExecuteReader())
-            //        {
-            //            if (dr.Read())
-            //            {
-            //                IDcount = int.Parse(dr["IDcount"].ToString());
-            //            }
-            //            IDcount = int.Parse(IDcount.ToString()) + 1;
-            //        }
-            //        cmd.Parameters.AddWithValue("@ID", IDcount);
-            //        cmd.Parameters.AddWithValue("@EID", "");
-            //        cmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
-            //        cmd.ExecuteNonQuery();
-            //        bind3();
-            //        using (SqlConnection cn3 = new SqlConnection(tmpdbhelper.DB_CnStr))
-            //        {
-            //            cn3.Open();
-            //            SqlCommand cmd3 = new SqlCommand("Select * from Preview Where SID='" + Lbl_SID.Text + "' and EID!='" + Lbl_EID.Text + "'");
-            //            cmd3.Connection = cn3;
-            //            using (SqlDataReader dr2 = cmd3.ExecuteReader())
-            //            {
-            //                int i = 0;
-            //                while (dr2.Read())
-            //                {
+                                ((TextBox)GridView2.Rows[int.Parse(i.ToString())].FindControl("Txt_Lvl")).Text = dr2["Lvl"].ToString();
+                                ((TextBox)GridView2.Rows[int.Parse(i.ToString())].FindControl("Txt_EID")).Text = dr2["EID"].ToString();
+                                ((Label)GridView2.Rows[int.Parse(i.ToString())].FindControl("Lbl_Dep")).Text = dr2["Department"].ToString();
+                                ((Label)GridView2.Rows[int.Parse(i.ToString())].FindControl("Lbl_Name")).Text = dr2["Name"].ToString();
+                                if (dr2["status"].ToString() == "1")
+                                {
+                                    ((CheckBox)GridView2.Rows[int.Parse(i.ToString())].FindControl("Cb_sign")).Checked = true;
+                                }
+                                else
+                                {
+                                    ((CheckBox)GridView2.Rows[int.Parse(i.ToString())].FindControl("Cb_sign")).Checked = false;
+                                }
 
-            //                    ((TextBox)GridView2.Rows[int.Parse(i.ToString())].FindControl("Txt_Lvl")).Text = dr2["Lvl"].ToString();
-            //                    ((TextBox)GridView2.Rows[int.Parse(i.ToString())].FindControl("Txt_EID")).Text = dr2["EID"].ToString();
-            //                    ((Label)GridView2.Rows[int.Parse(i.ToString())].FindControl("Lbl_Dep")).Text = dr2["Department"].ToString();
-            //                    ((Label)GridView2.Rows[int.Parse(i.ToString())].FindControl("Lbl_Name")).Text = dr2["Name"].ToString();
-            //                    if (dr2["status"].ToString() == "1")
-            //                    {
-            //                        ((CheckBox)GridView2.Rows[int.Parse(i.ToString())].FindControl("Cb_sign")).Checked = true;
-            //                    }
-            //                    else
-            //                    {
-            //                        ((CheckBox)GridView2.Rows[int.Parse(i.ToString())].FindControl("Cb_sign")).Checked = false;
-            //                    }
-
-            //                    if (dr2["path"].ToString() == "1")
-            //                    {
-            //                        ((CheckBox)GridView2.Rows[int.Parse(i.ToString())].FindControl("Cb_path")).Checked = true;
-            //                    }
-            //                    else
-            //                    {
-            //                        ((CheckBox)GridView2.Rows[int.Parse(i.ToString())].FindControl("Cb_path")).Checked = false;
-            //                    }
-            //                    if (dr2["Comment"].ToString() == "1")
-            //                    {
-            //                        ((CheckBox)GridView2.Rows[int.Parse(i.ToString())].FindControl("Cb_comment")).Checked = true;
-            //                    }
-            //                    else
-            //                    {
-            //                        ((CheckBox)GridView2.Rows[int.Parse(i.ToString())].FindControl("Cb_comment")).Checked = false;
-            //                    }
-            //                    i = int.Parse(i.ToString()) + 1;
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
+                                if (dr2["path"].ToString() == "1")
+                                {
+                                    ((CheckBox)GridView2.Rows[int.Parse(i.ToString())].FindControl("Cb_path")).Checked = true;
+                                }
+                                else
+                                {
+                                    ((CheckBox)GridView2.Rows[int.Parse(i.ToString())].FindControl("Cb_path")).Checked = false;
+                                }
+                                if (dr2["Comment"].ToString() == "1")
+                                {
+                                    ((CheckBox)GridView2.Rows[int.Parse(i.ToString())].FindControl("Cb_comment")).Checked = true;
+                                }
+                                else
+                                {
+                                    ((CheckBox)GridView2.Rows[int.Parse(i.ToString())].FindControl("Cb_comment")).Checked = false;
+                                }
+                                i = int.Parse(i.ToString()) + 1;
+                            }
+                        }
+                    }
+                }
+            }
         }
         #endregion
 
@@ -655,5 +655,41 @@ namespace WebApplication1
             //}
         }
         #endregion
+
+        #region bind3
+        public void bind3()
+        {
+            string sqlstr = "select * from UseGroup Where GID='" + Lbl_GID.Text + "'";
+
+            SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
+            SqlCommand cmd = new SqlCommand(sqlstr, sqlcon);
+            DataSet myds = new DataSet();
+            sqlcon.Open();
+            SqlDataAdapter myda = new SqlDataAdapter(sqlstr, sqlcon);
+
+            myda.Fill(myds, "UseGroup");
+
+            GridView2.DataSource = myds;
+            GridView2.DataBind();
+            sqlcon.Close();
+        }
+        #endregion
+
+        protected void GridView2_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            GridView2.EditIndex = e.NewEditIndex;
+            bind();
+        }
+
+        protected void GridView2_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            GridView2.EditIndex = -1;
+            bind();
+        }
+
+        protected void GridView2_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+
+        }
     }
 }

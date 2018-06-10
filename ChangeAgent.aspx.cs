@@ -88,7 +88,7 @@ namespace WebApplication1
                 {
                     work += "," + CheckBox2.Text;
                 }
-                txt_Ciphertext_Text = AESEncryption(txtKey, txtIV, "被代理單位:" + DropDownList1.Text + "被代理人員:" + DropDownList2.Text + "\r\n" + "代理職務:" + work + "\r\n" + "開始代理時間:" + Request.Form["d3"] + "\r\n" + "結束代理時間:" + Request.Form["d4"] + "\r\n" + "代理單位:" + DropDownList7.Text + "代理人:" + DropDownList8.Text + "");
+                txt_Ciphertext_Text = AESEncryption(txtKey, txtIV, "被代理單位:" + tmpUserInfo.Department + "被代理人員:" + tmpUserInfo.Name + "\r\n" + "代理職務:" + work + "\r\n" + "開始代理時間:" + Request.Form["d3"] + "\r\n" + "結束代理時間:" + Request.Form["d4"] + "\r\n" + "代理單位:" + DropDownList7.Text + "代理人:" + DropDownList8.Text + "");
                 txt_Ciphertext_Proposition = AESEncryption(txtKey, txtIV, "");
                 //發文者私鑰加密訊息摘要
                 SqlCommand cmdfindkeyaddress = new SqlCommand(@"Select KeyAddress From UserInfo Where EID=@EID");
@@ -135,10 +135,11 @@ namespace WebApplication1
                 catch
                 {
                     Response.Write("<script>alert('此位置找無金鑰，請從新設定!');location.href='KeyAddress.aspx';</script>");
+                    return;
                 }
 
                 cmd3.Parameters.AddWithValue("@SID", Date);
-                cmd3.Parameters.AddWithValue("@EID", DropDownList9.Text);
+                cmd3.Parameters.AddWithValue("@EID", tmpUserInfo.EID);
                 cmd3.Parameters.AddWithValue("@Date", Date2);
                 cmd3.Parameters.AddWithValue("@Text", txt_Ciphertext_Text);
                 cmd3.Parameters.AddWithValue("@Title", "代理人同意函");
@@ -160,7 +161,7 @@ namespace WebApplication1
                 cn3.Open();
                 cmduserInfo.Connection = cn3;
                 cmduserInfo.Connection = cn3;
-                cmduserInfo.Parameters.AddWithValue("@EID", DropDownList9.Text);
+                cmduserInfo.Parameters.AddWithValue("@EID", tmpUserInfo.EID);
                 using (SqlDataReader dr = cmduserInfo.ExecuteReader())
                 {
                     if (dr.Read())
@@ -203,19 +204,23 @@ namespace WebApplication1
                 }
                 cn3.Close();
                 //寫回資料庫                        
-                SqlCommand cmd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,sign,look,choose,RSAkey,Hashstat)VALUES(@SID,@Lvl,@EID,@Department,@status,@sign,@look,@choose,@RSAkey,@Hashstat)");
-                SqlCommand cmd2 = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,sign,look,choose,RSAkey,Hashstat)VALUES(@SID,@Lvl,@EID,@Department,@status,@sign,@look,@choose,@RSAkey,@Hashstat)");
+                SqlCommand cmd = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,sign,look,choose,RSAkey,Hashstat,isread,path,recheckKey)VALUES(@SID,@Lvl,@EID,@Department,@status,@sign,@look,@choose,@RSAkey,@Hashstat,@isread,@path,@recheckKey)");
+                SqlCommand cmd2 = new SqlCommand(@"Insert INTO Detail(SID,Lvl,EID,Department,status,sign,look,choose,RSAkey,Hashstat,isread,path,recheckKey)VALUES(@SID,@Lvl,@EID,@Department,@status,@sign,@look,@choose,@RSAkey,@Hashstat,@isread,@path,@recheckKey)");
                 cn3.Open();
                 cmd.Connection = cn3;
                 cmd.Parameters.AddWithValue("@SID", Date);
                 cmd.Parameters.AddWithValue("@Lvl", "1");
-                cmd.Parameters.AddWithValue("@EID", DropDownList9.Text);
-                cmd.Parameters.AddWithValue("@Department", DropDownList1.Text);
+                cmd.Parameters.AddWithValue("@EID", tmpUserInfo.EID);
+                cmd.Parameters.AddWithValue("@Department", tmpUserInfo.Department);
                 cmd.Parameters.AddWithValue("@status", "1");
                 cmd.Parameters.AddWithValue("@RSAkey", txt_PKmessage);
                 cmd.Parameters.AddWithValue("@look", 1);
                 cmd.Parameters.AddWithValue("@sign", 1);
                 cmd.Parameters.AddWithValue("@choose", 0);
+                cmd.Parameters.AddWithValue("@isread", 0);
+                cmd.Parameters.AddWithValue("@path", 1);
+                cmd.Parameters.AddWithValue("@recheckKey", 1);
+                
                 SHA256 sha256_1 = new SHA256CryptoServiceProvider();//建立一個SHA256
                 byte[] source_1 = Encoding.Default.GetBytes("1" + "0" + txt_PKmessage);//將字串轉為Byte[]
                 byte[] crypto_1 = sha256_1.ComputeHash(source_1);//進行SHA256加密
@@ -235,6 +240,9 @@ namespace WebApplication1
                 cmd2.Parameters.AddWithValue("@look", 1);
                 cmd2.Parameters.AddWithValue("@sign", 0);
                 cmd2.Parameters.AddWithValue("@choose", 0);
+                cmd2.Parameters.AddWithValue("@isread", 0);
+                cmd2.Parameters.AddWithValue("@path", 1);
+                cmd2.Parameters.AddWithValue("@recheckKey", 1);
                 SHA256 sha256_2 = new SHA256CryptoServiceProvider();//建立一個SHA256
                 byte[] source_2 = Encoding.Default.GetBytes("0" + "0" + txt_PKmessage2);//將字串轉為Byte[]
                 byte[] crypto_2 = sha256_1.ComputeHash(source_2);//進行SHA256加密
@@ -243,83 +251,88 @@ namespace WebApplication1
                 cmd2.Parameters.AddWithValue("@Hashstat", result_2);
                 cmd2.ExecuteNonQuery();
                 cn3.Close();
-                Response.Write("<script>alert('代理人同意函已發送!');location.href='SetAgent.aspx';</script>");
+               
 
                 using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
                 {
                     cn.Open();
                     SqlCommand cmdEID = new SqlCommand(@"Select agent From UserInfo  Where EID=@EID");
                     cmdEID.Connection = cn;
-                    cmdEID.Parameters.AddWithValue("@EID", DropDownList2.Text);
+                    cmdEID.Parameters.AddWithValue("@EID", tmpUserInfo.EID);
                     using (SqlDataReader dr = cmdEID.ExecuteReader())
                     {
                         if (dr.Read())
                         {
-                            using (SqlConnection cnUpate = new SqlConnection(tmpdbhelper.DB_CnStr))
+                            if (dr["agent"].ToString() != "")
                             {
-                                cnUpate.Open();
-                                SqlCommand cmd3 = new SqlCommand(@"Update tempAgentInfo Set agent=@agent,AgentName=@AgentName,StartTime=@StartTime,EndTime=@EndTime,send=@send,receive=@receive Where EID=@EID");
-                                cmd3.Connection = cnUpate;
-                                cmd3.Parameters.AddWithValue("@EID", DropDownList9.Text);
-                                cmd3.Parameters.AddWithValue("@agent", DropDownList10.Text);
-                                cmd3.Parameters.AddWithValue("@AgentName", DropDownList8.Text);
-                                string date1 = Request.Form["d3"];
-                                string date2 = Request.Form["d4"];
-                                cmd3.Parameters.AddWithValue("@StartTime", date1);
-                                cmd3.Parameters.AddWithValue("@EndTime", date2);
-                                if (CheckBox1.Checked)
+                                using (SqlConnection cnUpate = new SqlConnection(tmpdbhelper.DB_CnStr))
                                 {
-                                    cmd3.Parameters.AddWithValue("@send", 1);
+                                    cnUpate.Open();
+                                    SqlCommand cmd3 = new SqlCommand(@"Update tempAgentInfo Set agent=@agent,AgentName=@AgentName,StartTime=@StartTime,EndTime=@EndTime,send=@send,receive=@receive Where EID=@EID");
+                                    cmd3.Connection = cnUpate;
+                                    cmd3.Parameters.AddWithValue("@EID", tmpUserInfo.EID);
+                                    cmd3.Parameters.AddWithValue("@agent", DropDownList10.Text);
+                                    cmd3.Parameters.AddWithValue("@AgentName", DropDownList8.Text);
+                                    string date1 = Request.Form["d3"];
+                                    string date2 = Request.Form["d4"];
+                                    cmd3.Parameters.AddWithValue("@StartTime", date1);
+                                    cmd3.Parameters.AddWithValue("@EndTime", date2);
+                                    if (CheckBox1.Checked)
+                                    {
+                                        cmd3.Parameters.AddWithValue("@send", 1);
+                                    }
+                                    else
+                                    {
+                                        cmd3.Parameters.AddWithValue("@send", 0);
+                                    }
+                                    if (CheckBox2.Checked)
+                                    {
+                                        cmd3.Parameters.AddWithValue("@receive", 1);
+                                    }
+                                    else
+                                    {
+                                        cmd3.Parameters.AddWithValue("@receive", 0);
+                                    }
+                                    cmd3.ExecuteNonQuery();
+                                    cnUpate.Close();
+                                    Response.Write("<script>alert('代理人同意函已發送!');location.href='SetAgent.aspx';</script>");
                                 }
-                                else
-                                {
-                                    cmd3.Parameters.AddWithValue("@send", 0);
-                                }
-                                if (CheckBox2.Checked)
-                                {
-                                    cmd3.Parameters.AddWithValue("@receive", 1);
-                                }
-                                else
-                                {
-                                    cmd3.Parameters.AddWithValue("@receive", 0);
-                                }
-                                cmd3.ExecuteNonQuery();
-                                cnUpate.Close();
-
                             }
-                        }
-                        else
-                        {
-                            using (SqlConnection cnUpate = new SqlConnection(tmpdbhelper.DB_CnStr))
+
+                            else
                             {
-                                cnUpate.Open();
-                                SqlCommand cmd3 = new SqlCommand(@"Insert Into tempAgentInfo (EID,agent,AgentName,StartTime,EndTime,send,receive) Values (@EID,@agent,@AgentName,@StartTime,@EndTime,@send,@receive)");
-                                cmd3.Connection = cnUpate;
-                                cmd3.Parameters.AddWithValue("@EID", DropDownList9.Text);
-                                cmd3.Parameters.AddWithValue("@agent", DropDownList10.Text);
-                                cmd3.Parameters.AddWithValue("@AgentName", DropDownList8.Text);
-                                string date1 = Request.Form["d3"];
-                                string date2 = Request.Form["d4"];
-                                cmd3.Parameters.AddWithValue("@StartTime", date1);
-                                cmd3.Parameters.AddWithValue("@EndTime", date2);
-                                if (CheckBox1.Checked)
+                                using (SqlConnection cnUpate = new SqlConnection(tmpdbhelper.DB_CnStr))
                                 {
-                                    cmd3.Parameters.AddWithValue("@send", 1);
+                                    cnUpate.Open();
+                                    SqlCommand cmd3 = new SqlCommand(@"Insert Into tempAgentInfo (EID,agent,AgentName,StartTime,EndTime,send,receive) Values (@EID,@agent,@AgentName,@StartTime,@EndTime,@send,@receive)");
+                                    cmd3.Connection = cnUpate;
+                                    cmd3.Parameters.AddWithValue("@EID", tmpUserInfo.EID);
+                                    cmd3.Parameters.AddWithValue("@agent", DropDownList10.Text);
+                                    cmd3.Parameters.AddWithValue("@AgentName", DropDownList8.Text);
+                                    string date1 = Request.Form["d3"];
+                                    string date2 = Request.Form["d4"];
+                                    cmd3.Parameters.AddWithValue("@StartTime", date1);
+                                    cmd3.Parameters.AddWithValue("@EndTime", date2);
+                                    if (CheckBox1.Checked)
+                                    {
+                                        cmd3.Parameters.AddWithValue("@send", 1);
+                                    }
+                                    else
+                                    {
+                                        cmd3.Parameters.AddWithValue("@send", 0);
+                                    }
+                                    if (CheckBox2.Checked)
+                                    {
+                                        cmd3.Parameters.AddWithValue("@receive", 1);
+                                    }
+                                    else
+                                    {
+                                        cmd3.Parameters.AddWithValue("@receive", 0);
+                                    }
+                                    cmd3.ExecuteNonQuery();
+                                    cnUpate.Close();
                                 }
-                                else
-                                {
-                                    cmd3.Parameters.AddWithValue("@send", 0);
-                                }
-                                if (CheckBox2.Checked)
-                                {
-                                    cmd3.Parameters.AddWithValue("@receive", 1);
-                                }
-                                else
-                                {
-                                    cmd3.Parameters.AddWithValue("@receive", 0);
-                                }
-                                cmd3.ExecuteNonQuery();
-                                cnUpate.Close();
+                                Response.Write("<script>alert('代理人同意函已發送!');location.href='SetAgent.aspx';</script>");
                             }
                         }
                     }
@@ -328,10 +341,6 @@ namespace WebApplication1
 
         }
 
-        protected void DropDownList2_DataBound(object sender, EventArgs e)
-        {
-            DropDownList9.DataBind();
-        }
 
         protected void DropDownList8_DataBound(object sender, EventArgs e)
         {

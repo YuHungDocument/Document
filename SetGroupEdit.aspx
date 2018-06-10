@@ -30,7 +30,7 @@
         
         <asp:Label ID="Lbl_GID" runat="server" Visible="false"></asp:Label>
         <hr />
-        <asp:GridView ID="GridView2" class="table" runat="server" AutoGenerateColumns="False" GridLines="Horizontal" DataKeyNames="GID" OnRowCommand="GridView2_RowCommand" OnRowCancelingEdit="GridView2_RowCancelingEdit" OnRowEditing="GridView2_RowEditing" OnRowUpdating="GridView2_RowUpdating">
+        <asp:GridView ID="GridView2" class="table" runat="server" AutoGenerateColumns="False" GridLines="Horizontal" DataKeyNames="ID" OnRowCommand="GridView2_RowCommand" OnRowCancelingEdit="GridView2_RowCancelingEdit" OnRowEditing="GridView2_RowEditing" OnRowUpdating="GridView2_RowUpdating">
             <Columns>
                 <asp:TemplateField HeaderText="ID" ShowHeader="False" Visible="False">
                     <ItemTemplate>
@@ -64,11 +64,17 @@
                     <ItemTemplate>
                         <asp:Label ID="Lbl_Dep" runat="server" Text='<%# Bind("Department") %>'></asp:Label>
                     </ItemTemplate>
+                    <EditItemTemplate>
+                        <asp:Label ID="Lbl_Dep" runat="server" Text=""></asp:Label>
+                    </EditItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="員工姓名">
                     <ItemTemplate>
                         <asp:Label ID="Lbl_Name" runat="server" Text='<%# Bind("Name") %>'></asp:Label>
                     </ItemTemplate>
+                    <EditItemTemplate>
+                        <asp:Label ID="Lbl_Name" runat="server" Text=""></asp:Label>
+                    </EditItemTemplate>
                 </asp:TemplateField>
 
                 <asp:TemplateField>

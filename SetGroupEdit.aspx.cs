@@ -689,7 +689,16 @@ namespace WebApplication1
 
         protected void GridView2_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
-
+            int i = Convert.ToInt32(e.Keys);
+            string ID =((Label)GridView2.Rows[i].FindControl("Lbl_ID")).Text;
+            using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+                cn.Open();
+                SqlCommand cmd = new SqlCommand("Update From UseGroup Where ID=@ID and GID=@GID");
+                cmd.Connection = cn;
+                cmd.Parameters.AddWithValue("@ID",ID);
+                cmd.Parameters.AddWithValue("@GID",Lbl_GID.Text);
+            }
         }
     }
 }

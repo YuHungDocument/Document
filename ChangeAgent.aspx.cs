@@ -88,7 +88,7 @@ namespace WebApplication1
                 {
                     work += "," + CheckBox2.Text;
                 }
-                txt_Ciphertext_Text = AESEncryption(txtKey, txtIV, "被代理單位:" + tmpUserInfo.Department + "被代理人員:" + tmpUserInfo.Name + "\r\n" + "代理職務:" + work + "\r\n" + "開始代理時間:" + Request.Form["d3"] + "\r\n" + "結束代理時間:" + Request.Form["d4"] + "\r\n" + "代理單位:" + DropDownList7.Text + "代理人:" + DropDownList8.Text + "");
+                txt_Ciphertext_Text = AESEncryption(txtKey, txtIV, "<p>被代理單位:" + tmpUserInfo.Department + "</p><p>被代理人員:" + tmpUserInfo.Name + "</p>" + "<p>代理職務:" + work + "</p>" + "<p>開始代理時間:" + Request.Form["d3"] + "</p>" + "<p>結束代理時間:" + Request.Form["d4"] + "</p>" + "<p>代理單位:" + DropDownList7.Text + "</p><p>代理人:" + DropDownList8.Text + "</p>");
                 txt_Ciphertext_Proposition = AESEncryption(txtKey, txtIV, "");
                 //發文者私鑰加密訊息摘要
                 SqlCommand cmdfindkeyaddress = new SqlCommand(@"Select KeyAddress From UserInfo Where EID=@EID");

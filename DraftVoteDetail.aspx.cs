@@ -2038,7 +2038,23 @@ namespace WebApplication1
                         Decmds = "Select * From UserInfo Where Department=@Department and position=@position";
                     }
                 }
-
+                SqlCommand cmdIDdel = new SqlCommand("Select Max(ID) as IDcount From Preview");
+                cmdIDdel.Connection = cn;
+                using (SqlDataReader drID = cmdIDdel.ExecuteReader())
+                {
+                    if (drID.Read())
+                    {
+                        IDGO = int.Parse(drID["IDcount"].ToString());
+                        using (SqlConnection delcn = new SqlConnection(tmpdbhelper.DB_CnStr))
+                        {
+                            delcn.Open();
+                            SqlCommand delcmd = new SqlCommand("Delete from Preview Where ID=@ID");
+                            delcmd.Connection = delcn;
+                            delcmd.Parameters.AddWithValue("@ID", IDGO);
+                            delcmd.ExecuteNonQuery();
+                        }
+                    }
+                }
 
                 SqlCommand Decmd = new SqlCommand(Decmds);
                 Decmd.Connection = cn;
@@ -2075,6 +2091,29 @@ namespace WebApplication1
                             bind3();
                         }
 
+                    }
+                    using (SqlConnection cninsert = new SqlConnection(tmpdbhelper.DB_CnStr))
+                    {
+                        cninsert.Open();
+
+                        SqlCommand cmdID = new SqlCommand("Select Max(ID) as IDcount From Preview");
+                        cmdID.Connection = cninsert;
+                        using (SqlDataReader drID = cmdID.ExecuteReader())
+                        {
+                            if (drID.Read())
+                            {
+                                IDGO = int.Parse(drID["IDcount"].ToString());
+                            }
+                            IDGO = int.Parse(IDGO.ToString()) + 1;
+                        }
+
+                        SqlCommand cmdinsert = new SqlCommand("Insert Into Preview(ID,SID,EID) Values(@ID,@SID,@EID)");
+                        cmdinsert.Connection = cninsert;
+                        cmdinsert.Parameters.AddWithValue("@ID", IDGO);
+                        cmdinsert.Parameters.AddWithValue("@EID", "");
+                        cmdinsert.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+                        cmdinsert.ExecuteNonQuery();
+                        bind3();
                     }
                     DropDownList2.SelectedIndex = 0;
                     DropDownList1.SelectedIndex = 0;

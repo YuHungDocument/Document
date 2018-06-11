@@ -16,6 +16,7 @@ namespace WebApplication1
             if (!Page.IsPostBack)
             {
                 bind();
+                ((Label)this.Master.FindControl("Lb_Title")).Text = "編輯布告欄";
             }
         }
         protected void Btn_Edit_Click(object sender, EventArgs e)
@@ -23,7 +24,7 @@ namespace WebApplication1
             if (Session["userinfo"] is UserInfo)
             {
                 tmpUserInfo = (UserInfo)Session["userinfo"];
-
+                
                 using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
                 {
                     cn.Open();

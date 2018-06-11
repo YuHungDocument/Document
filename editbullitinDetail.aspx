@@ -16,6 +16,10 @@
              height: 20px;
          }
 
+         body{
+             font-size:large;
+         }
+
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -25,6 +29,11 @@
         <tr>
             <td class="auto-style2">公告標題</td>
             <td class="auto-style3"><asp:TextBox ID="Txt_Title" runat="server"></asp:TextBox></td>            
+        </tr>
+        <tr>
+            <td class="auto-style1">&nbsp;</td>
+          
+            <td>&nbsp;</td>
         </tr>
         <tr>
             <td class="auto-style1">公告內容</td>

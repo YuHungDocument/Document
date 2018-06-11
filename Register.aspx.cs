@@ -142,7 +142,7 @@ namespace WebApplication1
                             //郵件標題編碼  
                             msg.SubjectEncoding = System.Text.Encoding.UTF8;
                             //郵件內容
-                            msg.Body = @"<p>您好!恭喜加入宇鴻自行車</p><p>公司將給予您一組公文專用的帳號密碼與私鑰(檔案位於附件)</p><p>您可透過此帳號密碼與私鑰進行公文處理動作</p><p>您的帳號："+Id.Text+"</p><p>密碼："+Password.Text+"</p><p>您的金鑰驗證碼為："+ verification.ToString() + "</p><p><a href='http://localhost:65241/verification.aspx'>點選此連結</a>)輸入驗證碼獲取金鑰</p>";
+                            msg.Body = @"<p>您好!恭喜加入宇鴻自行車</p><p>公司將給予您一組公文專用的帳號密碼與私鑰(檔案位於附件)</p><p>您可透過此帳號密碼與私鑰進行公文處理動作</p><p>您的帳號："+Id.Text+"</p><p>密碼："+Password.Text+"</p><p>您的金鑰驗證碼為："+ verification.ToString() + "</p><p>(<a href='http://localhost:65241/verification.aspx'>點選此連結</a>)輸入驗證碼獲取金鑰</p>";
                             msg.IsBodyHtml = true;
                             msg.BodyEncoding = System.Text.Encoding.UTF8;//郵件內容編碼 
                             msg.Priority = MailPriority.Normal;//郵件優先級 

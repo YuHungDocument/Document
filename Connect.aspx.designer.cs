@@ -67,21 +67,21 @@ namespace WebApplication1 {
         protected global::System.Web.UI.WebControls.TextBox Txt_message;
         
         /// <summary>
-        /// Lb_Reset 控制項。
+        /// Btn_Send 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Lb_Reset;
+        protected global::System.Web.UI.WebControls.Button Btn_Send;
         
         /// <summary>
-        /// Lb_send 控制項。
+        /// Button2 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton Lb_send;
+        protected global::System.Web.UI.WebControls.Button Button2;
     }
 }

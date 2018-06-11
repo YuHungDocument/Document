@@ -50,9 +50,10 @@
                     </div>
                   </div>
                   <div class="contact-btn clearfix">
-                      <asp:LinkButton ID="Lb_Reset" runat="server" PostBackUrl="~/Connect.aspx">重設</asp:LinkButton>
+                      <asp:Button ID="Btn_Send" CssClass="button" runat="server" Text="送出" OnClick="Btn_Send_Click" />
+&nbsp;&nbsp;
+                      <asp:Button ID="Button2" CssClass="button" runat="server" Text="重設" PostBackUrl="~/Connect.aspx"/>
                       <br />
-                      <asp:LinkButton ID="Lb_send" runat="server" OnClick="Lb_send_Click">送出</asp:LinkButton>
                   </div>
                 </div>
                 <div class="form-right">

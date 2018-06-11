@@ -16,7 +16,8 @@ namespace WebApplication1
         {
         }
 
-        protected void Lb_send_Click(object sender, EventArgs e)
+
+        protected void Btn_Send_Click(object sender, EventArgs e)
         {
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
@@ -35,7 +36,7 @@ namespace WebApplication1
                     //郵件標題編碼  
                     msg.SubjectEncoding = System.Text.Encoding.UTF8;
                     //郵件內容
-                    msg.Body = "姓名:"+Txt_Name.Text + "\r\n" + "公司:"+ Txt_Company.Text + "\r\n" + "電話:"+ Txt_Tel.Text + "\r\n"+"訊息:"+ Txt_message.Text;
+                    msg.Body = "<p>姓名:" + Txt_Name.Text + "</p>" + "<p>公司:" + Txt_Company.Text + "</p>" + "<p>電話:" + Txt_Tel.Text + "</p>" + "<p>訊息:" + Txt_message.Text + "</p>";
                     msg.IsBodyHtml = true;
                     msg.BodyEncoding = System.Text.Encoding.UTF8;//郵件內容編碼 
                     msg.Priority = MailPriority.Normal;//郵件優先級 

@@ -1441,7 +1441,8 @@ namespace WebApplication1
                     }
                     catch
                     {
-                        Response.Write("<script>alert('此位置找無金鑰，請從新設定!');location.href='KeyAddress.aspx';</script>");
+                        ScriptManager.RegisterClientScriptBlock(UpdatePanel1, this.GetType(), "click", "alert('此位置找無金鑰，請從新設定!');location.href='KeyAddress.aspx';", true);
+                        
                     }
 
                     cmd3.Parameters.AddWithValue("@SID", SID);
@@ -1794,7 +1795,14 @@ namespace WebApplication1
                             }
                         }
                         cmd.ExecuteNonQuery();
-                        cmd3.ExecuteNonQuery();
+                        //try
+                        //{
+                            cmd3.ExecuteNonQuery();
+                        //}
+                        //catch
+                        //{
+                        //    ScriptManager.RegisterClientScriptBlock(UpdatePanel1, this.GetType(), "click", "alert('此位置找無金鑰，請從新設定!');location.href='KeyAddress.aspx';", true);
+                        //}
 
                         MailMessage msg = new MailMessage();
                         //收件者，以逗號分隔不同收件者 ex "test@gmail.com,test2@gmail.com"

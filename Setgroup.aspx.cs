@@ -63,14 +63,19 @@ namespace WebApplication1
             if (e.CommandName == "DelData")
             {
                 int index = ((GridViewRow)((LinkButton)e.CommandSource).NamingContainer).RowIndex;
-                string keyId = GridView1.DataKeys[index].Value.ToString();
+                string Lbl_GID = ((Label)GridView1.Rows[index].FindControl("Lbl_GID")).Text.Trim();
                 using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
                 {
                     cn.Open();
-                    SqlCommand cmd = new SqlCommand("Delete From News Where NID=@NID");
+                    SqlCommand cmd = new SqlCommand("Delete From UseGroup Where GID=@GID");
                     cmd.Connection = cn;
-                    cmd.Parameters.AddWithValue("@NID", keyId);
+                    cmd.Parameters.AddWithValue("@GID", Lbl_GID);
                     cmd.ExecuteNonQuery();
+
+                    SqlCommand cmd2 = new SqlCommand("Delete From Record Where GID=@GID");
+                    cmd2.Connection = cn;
+                    cmd2.Parameters.AddWithValue("@GID", Lbl_GID);
+                    cmd2.ExecuteNonQuery();
                     bind();
                 }
             }

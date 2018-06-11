@@ -9,7 +9,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div style="text-align: center;width:40%;height:40%;margin:0px auto;">
-        <asp:GridView ID="GridView1" CssClass="table" runat="server" AutoGenerateColumns="False"  GridLines="Horizontal" BorderStyle="None" EmptyDataText="沒有任何群組" Font-Size="Large" OnRowCommand="GridView1_RowCommand">
+        <asp:GridView ID="GridView1" CssClass="table" runat="server" AutoGenerateColumns="False"  GridLines="Horizontal" BorderStyle="None" EmptyDataText="沒有任何群組" Font-Size="Large" OnRowCommand="GridView1_RowCommand" DataKeyNames="GID">
             <Columns>
                       <asp:TemplateField Visible="false">
                     <ItemTemplate>

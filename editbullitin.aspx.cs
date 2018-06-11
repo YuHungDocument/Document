@@ -23,7 +23,12 @@ namespace WebApplication1
                 else
                 {
                     ((Label)this.Master.FindControl("Lb_Title")).Text = "公告列表";
-
+                    UserInfo tmpUserInfo = null;
+                    if (Session["userinfo"] is UserInfo)
+                    {
+                        tmpUserInfo= (UserInfo)Session["userinfo"];
+                        Lbl_EID.Text = tmpUserInfo.EID;
+                    }
                 }
                 bind();
 
@@ -32,7 +37,7 @@ namespace WebApplication1
         }
         public void bind()
         {
-            string sqlstr = "select BID,Date,BTitle from Bulletin order by BID desc";
+            string sqlstr = "select BID,Date,BTitle from Bulletin Where EID='"+Lbl_EID.Text+"' order by BID desc";
             //string sqlstr = "select top 10 BID,CONCAT(Department, '　', BTitle) as bull,CONVERT(varchar(10) , Date, 111 ) as ConDate from Bulletin";
             SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
             SqlDataAdapter myda = new SqlDataAdapter(sqlstr, sqlcon);

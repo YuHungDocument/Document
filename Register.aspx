@@ -138,7 +138,7 @@
                         <asp:Button runat="server" OnClick="Button1_Click" Text="註冊" class="button" Height="45px" Width="93px" />
 
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                             <asp:Button ID="Button2" runat="server" class="button" Text="返回" Height="45px" Width="93px" CausesValidation="False" PostBackUrl="~/MainPage.aspx" />
+                             <asp:Button ID="Button2" runat="server" class="button" Text="返回" Height="45px" Width="93px" CausesValidation="False" PostBackUrl="~/back_mainpage.aspx"  />
 
                     </div>
                 </div>

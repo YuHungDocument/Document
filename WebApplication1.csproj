@@ -938,6 +938,7 @@
     <Content Include="setInfo.aspx" />
     <Content Include="SetNT.aspx" />
     <Content Include="ucGridViewChoiceAll.ascx" />
+    <Content Include="verification.aspx" />
     <Content Include="WebNavigation.aspx" />
     <Content Include="WriteDocument.aspx" />
     <Content Include="WriteVote.aspx" />
@@ -1496,6 +1497,13 @@
       <DependentUpon>ucGridViewChoiceAll.ascx</DependentUpon>
     </Compile>
     <Compile Include="UserInfo.cs" />
+    <Compile Include="verification.aspx.cs">
+      <DependentUpon>verification.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="verification.aspx.designer.cs">
+      <DependentUpon>verification.aspx</DependentUpon>
+    </Compile>
     <Compile Include="WaitDocument.aspx.cs">
       <DependentUpon>WaitDocument.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

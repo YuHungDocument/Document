@@ -42,10 +42,10 @@ namespace WebApplication1
                     {
                         UserInfo tmpUserInfo;
                         tmpUserInfo = (UserInfo)Session["userinfo"];
-                        ((Label)this.Master.FindControl("Lb_Title")).Text = "部門管理";
+                        ((Label)this.Master.FindControl("Lb_Title")).Text = "參數管理";
                         if(tmpUserInfo.Permission == 5 && tmpUserInfo.temp_Permission == 5)
                         {
-                            Response.Write("<script>alert('沒有足夠權限');location.href='Home.aspx';</script>");
+                            Response.Write("<script>alert('沒有足夠權限');location.href='back_mainpage.aspx';</script>");
 
                         }
                         

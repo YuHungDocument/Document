@@ -76,10 +76,14 @@ namespace WebApplication1
                                         {
                                             if (dr2.Read())
                                             {
-                                                Lbl_SenderName.Text = "主辦人：" + dr2["Name"].ToString();
+                                                Lbl_SenderName.Text = dr2["Name"].ToString();
                                             }
 
                                             cn2.Close();
+                                        }
+                                        if(Lbl_SenderEID.Text==Lbl_EID.Text)
+                                        {
+                                            Btn_DelFil.Visible = true;
                                         }
                                         cn2.Open();
                                         cmd3.Connection = cn2;
@@ -1359,6 +1363,25 @@ namespace WebApplication1
                 cmd.Parameters.AddWithValue("@Date", DateTime.Now);
                 cmd.ExecuteNonQuery();
                 Response.Redirect("Detail.aspx");
+            }
+        }
+        #endregion
+
+        #region 撤除文件
+        protected void Btn_DelFil_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+            {
+                cn.Open();
+                SqlCommand cmd = new SqlCommand("Delete From Detail Where SID=@SID");
+                cmd.Connection = cn;
+                cmd.Parameters.AddWithValue("@SID",Lbl_SID.Text);
+                cmd.ExecuteNonQuery();
+                SqlCommand cmd2 = new SqlCommand("Delete From Fil Where SID=@SID");
+                cmd2.Connection = cn;
+                cmd2.Parameters.AddWithValue("@SID",Lbl_SID.Text);
+                cmd2.ExecuteNonQuery();
+                Response.Write("<script>alert('成功刪除此文件');location.href='MainPage.aspx';</script>");
             }
         }
         #endregion

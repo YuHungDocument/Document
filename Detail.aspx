@@ -11,9 +11,12 @@
         <asp:Label ID="Lbl_EID" runat="server" Visible="False"></asp:Label>
 
         &nbsp;
-        <asp:Label ID="Lbl_SenderName" runat="server"></asp:Label>(<asp:Label ID="Lbl_SenderEID" runat="server"></asp:Label>)
+        主辦人：<asp:Label ID="Lbl_SenderName" runat="server"></asp:Label>(<asp:Label ID="Lbl_SenderEID" runat="server"></asp:Label>)
         &nbsp;
         公文類型：<asp:Label ID="Lbl_Type" runat="server" BackColor="#FFD5AA" Font-Names="標楷體" Font-Size="Medium"></asp:Label>
+
+    &nbsp;&nbsp;
+        <asp:Button ID="Btn_DelFil" runat="server" OnClick="Btn_DelFil_Click" Text="撤除" OnClientClick="javascript:return confirm('確定撤除此文件?撤除之後此文件會永久消失')" Visible="False" />
 
     </div>
     <div class="col-sm-4" style="text-align: right">
@@ -30,7 +33,7 @@
         <asp:Panel ID="Pel_Propostiton" runat="server">
             擬辦： 
             <br />
-            <asp:Label ID="Lbl_Proposition" runat="server"></asp:Label>
+            　　　<asp:Label ID="Lbl_Proposition" runat="server"></asp:Label>
         </asp:Panel>
         <br />
         <br />
@@ -82,20 +85,8 @@
             <RowStyle Font-Size="Large" BackColor="White" HorizontalAlign="Center" />
         </asp:GridView>
         <br />
-        <asp:GridView Style="border: 2px #ccc solid; border-radius: 10px;" ID="gv_showTempFile" runat="server" AutoGenerateColumns="false" DataKeyNames="FNO">
-            <Columns>
-                <asp:TemplateField HeaderText="已上傳的檔案">
-                    <ItemTemplate>
-                        <asp:LinkButton ID="btn_filename" runat="server" OnClick="OpenDoc" Text='<%# Eval("Name") %>'></asp:LinkButton>
-                    </ItemTemplate>
-                </asp:TemplateField>
-            </Columns>
-            <EmptyDataRowStyle BorderStyle="None" Font-Size="Large" />
-            <HeaderStyle BackColor="#F2F2F2" Font-Size="Large" />
-            <RowStyle Font-Size="Large" BackColor="White" HorizontalAlign="Center" />
-        </asp:GridView>
         <br />
-                <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" Width="148px" OnRowDataBound="GridView2_RowDataBound">
+                <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" Width="148px" OnRowDataBound="GridView2_RowDataBound" GridLines="Horizontal">
                     <Columns>
                         <asp:TemplateField HeaderText="投票項次">
                             <ItemTemplate>
@@ -118,6 +109,21 @@
                 選擇選項：<asp:DropDownList ID="DropDownList1" runat="server">
                 </asp:DropDownList>
             </asp:Panel>
+            <br />
+            <hr />
+            <h3>附件</h3>
+            <asp:GridView ID="gv_showTempFile" runat="server" AutoGenerateColumns="false" DataKeyNames="FNO"  BorderStyle="None" GridLines="None" ShowHeader="False">
+                <Columns>
+                    <asp:TemplateField HeaderText="已上傳的檔案">
+                        <ItemTemplate>
+                            <asp:LinkButton ID="btn_filename" runat="server" OnClick="OpenDoc" Text='<%# Eval("Name") %>'></asp:LinkButton>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+                <EmptyDataRowStyle BorderStyle="None" Font-Size="Large" />
+                <HeaderStyle BackColor="#F2F2F2" Font-Size="Large" />
+                <RowStyle Font-Size="Large" HorizontalAlign="Left" Height="30px" />
+            </asp:GridView>
             <br />
             <asp:TextBox ID="Txt_Enterpassword" placeholder="請輸入帳戶密碼" runat="server" TextMode="Password"></asp:TextBox>
             &nbsp;

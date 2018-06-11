@@ -212,7 +212,7 @@ namespace WebApplication1
 
         protected void Lbl_More_Click(object sender, EventArgs e)
         {
-
+            Response.Redirect("Product.aspx");
         }
     }
 }

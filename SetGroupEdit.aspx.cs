@@ -698,5 +698,32 @@ namespace WebApplication1
         {
             Response.Redirect("Setgroup.aspx");
         }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            if(Txt_GpName.Text=="")
+            {
+                Response.Write("<script language=javascript>alert('請輸入群組名稱');</" + "script>");
+            }
+            else
+            {
+                using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
+                {
+                    cn.Open();
+                    SqlCommand cmd = new SqlCommand("Update Record set GpName=@GpName Where GID=@GID");
+                    cmd.Connection = cn;
+                    cmd.Parameters.AddWithValue("@GpName",Txt_GpName.Text);
+                    cmd.Parameters.AddWithValue("@GID",Lbl_GID.Text);
+                    cmd.ExecuteNonQuery();
+
+                    SqlCommand cmduse = new SqlCommand("Update Usegroup set GpName=@GpName Where GID=@GID");
+                    cmduse.Connection = cn;
+                    cmduse.Parameters.AddWithValue("@GpName", Txt_GpName.Text);
+                    cmduse.Parameters.AddWithValue("@GID", Lbl_GID.Text);
+                    cmduse.ExecuteNonQuery();
+                    Response.Write("<script language=javascript>alert('修改群組名稱成功');</" + "script>");
+                }
+            }
+        }
     }
 }

@@ -24,7 +24,7 @@
                 <td>
                     <asp:TextBox ID="Txt_GpName" class="form-control" runat="server"></asp:TextBox></td>
                 <td>
-                    <asp:Button ID="Button1" runat="server" Text="群組名稱修改" /></td>
+                    <asp:Button ID="Button1" runat="server" Text="群組名稱修改" OnClick="Button1_Click" /></td>
             </tr>
         </table>
         &nbsp;&nbsp; &nbsp; &nbsp;

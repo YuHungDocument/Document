@@ -52,7 +52,7 @@ namespace WebApplication1
                     {
                         tmpUserInfo = (UserInfo)Session["userinfo"];
                         Lbl_EID.Text = tmpUserInfo.EID;
-                        bind();
+                       
                         bind2();
                         using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
                         {
@@ -65,6 +65,7 @@ namespace WebApplication1
                                 if (dr.Read())
                                 {
                                     Lbl_SenderEID.Text = dr["EID"].ToString();
+                                    bind();
                                     using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
                                     {
                                         cn2.Open();
@@ -161,6 +162,7 @@ namespace WebApplication1
                                 Pel_Propostiton.Visible = false;
                             }
                         }
+                        
                         using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
                         {
                             cn.Open();
@@ -297,7 +299,7 @@ namespace WebApplication1
             }
             catch
             {
-                Response.Write("<script>alert('資料已遭竄改!,簽章失敗');location.href='WaitDocument.aspx';</script>");
+                Response.Write("<script>alert('資料已遭竄改!,簽章失敗');location.href='AllPage.aspx';</script>");
             }
 
             if(encryptedText!=null)
@@ -307,7 +309,7 @@ namespace WebApplication1
             }
             else
             {
-                Response.Write("<script>alert('資料已遭竄改!,簽章失敗');location.href='WaitDocument.aspx';</script>");
+                Response.Write("<script>alert('資料已遭竄改!,簽章失敗');location.href='AllPage.aspx';</script>");
                 return "";
                
             }
@@ -421,7 +423,7 @@ namespace WebApplication1
                     }
                     catch
                     {
-                        Response.Write("<script>alert('解密失敗!');location.href='WaitDocument.aspx';</script>");
+                        Response.Write("<script>alert('解密失敗!');location.href='AllPage.aspx';</script>");
                     }
                 }
                 catch
@@ -466,223 +468,276 @@ namespace WebApplication1
         #region bind
         public void bind()
         {
-            using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
-            {
-                cn.Open();
 
-                #region 讀公文資料
-                SqlCommand cmd = new SqlCommand("Select * from Fil Where SID=@SID");
-                cmd.Connection = cn;
-                cmd.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
-                using (SqlDataReader dr = cmd.ExecuteReader())
+                using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
                 {
-                    if (dr.Read())
+                    cn.Open();
+
+                    #region 讀公文資料
+                    SqlCommand cmd = new SqlCommand("Select * from Fil Where SID=@SID");
+                    cmd.Connection = cn;
+                    cmd.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
+                    using (SqlDataReader dr = cmd.ExecuteReader())
                     {
-                        DateTime strDate = DateTime.Parse(dr["Date"].ToString());
-
-                        Lbl_SID.Text = dr["SID"].ToString();
-                        Lbl_Title.Text = dr["Title"].ToString();
-                        Lbl_Date.Text = String.Format("{0:yyyy/MM/dd}", strDate);
-                        stringdate = strDate.ToString("yyyyMMdd");
-                        Lbl_Text.Text = dr["Text"].ToString();
-                        Lbl_Type.Text = dr["Type"].ToString();
-                        Lbl_Proposition.Text = dr["Proposition"].ToString();
-                        if (dr["Type"].ToString() == "投票")
+                        if (dr.Read())
                         {
+                            DateTime strDate = DateTime.Parse(dr["Date"].ToString());
 
-                            using (SqlConnection cn3 = new SqlConnection(tmpdbhelper.DB_CnStr))
+                            Lbl_SID.Text = dr["SID"].ToString();
+                            Lbl_Title.Text = dr["Title"].ToString();
+                            Lbl_Date.Text = String.Format("{0:yyyy/MM/dd}", strDate);
+                            stringdate = strDate.ToString("yyyyMMdd");
+                            Lbl_Text.Text = dr["Text"].ToString();
+                            Lbl_Type.Text = dr["Type"].ToString();
+                            Lbl_Proposition.Text = dr["Proposition"].ToString();
+                            if (dr["Type"].ToString() == "投票")
                             {
-                                cn3.Open();
-                                SqlCommand choosecmd = new SqlCommand(@"Select choose From Detail Where EID=@EID and SID=@SID");
-                                choosecmd.Connection = cn3;
-                                choosecmd.Parameters.AddWithValue("@EID", Lbl_EID.Text);
-                                choosecmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
-                                using (SqlDataReader dr2 = choosecmd.ExecuteReader())
+
+                                using (SqlConnection cn3 = new SqlConnection(tmpdbhelper.DB_CnStr))
                                 {
-                                    if (dr2.Read())
+                                    cn3.Open();
+                                    SqlCommand choosecmd = new SqlCommand(@"Select choose From Detail Where EID=@EID and SID=@SID");
+                                    choosecmd.Connection = cn3;
+                                    choosecmd.Parameters.AddWithValue("@EID", Lbl_EID.Text);
+                                    choosecmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+                                    using (SqlDataReader dr2 = choosecmd.ExecuteReader())
                                     {
-                                        using (SqlConnection Vmcn = new SqlConnection(tmpdbhelper.DB_CnStr))
+                                        if (dr2.Read())
                                         {
-                                            Vmcn.Open();
-                                            SqlCommand Vmcmd = new SqlCommand(@"Select Vname From Vote Where number=@number and SID=@SID");
-                                            Vmcmd.Connection = Vmcn;
-                                            Vmcmd.Parameters.AddWithValue("@number", dr2["choose"].ToString());
-                                            Vmcmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
-                                            using (SqlDataReader drVm = Vmcmd.ExecuteReader())
+                                            using (SqlConnection Vmcn = new SqlConnection(tmpdbhelper.DB_CnStr))
                                             {
-                                                if (drVm.Read())
+                                                Vmcn.Open();
+                                                SqlCommand Vmcmd = new SqlCommand(@"Select Vname From Vote Where number=@number and SID=@SID");
+                                                Vmcmd.Connection = Vmcn;
+                                                Vmcmd.Parameters.AddWithValue("@number", dr2["choose"].ToString());
+                                                Vmcmd.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+                                                using (SqlDataReader drVm = Vmcmd.ExecuteReader())
                                                 {
-                                                    Lbl_Choose.Text = drVm["Vname"].ToString();
+                                                    if (drVm.Read())
+                                                    {
+                                                        Lbl_Choose.Text = drVm["Vname"].ToString();
+                                                    }
                                                 }
                                             }
                                         }
                                     }
+                                    cn3.Close();
                                 }
-                                cn3.Close();
+                                Pel_selectwatch.Visible = true;
+                                bind2();
                             }
-                            Pel_selectwatch.Visible = true;
-                            bind2();
+                            else
+                            {
+                                Pel_Choose.Visible = false;
+                                bind2();
+                            }
+                        }
+                    }
+                    #endregion
+
+                    #region 判斷簽核是否完成
+                    SqlCommand cmd2 = new SqlCommand(@"Select * From Detail Where SID=@SID AND EID=@EID");
+                    cmd2.Connection = cn;
+                    cmd2.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
+                    cmd2.Parameters.AddWithValue("@EID", Lbl_EID.Text);
+                    using (SqlDataReader dr2 = cmd2.ExecuteReader())
+                        if (dr2.Read())
+                        {
+                            if (dr2["sign"].ToString() == "0" || dr2["choose"].ToString() != "0")
+
+                            {
+                                Pnl_sign.Visible = true;
+
+                            }
+                            else
+                            {
+                                Pel_Choose.Visible = true;
+                                Pnl_sign.Visible = false;
+                            }
+                        }
+                    #endregion
+
+                    #region 找出金鑰位址
+                    SqlCommand cmdfindkeyaddress = new SqlCommand(@"Select KeyAddress From UserInfo Where EID=@EID");
+                    cmdfindkeyaddress.Connection = cn;
+                    cmdfindkeyaddress.Parameters.AddWithValue("@EID", Lbl_EID.Text);
+
+                    using (SqlDataReader dr2 = cmdfindkeyaddress.ExecuteReader())
+                    {
+                        if (dr2.Read())
+                        {
+                            KeyAddress = dr2["KeyAddress"].ToString();
+
+                        }
+                        if (KeyAddress == "")
+                        {
+                            Response.Redirect("KeyAddress.aspx");
                         }
                         else
                         {
-                            Pel_Choose.Visible = false;
-                            bind2();
+                            using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
+                            {
+                                cn2.Open();
+                                SqlCommand cmdKey = new SqlCommand("Update Detail set isread=1 where SID='" + Session["keyId"].ToString() + "' and EID='" + Lbl_EID.Text + "'");
+                                cmdKey.Connection = cn2;
+                                cmdKey.ExecuteNonQuery();
+                            }
                         }
                     }
-                }
-                #endregion
+                    #endregion
 
-                #region 判斷簽核是否完成
-                SqlCommand cmd2 = new SqlCommand(@"Select * From Detail Where SID=@SID AND EID=@EID");
-                cmd2.Connection = cn;
-                cmd2.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
-                cmd2.Parameters.AddWithValue("@EID", Lbl_EID.Text);
-                using (SqlDataReader dr2 = cmd2.ExecuteReader())
-                    if (dr2.Read())
-                    {
-                        if (dr2["sign"].ToString() == "0" || dr2["choose"].ToString() != "0")
-
-                        {
-                            Pnl_sign.Visible = true;
-
-                        }
-                        else
-                        {
-                            Pel_Choose.Visible = true;
-                            Pnl_sign.Visible = false;
-                        }
-                    }
-                #endregion                                
-
-                #region 找出金鑰位址
-                SqlCommand cmdfindkeyaddress = new SqlCommand(@"Select KeyAddress From UserInfo Where EID=@EID");
-                cmdfindkeyaddress.Connection = cn;
-                cmdfindkeyaddress.Parameters.AddWithValue("@EID", Lbl_EID.Text);
-
-                using (SqlDataReader dr2 = cmdfindkeyaddress.ExecuteReader())
-                {
-                    if (dr2.Read())
-                    {
-                        KeyAddress = dr2["KeyAddress"].ToString();
-
-                    }
-                    if (KeyAddress == "")
-                    {
-                        Response.Redirect("KeyAddress.aspx");
-                    }
-                    else
-                    {
-                        using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
-                        {
-                            cn2.Open();
-                            SqlCommand cmdKey = new SqlCommand("Update Detail set isread=1 where SID='" + Session["keyId"].ToString() + "' and EID='" + Lbl_EID.Text + "'");
-                            cmdKey.Connection = cn2;
-                            cmdKey.ExecuteNonQuery();
-                        }
-                    }
-                }
-                #endregion
-
-                #region 解密
-                try
-                {
-                    StreamReader str = new StreamReader(@"" + KeyAddress + "");
-                    string ReadAll = str.ReadToEnd();
-                    // 建立 RSA 演算法物件的執行個體，並匯入先前建立的私鑰
-                    RSACryptoServiceProvider rsaProviderReceiver = new RSACryptoServiceProvider();
-                    rsaProviderReceiver.FromXmlString(ReadAll);
+                    #region 解密
                     try
                     {
-
-                        SqlCommand cmd3 = new SqlCommand(@"Select RSAkey From Detail Where EID=@EID and SID=@SID");
-                        cmd3.Connection = cn;
-                        cmd3.Parameters.AddWithValue("@EID", Lbl_EID.Text);
-                        cmd3.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
-                        using (SqlDataReader dr2 = cmd3.ExecuteReader())
+                        StreamReader str = new StreamReader(@"" + KeyAddress + "");
+                        string ReadAll = str.ReadToEnd();
+                        // 建立 RSA 演算法物件的執行個體，並匯入先前建立的私鑰
+                        RSACryptoServiceProvider rsaProviderReceiver = new RSACryptoServiceProvider();
+                        rsaProviderReceiver.FromXmlString(ReadAll);
+                        try
                         {
-                            if (dr2.Read())
+
+                            SqlCommand cmd3 = new SqlCommand(@"Select RSAkey From Detail Where EID=@EID and SID=@SID");
+                            cmd3.Connection = cn;
+                            cmd3.Parameters.AddWithValue("@EID", Lbl_EID.Text);
+                            cmd3.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
+                            using (SqlDataReader dr2 = cmd3.ExecuteReader())
                             {
-                                RSAkey = dr2["RSAkey"].ToString();
+                                if (dr2.Read())
+                                {
+                                    RSAkey = dr2["RSAkey"].ToString();
+                                }
                             }
+
+                            // 將資料解密
+
+                            byte[] byteCipher = Convert.FromBase64String(RSAkey);
+                            byte[] bytePlain = rsaProviderReceiver.Decrypt(byteCipher, false);
+
+                            // 將解密後的資料，轉 UTF8 格式輸入
+                            key = Encoding.UTF8.GetString(bytePlain);
                         }
-
-                        // 將資料解密
-
-                        byte[] byteCipher = Convert.FromBase64String(RSAkey);
-                        byte[] bytePlain = rsaProviderReceiver.Decrypt(byteCipher, false);
-
-                        // 將解密後的資料，轉 UTF8 格式輸入
-                        key = Encoding.UTF8.GetString(bytePlain);
+                        catch
+                        {
+                            Response.Write("<script>alert('解密失敗!');location.href='AllPage.aspx';</script>");
+                        }
                     }
                     catch
                     {
-                        Response.Write("<script>alert('解密失敗!');location.href='WaitDocument.aspx';</script>");
+                        Response.Write("<script>alert('此位置找無金鑰，請從新設定!');location.href='KeyAddress.aspx';</script>");
                     }
-                }
-                catch
-                {
-                    Response.Write("<script>alert('此位置找無金鑰，請從新設定!');location.href='KeyAddress.aspx';</script>");
-                }
 
 
-                if (key != null)
-                {
-                    //找到解密iv
-
-                    SqlCommand cmd5 = new SqlCommand(@"Select AESiv From Fil Where SID=@SID");
-                    cmd5.Connection = cn;
-                    cmd5.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
-
-                    using (SqlDataReader dr3 = cmd5.ExecuteReader())
+                    if (key != null)
                     {
-                        if (dr3.Read())
+                        //找到解密iv
+
+                        SqlCommand cmd5 = new SqlCommand(@"Select AESiv From Fil Where SID=@SID");
+                        cmd5.Connection = cn;
+                        cmd5.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
+
+                        using (SqlDataReader dr3 = cmd5.ExecuteReader())
                         {
-                            AESiv = dr3["AESiv"].ToString();
-                        }
-                    }
-                    //找RSAkey
-                   
-                            using (SqlConnection cncheck = new SqlConnection(tmpdbhelper.DB_CnStr))
+                            if (dr3.Read())
                             {
-                                cncheck.Open();
-                                SqlCommand cmd6 = new SqlCommand(@"Select RSAkey,sign,choose,Hashstat From Detail Where SID=@SID ");
-                                cmd6.Connection = cncheck;
-                                cmd6.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+                                AESiv = dr3["AESiv"].ToString();
+                            }
+                        }
+                        //找RSAkey
 
-                                using (SqlDataReader dr2 = cmd6.ExecuteReader())
+                        using (SqlConnection cncheck = new SqlConnection(tmpdbhelper.DB_CnStr))
+                        {
+                            cncheck.Open();
+                            SqlCommand cmd6 = new SqlCommand(@"Select RSAkey,sign,choose,Hashstat From Detail Where SID=@SID ");
+                            cmd6.Connection = cncheck;
+                            cmd6.Parameters.AddWithValue("@SID", Lbl_SID.Text);
+
+                            using (SqlDataReader dr2 = cmd6.ExecuteReader())
+                            {
+                                while (dr2.Read())
                                 {
-                                    while (dr2.Read())
-                                    {
 
-                                        RSAkey = dr2["RSAkey"].ToString();
-                                        string sign= dr2["sign"].ToString();
-                                        string choose = dr2["choose"].ToString();
-                                        SHA256 sha256 = new SHA256CryptoServiceProvider();//建立一個SHA256
-                                        byte[] source = Encoding.Default.GetBytes(sign + choose + RSAkey);//將字串轉為Byte[]
-                                        byte[] crypto = sha256.ComputeHash(source);//進行SHA256加密
-                                        result += Convert.ToBase64String(crypto);//把加密後的字串從Byte[]轉為字串
-                                        Hashstat += dr2["Hashstat"].ToString();
-                                        }
-
-                                    }
-                                    if (Hashstat != result)
-                                    {
-                                        Response.Write("<script>alert('簽章已遭竄改!');location.href='WaitDocument.aspx';</script>");
-                                    }
+                                    RSAkey = dr2["RSAkey"].ToString();
+                                    string sign = dr2["sign"].ToString();
+                                    string choose = dr2["choose"].ToString();
+                                    SHA256 sha256 = new SHA256CryptoServiceProvider();//建立一個SHA256
+                                    byte[] source = Encoding.Default.GetBytes(sign + choose + RSAkey);//將字串轉為Byte[]
+                                    byte[] crypto = sha256.ComputeHash(source);//進行SHA256加密
+                                    result += Convert.ToBase64String(crypto);//把加密後的字串從Byte[]轉為字串
+                                    Hashstat += dr2["Hashstat"].ToString();
                                 }
 
-                    
+                            }
+                            if (Hashstat != result)
+                            {
+                                Response.Write("<script>alert('簽章已遭竄改!');location.href='AllPage.aspx';</script>");
+                            }
+                        }
 
-                    //對稱解密
 
-                    Lbl_Text.Text = AESDecryption(key, AESiv, Lbl_Text.Text);
-                    Lbl_Proposition.Text = AESDecryption(key, AESiv, Lbl_Proposition.Text);
-                    Lbl_Choose.Text = AESDecryption(key, AESiv, Lbl_Choose.Text);
+
+                        //對稱解密
+
+                        Lbl_Text.Text = AESDecryption(key, AESiv, Lbl_Text.Text);
+                        Lbl_Proposition.Text = AESDecryption(key, AESiv, Lbl_Proposition.Text);
+                        Lbl_Choose.Text = AESDecryption(key, AESiv, Lbl_Choose.Text);
+                    using (SqlConnection cnsign = new SqlConnection(tmpdbhelper.DB_CnStr))
+                    {
+                        cnsign.Open();
+                        SqlCommand cmdsign = new SqlCommand(@"Select PK From UserInfo Where EID=@EID");
+                        SqlCommand cmdhash = new SqlCommand(@"Select txt_RSAhash_Text,txt_RSAhash_Proposition,Text,Proposition,Date From Fil Where SID=@SID");
+                        cmdsign.Connection = cnsign;
+                        cmdhash.Connection = cnsign;
+                        cmdsign.Parameters.AddWithValue("@EID", Lbl_SenderEID.Text);
+                        cmdhash.Parameters.AddWithValue("@SID", Session["keyId"].ToString());
+
+                        using (SqlDataReader dr2 = cmdsign.ExecuteReader())
+                        {
+                            if (dr2.Read())
+                            {
+                                senderPK = dr2["PK"].ToString();
+                            }
+                        }
+                        using (SqlDataReader drhash = cmdhash.ExecuteReader())
+                        {
+                            if (drhash.Read())
+                            {
+                                txt_RSAhash_Text = drhash["txt_RSAhash_Text"].ToString();
+                                txt_RSAhash_Proposition = drhash["txt_RSAhash_Proposition"].ToString();
+                                txt_Text = drhash["Text"].ToString();
+                                txt_Proposition = drhash["Proposition"].ToString();
+                                txtDate = DateTime.Parse(drhash["Date"].ToString());
+                                stringdate = txtDate.ToString("yyyyMMdd");
+                            }
+                        }
+                    }
+                    // 1) 建立RSA數位簽章演算法物件
+                    RSACryptoServiceProvider verifier = new RSACryptoServiceProvider();
+                    verifier.FromXmlString(senderPK);     //讀取公開金鑰
+                                                          // 2) 讀取接收到的本文資料
+                    byte[] content_Text = Encoding.UTF8.GetBytes(txt_Text + stringdate);
+                    byte[] content_Proposition = Encoding.UTF8.GetBytes(txt_Proposition + stringdate);
+                    // 3) 讀取接收到的簽章資料
+
+                    byte[] signature_Text = Convert.FromBase64String(txt_RSAhash_Text);
+                    byte[] signature_Proposition = Convert.FromBase64String(txt_RSAhash_Proposition);
+                    // 將資料解密
+                    // 4) 呼叫 VerifyData 方法, 驗證本文與簽章是否相符
+                    if (verifier.VerifyData(content_Text, new SHA1CryptoServiceProvider(), signature_Text) && verifier.VerifyData(content_Proposition, new SHA1CryptoServiceProvider(), signature_Proposition))
+                    {
+
+                    }
+                    else
+                    {
+                        Response.Write("<script language=javascript>alert('此公文為無效資料!')</script>");
+                        Response.Write("<script language=javascript>window.location.href='AllPage.aspx'</script>");
+
+                    }
+                    #endregion
 
                 }
-                #endregion
-
             }
+            
         }
         #endregion
 
@@ -1107,7 +1162,7 @@ namespace WebApplication1
                     }
                     catch
                     {
-                        Response.Write("<script>alert('解密失敗!');location.href='WaitDocument.aspx';</script>");
+                        Response.Write("<script>alert('解密失敗!');location.href='AllPage.aspx';</script>");
                     }
                 }
                 catch
@@ -1234,7 +1289,7 @@ namespace WebApplication1
                         }
                         catch
                         {
-                            Response.Write("<script>alert('解密失敗!');location.href='WaitDocument.aspx';</script>");
+                            Response.Write("<script>alert('解密失敗!');location.href='AllPage.aspx';</script>");
                         }
                     }
                     catch

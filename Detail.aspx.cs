@@ -556,10 +556,21 @@ namespace WebApplication1
                     if (dr2.Read())
                     {
                         KeyAddress = dr2["KeyAddress"].ToString();
+
                     }
                     if (KeyAddress == "")
                     {
                         Response.Redirect("KeyAddress.aspx");
+                    }
+                    else
+                    {
+                        using (SqlConnection cn2 = new SqlConnection(tmpdbhelper.DB_CnStr))
+                        {
+                            cn2.Open();
+                            SqlCommand cmdKey = new SqlCommand("Update Detail set isread=1 where SID='" + Session["keyId"].ToString() + "' and EID='" + Lbl_EID.Text + "'");
+                            cmdKey.Connection = cn2;
+                            cmdKey.ExecuteNonQuery();
+                        }
                     }
                 }
                 #endregion

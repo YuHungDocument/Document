@@ -365,13 +365,7 @@ namespace WebApplication1
                 ((LinkButton)e.CommandSource).NamingContainer).RowIndex;
                 //這樣就可以取得Keys值了
                 string keyId = Menu.DataKeys[index].Value.ToString();
-                using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
-                {
-                    cn.Open();
-                    SqlCommand cmd = new SqlCommand("Update Detail set isread=1 where SID='"+ keyId + "' and EID='"+Lbl_EID.Text+"'");
-                    cmd.Connection = cn;
-                    cmd.ExecuteNonQuery();
-                }
+
                     Session["keyId"] = keyId;
                 Response.Redirect("Detail.aspx");
             }

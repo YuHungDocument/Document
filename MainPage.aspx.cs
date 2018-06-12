@@ -190,7 +190,7 @@ namespace WebApplication1
             using (SqlConnection cn = new SqlConnection(tmpdbhelper.DB_CnStr))
             {
                 cn.Open();
-                SqlCommand cmd = new SqlCommand("Select * from Detail left join Fil On Fil.SID = Detail.SID Where Detail.EID='" + Lbl_EID.Text+ "' and Detail.look=1 and Detail.sign=0 and Fil.Type!='投票'");
+                SqlCommand cmd = new SqlCommand("Select * from Detail left join Fil On Fil.SID = Detail.SID Where Detail.EID='" + Lbl_EID.Text+ "' and Detail.look=1 and (Detail.sign = 0 or Detail.isread=0) and Fil.Type!='投票'");
                 cmd.Connection = cn;
                 using (SqlDataReader dr = cmd.ExecuteReader())
                 {
@@ -199,7 +199,7 @@ namespace WebApplication1
                         Wdc = int.Parse(Wdc.ToString()) + 1;
                     }
                 }
-                SqlCommand votecmd = new SqlCommand("Select * from Detail left join Fil On Fil.SID = Detail.SID Where Detail.EID='" + Lbl_EID.Text + "' and Detail.look=1 and Detail.sign=0 and Fil.Type='投票'");
+                SqlCommand votecmd = new SqlCommand("Select * from Detail left join Fil On Fil.SID = Detail.SID Where Detail.EID='" + Lbl_EID.Text + "' and Detail.look=1 and (Detail.sign = 0 or Detail.isread=0) and Fil.Type='投票'");
                 votecmd.Connection = cn;
                 using (SqlDataReader dr = votecmd.ExecuteReader())
                 {
@@ -209,7 +209,7 @@ namespace WebApplication1
                     }
                 }
 
-                SqlCommand NewDccmd = new SqlCommand("Select * from Detail left join Fil On Fil.SID = Detail.SID Where Detail.EID='" + Lbl_EID.Text + "' and Detail.isread='0' and Fil.Type!='投票' and Detail.look!='0' and Detail.status='1'");
+                SqlCommand NewDccmd = new SqlCommand("Select * from Detail left join Fil On Fil.SID = Detail.SID Where Detail.EID='" + Lbl_EID.Text + "' and Detail.isread='0' and Fil.Type!='投票' and Detail.look!='0'");
                 NewDccmd.Connection = cn;
                 using (SqlDataReader dr = NewDccmd.ExecuteReader())
                 {
@@ -219,7 +219,7 @@ namespace WebApplication1
                     }
                 }
 
-                SqlCommand NewVocmd = new SqlCommand("Select * from Detail left join Fil On Fil.SID = Detail.SID Where Detail.EID='" + Lbl_EID.Text + "' and Detail.isread='0' and Fil.Type='投票' and Detail.look!='0' and Detail.status='1'");
+                SqlCommand NewVocmd = new SqlCommand("Select * from Detail left join Fil On Fil.SID = Detail.SID Where Detail.EID='" + Lbl_EID.Text + "' and Detail.isread='0' and Fil.Type='投票' and Detail.look!='0'");
                 NewVocmd.Connection = cn;
                 using (SqlDataReader dr = NewVocmd.ExecuteReader())
                 {

@@ -1757,33 +1757,44 @@ namespace WebApplication1
                         cmd.ExecuteNonQuery();
                         cmd3.ExecuteNonQuery();
 
-                        MailMessage msg = new MailMessage();
-                        //收件者，以逗號分隔不同收件者 ex "test@gmail.com,test2@gmail.com"
-                        msg.To.Add(listmail.ToString());
-                        msg.From = new MailAddress("yuhungsystem@gmail.com", "電子公文通知", System.Text.Encoding.UTF8);
-                        //郵件標題 
-                        msg.Subject = "新公文通知";
-                        //郵件標題編碼  
-                        msg.SubjectEncoding = System.Text.Encoding.UTF8;
-                        //郵件內容
-                        msg.Body = "您有新公文需簽收請前往系統確認";
-                        msg.IsBodyHtml = true;
-                        msg.BodyEncoding = System.Text.Encoding.UTF8;//郵件內容編碼 
-                        msg.Priority = MailPriority.Normal;//郵件優先級 
-                                                           //建立 SmtpClient 物件 並設定 Gmail的smtp主機及Port 
-                        #region 其它 Host
-                        /*
-                         *  outlook.com smtp.live.com port:25
-                         *  yahoo smtp.mail.yahoo.com.tw port:465
-                        */
-                        #endregion
-                        SmtpClient MySmtp = new SmtpClient("smtp.gmail.com", 587);
-                        //設定你的帳號密碼
-                        MySmtp.Credentials = new System.Net.NetworkCredential("yuhungsystem@gmail.com", "lkxvbxebxzfkfdke");
-                        //Gmial 的 smtp 使用 SSL
-                        MySmtp.EnableSsl = true;
-                        MySmtp.Send(msg);
-                        Response.Redirect("WaitDocument.aspx");
+                        try
+                        {
+                            MailMessage msg = new MailMessage();
+                            //收件者，以逗號分隔不同收件者 ex "test@gmail.com,test2@gmail.com"
+                            msg.To.Add(listmail.ToString());
+                            msg.From = new MailAddress("yuhungsystem@gmail.com", "電子公文通知", System.Text.Encoding.UTF8);
+                            //郵件標題 
+                            msg.Subject = "新公文通知";
+                            //郵件標題編碼  
+                            msg.SubjectEncoding = System.Text.Encoding.UTF8;
+                            //郵件內容
+                            msg.Body = "您有新公文需簽收請前往系統確認";
+                            msg.IsBodyHtml = true;
+                            msg.BodyEncoding = System.Text.Encoding.UTF8;//郵件內容編碼 
+                            msg.Priority = MailPriority.Normal;//郵件優先級 
+                                                               //建立 SmtpClient 物件 並設定 Gmail的smtp主機及Port 
+                            #region 其它 Host
+                            /*
+                             *  outlook.com smtp.live.com port:25
+                             *  yahoo smtp.mail.yahoo.com.tw port:465
+                            */
+                            #endregion
+                            SmtpClient MySmtp = new SmtpClient("smtp.gmail.com", 587);
+                            //設定你的帳號密碼
+                            MySmtp.Credentials = new System.Net.NetworkCredential("yuhungsystem@gmail.com", "lkxvbxebxzfkfdke");
+                            //Gmial 的 smtp 使用 SSL
+                            MySmtp.EnableSsl = true;
+                            MySmtp.Send(msg);
+                        }
+                        catch
+                        {
+                            
+                        }
+                        finally
+                        {
+                            Response.Redirect("HostDocument.aspx");
+                        }
+                        
                     }
 
                     //cmd4.ExecuteNonQuery();

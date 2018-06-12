@@ -83,7 +83,15 @@ namespace WebApplication1
                                         }
                                         if(Lbl_SenderEID.Text==Lbl_EID.Text)
                                         {
-                                            Btn_DelFil.Visible = true;
+                                            if(dr["IsEnd"].ToString()=="1")
+                                            {
+                                                Btn_DelFil.Visible = false;
+                                            }
+                                            else
+                                            {
+                                                Btn_DelFil.Visible = true;
+                                            }
+                                            
                                         }
                                         cn2.Open();
                                         cmd3.Connection = cn2;

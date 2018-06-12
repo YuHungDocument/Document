@@ -17,18 +17,7 @@
                     <div class="item">公佈欄管理</div>
                 </a>
             </div>
-            <div class="col-sm-2">
-                 <a href="SelectMemberData.aspx" title="改變權限">
-                    <div class="glyphicon glyphicon-resize-vertical"></div>
-                    <div class="item">改變權限</div>
-                </a>
-            </div>
-            <div class="col-sm-2">
-                <a href="Edit_U.aspx" title="新增">
-                    <div class="glyphicon glyphicon-plus-sign   "></div>
-                    <div class="item">編輯管理</div>
-                </a>
-            </div>
+         
              <div class="col-sm-2">
                 <a href="Register.aspx" title="新帳戶註冊">
                     <div class="glyphicon glyphicon-wrench"></div>

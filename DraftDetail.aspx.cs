@@ -45,7 +45,7 @@ namespace WebApplication1
             {
                 Btn_Save.Attributes["onclick"] = "this.disabled = true;this.value = '資料送出中..';" + Page.ClientScript.GetPostBackEventReference(Btn_Save, "");
                 UserInfo tmpUserInfo = null;
-                bind2();
+                
                 if (Session["userinfo"] == null)
                 {
                     Response.Redirect("Home.aspx");
@@ -71,7 +71,28 @@ namespace WebApplication1
                             Date += DateTime.Today.Day.ToString();
                         Lbl_Date.Text = Date;
                         Lbl_Sender.Text = tmpUserInfo.Name;
+                        #region 找出金鑰位址
+                        using (SqlConnection cnkey = new SqlConnection(tmpdbhelper.DB_CnStr))
+                        {
+                            cnkey.Open();
+                            SqlCommand cmdfindkeyaddress = new SqlCommand(@"Select KeyAddress From UserInfo Where EID=@EID");
+                            cmdfindkeyaddress.Connection = cnkey;
+                            cmdfindkeyaddress.Parameters.AddWithValue("@EID", Lbl_EID.Text);
 
+                            using (SqlDataReader dr2 = cmdfindkeyaddress.ExecuteReader())
+                            {
+                                if (dr2.Read())
+                                {
+                                    KeyAddress = dr2["KeyAddress"].ToString();
+                                }
+                                if (KeyAddress == "")
+                                {
+                                    Response.Redirect("KeyAddress.aspx");
+                                }
+                            }
+                        }
+                        #endregion
+                        bind2();
                         ddpbind();
 
                         SqlCommand cmd = new SqlCommand(@"Select * From Draft Where DID=@DID");
@@ -664,7 +685,7 @@ namespace WebApplication1
         public void bind2()
         {
 
-            string sqlstr = "select * from Record ";
+            string sqlstr = "select * from Record Where EID='"+Lbl_EID.Text+"'";
             SqlConnection sqlcon = new SqlConnection(tmpdbhelper.DB_CnStr);
             SqlDataAdapter myda = new SqlDataAdapter(sqlstr, sqlcon);
             DataSet myds = new DataSet();
